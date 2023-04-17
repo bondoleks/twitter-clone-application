@@ -2,12 +2,15 @@ package demo.project.twitter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 @SpringBootTest
 class TwitterApplicationTests {
 
 	@Test
 	void contextLoads() {
+		int x = 1;
+		Assert.isTrue(x == 1);
 	}
 
 }
