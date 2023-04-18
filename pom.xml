@@ -46,7 +46,7 @@
 						<id>validate</id>
 						<phase>validate</phase>
 						<configuration>
-							<configLocation>./checkstyle_config.xml</configLocation>
+							<configLocation>src/main/resources/checkstyle_config.xml</configLocation>
 							<encoding>utf-8</encoding>
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>true</failsOnError>
