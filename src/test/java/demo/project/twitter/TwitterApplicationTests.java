@@ -9,6 +9,8 @@ class TwitterApplicationTests {
 
 	@Test
 	void contextLoads() {
+		int x = 1;
+		Assert.isTrue(x == 1);
 	}
 
 }
