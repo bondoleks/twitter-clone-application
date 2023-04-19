@@ -1,0 +1,7 @@
+language: java
+addons:
+  sonarcloud:
+    organization: "<final-project-group-twitter>"
+    token: <55c8fd390ff342148581fd322ceba035e10f6ac9>
+script:
+  - sonar-scanner
