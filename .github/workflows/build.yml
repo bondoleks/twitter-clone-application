@@ -32,6 +32,6 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.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 }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.9a2ea255a20d9d03ffeaccc5e3f909db9e429c20 }}
+          GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=final-project-group-twitter
