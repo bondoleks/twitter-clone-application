@@ -3,6 +3,8 @@ addons:
   sonarcloud:
     organization: "<final-project-group-twitter>"
     token: <55c8fd390ff342148581fd322ceba035e10f6ac9>
+install:
+  - pip install coveralls
 script:
   - sonar-scanner
   - mvn clean test jacoco:report coveralls:report
