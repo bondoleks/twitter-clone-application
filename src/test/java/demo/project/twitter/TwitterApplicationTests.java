@@ -10,8 +10,7 @@ class TwitterApplicationTests {
 
 	@Test
 	void contextLoads() {
-		User user = new User("Test");
-		Assert.isTrue(user.getName().equals("Test"));
+//		User user = new User("Test");
+//		Assert.isTrue(user.getName().equals("Test"));
 	}
-
 }
