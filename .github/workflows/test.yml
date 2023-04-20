@@ -18,6 +18,7 @@ jobs:
 
       - name: npm install, make test-coverage
         run: |
+          npm cache clean
           npm install
           make test-coverage
 
