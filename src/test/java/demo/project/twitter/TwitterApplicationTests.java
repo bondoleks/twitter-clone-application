@@ -1,9 +1,7 @@
 package demo.project.twitter;
 
-import demo.project.twitter.user.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 @SpringBootTest
 class TwitterApplicationTests {
