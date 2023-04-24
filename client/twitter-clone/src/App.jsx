@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import './App.css'
+import Button from '@mui/material/Button'
 
 
 function App() {
@@ -8,6 +9,10 @@ function App() {
     <div className='App'>
 
       <h1>Twitter-clone</h1>
+      <div>
+        <Button style={{margin: 10}} variant="contained">Hello World</Button>
+        <Button variant="outlined">Hello React</Button>
+      </div>
 
       <nav>
           <ul>
