@@ -1,4 +1,4 @@
-package demo.project.twitter.repositiry;
+package demo.project.twitter.repository;
 
 import demo.project.twitter.models.TestDb;
 import org.springframework.data.repository.CrudRepository;
