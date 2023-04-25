@@ -5,7 +5,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import App from './App.jsx'
-import './index.css'
 import Home from './pages/Home/Home.jsx'
 import Explore from './pages/Explore/Explore.jsx'
 import Messages from './pages/Messages/Messages.jsx';

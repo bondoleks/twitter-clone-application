@@ -1,48 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
+import { Stack } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import HomeIcon from '@mui/icons-material/Home';
 import Grid3x3Icon from '@mui/icons-material/Grid3x3';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import '../Sidebar/sidebar.css'
+
 
 export const Sidebar = () => {
   return (
-    <div className='sidebar'>
-      <Link className="sidebar-link" to={`/`}>
+    <Stack sx={{ margin: '48px' }}>
+      <Link to={`/`}>
         <Tooltip title="Main">
-          <TwitterIcon fontSize="medium" color='primary' />
+          <IconButton>
+            <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
+          </IconButton>
         </Tooltip>
       </Link>
-      <Link className="sidebar-link" to={`/home`}>
+      <Link to={`/home`}>
         <Tooltip title="Home">
-          <HomeIcon fontSize="medium" color='primary' />
+          <IconButton>
+            <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
+          </IconButton>
         </Tooltip>
       </Link>
-      <Link className="sidebar-link" to={`/explore`}>
+      <Link to={`/explore`}>
         <Tooltip title="Explore">
-          <Grid3x3Icon fontSize="medium" />
+          <IconButton>
+            <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />
+          </IconButton>
         </Tooltip>
       </Link>
-      <Link className="sidebar-link" to={`/notifications`}>
+      <Link to={`/notifications`}>
         <Tooltip title="Notifications">
-          <NotificationsActiveIcon fontSize="medium" />
+          <IconButton>
+            <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" />
+          </IconButton>
         </Tooltip>
       </Link>
-      <Link className="sidebar-link" to={`/messages`}>
+      <Link to={`/messages`}>
         <Tooltip title="Messages">
-          <MailOutlineIcon fontSize="medium" />
+          <IconButton>
+            <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />
+          </IconButton>
         </Tooltip>
       </Link>
-      <Link className="sidebar-link" to={`/user_profile`}>
+      <Link to={`/user_profile`}>
         <Tooltip title="User">
-          <AccountCircleIcon fontSize="large" color="success" />
+          <IconButton>
+            <AccountCircleIcon sx={{ margin: '16px', textAlign: 'center' }} fontSize="large" color="success" />
+          </IconButton>
         </Tooltip>
       </Link>
-    </div>
+    </Stack>
   )
 }
 

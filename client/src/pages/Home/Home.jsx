@@ -1,13 +1,15 @@
 import React from 'react'
 import Sidebar from '../../components/Sidebar/Sidebar'
-import '../Home/home.css'
+import { Grid } from '@mui/material';
+import Box from '@mui/material/Box';
+
 
 export const Home = () => {
   return (
-    <div className='home'>
+    <Grid container spacing={3} sx={{margin: "48px"}}>
       <Sidebar className='navbar' />
-      <div className='main-part'>Home</div>
-    </div>
+      <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto' }}>Home</Box>
+    </Grid>
 
   )
 }
