@@ -1,0 +1,9 @@
+.home {
+    display: flex;
+}
+
+.main-part {
+    margin-left: 50px;
+    font-size: 28px;
+    font-weight: 600;
+}
