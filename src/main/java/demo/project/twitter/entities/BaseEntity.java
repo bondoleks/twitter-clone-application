@@ -1,26 +1,36 @@
 package demo.project.twitter.entities;
 
 
-    import lombok.*;
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import java.util.Date;
 
-import static javax.persistence.GenerationType.IDENTITY;
+@MappedSuperclass
+@Data
+public class BaseEntity {
 
-    @MappedSuperclass
-    @Setter(AccessLevel.PUBLIC)
-    @Getter(AccessLevel.PUBLIC)
-    @EqualsAndHashCode(callSuper = true)
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class BaseEntity extends Auditable<String> implements Serializable {
-        @Id
-        @GeneratedValue(strategy = IDENTITY)
-        @Column(name = "id", nullable = false, updatable = false)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @Version
-        private Long version;
-    }
+    @CreatedDate
+    @Column(name = "created")
+    private Date created;
+
+    @LastModifiedDate
+    @Column(name = "updated")
+    private Date updated;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+}
