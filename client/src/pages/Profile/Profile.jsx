@@ -1,13 +1,13 @@
 import React from 'react'
 import Sidebar from '../../components/Sidebar/Sidebar'
 
-export const User_profile = () => {
+export const Profile = () => {
   return (
     <div>
       <Sidebar />
-      <div>User_profile</div>
+      <div>Profile</div>
     </div>    
   )
 }
 
-export default User_profile
+export default Profile
