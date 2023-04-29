@@ -1,7 +1,10 @@
 package demo.project.twitter.controllers;
 
 import demo.project.twitter.models.TestDb;
-import demo.project.twitter.repositiry.TestRepository;
+import demo.project.twitter.models.TweetAction;
+import demo.project.twitter.models.enums.ActionType;
+import demo.project.twitter.repository.TestRepository;
+import demo.project.twitter.repository.TweetActionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @AllArgsConstructor
 public class TestController {
 
-    private final TestRepository testRepository;
+    private final TweetActionRepository tweetActionRepository;
     @GetMapping("/test")
     public String home(Model model) {
-        testRepository.save(new TestDb("Tommy"));
+        tweetActionRepository.save(new TweetAction());
+        tweetActionRepository.save(new TweetAction(1l, 2l, ActionType.LIKE, 1l));
         return "test";
     }
 }
