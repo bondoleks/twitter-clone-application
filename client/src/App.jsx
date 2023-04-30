@@ -8,7 +8,7 @@ function App() {
   return (
     <Grid container spacing={2} sx={{margin: "48px"}}>
       <Sidebar />
-      <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto' }}>Twitter-clone</Box>
+      <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto', marginTop: '50px' }}>Twitter-clone</Box>
         <Footerlogin/>
     </Grid>
 
