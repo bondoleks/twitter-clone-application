@@ -142,6 +142,7 @@ const Footerlogin = () => {
                     </Box>
                 </Modal>
             )}
+
         </Box>
     );
 };
