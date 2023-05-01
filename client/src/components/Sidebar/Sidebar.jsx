@@ -8,10 +8,10 @@ import Hidden from '@mui/material/Hidden';
 export const Sidebar = () => {
     return (
         <>
-            <Hidden xlUp mdDown>
+            <Hidden xlUp lgDown>
                 <SidebarDesktop />
             </Hidden>
-            <Hidden mdUp smDown>
+            <Hidden lgUp smDown>
                 <SidebarMedium />
             </Hidden>
             <Hidden smUp>
