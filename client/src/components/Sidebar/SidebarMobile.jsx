@@ -1,17 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { IconButton, Tooltip, Box, AppBar, Container, Toolbar } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailIcon from '@mui/icons-material/Mail';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BottomNavigation from '@mui/material/BottomNavigation';
 
 
 const SidebarMobile = () => {
+
+    const [clicked, setClicked] = useState({
+        home: false,
+        explore: false,
+        notifications: false,
+        messages: false,
+        profile: false,
+        user: false,
+    });
+
+    const location = useLocation();
+
+    useEffect(() => {
+        const path = location.pathname;
+        setClicked({
+            home: path === '/home',
+            explore: path === '/explore',
+            notifications: path === '/notifications',
+            messages: path === '/messages',
+            profile: path === '/profile',
+            user: path === '/user',
+        });
+    }, [location]);
+
     return (
         <>
             <AppBar position='fixed' sx={{ backgroundColor: 'white' }} >
@@ -44,7 +72,7 @@ const SidebarMobile = () => {
                     <Link to={`/home`}>
                         <Tooltip title="Home">
                             <IconButton >
-                                <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
+                                {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
                             </IconButton>
                         </Tooltip>
                     </Link>
@@ -52,7 +80,7 @@ const SidebarMobile = () => {
                     <Link to={`/explore`}>
                         <Tooltip title="Explore">
                             <IconButton>
-                                <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />
+                                {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                         </Tooltip>
                     </Link>
@@ -60,7 +88,7 @@ const SidebarMobile = () => {
                     <Link to={`/notifications`}>
                         <Tooltip title="Notifications">
                             <IconButton>
-                                <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" />
+                                {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                         </Tooltip>
                     </Link>
@@ -68,7 +96,7 @@ const SidebarMobile = () => {
                     <Link to={`/messages`}>
                         <Tooltip title="Messages">
                             <IconButton>
-                                <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />
+                                {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                         </Tooltip>
                     </Link>
