@@ -1,15 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import App from './App.jsx'
-import Home from './pages/Home/Home.jsx'
-import Explore from './pages/Explore/Explore.jsx'
+import App from './App.jsx';
+import Home from './pages/Home/Home.jsx';
+import Explore from './pages/Explore/Explore.jsx';
 import Messages from './pages/Messages/Messages.jsx';
 import Notifications from './pages/Notifications/Notifications.jsx';
-import User_profile from './pages/User_profile/User_profile.jsx';
+import Profile from './pages/Profile/Profile.jsx';
+import User from './pages/User/User.jsx';
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,12 @@ const router = createBrowserRouter([
     element: <Messages />,
   },
   {
-    path: "/user_profile",
-    element: <User_profile />,
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/user",
+    element: <User />,
   },
 ]);
 
