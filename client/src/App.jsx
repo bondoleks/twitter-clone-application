@@ -9,6 +9,7 @@ function App() {
   return (
 
     <Grid container spacing={2} sx={{margin: "48px"}}>
+
       <Grid item xs={3}>
         <Sidebar />
         </Grid>
@@ -19,6 +20,7 @@ function App() {
       <Grid item xs={3}>
         <Search />
       </Grid>
+
     </Grid>
 
   )
