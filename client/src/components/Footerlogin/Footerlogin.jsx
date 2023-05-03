@@ -14,9 +14,11 @@ const Footerlogin = () => {
         setIsModalOpen(true);
     };
 
+
     const handleLoginButtonX = () => {
         setIsModalOpen(false);
     }
+
 
     // Modal style-----------------------------
     const style = {
@@ -56,6 +58,7 @@ const Footerlogin = () => {
                         variant="contained" color="primary" size="small"
                         sx={{
                             mr: 1,
+
                             fontSize: '14px',
                             borderRadius: '20px',
                             color: 'white',
