@@ -14,6 +14,10 @@ const Footerlogin = () => {
         setIsModalOpen(true);
     };
 
+    const handleLoginButtonX = () => {
+        setIsModalOpen(false);
+    }
+
     // Modal style-----------------------------
     const style = {
         position: 'absolute',
@@ -73,7 +77,7 @@ const Footerlogin = () => {
                         backgroundColor: '#FFFFFF',
                         border: '1px solid rgba(255, 255, 255, 0.35)',
                         '&:hover': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.01)', } }}>
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)', } }}>
                         Registration
                     </Button>
                 </BottomNavigation>
@@ -83,15 +87,27 @@ const Footerlogin = () => {
                     open={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <TwitterIcon />
+                    aria-describedby="modal-modal-description">
+
+
+
+                    <Box
+                    sx={{maxWidth: 364,
+                    minWidth: 364,}}>
+                        <Box sx={style}>
+                        <TwitterIcon
+                        sx={{marginTop: -2, marginBottom: 2,}}/>
+                            <Typography
+                                onClick={handleLoginButtonX}
+                            sx={{position: 'absolute', lineHeight: '18px', left: 20, top: 12, fontSize: 14, borderRadius: '50%', cursor: 'pointer', padding: '6px',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                }}}> X </Typography>
                         <Typography
                             id="modal-modal-title"
                             variant="h6"
                             component="h2"
-                            sx={{ fontSize: 30 }}
+                            sx={{ fontSize: 30, marginBottom: 5, width: 300, }}
                         >
                             Login to Twitter
                         </Typography>
@@ -99,7 +115,7 @@ const Footerlogin = () => {
                         <Box
                             component="form"
                             sx={{
-                                '& > :not(style)': { m: 1, width: '25ch' },
+                                '& > :not(style)': { m: 1, width: 300, marginBottom: 5, },
                             }}
                             noValidate
                             autoComplete="on"
@@ -115,6 +131,7 @@ const Footerlogin = () => {
                                         textAlign: 'center',
                                         color: 'white',
                                         backgroundColor: 'transparent',
+                                        cursor: 'pointer',
                                     },
                                 }}
                                 InputLabelProps={{
@@ -136,9 +153,46 @@ const Footerlogin = () => {
                             />
                         </Box>
 
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
+                        <Button
+                            variant="contained" color="secondary" size="small" sx={{ mr: 1,
+                            borderRadius: '20px',
+                            fontSize: '14px',
+                            color: 'black',
+                            backgroundColor: '#FFFFFF',
+                            marginBottom: 5,
+                            width: 300,
+                            border: '1px solid rgba(255, 255, 255, 0.35)',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            }}}>
+                            Next
+                        </Button>
+                            <Button
+                                variant="contained" color="secondary" size="small" sx={{ mr: 1,
+                                borderRadius: '20px',
+                                fontSize: '14px',
+                                color: 'white',
+                                backgroundColor: '#000000',
+                                marginBottom: 5,
+                                width: 300,
+                                border: '1px solid rgba(255, 255, 255, 0.35)',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                }}}>
+                                Forgot password?
+                            </Button>
+                            <Typography
+                            sx={{fontSize: 14, color: 'gray', display: 'flex', width: 300,
+                            }}>
+                                Not an account?
+                                <Typography
+                                    sx={{fontSize: 14, color: 'rgb(29, 155, 240)', display: 'flex', marginLeft: 0.5, cursor: 'pointer',
+                                        '&:hover':{
+                                        textDecoration: 'underline'
+                                        }
+                                    }}> Register </Typography>
+                            </Typography>
+                    </Box>
                     </Box>
                 </Modal>
             )}
