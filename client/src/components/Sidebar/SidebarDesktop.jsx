@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { IconButton, Typography, Button } from '@mui/material';
 import { Stack } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -14,19 +14,10 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import PersonIcon from '@mui/icons-material/Person';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-// import { styled } from '@mui/material/styles';
-// import { color } from '@mui/system';
-
 
 export const SidebarDesktop = () => {
 
-    // const [color, setColor] = useState();
-
-    // const handleClick = (e) => {
-    //   setColor('black');
-    // }
-
-    const [clicked, setClicked] = useState({
+   const [clicked, setClicked] = useState({
         home: false,
         explore: false,
         notifications: false,
@@ -35,12 +26,20 @@ export const SidebarDesktop = () => {
         user: false,
     });
 
-    const handleClick = (e) => {
-        const key = e.currentTarget.getAttribute('data-key');
-        setClicked(() => ({
-            [key]: true,
-        }));
-    };
+    const location = useLocation();
+
+    useEffect(() => {
+        const path = location.pathname;
+        setClicked({
+            home: path === '/home',
+            explore: path === '/explore',
+            notifications: path === '/notifications',
+            messages: path === '/messages',
+            profile: path === '/profile',
+            user: path === '/user',
+        });
+    }, [location]);
+
 
     return (
 
@@ -51,35 +50,44 @@ export const SidebarDesktop = () => {
                 </IconButton>
             </Link>
 
-            <Link data-key="home" onClick={handleClick} to={`/home`}>
+
+            <Link to={`/home`}>
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' />}
                     <Typography variant='h6' sx={{ color: clicked.home ? 'black' : 'inherit' }}> Home</Typography>
                 </IconButton>
             </Link>
 
-            <Link data-key="explore" onClick={handleClick} to={`/explore`}>
+
+            <Link to={`/explore`}>
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.explore ? 'black' : 'inherit' }}> Explore</Typography>
                 </IconButton>
             </Link>
 
-            <Link data-key="notifications" onClick={handleClick} to={`/notifications`}>
+            <Link to={`/notifications`}>
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '10px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.notifications ? 'black' : 'inherit' }} >Notifications</Typography>
                 </IconButton>
             </Link>
 
-            <Link data-key="messages" onClick={handleClick} to={`/messages`} >
+
+            <Link to={`/messages`} >
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.messages ? <MailIcon sx={{ margin: '10px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '10px' }} fontSize="medium" />}                    
                     <Typography variant='h6' sx={{ color: clicked.messages ? 'black' : 'inherit' }}>Messages</Typography>
                 </IconButton>
             </Link>
 
-            <Link data-key="profile" onClick={handleClick} to={`/profile`} >
+
+            <Link to={`/profile`} >
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.profile ? <PersonIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}                    
                     <Typography variant='h6' sx={{ color: clicked.profile ? 'black' : 'inherit' }} >Profile</Typography>
@@ -89,7 +97,9 @@ export const SidebarDesktop = () => {
             <Button variant="contained" color="primary" size="medium"
                 sx={{ marginBottom: '50px', borderRadius: '50px' }}>Tweet</Button>
 
-            <Link data-key="user" onClick={handleClick} to={`/user`} >
+
+            <Link to={`/user`} >
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
                     <Typography variant='h6' sx={{ color: clicked.user ? 'black' : 'inherit' }} >User</Typography>
