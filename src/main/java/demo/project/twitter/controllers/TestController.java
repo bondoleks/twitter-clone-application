@@ -1,9 +1,7 @@
 package demo.project.twitter.controllers;
 
-import demo.project.twitter.models.TestDb;
 import demo.project.twitter.models.TweetAction;
 import demo.project.twitter.models.enums.ActionType;
-import demo.project.twitter.repository.TestRepository;
 import demo.project.twitter.repository.TweetActionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

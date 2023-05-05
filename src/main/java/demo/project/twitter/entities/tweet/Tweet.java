@@ -2,6 +2,7 @@ package demo.project.twitter.entities.tweet;
 
 import demo.project.twitter.entities.BaseEntity;
 import demo.project.twitter.entities.User;
+import demo.project.twitter.models.enums.TweetType;
 import lombok.*;
 import javax.persistence.*;
 

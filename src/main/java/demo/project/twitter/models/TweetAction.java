@@ -1,5 +1,6 @@
 package demo.project.twitter.models;
 
+import demo.project.twitter.entities.BaseEntity;
 import demo.project.twitter.models.enums.ActionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TweetAction {
+public class TweetAction extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

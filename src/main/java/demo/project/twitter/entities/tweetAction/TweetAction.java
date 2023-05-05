@@ -3,6 +3,7 @@ package demo.project.twitter.entities.tweetAction;
 import demo.project.twitter.entities.BaseEntity;
 import demo.project.twitter.entities.User;
 import demo.project.twitter.entities.tweet.Tweet;
+import demo.project.twitter.models.enums.ActionType;
 import lombok.*;
 
 import javax.persistence.*;
