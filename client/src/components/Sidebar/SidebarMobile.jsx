@@ -81,6 +81,7 @@ const SidebarMobile = () => {
 
     return (
 
+
         <>
             <AppBar position='fixed' sx={{ backgroundColor: 'white' }} >
                 <Container fixed>
@@ -92,7 +93,9 @@ const SidebarMobile = () => {
                                 </IconButton>
                             </Tooltip>
                         </Link>
+
                         {headerBox}
+
                     </Toolbar>
                 </Container>
             </AppBar>
@@ -106,7 +109,9 @@ const SidebarMobile = () => {
                     <Link to={`/home`}>
                         <Tooltip title="Home">
                             <IconButton >
+
                                 {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
+
                             </IconButton>
                         </Tooltip>
                     </Link>
@@ -114,7 +119,9 @@ const SidebarMobile = () => {
                     <Link to={`/explore`}>
                         <Tooltip title="Explore">
                             <IconButton>
+
                                 {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
+
                             </IconButton>
                         </Tooltip>
                     </Link>
@@ -122,7 +129,9 @@ const SidebarMobile = () => {
                     <Link to={`/notifications`}>
                         <Tooltip title="Notifications">
                             <IconButton>
+
                                 {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+
                             </IconButton>
                         </Tooltip>
                     </Link>
@@ -130,7 +139,9 @@ const SidebarMobile = () => {
                     <Link to={`/messages`}>
                         <Tooltip title="Messages">
                             <IconButton>
+
                                 {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
+
                             </IconButton>
                         </Tooltip>
                     </Link>

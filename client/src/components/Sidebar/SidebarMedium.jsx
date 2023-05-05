@@ -30,6 +30,7 @@ export const SidebarMedium = () => {
         user: false,
     });
 
+
     const location = useLocation();
 
     useEffect(() => {
@@ -44,6 +45,7 @@ export const SidebarMedium = () => {
         });
     }, [location]);
 
+
     return (
         <>
             <Box sx={{ marginRight: '20px', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
@@ -57,7 +59,9 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
+
                     <Link to={`/home`}>
+
                         <Tooltip title="Home">
                             <IconButton >
                                 {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
@@ -66,7 +70,9 @@ export const SidebarMedium = () => {
                     </Link>
 
                     <Hidden mdUp smDown>
+
                         <Link to={`/explore`}>
+
                             <Tooltip title="Explore">
                                 <IconButton>
                                     {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -76,7 +82,9 @@ export const SidebarMedium = () => {
                     </Hidden>
 
                     <Hidden lgUp mdDown>
+
                         <Link to={`/explore`}>
+
                             <Tooltip title="Explore">
                                 <IconButton>
                                     {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -85,7 +93,9 @@ export const SidebarMedium = () => {
                         </Link>
                     </Hidden>
 
+
                     <Link to={`/notifications`}>
+
                         <Tooltip title="Notifications">
                             <IconButton>
                                 {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -93,7 +103,9 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
+
                     <Link to={`/messages`}>
+
                         <Tooltip title="Messages">
                             <IconButton>
                                 {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -101,7 +113,9 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
+
                     <Link to={`/profile`}>
+
                         <Tooltip title="Profile">
                             <IconButton>
                                 {clicked.profile ? <PersonIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}

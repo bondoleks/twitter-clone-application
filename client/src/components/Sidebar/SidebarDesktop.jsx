@@ -15,10 +15,9 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import PersonIcon from '@mui/icons-material/Person';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-
 export const SidebarDesktop = () => {
 
-    const [clicked, setClicked] = useState({
+   const [clicked, setClicked] = useState({
         home: false,
         explore: false,
         notifications: false,
@@ -41,6 +40,7 @@ export const SidebarDesktop = () => {
         });
     }, [location]);
 
+
     return (
 
         <Stack sx={{ margin: '24px' }}>
@@ -50,14 +50,18 @@ export const SidebarDesktop = () => {
                 </IconButton>
             </Link>
 
+
             <Link to={`/home`}>
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' />}
                     <Typography variant='h6' sx={{ color: clicked.home ? 'black' : 'inherit' }}> Home</Typography>
                 </IconButton>
             </Link>
 
+
             <Link to={`/explore`}>
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.explore ? 'black' : 'inherit' }}> Explore</Typography>
@@ -65,20 +69,25 @@ export const SidebarDesktop = () => {
             </Link>
 
             <Link to={`/notifications`}>
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '10px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.notifications ? 'black' : 'inherit' }} >Notifications</Typography>
                 </IconButton>
             </Link>
 
+
             <Link to={`/messages`} >
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.messages ? <MailIcon sx={{ margin: '10px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '10px' }} fontSize="medium" />}                    
                     <Typography variant='h6' sx={{ color: clicked.messages ? 'black' : 'inherit' }}>Messages</Typography>
                 </IconButton>
             </Link>
 
+
             <Link to={`/profile`} >
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     {clicked.profile ? <PersonIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}                    
                     <Typography variant='h6' sx={{ color: clicked.profile ? 'black' : 'inherit' }} >Profile</Typography>
@@ -88,7 +97,9 @@ export const SidebarDesktop = () => {
             <Button variant="contained" color="primary" size="medium"
                 sx={{ marginBottom: '50px', borderRadius: '50px' }}>Tweet</Button>
 
+
             <Link to={`/user`} >
+
                 <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
                     <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
                     <Typography variant='h6' sx={{ color: clicked.user ? 'black' : 'inherit' }} >User</Typography>
