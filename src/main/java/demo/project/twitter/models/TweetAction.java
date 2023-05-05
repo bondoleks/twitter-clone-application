@@ -1,8 +1,8 @@
-package demo.project.twitter.entities.tweetAction;
+package demo.project.twitter.models;
 
-import demo.project.twitter.entities.BaseEntity;
-import demo.project.twitter.entities.User;
-import demo.project.twitter.entities.tweet.Tweet;
+import demo.project.twitter.models.tweet.Tweet;
+import demo.project.twitter.model.BaseEntity;
+import demo.project.twitter.model.User;
 import demo.project.twitter.models.enums.ActionType;
 import lombok.*;
 

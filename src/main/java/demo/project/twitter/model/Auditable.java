@@ -1,4 +1,4 @@
-package demo.project.twitter.entities;
+package demo.project.twitter.model;
 
 import lombok.Getter;
 import lombok.Setter;

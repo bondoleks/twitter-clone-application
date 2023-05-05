@@ -1,7 +1,7 @@
-package demo.project.twitter.entities.tweet;
+package demo.project.twitter.models.tweet;
 
-import demo.project.twitter.entities.BaseEntity;
-import demo.project.twitter.entities.User;
+import demo.project.twitter.model.BaseEntity;
+import demo.project.twitter.model.User;
 import demo.project.twitter.models.enums.TweetType;
 import lombok.*;
 import javax.persistence.*;
@@ -17,6 +17,7 @@ public class Tweet extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TweetType tweetType;
 
+    @Column(name = "tweet_body")
     private String tweetBody;
 
     @ManyToOne(fetch = FetchType.EAGER)
