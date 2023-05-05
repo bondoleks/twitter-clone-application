@@ -14,7 +14,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import SearchField from '../Search/Search';
+import Search from '../Search/Search.jsx'
 
 
 const SidebarMobile = () => {
@@ -72,7 +72,7 @@ const SidebarMobile = () => {
     } if (clicked.explore) {
         headerBox = <Box >
             <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
-                <SearchField />
+                <Search />
                 <SettingsOutlinedIcon fontSize="medium" />
             </IconButton>
         </Box>

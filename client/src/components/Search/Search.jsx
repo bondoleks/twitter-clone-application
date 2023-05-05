@@ -24,7 +24,7 @@ const StyledCancelIcon = styled(CancelIcon)(({}) => ({
   },
 }));
 
-const SearchField = () => {
+const Search = () => {
   const [inputValue, setInputValue] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
 
@@ -88,5 +88,5 @@ const SearchField = () => {
    );
  };
 
- export default SearchField;
+ export default Search;
 
