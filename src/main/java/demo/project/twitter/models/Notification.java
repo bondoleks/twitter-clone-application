@@ -33,11 +33,7 @@ public class Notification extends BaseEntity {
     private Tweet tweet;
 
     @Column(name = "is_read")
-    private String isRead;
-
-
-
-
+    private boolean isRead;
 }
 
 

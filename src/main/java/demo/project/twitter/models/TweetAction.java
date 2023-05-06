@@ -7,6 +7,7 @@ import demo.project.twitter.models.enums.ActionType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -22,7 +23,7 @@ public class TweetAction extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private List<User> users;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tweet_id", referencedColumnName = "id")

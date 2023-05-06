@@ -5,6 +5,7 @@ import demo.project.twitter.model.User;
 import demo.project.twitter.models.enums.TweetType;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -22,7 +23,7 @@ public class Tweet extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private List<User> users;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_tweet_id", referencedColumnName = "id")
