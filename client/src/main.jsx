@@ -10,7 +10,7 @@ import Explore from './pages/Explore/Explore.jsx';
 import Messages from './pages/Messages/Messages.jsx';
 import Notifications from './pages/Notifications/Notifications.jsx';
 import Profile from './pages/Profile/Profile.jsx';
-import User from './pages/User/User.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -37,10 +37,6 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
-  },
-  {
-    path: "/user",
-    element: <User />,
   },
 ]);
 

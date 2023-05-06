@@ -38,7 +38,6 @@ const SidebarMobile = () => {
             notifications: path === '/notifications',
             messages: path === '/messages',
             profile: path === '/profile',
-            user: path === '/user',
         });
     }, [location]);
 
@@ -88,13 +87,11 @@ const SidebarMobile = () => {
             <AppBar position='fixed' sx={{ backgroundColor: 'white' }} >
                 <Container fixed>
                     <Toolbar>
-                        <Link to={`/user`}>
-                            <Tooltip title="User">
-                                <IconButton edge="start">
-                                    <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
-                                </IconButton>
-                            </Tooltip>
-                        </Link>
+                        <Tooltip title="User">
+                            <IconButton edge="start">
+                                <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                            </IconButton>
+                        </Tooltip>
 
                         {headerBox}
 

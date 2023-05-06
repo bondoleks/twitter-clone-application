@@ -27,7 +27,6 @@ export const SidebarMedium = () => {
         notifications: false,
         messages: false,
         profile: false,
-        user: false,
     });
 
 
@@ -41,7 +40,6 @@ export const SidebarMedium = () => {
             notifications: path === '/notifications',
             messages: path === '/messages',
             profile: path === '/profile',
-            user: path === '/user',
         });
     }, [location]);
 
@@ -127,13 +125,13 @@ export const SidebarMedium = () => {
                         <AddCircleIcon color="primary" fontSize='large' />
                     </IconButton>
 
-                    <Link to={`/user`}>
-                        <Tooltip title="User">
-                            <IconButton>
-                                <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
+
+                    <Tooltip title="User">
+                        <IconButton>
+                            <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                        </IconButton>
+                    </Tooltip>
+
                 </Stack>
             </Box>
         </>
