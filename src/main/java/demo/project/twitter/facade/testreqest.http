@@ -1,0 +1,33 @@
+####
+POST http://localhost:8080/test/save
+Content-Type: application/json
+
+{
+  "id" : 120,
+  "name": "Alex500",
+  "description" : "des8888"
+}
+####
+GET http://localhost:8080/test/read/47
+
+###
+GET http://localhost:8080/test/read/all
+
+###
+GET http://localhost:8080/test2/read/all
+
+
+####
+PUT http://localhost:8080/test/update
+Content-Type: application/json
+
+{
+  "id" :38,
+  "name": "Jim888",
+  "description" : "desJim888"
+}
+####
+DELETE http://localhost:8080/test/remove/38
+
+####
+DELETE http://localhost:8080/test/remove/all
