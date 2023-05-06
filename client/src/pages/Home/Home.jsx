@@ -8,7 +8,7 @@ export const Home = () => {
   return (
     <Grid container spacing={3} sx={{margin: "48px"}}>
       <Sidebar />
-      <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto', marginTop: '50px' }}>Home</Box>
+      <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto', marginTop: '50px', marginLeft: '250px' }}>Home</Box>
     </Grid>
 
   )

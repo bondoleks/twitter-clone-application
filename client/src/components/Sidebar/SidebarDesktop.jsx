@@ -41,7 +41,7 @@ export const SidebarDesktop = () => {
 
     return (
 
-        <Stack sx={{ margin: '24px' }}>
+        <Stack position='fixed'>
             <Link to={`/`}>
                 <IconButton>
                     <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
