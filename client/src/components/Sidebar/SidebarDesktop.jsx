@@ -95,7 +95,7 @@ export const SidebarDesktop = () => {
             </Link>
 
             <Button variant="contained" color="primary" size="medium"
-                sx={{ marginBottom: '50px', borderRadius: '50px', cursor: 'pointer' }}>Tweet</Button>
+                sx={{ marginBottom: '50px', borderRadius: '50px' }}>Tweet</Button>
 
 
             <Link to={`/user`} >

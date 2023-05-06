@@ -15,7 +15,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Search from '../Search/Search.jsx';
-import { useTheme } from '@mui/material/styles';
 
 
 const SidebarMobile = () => {
@@ -43,7 +42,6 @@ const SidebarMobile = () => {
         });
     }, [location]);
 
-    const theme = useTheme();
 
     let headerBox;
     if (clicked.home) {
