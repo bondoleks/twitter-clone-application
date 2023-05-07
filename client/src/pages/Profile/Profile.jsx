@@ -57,7 +57,7 @@ export const Profile = () => {
           <StyledAvatar
             alt="User Avatar"
             src='../../img/avatar.png'
-            sx={{ width: 128, height: 128, borderRadius: '50%', marginTop: '-64px', marginLeft: '20px', marginBottom: '20px', cursor: 'pointer' }}
+            sx={{ width: '30%', height: '30%', borderRadius: '50%', marginTop: '-15%', marginLeft: '10px', marginBottom: '20px', cursor: 'pointer' }}
           />
 
           <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '60%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
