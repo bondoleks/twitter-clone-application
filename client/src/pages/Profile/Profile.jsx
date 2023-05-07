@@ -1,14 +1,13 @@
 import React from 'react';
-import { useState } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { Grid, Hidden, IconButton, Container, Typography, Toolbar, Box, Button, Tab, Tabs } from '@mui/material';
-import { TabPanel, TabContext } from '@mui/lab';
+import { Grid, Hidden, IconButton, Container, Typography, Toolbar, Box, Button } from '@mui/material';
 import Link from '@mui/material/Link';
 import Search from '../../components/Search/Search';
 import WestIcon from '@mui/icons-material/West';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import TabsProfile from './TabsProfile';
 
 
 export const Profile = () => {
@@ -31,34 +30,29 @@ export const Profile = () => {
     },
   }));
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-
   return (
 
-    <Grid container spacing={3} sx={{ margin: "48px" }}>
+    <Grid container spacing={3} sx={{ height: '100%', marginLeft: "24px" }}>
 
       <Grid item xs={3}>
         <Sidebar />
       </Grid>
 
-      <Grid item xs={5}>
-        <Toolbar position="fixed" edge="start">
-          <IconButton >
-            <WestIcon />
-          </IconButton>
-          <Box ml={2}>
-            <Typography variant='h6'>User</Typography>
-            <Typography>N Tweets</Typography>
-          </Box>
-        </Toolbar>
+      <Grid item xs={5} sx={{borderRight: '1px solid grey', borderLeft: '1px solid grey'}}>
+        <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
+          <Toolbar >
+            <IconButton >
+              <WestIcon />
+            </IconButton>
+            <Box ml={2}>
+              <Typography variant='h6'>User</Typography>
+              <Typography>N Tweets</Typography>
+            </Box>
+          </Toolbar>
+        </Box>
 
-        <Container>
-          <Box sx={{ bgcolor: 'grey.300', width: '100%', height: '200px' }}></Box>
+        <Container sx={{ marginTop: '70px' }}>
+          <Box sx={{ bgcolor: 'grey.300', width: '115%', marginLeft: '-10%', height: '200px' }}></Box>
 
           <StyledAvatar
             alt="User Avatar"
@@ -66,7 +60,7 @@ export const Profile = () => {
             sx={{ width: 128, height: 128, borderRadius: '50%', marginTop: '-64px', marginLeft: '20px', marginBottom: '20px', cursor: 'pointer' }}
           />
 
-          <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '60%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+          <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '60%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
             Edit profile
           </Button>
 
@@ -90,26 +84,7 @@ export const Profile = () => {
           </Box>
         </Container>
 
-        <TabContext>
-          <Tabs variant="fullWidth" value={value} onChange={handleChange}  >
-            <Tab label="Tweets" sx={{ textTransform: 'none' }}></Tab>
-            <Tab label="Replies" sx={{ textTransform: 'none' }}></Tab>
-            <Tab label="Media" sx={{ textTransform: 'none' }}></Tab>
-            <Tab label="Linkes" sx={{ textTransform: 'none' }}></Tab>
-          </Tabs>
-
-          <TabPanel value={value} index={0}>
-            <Typography variant="h4">Tweets</Typography>
-            <Typography variant="body1">Here are the tweets</Typography>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            Item Two
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            Item Three
-          </TabPanel>
-        </TabContext>
-
+        <TabsProfile />
 
       </Grid>
 
