@@ -34,11 +34,11 @@ export const Profile = () => {
 
     <Grid container spacing={3} sx={{ height: '100%', marginLeft: "24px" }}>
 
-      <Grid item xs={3}>
+      <Grid item md={3}>
         <Sidebar />
       </Grid>
 
-      <Grid item xs={5} sx={{borderRight: '1px solid grey', borderLeft: '1px solid grey'}}>
+      <Grid item xs={12} md={5} sm={6} sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey' }}>
         <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
           <Toolbar >
             <IconButton >
@@ -60,9 +60,17 @@ export const Profile = () => {
             sx={{ width: '30%', height: '30%', borderRadius: '50%', marginTop: '-15%', marginLeft: '10px', marginBottom: '20px', cursor: 'pointer' }}
           />
 
-          <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '60%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
-            Edit profile
-          </Button>
+          <Hidden smDown>
+            <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '57%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+              Edit profile
+            </Button>
+          </Hidden>
+
+          <Hidden smUp>
+            <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '65%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+              Edit profile
+            </Button>
+          </Hidden>
 
           <Box>
             <Typography sx={{ fontSize: '24px', fontWeight: '900' }}>User</Typography>
