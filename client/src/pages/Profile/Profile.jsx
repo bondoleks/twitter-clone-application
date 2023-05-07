@@ -38,7 +38,7 @@ export const Profile = () => {
         <Sidebar />
       </Grid>
 
-      <Grid item xs={12} md={5} sm={6} sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey' }}>
+      <Grid item xs={12} md={5} sm={8} sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey' }}>
         <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
           <Toolbar >
             <IconButton >

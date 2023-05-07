@@ -121,14 +121,14 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
-                    <IconButton>
+                    <IconButton edge='start'>
                         <AddCircleIcon color="primary" fontSize='large' />
                     </IconButton>
 
 
                     <Tooltip title="User">
-                        <IconButton>
-                            <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                        <IconButton edge='start'>
+                            <AccountCircleIcon sx={{ margin: '16px' }} fontSize="large" color="success" />
                         </IconButton>
                     </Tooltip>
 
