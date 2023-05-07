@@ -39,17 +39,17 @@ export const Profile = () => {
       </Grid>
 
       <Grid item xs={12} md={5} sm={8} sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey' }}>
-        <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
-          <Toolbar >
-            <IconButton >
-              <WestIcon />
-            </IconButton>
-            <Box ml={2}>
-              <Typography variant='h6'>User</Typography>
-              <Typography>N Tweets</Typography>
-            </Box>
-          </Toolbar>
-        </Box>
+          <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
+            <Toolbar >
+              <IconButton >
+                <WestIcon />
+              </IconButton>
+              <Box ml={2}>
+                <Typography variant='h6'>User</Typography>
+                <Typography>N Tweets</Typography>
+              </Box>
+            </Toolbar>
+          </Box>
 
         <Container sx={{ marginTop: '70px' }}>
           <Box sx={{ bgcolor: 'grey.300', width: '115%', marginLeft: '-10%', height: '200px' }}></Box>

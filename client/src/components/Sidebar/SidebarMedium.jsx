@@ -17,6 +17,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 
 export const SidebarMedium = () => {
@@ -111,6 +113,14 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
+                    <Link to={`/bookmarks`}>
+
+                        <Tooltip title="Bookmarks">
+                            <IconButton>
+                                {clicked.profile ? <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                            </IconButton>
+                        </Tooltip>
+                    </Link>
 
                     <Link to={`/profile`}>
 
