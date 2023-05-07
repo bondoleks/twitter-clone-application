@@ -1,12 +1,15 @@
 import React from 'react';
+import { useState } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { Grid, Hidden, IconButton, Container, Typography, Toolbar, Box, Button } from '@mui/material';
+import { Grid, Hidden, IconButton, Container, Typography, Toolbar, Box, Button, Tab, Tabs } from '@mui/material';
+import { TabPanel, TabContext } from '@mui/lab';
 import Link from '@mui/material/Link';
 import Search from '../../components/Search/Search';
 import WestIcon from '@mui/icons-material/West';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 
 export const Profile = () => {
 
@@ -28,15 +31,22 @@ export const Profile = () => {
     },
   }));
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+
   return (
 
     <Grid container spacing={3} sx={{ margin: "48px" }}>
 
-      <Grid item xs={2}>
+      <Grid item xs={3}>
         <Sidebar />
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Toolbar position="fixed" edge="start">
           <IconButton >
             <WestIcon />
@@ -79,6 +89,28 @@ export const Profile = () => {
             </Box>
           </Box>
         </Container>
+
+        <TabContext>
+          <Tabs variant="fullWidth" value={value} onChange={handleChange}  >
+            <Tab label="Tweets" sx={{ textTransform: 'none' }}></Tab>
+            <Tab label="Replies" sx={{ textTransform: 'none' }}></Tab>
+            <Tab label="Media" sx={{ textTransform: 'none' }}></Tab>
+            <Tab label="Linkes" sx={{ textTransform: 'none' }}></Tab>
+          </Tabs>
+
+          <TabPanel value={value} index={0}>
+            <Typography variant="h4">Tweets</Typography>
+            <Typography variant="body1">Here are the tweets</Typography>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            Item Two
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            Item Three
+          </TabPanel>
+        </TabContext>
+
+
       </Grid>
 
       <Hidden mdDown>
