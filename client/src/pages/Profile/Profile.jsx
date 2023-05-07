@@ -7,6 +7,8 @@ import WestIcon from '@mui/icons-material/West';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import TabsProfile from './TabsProfile';
+
 
 export const Profile = () => {
 
@@ -30,35 +32,45 @@ export const Profile = () => {
 
   return (
 
-    <Grid container spacing={3} sx={{ margin: "48px" }}>
+    <Grid container spacing={3} sx={{ height: '100%', marginLeft: "24px" }}>
 
-      <Grid item xs={2}>
+      <Grid item md={3}>
         <Sidebar />
       </Grid>
 
-      <Grid item xs={6}>
-        <Toolbar position="fixed" edge="start">
-          <IconButton >
-            <WestIcon />
-          </IconButton>
-          <Box ml={2}>
-            <Typography variant='h6'>User</Typography>
-            <Typography>N Tweets</Typography>
+      <Grid item xs={12} md={5} sm={8} sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey' }}>
+          <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
+            <Toolbar >
+              <IconButton >
+                <WestIcon />
+              </IconButton>
+              <Box ml={2}>
+                <Typography variant='h6'>User</Typography>
+                <Typography>N Tweets</Typography>
+              </Box>
+            </Toolbar>
           </Box>
-        </Toolbar>
 
-        <Container>
-          <Box sx={{ bgcolor: 'grey.300', width: '100%', height: '200px' }}></Box>
+        <Container sx={{ marginTop: '70px' }}>
+          <Box sx={{ bgcolor: 'grey.300', width: '115%', marginLeft: '-10%', height: '200px' }}></Box>
 
           <StyledAvatar
             alt="User Avatar"
             src='../../img/avatar.png'
-            sx={{ width: 128, height: 128, borderRadius: '50%', marginTop: '-64px', marginLeft: '20px', marginBottom: '20px', cursor: 'pointer' }}
+            sx={{ width: '30%', height: '30%', borderRadius: '50%', marginTop: '-15%', marginLeft: '10px', marginBottom: '20px', cursor: 'pointer' }}
           />
 
-          <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '60%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
-            Edit profile
-          </Button>
+          <Hidden smDown>
+            <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '57%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+              Edit profile
+            </Button>
+          </Hidden>
+
+          <Hidden smUp>
+            <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '65%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+              Edit profile
+            </Button>
+          </Hidden>
 
           <Box>
             <Typography sx={{ fontSize: '24px', fontWeight: '900' }}>User</Typography>
@@ -79,6 +91,9 @@ export const Profile = () => {
             </Box>
           </Box>
         </Container>
+
+        <TabsProfile />
+
       </Grid>
 
       <Hidden mdDown>

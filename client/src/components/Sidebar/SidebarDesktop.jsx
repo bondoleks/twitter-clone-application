@@ -14,6 +14,8 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import PersonIcon from '@mui/icons-material/Person';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 export const SidebarDesktop = () => {
 
@@ -81,6 +83,13 @@ export const SidebarDesktop = () => {
                     {clicked.messages ? <MailIcon sx={{ margin: '10px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.messages ? 'black' : 'inherit' }}>Messages</Typography>
                 </IconButton>
+            </Link>
+
+            <Link to={`/bookmarks`}>
+                    <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+                        {clicked.profile ? <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkIcon sx={{ margin: '10px' }} fontSize="medium" />}
+                        <Typography variant='h6' sx={{ color: clicked.messages ? 'black' : 'inherit' }}>Bookmarks</Typography>
+                    </IconButton>
             </Link>
 
 
