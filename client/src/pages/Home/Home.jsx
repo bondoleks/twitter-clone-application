@@ -7,8 +7,8 @@ import Box from '@mui/material/Box';
 export const Home = () => {
   return (
     <Grid container spacing={3} sx={{margin: "48px"}}>
-      <Sidebar className='navbar' />
-      <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto', marginTop: '50px' }}>Home</Box>
+      <Sidebar />
+      <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto', marginTop: '50px', marginLeft: '250px' }}>Home</Box>
     </Grid>
 
   )
