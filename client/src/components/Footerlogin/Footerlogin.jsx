@@ -21,6 +21,7 @@ const Footerlogin = () => {
         setIsModalOpen(false);
     }
 
+
     const handleRegistrationOpen = () => {
         setIsRegistrationModalOpen(true)
     }
@@ -203,7 +204,9 @@ const Footerlogin = () => {
                             }}>
                                 Not an account?
                                 <Typography
+
                                     onClick={handleRegistrationOpen}
+
                                     sx={{fontSize: 14, color: 'rgb(29, 155, 240)', display: 'flex', marginLeft: 0.5, cursor: 'pointer',
                                         '&:hover':{
                                         textDecoration: 'underline'
