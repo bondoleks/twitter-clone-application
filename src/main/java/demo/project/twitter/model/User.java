@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -30,6 +31,21 @@ public class User extends BaseEntity {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "bDate")
+    private Date birthDate;
+
+    @Column(name = "bio")
+    private String bio;
+
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "avatar_image_url")
+    private String av_imagerUrl;
+
+    @Column(name = "header_image_url")
+    private String head_imagerUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
