@@ -88,9 +88,10 @@ export const SidebarDesktop = () => {
             </Link>
 
             <Link to={`/bookmarks`}>
-                    <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+
                         {clicked.bookmarks ? <BookmarkIcon  sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" />}
                         <Typography variant='h6' sx={{ color: clicked.bookmarks ? 'black' : 'inherit' }}>Bookmarks</Typography>
+
                     </IconButton>
             </Link>
 
