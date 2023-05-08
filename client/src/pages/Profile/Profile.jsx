@@ -3,11 +3,11 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import { Grid, Hidden, IconButton, Container, Typography, Toolbar, Box, Button } from '@mui/material';
 import Link from '@mui/material/Link';
 import Search from '../../components/Search/Search';
-import WestIcon from '@mui/icons-material/West';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
+import ToolbarProfile from './ToolbarProfile';
 
 
 export const Profile = () => {
@@ -39,17 +39,8 @@ export const Profile = () => {
       </Grid>
 
       <Grid item xs={12} md={5} sm={8} sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey' }}>
-          <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
-            <Toolbar >
-              <IconButton >
-                <WestIcon />
-              </IconButton>
-              <Box ml={2}>
-                <Typography variant='h6'>User</Typography>
-                <Typography>N Tweets</Typography>
-              </Box>
-            </Toolbar>
-          </Box>
+
+        <ToolbarProfile />
 
         <Container sx={{ marginTop: '70px' }}>
           <Box sx={{ bgcolor: 'grey.300', width: '115%', marginLeft: '-10%', height: '200px' }}></Box>
@@ -60,14 +51,20 @@ export const Profile = () => {
             sx={{ width: '30%', height: '30%', borderRadius: '50%', marginTop: '-15%', marginLeft: '10px', marginBottom: '20px', cursor: 'pointer' }}
           />
 
-          <Hidden smDown>
-            <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '57%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+          <Hidden mdDown>
+            <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '59%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+              Edit profile
+            </Button>
+          </Hidden>
+
+          <Hidden mdUp smDown>
+            <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '75%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
               Edit profile
             </Button>
           </Hidden>
 
           <Hidden smUp>
-            <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '65%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+            <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '70%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
               Edit profile
             </Button>
           </Hidden>
@@ -102,8 +99,7 @@ export const Profile = () => {
         </Grid>
       </Hidden>
     </Grid>
-
-
+    
   )
 }
 
