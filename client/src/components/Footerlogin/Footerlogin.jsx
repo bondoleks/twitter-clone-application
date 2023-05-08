@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { BottomNavigation, Box, Typography, Button, Modal } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TextField from '@mui/material/TextField';
-import Input from '@mui/material/Input';
+import RegistrationModal from "../Registration/Registration.jsx";
 
 const Footerlogin = () => {
 
     // W8 to Redux
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+
 
     const handleLoginButtonClick = () => {
         setIsModalOpen(true);
@@ -18,6 +20,16 @@ const Footerlogin = () => {
     const handleLoginButtonX = () => {
         setIsModalOpen(false);
     }
+
+    const handleRegistrationOpen = () => {
+        setIsRegistrationModalOpen(true)
+    }
+
+    const handleRegistrationClose = () => {
+        setIsRegistrationModalOpen(false)
+    }
+
+
 
 
     // Modal style-----------------------------
@@ -73,7 +85,9 @@ const Footerlogin = () => {
                         Login
                     </Button>
                     <Button
-                        variant="contained" color="secondary" size="small" sx={{ mr: 1,
+                        variant="contained" color="secondary" size="small"
+                        onClick={handleRegistrationOpen}
+                        sx={{ mr: 1,
                         borderRadius: '20px',
                         fontSize: '14px',
                         color: 'black',
@@ -189,6 +203,7 @@ const Footerlogin = () => {
                             }}>
                                 Not an account?
                                 <Typography
+                                    onClick={handleRegistrationOpen}
                                     sx={{fontSize: 14, color: 'rgb(29, 155, 240)', display: 'flex', marginLeft: 0.5, cursor: 'pointer',
                                         '&:hover':{
                                         textDecoration: 'underline'
@@ -199,7 +214,7 @@ const Footerlogin = () => {
                     </Box>
                 </Modal>
             )}
-
+            <RegistrationModal isOpen={isRegistrationModalOpen} onClose={handleRegistrationClose} />
         </Box>
     );
 };
