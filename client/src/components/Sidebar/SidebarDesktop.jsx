@@ -24,6 +24,7 @@ export const SidebarDesktop = () => {
         explore: false,
         notifications: false,
         messages: false,
+        bookmarks: false,
         profile: false,
     });
 
@@ -36,6 +37,7 @@ export const SidebarDesktop = () => {
             explore: path === '/explore',
             notifications: path === '/notifications',
             messages: path === '/messages',
+            bookmarks: path ==='/bookmarks',
             profile: path === '/profile',
         });
     }, [location]);
@@ -87,8 +89,8 @@ export const SidebarDesktop = () => {
 
             <Link to={`/bookmarks`}>
                     <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
-                        {clicked.profile ? <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkIcon sx={{ margin: '10px' }} fontSize="medium" />}
-                        <Typography variant='h6' sx={{ color: clicked.messages ? 'black' : 'inherit' }}>Bookmarks</Typography>
+                        {clicked.bookmarks ? <BookmarkIcon  sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" />}
+                        <Typography variant='h6' sx={{ color: clicked.bookmarks ? 'black' : 'inherit' }}>Bookmarks</Typography>
                     </IconButton>
             </Link>
 

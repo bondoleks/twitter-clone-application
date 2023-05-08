@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { Grid, Hidden, IconButton, Container, Typography, Toolbar, Box, Button } from '@mui/material';
+import { Grid, Hidden, IconButton, Container, Typography, Box } from '@mui/material';
 import Link from '@mui/material/Link';
 import Search from '../../components/Search/Search';
 import { Avatar } from '@mui/material';
@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
-
+import ButEditUser from './ButEditUser';
 
 export const Profile = () => {
 
@@ -51,23 +51,7 @@ export const Profile = () => {
             sx={{ width: '30%', height: '30%', borderRadius: '50%', marginTop: '-15%', marginLeft: '10px', marginBottom: '20px', cursor: 'pointer' }}
           />
 
-          <Hidden mdDown>
-            <Button variant="outlined" sx={{ position: 'absolute', top: '300px', left: '59%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
-              Edit profile
-            </Button>
-          </Hidden>
-
-          <Hidden mdUp smDown>
-            <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '75%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
-              Edit profile
-            </Button>
-          </Hidden>
-
-          <Hidden smUp>
-            <Button variant="outlined" sx={{ position: 'absolute', top: '350px', left: '70%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
-              Edit profile
-            </Button>
-          </Hidden>
+          <ButEditUser />
 
           <Box>
             <Typography sx={{ fontSize: '24px', fontWeight: '900' }}>User</Typography>
@@ -99,7 +83,7 @@ export const Profile = () => {
         </Grid>
       </Hidden>
     </Grid>
-    
+
   )
 }
 

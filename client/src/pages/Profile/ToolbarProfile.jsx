@@ -8,7 +8,7 @@ export const ToolbarProfile = () => {
     return (
         <>
             <Hidden mdUp>
-                <Box position='fixed' bgcolor={'white'} sx={{ width: '65%', zIndex: '99', top: '0', left: '24%' }}>
+                <Box position='fixed' bgcolor={'white'} sx={{ width: '65%', zIndex: '99', top: '0', left: '21%' }}>
                     <Toolbar >
                         <IconButton >
                             <WestIcon />

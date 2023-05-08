@@ -28,6 +28,7 @@ export const SidebarMedium = () => {
         explore: false,
         notifications: false,
         messages: false,
+        bookmarks: false,
         profile: false,
     });
 
@@ -41,6 +42,7 @@ export const SidebarMedium = () => {
             explore: path === '/explore',
             notifications: path === '/notifications',
             messages: path === '/messages',
+            bookmarks: path ==='/bookmarks',
             profile: path === '/profile',
         });
     }, [location]);
@@ -117,7 +119,7 @@ export const SidebarMedium = () => {
 
                         <Tooltip title="Bookmarks">
                             <IconButton>
-                                {clicked.profile ? <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                         </Tooltip>
                     </Link>
