@@ -10,7 +10,8 @@ import Explore from './pages/Explore/Explore.jsx';
 import Messages from './pages/Messages/Messages.jsx';
 import Notifications from './pages/Notifications/Notifications.jsx';
 import Profile from './pages/Profile/Profile.jsx';
-import User from './pages/User/User.jsx';
+import Bookmarks from './pages/Bookmarks/Bookmarks.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -35,12 +36,12 @@ const router = createBrowserRouter([
     element: <Messages />,
   },
   {
-    path: "/profile",
-    element: <Profile />,
+    path: "/bookmarks",
+    element: <Bookmarks />,
   },
   {
-    path: "/user",
-    element: <User />,
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 

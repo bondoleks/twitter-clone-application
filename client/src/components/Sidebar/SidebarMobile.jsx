@@ -14,7 +14,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import Search from '../Search/Search.jsx'
+import Search from '../Search/Search.jsx';
 
 
 const SidebarMobile = () => {
@@ -38,9 +38,9 @@ const SidebarMobile = () => {
             notifications: path === '/notifications',
             messages: path === '/messages',
             profile: path === '/profile',
-            user: path === '/user',
         });
     }, [location]);
+
 
     let headerBox;
     if (clicked.home) {
@@ -52,47 +52,46 @@ const SidebarMobile = () => {
             </Link>
         </Box>;
     } if (clicked.messages) {
-        headerBox = <Box >
-            <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
-                <Typography variant='h6' sx={{ color: 'black', margin: '16px' }}>Messages</Typography>
-                <SettingsOutlinedIcon fontSize="medium" sx={{ marginLeft: '100px' }} />
-            </IconButton>
-        </Box>
+        headerBox = <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
+            <Typography variant='h6' sx={{ color: 'black' }}>Messages</Typography>
+            <Box>
+                <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
+                    <SettingsOutlinedIcon fontSize="medium" />
+                </IconButton>
+            </Box>
+        </Toolbar>
     } if (clicked.notifications) {
-        headerBox = <Box>
-            <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                    <Typography variant='h6'>Notifications</Typography>
-                    <Box sx={{ ml: '60%', mr: '10%' }}>
-                        <SettingsOutlinedIcon fontSize="medium" />
-                    </Box>
-                </Box>
-            </IconButton>
-        </Box>
+        headerBox = <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
+            <Typography variant='h6' sx={{ color: 'black' }}>Notifications</Typography>
+            <Box >
+                <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
+                    <SettingsOutlinedIcon fontSize="medium" />
+                </IconButton>
+            </Box>
+        </Toolbar>
     } if (clicked.explore) {
-        headerBox = <Box >
-            <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
-                <Search />
-                <SettingsOutlinedIcon fontSize="medium" />
-            </IconButton>
-        </Box>
+        headerBox = <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
+            <Search />
+            <Box>
+                <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
+                    <SettingsOutlinedIcon fontSize="medium" />
+                </IconButton>
+            </Box>
+        </Toolbar>
     }
 
 
     return (
 
-
         <>
             <AppBar position='fixed' sx={{ backgroundColor: 'white' }} >
                 <Container fixed>
                     <Toolbar>
-                        <Link to={`/user`}>
-                            <Tooltip title="User">
-                                <IconButton edge="start">
-                                    <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
-                                </IconButton>
-                            </Tooltip>
-                        </Link>
+                        <Tooltip title="User">
+                            <IconButton edge="start">
+                                <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                            </IconButton>
+                        </Tooltip>
 
                         {headerBox}
 

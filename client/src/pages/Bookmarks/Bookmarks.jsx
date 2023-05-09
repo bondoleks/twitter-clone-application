@@ -1,13 +1,13 @@
 import React from 'react'
 import Sidebar from '../../components/Sidebar/Sidebar'
 
-export const User = () => {
+export const Bookmarks = () => {
   return (
     <div>
       <Sidebar />
-      <div>User</div>
-    </div>    
+      <div>Bookmarks</div>
+    </div> 
   )
 }
 
-export default User
+export default Bookmarks
