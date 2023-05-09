@@ -18,7 +18,7 @@ public class AttachmentImage extends BaseEntity {
     @Column(name = "image_url")
     private String imagerUrl;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tweet_id", referencedColumnName = "id")
     private Tweet tweet;
 }
