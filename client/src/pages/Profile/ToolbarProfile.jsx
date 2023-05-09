@@ -1,5 +1,11 @@
 import React from 'react';
-import { Hidden, IconButton, Typography, Toolbar, Box } from '@mui/material';
+import {
+    Hidden,
+    IconButton,
+    Typography,
+    Toolbar,
+    Box
+} from '@mui/material';
 import WestIcon from '@mui/icons-material/West';
 
 
@@ -8,7 +14,12 @@ export const ToolbarProfile = () => {
     return (
         <>
             <Hidden mdUp>
-                <Box position='fixed' bgcolor={'white'} sx={{ width: '65%', zIndex: '99', top: '0', left: '21%' }}>
+                <Box position='fixed' bgcolor={'white'} sx={{
+                    width: '65%',
+                    zIndex: '99',
+                    top: '0',
+                    left: '21%'
+                }}>
                     <Toolbar >
                         <IconButton >
                             <WestIcon />
@@ -22,7 +33,12 @@ export const ToolbarProfile = () => {
             </Hidden>
 
             <Hidden mdDown>
-                <Box position='fixed' bgcolor={'white'} sx={{ width: '41.5%', zIndex: '99', top: '0', left: '28%' }}>
+                <Box position='fixed' bgcolor={'white'} sx={{
+                    width: '41.5%',
+                    zIndex: '99',
+                    top: '0',
+                    left: '28%'
+                }}>
                     <Toolbar >
                         <IconButton >
                             <WestIcon />

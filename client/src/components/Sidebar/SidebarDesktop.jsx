@@ -37,7 +37,7 @@ export const SidebarDesktop = () => {
             explore: path === '/explore',
             notifications: path === '/notifications',
             messages: path === '/messages',
-            bookmarks: path ==='/bookmarks',
+            bookmarks: path === '/bookmarks',
             profile: path === '/profile',
         });
     }, [location]);
@@ -55,7 +55,10 @@ export const SidebarDesktop = () => {
 
             <Link to={`/home`}>
 
-                <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+                <IconButton sx={{
+                    paddingInline: '20px',
+                    borderRadius: '50px'
+                }}>
                     {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' />}
                     <Typography variant='h6' sx={{ color: clicked.home ? 'black' : 'inherit' }}> Home</Typography>
                 </IconButton>
@@ -64,7 +67,10 @@ export const SidebarDesktop = () => {
 
             <Link to={`/explore`}>
 
-                <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+                <IconButton sx={{
+                    paddingInline: '20px',
+                    borderRadius: '50px'
+                }}>
                     {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.explore ? 'black' : 'inherit' }}> Explore</Typography>
                 </IconButton>
@@ -72,7 +78,10 @@ export const SidebarDesktop = () => {
 
             <Link to={`/notifications`}>
 
-                <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+                <IconButton sx={{
+                    paddingInline: '20px',
+                    borderRadius: '50px'
+                }}>
                     {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '10px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.notifications ? 'black' : 'inherit' }} >Notifications</Typography>
                 </IconButton>
@@ -81,33 +90,49 @@ export const SidebarDesktop = () => {
 
             <Link to={`/messages`} >
 
-                <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+                <IconButton sx={{
+                    paddingInline: '20px',
+                    borderRadius: '50px'
+                }}>
                     {clicked.messages ? <MailIcon sx={{ margin: '10px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.messages ? 'black' : 'inherit' }}>Messages</Typography>
                 </IconButton>
             </Link>
 
             <Link to={`/bookmarks`}>
-                    <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
-                        {clicked.bookmarks ? <BookmarkIcon  sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" />}
-                        <Typography variant='h6' sx={{ color: clicked.bookmarks ? 'black' : 'inherit' }}>Bookmarks</Typography>
-                    </IconButton>
+                <IconButton sx={{
+                    paddingInline: '20px',
+                    borderRadius: '50px'
+                }}>
+                    {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" />}
+                    <Typography variant='h6' sx={{ color: clicked.bookmarks ? 'black' : 'inherit' }}>Bookmarks</Typography>
+                </IconButton>
             </Link>
 
 
             <Link to={`/profile`} >
 
-                <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+                <IconButton sx={{
+                    paddingInline: '20px',
+                    borderRadius: '50px'
+                }}>
                     {clicked.profile ? <PersonIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}
                     <Typography variant='h6' sx={{ color: clicked.profile ? 'black' : 'inherit' }} >Profile</Typography>
                 </IconButton>
             </Link>
 
             <Button variant="contained" color="primary" size="medium"
-                sx={{ marginBottom: '50px', marginInline: '30px', borderRadius: '50px' }}>Tweet</Button>
+                sx={{
+                    marginBottom: '50px',
+                    marginInline: '30px',
+                    borderRadius: '50px'
+                }}>Tweet</Button>
 
 
-            <IconButton sx={{ paddingInline: '20px', borderRadius: '50px' }}>
+            <IconButton sx={{
+                paddingInline: '20px',
+                borderRadius: '50px'
+            }}>
                 <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
                 <Typography variant='h6' sx={{ color: clicked.user ? 'black' : 'inherit' }} >User</Typography>
             </IconButton>

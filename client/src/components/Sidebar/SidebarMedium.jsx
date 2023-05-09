@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { IconButton, Tooltip, Box, Hidden } from '@mui/material';
+import {
+    IconButton,
+    Tooltip,
+    Box,
+    Hidden
+} from '@mui/material';
 import { Stack } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -42,7 +47,7 @@ export const SidebarMedium = () => {
             explore: path === '/explore',
             notifications: path === '/notifications',
             messages: path === '/messages',
-            bookmarks: path ==='/bookmarks',
+            bookmarks: path === '/bookmarks',
             profile: path === '/profile',
         });
     }, [location]);
@@ -50,7 +55,11 @@ export const SidebarMedium = () => {
 
     return (
         <>
-            <Box sx={{ marginRight: '20px', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
+            <Box sx={{
+                marginRight: '20px',
+                height: 'calc(100vh - 48px)',
+                overflowY: 'auto'
+            }}>
                 <Stack sx={{ margin: '24px' }}>
 
                     <Link to={`/`}>
