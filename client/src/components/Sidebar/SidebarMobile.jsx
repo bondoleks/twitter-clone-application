@@ -52,28 +52,58 @@ const SidebarMobile = () => {
             </Link>
         </Box>;
     } if (clicked.messages) {
-        headerBox = <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
+        headerBox = <Toolbar sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '90%'
+        }}>
             <Typography variant='h6' sx={{ color: 'black' }}>Messages</Typography>
             <Box>
-                <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
+                <IconButton disableTouchRipple sx={{
+                    color: 'black',
+                    '&:hover': {
+                        backgroundColor: 'white',
+                        textDecoration: 'none'
+                    }
+                }}>
                     <SettingsOutlinedIcon fontSize="medium" />
                 </IconButton>
             </Box>
         </Toolbar>
     } if (clicked.notifications) {
-        headerBox = <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
+        headerBox = <Toolbar sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '90%'
+        }}>
             <Typography variant='h6' sx={{ color: 'black' }}>Notifications</Typography>
             <Box >
-                <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
+                <IconButton disableTouchRipple sx={{
+                    color: 'black',
+                    '&:hover': {
+                        backgroundColor: 'white',
+                        textDecoration: 'none'
+                    }
+                }}>
                     <SettingsOutlinedIcon fontSize="medium" />
                 </IconButton>
             </Box>
         </Toolbar>
     } if (clicked.explore) {
-        headerBox = <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
+        headerBox = <Toolbar sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '90%'
+        }}>
             <Search />
             <Box>
-                <IconButton disableTouchRipple sx={{ color: 'black', '&:hover': { backgroundColor: 'white', textDecoration: 'none' } }}>
+                <IconButton disableTouchRipple sx={{
+                    color: 'black',
+                    '&:hover': {
+                        backgroundColor: 'white',
+                        textDecoration: 'none'
+                    }
+                }}>
                     <SettingsOutlinedIcon fontSize="medium" />
                 </IconButton>
             </Box>
@@ -100,11 +130,20 @@ const SidebarMobile = () => {
             </AppBar>
 
             <IconButton>
-                <AddCircleIcon sx={{ position: 'fixed', top: '80%', left: '70%' }} fontSize='large' color='primary' />
+                <AddCircleIcon sx={{
+                    position: 'fixed',
+                    top: '80%',
+                    left: '70%'
+                }} fontSize='large' color='primary' />
             </IconButton>
 
             <Box edge="start">
-                <BottomNavigation sx={{ position: 'fixed', bottom: '0', left: '10%', width: '80%' }}>
+                <BottomNavigation sx={{
+                    position: 'fixed',
+                    bottom: '0',
+                    left: '10%',
+                    width: '80%'
+                }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">
                             <IconButton >
