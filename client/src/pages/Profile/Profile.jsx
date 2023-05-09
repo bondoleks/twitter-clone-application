@@ -17,6 +17,7 @@ import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
 import ButEditUser from './ButEditUser';
 
+
 export const Profile = () => {
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
@@ -45,6 +46,7 @@ export const Profile = () => {
         <Sidebar />
       </Grid>
 
+
       <Grid item xs={12} md={5} sm={8} sx={{
         borderRight: '1px solid grey',
         borderLeft: '1px solid grey'
@@ -60,9 +62,11 @@ export const Profile = () => {
             height: '200px'
           }}></Box>
 
+
           <StyledAvatar
             alt="User Avatar"
             src='../../img/avatar.png'
+
             sx={{
               width: '30%',
               height: '30%',
@@ -75,6 +79,7 @@ export const Profile = () => {
           />
 
           <ButEditUser />
+
 
           <Box>
             <Typography sx={{

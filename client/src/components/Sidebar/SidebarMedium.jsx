@@ -129,7 +129,9 @@ export const SidebarMedium = () => {
                         <Tooltip title="Bookmarks">
                             <IconButton>
 
+
                                 {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
+
 
                             </IconButton>
                         </Tooltip>

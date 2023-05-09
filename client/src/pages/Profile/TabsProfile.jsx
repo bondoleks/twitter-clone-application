@@ -23,26 +23,31 @@ export const TabsProfile = () => {
 
             <TabContext value={value} >
                 <TabPanel value={0} index={0}>
+
                     <Typography mb={2} sx={{
                         fontSize: '20px',
                         fontWeight: '900'
                     }}>
+
                         Who to follow
                     </Typography>
                     <Typography variant="h4">Tweets</Typography>
                     <Typography variant="body1">Here are the tweets</Typography>
                 </TabPanel>
                 <TabPanel value={1} index={1}>
+
                     <Typography mb={2} sx={{
                         fontSize: '20px',
                         fontWeight: '900'
                     }}>
+
                         Who to follow
                     </Typography>
                     <Typography variant="h4">Replies</Typography>
                     <Typography variant="body1">Here are the replies</Typography>
                 </TabPanel>
                 <TabPanel value={2} index={2}>
+
                     <Avatar variant="square" sx={{
                         width: '100%',
                         height: '100px',
@@ -55,6 +60,7 @@ export const TabsProfile = () => {
                         fontWeight: '900',
                         margin: '20px'
                     }}>
+
                         Lights, camera … attachments!
                     </Typography>
                     <Typography variant="body1" sx={{ margin: '20px' }}>
@@ -63,11 +69,13 @@ export const TabsProfile = () => {
 
                 </TabPanel>
                 <TabPanel value={3} index={3}>
+
                     <Typography mb={2} sx={{
                         fontSize: '28px',
                         fontWeight: '900',
                         margin: '20px'
                     }}>
+
                         You don’t have any likes yet
                     </Typography>
                     <Typography variant="body1" sx={{ margin: '20px' }}>
