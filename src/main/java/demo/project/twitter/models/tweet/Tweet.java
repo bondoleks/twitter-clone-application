@@ -23,9 +23,9 @@ public class Tweet extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private List<User> users;
+    private User user;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_tweet_id", referencedColumnName = "id")
     private Tweet parentTweet;
 
