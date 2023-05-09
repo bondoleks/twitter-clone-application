@@ -6,9 +6,10 @@ import {
     DialogActions,
     Button
 } from "@mui/material";
+import ButEditBirthdate from "./ButEditBirthday";
 
 
-export default function ModalEditBirthdate({ open, onClose }) {
+export default function ModalEditBirthdate({ open, onClose, toggleContainers }) {
 
     return (
 
@@ -25,20 +26,9 @@ export default function ModalEditBirthdate({ open, onClose }) {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <Button sx={{
-                    width: '90%',
-                    margin: '4px',
-                    color: 'white',
-                    backgroundColor: 'black',
-                    border: '1px solid black',
-                    height: '30px',
-                    borderRadius: '20px',
-                    textTransform: 'none',
-                    fontWeight: '600',
-                    '&:hover': { backgroundColor: 'gray' }
-                }}>
-                    Edit
-                </Button>
+
+                <ButEditBirthdate toggleContainers={toggleContainers} />
+
                 <Button onClick={onClose} sx={{
                     width: '90%',
                     margin: '4px',

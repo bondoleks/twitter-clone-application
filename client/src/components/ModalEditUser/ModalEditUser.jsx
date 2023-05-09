@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Dialog,
     DialogTitle,
@@ -7,18 +7,15 @@ import {
     IconButton,
     Toolbar,
     Container,
-    Box,
-    Typography
+    Box
 } from "@mui/material";
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import Link from '@mui/material/Link';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
-import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSharp';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
-import ModalEditBirthdate from "./ModalEditBirthdate";
+import ContainerBirthday from "./ContainerBirthday";
 
 export default function ModalEditUser({ open, onClose }) {
 
@@ -37,15 +34,6 @@ export default function ModalEditUser({ open, onClose }) {
         }
     }));
 
-    const [openMod2, setOpenMod2] = useState(false);
-
-    const handleOpenMod2 = () => {
-        setOpenMod2(true);
-    };
-
-    const handleCloseMod2 = () => {
-        setOpenMod2(false);
-    };
 
     return (
 
@@ -140,28 +128,7 @@ export default function ModalEditUser({ open, onClose }) {
                     marginBottom: '10px'
                 }} />
 
-                <Typography sx={{
-                    marginTop: '8px',
-                    fontSize: '14px'
-                }}>
-                    Birth date
-                    <FiberManualRecordSharpIcon sx={{
-                        fontSize: '4px',
-                        marginInline: '8px',
-                        paddingBottom: '4px'
-                    }} />
-                    <Link onClick={handleOpenMod2} underline="hover" sx={{
-                        textDecoration: 'none',
-                        cursor: 'pointer'
-                    }}>
-                        Edit
-                    </Link>
-                    <ModalEditBirthdate open={openMod2} onClose={handleCloseMod2} />
-                </Typography>
-
-                <Typography>
-                    Mounth Day, Year
-                </Typography>
+                <ContainerBirthday />
 
             </DialogContent>
 
