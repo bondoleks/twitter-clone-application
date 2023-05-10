@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BottomNavigation, Box, Typography, Button, Modal } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TextField from '@mui/material/TextField';
-import Input from '@mui/material/Input';
+
 
 const Footerlogin = () => {
 
@@ -53,7 +53,8 @@ const Footerlogin = () => {
                         Пользователи Твиттера узнают новости первыми.
                     </Typography>
                 </Box>
-                <BottomNavigation sx={{ alignItems: 'center', bgcolor: '#1DA1F2' }}>
+                {/*// issue is here in the elem below*/}
+                <Box sx={{ alignItems: 'center', bgcolor: '#1DA1F2' }}>
                     <Button
                         variant="contained" color="primary" size="small"
                         sx={{
@@ -83,7 +84,7 @@ const Footerlogin = () => {
                             backgroundColor: 'rgba(255, 255, 255, 0.9)', } }}>
                         Registration
                     </Button>
-                </BottomNavigation>
+                </Box>
             </Box>
             {isModalOpen && (
                 <Modal

@@ -1,33 +1,28 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import {Typography} from "@mui/material";
-
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const ModalClue = () => {
-
-  return(
+  return (
     <>
-    <Box sx = {{
-      pl: 2,
-      height: '100px',
-      maxWidth: '300px',
-      boxShadow:"0 0 0 2px rgba(29, 161, 242, 0.5)",
-      outline: "2px solid #fff",
-      outlineOffset: "-1px",
-      borderRadius: "5px"
-    }}>
-      <Typography sx={{
-        pt: 2,
-        mr: 2,
-        color: "e9e9e9"
-      }}>
-        Try searching for people, topics, keywords
-      </Typography>
-    </Box>
-
+      <Paper
+        elevation={2}
+        sx={{
+          backgroundColor: "#fff",
+          p: 2,
+          borderRadius: "5px",
+          marginRight: "50px",
+          maxHeight: "100px",
+          maxWidth: "300px",
+          minWidth: "250px"
+        }}
+      >
+        <Typography sx={{ color: "e9e9e9" }}>
+          Try searching for people, topics, keywords
+        </Typography>
+      </Paper>
     </>
-  )
-}
-
+  );
+};
 
 export default ModalClue;

@@ -60,18 +60,19 @@ const Search = () => {
                 InputProps={{
                    startAdornment: (
                     <InputAdornment position="start">
-                       <StyledSearchIcon inputFocused={inputFocused} />
+                       <StyledSearchIcon />
                      </InputAdornment>
                    ),
                    endAdornment: inputValue ? (
                      <InputAdornment position="end">
-                       <StyledCancelIcon onClick={handleCancelClick} inputFocused={inputFocused}/>
+                       <StyledCancelIcon onClick={handleCancelClick}/>
                      </InputAdornment>
                    ) : null,
                    sx: {
                      marginRight: "50px",
                      maxHeight: "40px",
                      maxWidth: "300px",
+                     minWidth: "250px",
                      borderRadius: "50px",
                      backgroundColor: "#F5F5F5",
                      "&:focus-within": {
