@@ -1,29 +1,27 @@
 import React, { useState } from "react";
 import {
     Dialog,
-    DialogTitle,
     DialogContent,
     Button,
     IconButton,
     Toolbar,
     Container,
-    Box,
-    Select,
     Menu,
     MenuItem,
     ListItemIcon,
     ListItemText,
     Typography,
+    Box,
 } from "@mui/material";
 import { TextareaAutosize } from "@mui/material";
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PublicIcon from "@mui/icons-material/Public";
 import PeopleIcon from "@mui/icons-material/People";
 import CheckIcon from "@mui/icons-material/Check";
+import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
 
 
 export default function TweetForm({ open, onClose }) {
@@ -55,71 +53,174 @@ export default function TweetForm({ open, onClose }) {
         setAnchorEl(null);
     };
 
+    const [selectedValue2, setSelectedValue2] = useState("");
+    const [anchorEl2, setAnchorEl2] = useState(null);
+
+    const handleButtonClick2 = (event) => {
+        setAnchorEl2(event.currentTarget);
+    };
+
+    const handleMenuClose2 = (value) => {
+        setSelectedValue2(value);
+        setAnchorEl2(null);
+    };
+
+    // Определение иконки для каждого значения
+    let icon;
+    switch (selectedValue2) {
+        case "Everyone can reply":
+            icon = <PublicIcon sx={{
+                color: "#1DA1F2",
+                marginRight: '4px',
+                fontSize: '16px'
+            }} />;
+            break;
+        case "People you follow can reply":
+            icon = <PeopleIcon sx={{
+                color: "#1DA1F2",
+                marginRight: '4px',
+                fontSize: '16px'
+            }} />;
+            break;
+        case "Only people you mention can reply":
+            icon = <AlternateEmailOutlinedIcon sx={{
+                color: "#1DA1F2",
+                marginRight: '4px',
+                fontSize: '16px'
+            }} />;
+            break;
+        default:
+            icon = <PublicIcon sx={{
+                color: "#1DA1F2",
+                marginRight: '4px',
+                fontSize: '16px'
+            }} />;
+    }
+
 
     return (
 
-        <Dialog open={open} onClose={onClose} >
+        <Dialog open={open} onClose={onClose}>
 
             <IconButton sx={{ position: 'absolute', top: '0', left: '0' }}>
                 <CloseIcon onClick={onClose} />
             </IconButton>
 
-
-            <Container sx={{ display: 'flex', marginTop: '50px' }}>
-
-                <StyledAvatar alt="User Avatar"
-                    src='../../img/avatar.png' />
-
-                <Button onClick={handleButtonClick} startIcon={<ArrowDropDownIcon />}
-                    sx={{
-                        height: '20px',
-                        marginLeft: '10px',
-                        textTransform: 'none',
-                        border: '1px solid black',
-                        borderRadius: '20px'
-                    }} >
-                    {selectedValue || "Everyone"}
-                </Button>
-                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => handleMenuClose(selectedValue)}>
-                    <Typography variant="h6" sx={{marginLeft: '12px'}}>Choose audience</Typography>
-                    <MenuItem onClick={() => handleMenuClose("Everyone")} >
-                        <ListItemIcon>
-                            <PublicIcon sx={{color: 'blue'}} />
-                        </ListItemIcon>
-                        <ListItemText primary="Everyone" />
-                        <ListItemIcon>
-                            {selectedValue === "Everyone" && <CheckIcon sx={{color: 'blue'}} />}
-                        </ListItemIcon>
-                    </MenuItem >
-                    <MenuItem onClick={() => handleMenuClose("Twitter Circle")}>
-                        <ListItemIcon>
-                            <PeopleIcon sx={{color: 'green'}} />
-                        </ListItemIcon>
-                        <ListItemText primary="Twitter Circle" />
-                        <ListItemIcon>
-                            {selectedValue === "Twitter Circle" && <CheckIcon sx={{color: 'blue', marginLeft: '4px'}}/>}
-                        </ListItemIcon>
-                    </MenuItem>
-                </Menu>
-
-            </Container>
-
-
-            <TextareaAutosize placeholder="What's happening?" style={{
-                width: '300px',
-                height: '100px',
-                marginBottom: '10px',
-                border: '1px solid transparent',
-                marginLeft: '70px',
-                outline: 'none',
-                resize: 'none'
-            }
-            } />
-
-
-
             <DialogContent sx={{ maxWidth: 'md' }}>
 
+                <Container sx={{ display: 'flex', marginTop: '50px' }}>
+
+                    <StyledAvatar alt="User Avatar"
+                        src='../../img/avatar.png' />
+
+                    <Button onClick={handleButtonClick} endIcon={<ArrowDropDownIcon />}
+                        sx={{
+                            height: '20px',
+                            marginLeft: '10px',
+                            textTransform: 'none',
+                            border: '1px solid black',
+                            borderRadius: '20px'
+                        }} >
+                        {selectedValue || "Everyone"}
+                    </Button>
+                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => handleMenuClose(selectedValue)}>
+                        <Typography variant="h6" sx={{ marginLeft: '12px' }}>Choose audience</Typography>
+                        <MenuItem onClick={() => handleMenuClose("Everyone")} >
+                            <ListItemIcon>
+                                <PublicIcon sx={{ color: '#1DA1F2' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Everyone" />
+                            <ListItemIcon>
+                                {selectedValue === "Everyone" && <CheckIcon sx={{ color: '#1DA1F2' }} />}
+                            </ListItemIcon>
+                        </MenuItem >
+                        <MenuItem onClick={() => handleMenuClose("Twitter Circle")}>
+                            <ListItemIcon>
+                                <PeopleIcon sx={{ color: 'green' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Twitter Circle" />
+                            <ListItemIcon>
+                                {selectedValue === "Twitter Circle" && <CheckIcon sx={{ color: '#1DA1F2', marginLeft: '4px' }} />}
+                            </ListItemIcon>
+                        </MenuItem>
+                    </Menu>
+
+                </Container>
+
+
+                <TextareaAutosize placeholder="What's happening?" style={{
+                    width: '300px',
+                    height: '100px',
+                    marginBottom: '10px',
+                    border: '1px solid transparent',
+                    marginLeft: '70px',
+                    outline: 'none',
+                    resize: 'none',
+                    fontSize: '20px',
+                    fontFamily: 'sans-serif'
+                }
+                } />
+
+                <Box>
+                    <Button
+                        onClick={handleButtonClick2}
+                        sx={{
+                            display: "inline-flex",
+                            height: "20px",
+                            marginLeft: "12px",
+                            textTransform: "none",
+                            border: "none",
+                            borderRadius: "20px",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        {icon}
+                        {selectedValue2 || "Everyone can reply"}
+                    </Button>
+
+                    <Menu anchorEl={anchorEl2} open={Boolean(anchorEl2)} onClose={() => handleMenuClose2(selectedValue2)}>
+                        <Typography variant="h6" sx={{ marginLeft: '12px' }}>
+                            Who can reply?
+                        </Typography>
+                        <Typography sx={{ marginInline: '10px', marginBottom: '10px', fontSize: '14px' }}>
+                            Choose who can reply to this Tweet.<br /> Anyone mentioned can always reply.
+                        </Typography>
+                        <MenuItem onClick={() => handleMenuClose2("Everyone can reply")} >
+                            <ListItemIcon>
+                                <PublicIcon sx={{ color: '#1DA1F2', marginRight: '8px' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Everyone" />
+                            <ListItemIcon>
+                                {selectedValue2 === "Everyone can reply" && <CheckIcon sx={{ color: '#1DA1F2' }} />}
+                            </ListItemIcon>
+                        </MenuItem >
+                        <MenuItem onClick={() => handleMenuClose2("People you follow can reply")}>
+                            <ListItemIcon>
+                                <PeopleIcon sx={{ color: '#1DA1F2', marginRight: '8px' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="People you follow" />
+                            <ListItemIcon>
+                                {selectedValue2 === "People you follow can reply" && <CheckIcon sx={{ color: '#1DA1F2', marginLeft: '4px' }} />}
+                            </ListItemIcon>
+                        </MenuItem>
+                        <MenuItem onClick={() => handleMenuClose2("Only people you mention can reply")}>
+                            <ListItemIcon>
+                                <AlternateEmailOutlinedIcon sx={{ color: '#1DA1F2', marginRight: '8px' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Only people you mention" />
+                            <ListItemIcon>
+                                {selectedValue2 === "Only people you mention can reply" && <CheckIcon sx={{ color: '#1DA1F2', marginLeft: '8px' }} />}
+                            </ListItemIcon>
+                        </MenuItem>
+                    </Menu>
+                </Box>
+
+                <Box sx={{ borderTop: "1px solid #e1e8ed", width: "100%", my: 2 }}></Box>
+
+                <Toolbar>
+
+                </Toolbar>
 
             </DialogContent>
 
