@@ -11,6 +11,9 @@ import {
     Select,
     Menu,
     MenuItem,
+    ListItemIcon,
+    ListItemText,
+    Typography,
 } from "@mui/material";
 import { TextareaAutosize } from "@mui/material";
 import { Avatar } from '@mui/material';
@@ -18,6 +21,9 @@ import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import PublicIcon from "@mui/icons-material/Public";
+import PeopleIcon from "@mui/icons-material/People";
+import CheckIcon from "@mui/icons-material/Check";
 
 
 export default function TweetForm({ open, onClose }) {
@@ -75,23 +81,40 @@ export default function TweetForm({ open, onClose }) {
                     {selectedValue || "Everyone"}
                 </Button>
                 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => handleMenuClose(selectedValue)}>
-                    <MenuItem onClick={() => handleMenuClose("Everyone")} >Everyone</MenuItem >
-                    <MenuItem onClick={() => handleMenuClose("Twitter Circle")}>Twitter Circle</MenuItem>
+                    <Typography variant="h6" sx={{marginLeft: '12px'}}>Choose audience</Typography>
+                    <MenuItem onClick={() => handleMenuClose("Everyone")} >
+                        <ListItemIcon>
+                            <PublicIcon sx={{color: 'blue'}} />
+                        </ListItemIcon>
+                        <ListItemText primary="Everyone" />
+                        <ListItemIcon>
+                            {selectedValue === "Everyone" && <CheckIcon sx={{color: 'blue'}} />}
+                        </ListItemIcon>
+                    </MenuItem >
+                    <MenuItem onClick={() => handleMenuClose("Twitter Circle")}>
+                        <ListItemIcon>
+                            <PeopleIcon sx={{color: 'green'}} />
+                        </ListItemIcon>
+                        <ListItemText primary="Twitter Circle" />
+                        <ListItemIcon>
+                            {selectedValue === "Twitter Circle" && <CheckIcon sx={{color: 'blue', marginLeft: '4px'}}/>}
+                        </ListItemIcon>
+                    </MenuItem>
                 </Menu>
 
             </Container>
 
 
-            <TextareaAutosize placeholder="What's happening?"  style={{
-                    width: '300px',
-                    height: '100px',
-                    marginBottom: '10px',
-                    border: '1px solid transparent',
-                    marginLeft: '70px', 
-                    outline: 'none',
-                    resize: 'none'
-                 }
-                } />
+            <TextareaAutosize placeholder="What's happening?" style={{
+                width: '300px',
+                height: '100px',
+                marginBottom: '10px',
+                border: '1px solid transparent',
+                marginLeft: '70px',
+                outline: 'none',
+                resize: 'none'
+            }
+            } />
 
 
 
