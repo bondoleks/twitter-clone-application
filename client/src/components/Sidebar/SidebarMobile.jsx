@@ -15,6 +15,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Search from '../Search/Search.jsx';
+import TweetFormMobile from '../TweetForm/TweetFormMobile.jsx';
 
 
 const SidebarMobile = () => {
@@ -40,6 +41,16 @@ const SidebarMobile = () => {
             profile: path === '/profile',
         });
     }, [location]);
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
 
     let headerBox;
@@ -129,13 +140,14 @@ const SidebarMobile = () => {
                 </Container>
             </AppBar>
 
-            <IconButton>
+            <IconButton onClick={handleOpen}>
                 <AddCircleIcon sx={{
                     position: 'fixed',
                     top: '80%',
                     left: '70%'
                 }} fontSize='large' color='primary' />
             </IconButton>
+            <TweetFormMobile open={open} onClose={handleClose} />
 
             <Box edge="start">
                 <BottomNavigation sx={{

@@ -42,6 +42,7 @@ export const SidebarDesktop = () => {
             profile: path === '/profile',
         });
     }, [location]);
+    
 
     const [open, setOpen] = useState(false);
 

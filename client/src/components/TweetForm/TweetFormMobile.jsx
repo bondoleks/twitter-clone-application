@@ -11,7 +11,7 @@ import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
 
 
-export default function TweetForm({ open, onClose }) {
+export default function TweetFormMobile({ open, onClose }) {
 
     return (
 
