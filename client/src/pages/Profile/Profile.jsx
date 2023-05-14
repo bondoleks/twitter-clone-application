@@ -80,7 +80,6 @@ export const Profile = () => {
 
           <ButEditUser />
 
-
           <Box>
             <Typography sx={{
               fontSize: '24px',
