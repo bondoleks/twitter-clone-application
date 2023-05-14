@@ -98,25 +98,40 @@ export default function ContainerTweetForm({ open, onClose }) {
         const peopleCount = 0; // Здесь можно задать количество людей
 
         return (
-            <MenuItem onClick={() => handleMenuClose('Twitter Circle')} sx={{marginTop: '8px'}}>
+            <MenuItem onClick={() => handleMenuClose('Twitter Circle')} sx={{ marginTop: '8px' }}>
                 <ListItemIcon>
                     <PeopleIcon sx={{ color: 'green' }} />
                 </ListItemIcon>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <ListItemText primary="Twitter Circle" />
-                    <Box sx={{display: 'flex', alignItems: 'center'}}>
-                        <Typography variant="caption" sx={{ display: 'flex', color: 'gray', marginRight: '8px' }}>
-                            <Box sx={{ marginInline: '4px', fontWeight: '700'}}>{peopleCount} </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography variant="caption" sx={{
+                            display: 'flex',
+                            color: 'gray',
+                            marginRight: '8px'
+                        }}>
+                            <Box sx={{
+                                marginInline: '4px',
+                                fontWeight: '700'
+                            }}>
+                                {peopleCount}
+                            </Box>
                             People
                         </Typography>
                         <IconButton>
-                            <Link href='#' color="inherit" sx={{ fontWeight: '700', fontSize: '14px' }}>
+                            <Link href='#' color="inherit" sx={{
+                                fontWeight: '700',
+                                fontSize: '14px'
+                            }}>
                                 {'Edit'}
                             </Link>
                         </IconButton>
                     </Box>
                 </Box>
-                {selectedValue === 'Twitter Circle' && <CheckIcon sx={{ color: '#1DA1F2', marginLeft: '4px' }} />}
+                {selectedValue === 'Twitter Circle' && <CheckIcon sx={{
+                    color: '#1DA1F2',
+                    marginLeft: '16px'
+                }} />}
             </MenuItem>
         );
     };
@@ -149,7 +164,10 @@ export default function ContainerTweetForm({ open, onClose }) {
                         </ListItemIcon>
                         <ListItemText primary="Everyone" />
                         <ListItemIcon>
-                            {selectedValue === "Everyone" && <CheckIcon sx={{ color: '#1DA1F2' }} />}
+                            {selectedValue === "Everyone" && <CheckIcon sx={{
+                                color: '#1DA1F2',
+                                marginLeft: '16px'
+                            }} />}
                         </ListItemIcon>
                     </MenuItem >
                     {renderTwitterCircleMenuItem()}
@@ -191,7 +209,11 @@ export default function ContainerTweetForm({ open, onClose }) {
                     <Typography variant="h6" sx={{ marginLeft: '12px' }}>
                         Who can reply?
                     </Typography>
-                    <Typography sx={{ marginInline: '10px', marginBottom: '10px', fontSize: '14px' }}>
+                    <Typography sx={{
+                        marginInline: '10px',
+                        marginBottom: '10px',
+                        fontSize: '14px'
+                    }}>
                         Choose who can reply to this Tweet.<br /> Anyone mentioned can always reply.
                     </Typography>
                     <MenuItem onClick={() => handleMenuClose2("Everyone can reply")} >
@@ -209,7 +231,10 @@ export default function ContainerTweetForm({ open, onClose }) {
                         </ListItemIcon>
                         <ListItemText primary="People you follow" />
                         <ListItemIcon>
-                            {selectedValue2 === "People you follow can reply" && <CheckIcon sx={{ color: '#1DA1F2', marginLeft: '4px' }} />}
+                            {selectedValue2 === "People you follow can reply" && <CheckIcon sx={{
+                                color: '#1DA1F2',
+                                marginLeft: '4px'
+                            }} />}
                         </ListItemIcon>
                     </MenuItem>
                     <MenuItem onClick={() => handleMenuClose2("Only people you mention can reply")}>
@@ -218,7 +243,10 @@ export default function ContainerTweetForm({ open, onClose }) {
                         </ListItemIcon>
                         <ListItemText primary="Only people you mention" />
                         <ListItemIcon>
-                            {selectedValue2 === "Only people you mention can reply" && <CheckIcon sx={{ color: '#1DA1F2', marginLeft: '8px' }} />}
+                            {selectedValue2 === "Only people you mention can reply" && <CheckIcon sx={{
+                                color: '#1DA1F2',
+                                marginLeft: '8px'
+                            }} />}
                         </ListItemIcon>
                     </MenuItem>
                 </Menu>

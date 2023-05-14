@@ -1,25 +1,45 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import {
     Dialog,
     DialogContent,
     Button,
     IconButton,
     Box,
+    useMediaQuery,
+    useTheme,
 } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
 import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
+import WestIcon from '@mui/icons-material/West';
 
 
 export default function TweetFormMobile({ open, onClose }) {
 
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
 
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} fullScreen={fullScreen}>
 
-            <IconButton sx={{ position: 'absolute', top: '0', left: '0' }}>
-                <CloseIcon onClick={onClose} />
-            </IconButton>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '8px',
+                marginInline: '12px'
+            }}>
+                <Link to={`/home`}>
+                    <IconButton >
+                        <WestIcon onClick={onClose} />
+                    </IconButton>
+                </Link>
+
+                <Button variant="contained" color="primary" size="small" sx={{ textTransform: 'none', borderRadius: '20px', height: '30px' }}>
+                    Tweet
+                </Button>
+            </Box>
 
             <DialogContent sx={{ maxWidth: 'md' }}>
 
@@ -31,19 +51,7 @@ export default function TweetFormMobile({ open, onClose }) {
                     my: 2
                 }}></Box>
 
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                }}>
-
-                    <ToolbarTweetForm />
-            
-                    <Button variant="contained" color="primary" size="small" sx={{ textTransform: 'none', borderRadius: '20px', height: '30px' }}>
-                        Tweet
-                    </Button>
-
-                </Box>
+                <ToolbarTweetForm />
 
             </DialogContent>
 
