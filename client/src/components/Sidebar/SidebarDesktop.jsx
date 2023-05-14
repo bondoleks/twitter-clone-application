@@ -16,6 +16,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import TweetForm from '../TweetForm/TweetForm';
 
 export const SidebarDesktop = () => {
 
@@ -41,6 +42,17 @@ export const SidebarDesktop = () => {
             profile: path === '/profile',
         });
     }, [location]);
+    
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
 
     return (
@@ -123,12 +135,13 @@ export const SidebarDesktop = () => {
                 </IconButton>
             </Link>
 
-            <Button variant="contained" color="primary" size="medium"
+            <Button variant="contained" color="primary" size="medium" onClick={handleOpen} 
                 sx={{
                     marginBottom: '50px',
                     marginInline: '30px',
                     borderRadius: '50px'
                 }}>Tweet</Button>
+                <TweetForm open={open} onClose={handleClose} />
 
 
             <IconButton sx={{

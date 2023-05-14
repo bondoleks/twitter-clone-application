@@ -24,6 +24,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import TweetForm from '../TweetForm/TweetForm';
 
 
 export const SidebarMedium = () => {
@@ -51,6 +52,16 @@ export const SidebarMedium = () => {
             profile: path === '/profile',
         });
     }, [location]);
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
 
     return (
@@ -146,9 +157,10 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
-                    <IconButton edge='start'>
+                    <IconButton edge='start' onClick={handleOpen}>
                         <AddCircleIcon color="primary" fontSize='large' />
                     </IconButton>
+                    <TweetForm open={open} onClose={handleClose} />
 
 
                     <Tooltip title="User">
