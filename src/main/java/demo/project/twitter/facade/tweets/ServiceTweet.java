@@ -5,6 +5,7 @@ import demo.project.twitter.model.User;
 import demo.project.twitter.models.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
@@ -32,6 +33,12 @@ public class ServiceTweet implements FunctionTweet {
     public boolean existsById(Long id) {
         return repo.existsById(id);
     }
+
+    @Override
+    public List<Tweet> getAll() {
+        return (List<Tweet>) repo.findAll();
+    }
+
 
 //    ************************************** EXAMPLE END **************************************
 

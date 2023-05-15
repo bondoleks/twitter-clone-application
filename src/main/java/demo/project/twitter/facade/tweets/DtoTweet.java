@@ -1,8 +1,10 @@
 package demo.project.twitter.facade.tweets;
 
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 @Service
+@Data
 public class DtoTweet {
 /* в зтом классе создаются только те поля, которые необходимы для работы с данной сущностью фронту. Именно эти поля
  будут передаваться в JSON в request и response
@@ -14,6 +16,8 @@ public class DtoTweet {
 
 /*******************Данные поля созданы для примера**************************/
     private Long id;
+    private String tweetBody;
+
 
 
 
