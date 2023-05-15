@@ -28,7 +28,6 @@ export const TabsProfile = () => {
                         fontSize: '20px',
                         fontWeight: '900'
                     }}>
-
                         Who to follow
                     </Typography>
                     <Typography variant="h4">Tweets</Typography>

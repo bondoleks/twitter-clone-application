@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
     Hidden,
     IconButton,
@@ -15,34 +16,38 @@ export const ToolbarProfile = () => {
         <>
             <Hidden mdUp>
                 <Box position='fixed' bgcolor={'white'} sx={{
-                    width: '65%',
+                    width: '68%',
                     zIndex: '99',
                     top: '0',
-                    left: '21%'
+                    left: '19%'
                 }}>
                     <Toolbar >
-                        <IconButton >
-                            <WestIcon />
-                        </IconButton>
+                        <RouterLink to={'/home'}>
+                            <IconButton>
+                                <WestIcon />
+                            </IconButton>
+                        </RouterLink>
                         <Box ml={2}>
                             <Typography variant='h6'>User</Typography>
                             <Typography>N Tweets</Typography>
                         </Box>
                     </Toolbar>
                 </Box>
-            </Hidden>
+            </Hidden >
 
             <Hidden mdDown>
                 <Box position='fixed' bgcolor={'white'} sx={{
                     width: '41.5%',
                     zIndex: '99',
                     top: '0',
-                    left: '28%'
+                    left: '24%'
                 }}>
-                    <Toolbar >
-                        <IconButton >
-                            <WestIcon />
-                        </IconButton>
+                    <Toolbar>
+                        <RouterLink to={'/home'}>
+                            <IconButton >
+                                <WestIcon />
+                            </IconButton>
+                        </RouterLink>
                         <Box ml={2}>
                             <Typography variant='h6'>User</Typography>
                             <Typography>N Tweets</Typography>

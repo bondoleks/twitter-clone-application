@@ -36,7 +36,10 @@ export default function TweetFormMobile({ open, onClose }) {
                     </IconButton>
                 </Link>
 
-                <Button variant="contained" color="primary" size="small" sx={{ textTransform: 'none', borderRadius: '20px', height: '30px' }}>
+
+                <Button variant="contained" color="primary" size="small" sx={{ textTransform: 'none',
+                 borderRadius: '20px', 
+                 height: '30px' }}>
                     Tweet
                 </Button>
             </Box>
