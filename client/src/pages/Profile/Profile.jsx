@@ -6,12 +6,12 @@ import {
   IconButton,
   Container,
   Typography,
-  Box
+  Box,
+  Avatar
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import Link from '@mui/material/Link';
 import Search from '../../components/Search/Search';
-import { Avatar } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
@@ -40,7 +40,7 @@ export const Profile = () => {
 
   return (
 
-    <Grid container spacing={3} sx={{ height: '100%', marginLeft: "24px" }}>
+    <Grid container spacing={3} sx={{ height: '100%' }} >
 
       <Grid item md={3}>
         <Sidebar />
@@ -49,12 +49,13 @@ export const Profile = () => {
 
       <Grid item xs={12} md={5} sm={8} sx={{
         borderRight: '1px solid grey',
-        borderLeft: '1px solid grey'
+        borderLeft: '1px solid grey',
+        width: '100%'
       }}>
 
         <ToolbarProfile />
 
-        <Container sx={{ marginTop: '70px' }}>
+        <Container sx={{ marginTop: '70px', width: '100%' }}>
           <Box sx={{
             bgcolor: 'grey.300',
             width: '115%',
