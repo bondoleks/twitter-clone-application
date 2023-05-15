@@ -20,7 +20,7 @@ export const ButEditUser = () => {
                 <Button variant="outlined" onClick={handleOpen} sx={{
                     position: 'absolute',
                     top: '300px',
-                    left: '59%',
+                    left: '56%',
                     color: 'primary',
                     border: '1px solid primary',
                     borderRadius: '50px',
@@ -32,7 +32,14 @@ export const ButEditUser = () => {
             </Hidden>
 
             <Hidden mdUp smDown>
-                <Button variant="outlined" onClick={handleOpen} sx={{ position: 'absolute', top: '350px', left: '75%', color: 'primary', border: '1px solid primary', borderRadius: '50px', textTransform: 'none', fontWeight: '600' }}>
+                <Button variant="outlined" onClick={handleOpen} sx={{ position: 'absolute', 
+                top: '300px', 
+                left: '70%', 
+                color: 'primary', 
+                border: '1px solid primary', 
+                borderRadius: '50px', 
+                textTransform: 'none', 
+                fontWeight: '600' }}>
                     Edit profile
                 </Button>
                 <ModalEditUser open={open} onClose={handleClose} />
