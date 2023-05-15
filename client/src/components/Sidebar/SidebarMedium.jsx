@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { IconButton, Tooltip, Box, Hidden } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import {
+    IconButton,
+    Tooltip,
+    Box,
+    Hidden
+} from '@mui/material';
 import { Stack } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -17,6 +22,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import TweetForm from '../TweetForm/TweetForm';
 
 
 export const SidebarMedium = () => {
@@ -26,20 +34,43 @@ export const SidebarMedium = () => {
         explore: false,
         notifications: false,
         messages: false,
+        bookmarks: false,
         profile: false,
-        user: false,
     });
 
-    const handleClick = (e) => {
-        const key = e.currentTarget.getAttribute('data-key');
-        setClicked(() => ({
-            [key]: true,
-        }));
+
+    const location = useLocation();
+
+    useEffect(() => {
+        const path = location.pathname;
+        setClicked({
+            home: path === '/home',
+            explore: path === '/explore',
+            notifications: path === '/notifications',
+            messages: path === '/messages',
+            bookmarks: path === '/bookmarks',
+            profile: path === '/profile',
+        });
+    }, [location]);
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
     };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
 
     return (
         <>
-            <Box sx={{ marginRight: '20px', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
+            <Box sx={{
+                marginRight: '20px',
+                height: 'calc(100vh - 48px)',
+                overflowY: 'auto'
+            }}>
                 <Stack sx={{ margin: '24px' }}>
 
                     <Link to={`/`}>
@@ -50,7 +81,9 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
-                    <Link data-key="home" onClick={handleClick} to={`/home`}>
+
+                    <Link to={`/home`}>
+
                         <Tooltip title="Home">
                             <IconButton >
                                 {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
@@ -59,7 +92,9 @@ export const SidebarMedium = () => {
                     </Link>
 
                     <Hidden mdUp smDown>
-                        <Link data-key="explore" onClick={handleClick} to={`/explore`}>
+
+                        <Link to={`/explore`}>
+
                             <Tooltip title="Explore">
                                 <IconButton>
                                     {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -69,7 +104,9 @@ export const SidebarMedium = () => {
                     </Hidden>
 
                     <Hidden lgUp mdDown>
-                        <Link data-key="explore" onClick={handleClick} to={`/explore`}>
+
+                        <Link to={`/explore`}>
+
                             <Tooltip title="Explore">
                                 <IconButton>
                                     {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -78,7 +115,9 @@ export const SidebarMedium = () => {
                         </Link>
                     </Hidden>
 
-                    <Link data-key="notifications" onClick={handleClick} to={`/notifications`}>
+
+                    <Link to={`/notifications`}>
+
                         <Tooltip title="Notifications">
                             <IconButton>
                                 {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -86,7 +125,9 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
-                    <Link data-key="messages" onClick={handleClick} to={`/messages`}>
+
+                    <Link to={`/messages`}>
+
                         <Tooltip title="Messages">
                             <IconButton>
                                 {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -94,7 +135,21 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
-                    <Link data-key="profile" onClick={handleClick} to={`/profile`}>
+                    <Link to={`/bookmarks`}>
+
+                        <Tooltip title="Bookmarks">
+                            <IconButton>
+
+
+                                {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
+
+
+                            </IconButton>
+                        </Tooltip>
+                    </Link>
+
+                    <Link to={`/profile`}>
+
                         <Tooltip title="Profile">
                             <IconButton>
                                 {clicked.profile ? <PersonIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
@@ -102,17 +157,18 @@ export const SidebarMedium = () => {
                         </Tooltip>
                     </Link>
 
-                    <IconButton>
+                    <IconButton edge='start' onClick={handleOpen}>
                         <AddCircleIcon color="primary" fontSize='large' />
                     </IconButton>
+                    <TweetForm open={open} onClose={handleClose} />
 
-                    <Link to={`/user`}>
-                        <Tooltip title="User">
-                            <IconButton>
-                                <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
+
+                    <Tooltip title="User">
+                        <IconButton edge='start'>
+                            <AccountCircleIcon sx={{ margin: '16px' }} fontSize="large" color="success" />
+                        </IconButton>
+                    </Tooltip>
+
                 </Stack>
             </Box>
         </>

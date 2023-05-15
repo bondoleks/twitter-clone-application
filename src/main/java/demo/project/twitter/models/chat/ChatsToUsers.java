@@ -3,7 +3,7 @@ package demo.project.twitter.models.chat;
 
 import demo.project.twitter.model.BaseEntity;
 import demo.project.twitter.model.User;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
