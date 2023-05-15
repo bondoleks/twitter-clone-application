@@ -23,12 +23,20 @@ const Footerlogin = () => {
 
 
     const handleRegistrationOpen = () => {
+        setIsModalOpen(false);
         setIsRegistrationModalOpen(true)
     }
 
     const handleRegistrationClose = () => {
         setIsRegistrationModalOpen(false)
     }
+
+    const handleRegistrationModalLoginClick = () => {
+        setIsRegistrationModalOpen(false);
+        setIsModalOpen(true)
+    }
+
+
 
 
 
@@ -217,7 +225,7 @@ const Footerlogin = () => {
                     </Box>
                 </Modal>
             )}
-            <RegistrationModal isOpen={isRegistrationModalOpen} onClose={handleRegistrationClose} />
+            <RegistrationModal isOpen={isRegistrationModalOpen} onClose={handleRegistrationClose} onLoginClick={handleRegistrationModalLoginClick} />
         </Box>
     );
 };
