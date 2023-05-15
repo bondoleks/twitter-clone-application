@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.images;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.tweet.AttachmentImage;
+import demo.project.twitter.model.tweet.AttachmentImage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

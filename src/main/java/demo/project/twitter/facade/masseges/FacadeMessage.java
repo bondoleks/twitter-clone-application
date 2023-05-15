@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.masseges;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.chat.Message;
+import demo.project.twitter.model.chat.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

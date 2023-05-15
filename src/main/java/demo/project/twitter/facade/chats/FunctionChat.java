@@ -1,6 +1,6 @@
 package demo.project.twitter.facade.chats;
 
-import demo.project.twitter.models.chat.Chat;
+import demo.project.twitter.model.chat.Chat;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
