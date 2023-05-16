@@ -420,7 +420,8 @@ const SidebarMobile = () => {
                 <AddCircleIcon sx={{
                     position: 'fixed',
                     top: '80%',
-                    left: '70%'
+                    left: '70%',
+                    zIndex: '99'
                 }} fontSize='large' color='primary' />
             </IconButton>
             <TweetFormMobile open={open} onClose={handleClose} />
@@ -429,8 +430,8 @@ const SidebarMobile = () => {
                 <BottomNavigation sx={{
                     position: 'fixed',
                     bottom: '0',
-                    left: '10%',
-                    width: '80%'
+                    width: '100%',
+                    zIndex: '99'
                 }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">
