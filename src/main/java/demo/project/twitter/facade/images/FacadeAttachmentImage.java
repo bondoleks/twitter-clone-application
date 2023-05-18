@@ -51,7 +51,7 @@ public  class FacadeAttachmentImage {
     }
 
     public DtoAttachmentImage saveEntity (DtoAttachmentImage requestBody){
-        entity = mapper().map(dto, entity.getClass());
+        entity = mapper().map(requestBody, entity.getClass());
         AttachmentImage entity2 =service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
         return dto;

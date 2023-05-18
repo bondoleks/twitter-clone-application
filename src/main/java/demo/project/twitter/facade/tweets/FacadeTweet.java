@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -51,10 +53,17 @@ public  class FacadeTweet {
     }
 
     public DtoTweet saveEntity (DtoTweet requestBody){
-        entity = mapper().map(dto, entity.getClass());
+        log.info(":::::::" + requestBody.getTweetBody());
+        entity = mapper().map(requestBody, entity.getClass());
+        log.info("::::::::" + entity.getTweetBody());
         Tweet entity2 =service.saveOne(entity);
+        log.info("::::::" + entity2.getTweetBody());
         dto = mapper().map(entity2, dto.getClass());
         return dto;
+    }
+
+    public List<Tweet> getAll(){
+        return service.getAll();
     }
 
 //    ************************************** EXAMPLE END **************************************
