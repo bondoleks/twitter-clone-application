@@ -36,19 +36,10 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import CloseIcon from '@mui/icons-material/Close';
 import WestIcon from '@mui/icons-material/West';
+import ModalTheme from '../ModalTheme/ModalTheme';
 
 
 const SidebarMobile = () => {
-
-    const [drawerOpen, setDrawerOpen] = useState(false);
-
-    const handleDrawerOpen = () => {
-        setDrawerOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setDrawerOpen(false);
-    };
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -74,6 +65,7 @@ const SidebarMobile = () => {
         });
     }, [location]);
 
+    // відкривання форми для створення твіта по кліку на кнопку Tweet
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -82,6 +74,28 @@ const SidebarMobile = () => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    // відкривання дроп-меню
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleDrawerOpen = () => {
+        setDrawerOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
+    };
+
+    // відкривання модального вікна для налаштування теми по кліку на пункт Settings
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
     };
 
 
@@ -117,7 +131,7 @@ const SidebarMobile = () => {
                     Messages
                 </Typography>
                 <Box>
-                    <IconButton disableTouchRipple sx={{
+                    <IconButton onClick={handleOpenModal} sx={{
                         color: 'black',
                         '&:hover': {
                             backgroundColor: 'white',
@@ -126,6 +140,7 @@ const SidebarMobile = () => {
                     }}>
                         <SettingsOutlinedIcon fontSize="medium" />
                     </IconButton>
+                    <ModalTheme open={openModal} onClose={handleCloseModal} />
                 </Box>
             </Toolbar>
         </>
@@ -145,7 +160,7 @@ const SidebarMobile = () => {
                     Notifications
                 </Typography>
                 <Box >
-                    <IconButton disableTouchRipple sx={{
+                    <IconButton onClick={handleOpenModal} sx={{
                         color: 'black',
                         '&:hover': {
                             backgroundColor: 'white',
@@ -154,6 +169,7 @@ const SidebarMobile = () => {
                     }}>
                         <SettingsOutlinedIcon fontSize="medium" />
                     </IconButton>
+                    <ModalTheme open={openModal} onClose={handleCloseModal} />
                 </Box>
             </Toolbar>
         </>
@@ -171,7 +187,7 @@ const SidebarMobile = () => {
             }}>
                 <Search />
                 <Box>
-                    <IconButton disableTouchRipple sx={{
+                    <IconButton onClick={handleOpenModal} sx={{
                         color: 'black',
                         '&:hover': {
                             backgroundColor: 'white',
@@ -180,6 +196,7 @@ const SidebarMobile = () => {
                     }}>
                         <SettingsOutlinedIcon fontSize="medium" />
                     </IconButton>
+                    <ModalTheme open={openModal} onClose={handleCloseModal} />
                 </Box>
             </Toolbar>
         </>
@@ -191,7 +208,7 @@ const SidebarMobile = () => {
         }}>
             <Box sx={{ display: 'flex' }}>
                 <Link to={`/home`}>
-                    <IconButton disableTouchRipple sx={{
+                    <IconButton sx={{
                         color: 'black',
                         '&:hover': {
                             backgroundColor: 'white',
@@ -219,7 +236,7 @@ const SidebarMobile = () => {
         }}>
             <Box sx={{ display: 'flex' }}>
                 <Link to={`/home`}>
-                    <IconButton disableTouchRipple sx={{
+                    <IconButton sx={{
                         color: 'black',
                         '&:hover': {
                             backgroundColor: 'white',
@@ -346,11 +363,15 @@ const SidebarMobile = () => {
                                         <Person2OutlinedIcon />
                                     </ListItemIcon>
 
-                                    <Link to={`/profile`} style={{ textDecoration: 'none',
-                                     color: 'black' }}>
+                                    <Link to={`/profile`} style={{
+                                        textDecoration: 'none',
+                                        color: 'black'
+                                    }}>
                                         <ListItemText onClick={handleDrawerClose}  >
-                                            <Typography sx={{ fontWeight: '900', 
-                                            fontSize: '20px' }}>
+                                            <Typography sx={{
+                                                fontWeight: '900',
+                                                fontSize: '20px'
+                                            }}>
                                                 Profile
                                             </Typography>
                                         </ListItemText>
@@ -363,8 +384,10 @@ const SidebarMobile = () => {
                                     </ListItemIcon>
                                     <Link to={`/bookmarks`} style={{ textDecoration: 'none', color: 'black' }}>
                                         <ListItemText onClick={handleDrawerClose}  >
-                                            <Typography sx={{ fontWeight: '900', 
-                                            fontSize: '20px', textDecoration: 'none' }}>
+                                            <Typography sx={{
+                                                fontWeight: '900',
+                                                fontSize: '20px', textDecoration: 'none'
+                                            }}>
                                                 Bookmarks
                                             </Typography>
                                         </ListItemText>
@@ -374,13 +397,16 @@ const SidebarMobile = () => {
                                     <ListItemIcon>
                                         <SettingsOutlinedIcon />
                                     </ListItemIcon>
-                                    <ListItemText onClick={handleDrawerClose}  >
-                                        <Typography sx={{ fontWeight: '900', 
-                                        fontSize: '20px' }}>
+                                    <ListItemText onClick={handleOpenModal}  >
+                                        <Typography sx={{
+                                            fontWeight: '900',
+                                            fontSize: '20px'
+                                        }}>
                                             Settings
                                         </Typography>
                                     </ListItemText>
                                 </ListItem>
+                                <ModalTheme open={openModal} onClose={handleCloseModal} />
                             </List>
                         </Drawer>
 
@@ -394,7 +420,8 @@ const SidebarMobile = () => {
                 <AddCircleIcon sx={{
                     position: 'fixed',
                     top: '80%',
-                    left: '70%'
+                    left: '70%',
+                    zIndex: '99'
                 }} fontSize='large' color='primary' />
             </IconButton>
             <TweetFormMobile open={open} onClose={handleClose} />
@@ -403,15 +430,13 @@ const SidebarMobile = () => {
                 <BottomNavigation sx={{
                     position: 'fixed',
                     bottom: '0',
-                    left: '10%',
-                    width: '80%'
+                    width: '100%',
+                    zIndex: '99'
                 }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">
                             <IconButton >
-
                                 {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
-
                             </IconButton>
                         </Tooltip>
                     </Link>
@@ -419,31 +444,21 @@ const SidebarMobile = () => {
                     <Link to={`/explore`}>
                         <Tooltip title="Explore">
                             <IconButton>
-
                                 {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
-
                             </IconButton>
                         </Tooltip>
                     </Link>
 
                     <Link to={`/notifications`}>
-                        <Tooltip title="Notifications">
                             <IconButton>
-
                                 {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
-
                             </IconButton>
-                        </Tooltip>
                     </Link>
 
                     <Link to={`/messages`}>
-                        <Tooltip title="Messages">
                             <IconButton>
-
                                 {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
-
                             </IconButton>
-                        </Tooltip>
                     </Link>
                 </BottomNavigation>
             </Box>

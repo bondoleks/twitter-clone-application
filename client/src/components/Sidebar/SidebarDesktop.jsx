@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { IconButton, Typography, Button } from '@mui/material';
+import {
+    IconButton,
+    Typography,
+    Button,
+    Menu,
+    MenuItem
+} from '@mui/material';
 import { Stack } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -17,6 +23,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import TweetForm from '../TweetForm/TweetForm';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ModalTheme from '../ModalTheme/ModalTheme';
 
 export const SidebarDesktop = () => {
 
@@ -42,8 +51,8 @@ export const SidebarDesktop = () => {
             profile: path === '/profile',
         });
     }, [location]);
-    
 
+    // відкривання форми для створення твіта по кліку на кнопку Tweet
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -54,6 +63,28 @@ export const SidebarDesktop = () => {
         setOpen(false);
     };
 
+    // відкривання меню Settings по натисканню на кнопку More 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleOpenMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+
+    // відкривання модального вікна для налаштування теми по кліку на пункт Settings
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+        handleCloseMenu();
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
 
     return (
 
@@ -125,7 +156,6 @@ export const SidebarDesktop = () => {
 
 
             <Link to={`/profile`} >
-
                 <IconButton sx={{
                     paddingInline: '20px',
                     borderRadius: '50px'
@@ -135,13 +165,41 @@ export const SidebarDesktop = () => {
                 </IconButton>
             </Link>
 
-            <Button variant="contained" color="primary" size="medium" onClick={handleOpen} 
+            <IconButton sx={{
+                marginLeft: '-70px',
+                borderRadius: '50px'
+            }} onClick={handleOpenMenu}>
+                <MoreHorizIcon sx={{ margin: '10px' }} fontSize="medium" />
+                <Typography variant='h6'>
+                    More
+                </Typography>
+            </IconButton>
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleCloseMenu}
+                sx={{
+                    marginTop: '-50px',
+                    marginLeft: '16px'
+                }}
+            >
+                <MenuItem onClick={handleOpenModal}>
+                    <Typography sx={{ marginInline: '8px' }}>
+                        Settings
+                    </Typography>
+                    <KeyboardArrowDownIcon />
+                </MenuItem>
+            </Menu>
+            <ModalTheme open={openModal} onClose={handleCloseModal} />
+
+
+            <Button variant="contained" color="primary" size="medium" onClick={handleOpen}
                 sx={{
                     marginBottom: '50px',
                     marginInline: '30px',
                     borderRadius: '50px'
                 }}>Tweet</Button>
-                <TweetForm open={open} onClose={handleClose} />
+            <TweetForm open={open} onClose={handleClose} />
 
 
             <IconButton sx={{

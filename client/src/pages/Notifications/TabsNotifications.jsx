@@ -14,9 +14,11 @@ export const TabsNotifications = () => {
     return (
         <>
             <Tabs variant="fullWidth" value={value} onChange={handleChange} indicatorColor="primary">
+
                 <Tab label="All" sx={{ textTransform: 'none' }}>
 
                 </Tab>
+
                 <Tab label="Verified" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Mentions" sx={{ textTransform: 'none' }}></Tab>
             </Tabs>

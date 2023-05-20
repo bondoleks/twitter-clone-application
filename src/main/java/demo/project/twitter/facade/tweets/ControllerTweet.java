@@ -1,9 +1,12 @@
 package demo.project.twitter.facade.tweets;
 
 
+import demo.project.twitter.models.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,6 +31,10 @@ public class ControllerTweet {
     @PostMapping("save")
     public DtoTweet saveEntity(@RequestBody DtoTweet dto) {
         return facade.saveEntity(dto);
+    }
+
+    public List<Tweet> getAll(){
+        return facade.getAll();
     }
 
     //    ************************************** EXAMPLE END **************************************

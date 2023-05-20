@@ -3,8 +3,16 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import {
   Grid,
   Hidden,
+
+  IconButton,
+  Container,
   Typography,
+  Box,
+  Avatar
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Link from '@mui/material/Link';
+
 import TabsNotifications from "./TabsNotifications.jsx";
 import Search from "../../components/Search/Search.jsx";
 

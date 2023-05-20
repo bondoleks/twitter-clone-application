@@ -50,9 +50,11 @@ public  class FacadeChat {
     }
 
     public DtoChat saveEntity (DtoChat requestBody){
-        entity = mapper().map(dto, entity.getClass());
+
+        entity = mapper().map(requestBody, entity.getClass());
         Chat entity2 =service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
+
         return dto;
     }
 
