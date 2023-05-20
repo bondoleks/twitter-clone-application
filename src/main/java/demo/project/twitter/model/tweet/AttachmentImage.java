@@ -1,10 +1,9 @@
-package demo.project.twitter.models.tweet;
+package demo.project.twitter.model.tweet;
 
 import demo.project.twitter.model.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.net.URL;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity

@@ -1,13 +1,12 @@
-package demo.project.twitter.models;
+package demo.project.twitter.model;
 
-import demo.project.twitter.models.tweet.Tweet;
+import demo.project.twitter.model.tweet.Tweet;
 import demo.project.twitter.model.BaseEntity;
 import demo.project.twitter.model.User;
-import demo.project.twitter.models.enums.ActionType;
+import demo.project.twitter.model.enums.ActionType;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @EqualsAndHashCode(callSuper = true)

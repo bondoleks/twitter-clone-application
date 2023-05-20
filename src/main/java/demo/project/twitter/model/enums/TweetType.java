@@ -1,4 +1,4 @@
-package demo.project.twitter.models.enums;
+package demo.project.twitter.model.enums;
 
 public enum TweetType {
 
