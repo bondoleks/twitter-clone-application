@@ -10,7 +10,7 @@ import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector
 import { Tooltip, Box } from '@mui/material';
 
 
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
+const QontoConnector = styled(StepConnector)(({ theme, selectedColor, selectedLightColor }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 10,
     left: 'calc(-50% + 12px)',
@@ -18,16 +18,16 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#0080ff',
+      borderColor: selectedColor,
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#0080ff',
-    },
+    [`& .${stepConnectorClasses.line}`]:{
+      borderColor: selectedColor,
+    }
   },
   [`& .${stepConnectorClasses.line}`]: {
-    borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#aed7ff',
+    borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : selectedLightColor,
     borderTopWidth: 3,
     borderRadius: 1,
   },
@@ -55,14 +55,14 @@ const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
 
 function QontoStepIcon(props) {
 
-  const { active, completed, className } = props;
+  const { active, completed, className, selectedColor } = props;
 
   return (
-    <QontoStepIconRoot ownerState={{ active }} className={className}>
+    <QontoStepIconRoot ownerState={{ active, selectedColor }} className={className}>
       {completed ? (
-        <Check className="QontoStepIcon-completedIcon" />
+        <Check className="QontoStepIcon-completedIcon" style={{ color: selectedColor }} />
       ) : (
-        <div className="QontoStepIcon-circle" />
+        <div className="QontoStepIcon-circle" style={{ backgroundColor: selectedColor }} />
       )}
     </QontoStepIconRoot>
   );
@@ -80,19 +80,22 @@ QontoStepIcon.propTypes = {
    * @default false
    */
   completed: PropTypes.bool,
+  selectedColor: PropTypes.string,
+  selectedLightColor: PropTypes.string
 };
 
 const steps = ['Extra small', 'Small', 'Default', 'Large', 'Extra large'];
 
-export default function CustomizedSteppers() {
+export default function CustomizedSteppers({selectedColor, selectedLightColor}) {
 
   return (
     <Stack sx={{ width: '100%' }} spacing={4}>
-      <Stepper alternativeLabel activeStep={2} connector={<QontoConnector />}>
+      <Stepper alternativeLabel activeStep={2} connector={<QontoConnector selectedColor={selectedColor} selectedLightColor={selectedLightColor}/>}>
         {steps.map((label) => (
           <Step key={label}>
 
-            <StepLabel StepIconComponent={QontoStepIcon} >
+            <StepLabel  StepIconComponent={(props) => <QontoStepIcon {...props} selectedColor={selectedColor} selectedLightColor={selectedLightColor} />}>
+            
               <Tooltip title={label}>
                 <Box sx={{ marginTop: '-40px', 
                 marginLeft: '12px', 
