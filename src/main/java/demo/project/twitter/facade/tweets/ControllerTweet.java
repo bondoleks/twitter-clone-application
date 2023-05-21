@@ -1,7 +1,8 @@
 package demo.project.twitter.facade.tweets;
 
 
-import demo.project.twitter.models.tweet.Tweet;
+
+import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
