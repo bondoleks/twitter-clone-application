@@ -27,12 +27,17 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 
-
-
-export const SidebarDesktop = ({}) => { 
-    
+export const SidebarDesktop = ({ }) => {
 
     const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -91,11 +96,10 @@ export const SidebarDesktop = ({}) => {
         setOpenModal(false);
     };
 
-
-      const handleColorChange = (color) => {
+    const handleColorChange = (color) => {
         setButtonColor(color);
-      };
-
+        localStorage.setItem('buttonColor', color);
+    };
 
     return (
 
@@ -201,7 +205,7 @@ export const SidebarDesktop = ({}) => {
                     <KeyboardArrowDownIcon />
                 </MenuItem>
             </Menu>
-            
+
             <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
 
 
@@ -212,7 +216,7 @@ export const SidebarDesktop = ({}) => {
                     borderRadius: '50px',
                     backgroundColor: buttonColor
                 }}>Tweet</Button>
-            <TweetForm open={open} onClose={handleClose}/>
+            <TweetForm open={open} onClose={handleClose} />
 
 
             <IconButton sx={{

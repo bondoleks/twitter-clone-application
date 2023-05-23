@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Tab, Tabs } from '@mui/material';
 import { TabPanel, TabContext } from '@mui/lab';
 import { Avatar } from '@mui/material';
+import ModalTheme from '../../components/ModalTheme/ModalTheme';
 
 
 export const TabsProfile = () => {
@@ -12,14 +13,47 @@ export const TabsProfile = () => {
         setValue(newValue);
     };
 
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
+const [openModal, setOpenModal] = useState(false);
+
+const handleOpenModal = () => {
+    setOpenModal(true);
+    handleCloseMenu();
+};
+
+const handleCloseModal = () => {
+    setOpenModal(false);
+};
+
+const handleColorChange = (color) => {
+    setButtonColor(color);
+    localStorage.setItem('buttonColor', color);
+};
+
     return (
         <>
-            <Tabs variant="fullWidth" value={value} onChange={handleChange}  >
+            <Tabs variant="fullWidth" value={value} onChange={handleChange} sx={{
+          "& .MuiTabs-indicator": {
+            backgroundColor: buttonColor,
+          },
+          "& .Mui-selected": {
+            color: 'black',
+          },
+          }} >
                 <Tab label="Tweets" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Replies" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Media" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Linkes" sx={{ textTransform: 'none' }}></Tab>
             </Tabs>
+            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
 
             <TabContext value={value} >
                 <TabPanel value={0} index={0}>

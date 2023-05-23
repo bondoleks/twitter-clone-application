@@ -16,8 +16,30 @@ import CheckIcon from '@mui/icons-material/Check';
 
 export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
 
-    const [color, setColor] = useState(buttonColor);
-    const [lightColor, setLightColor] = useState('#7bbdff');
+    const [color, setColor] = useState(() => {
+        // При первом рендере компонента пытаемся получить цвет из локального хранилища
+        const storedColor = localStorage.getItem('selectedColor');
+        return storedColor ? storedColor : buttonColor;
+    });
+
+    const [lightColor, setLightColor] = useState(() => {
+        // При первом рендере компонента пытаемся получить светлый цвет из локального хранилища
+        const storedLightColor = localStorage.getItem('selectedLightColor');
+        return storedLightColor ? storedLightColor : '#7bbdff';
+    });
+
+    
+    // При изменении color или lightColor сохраняем значения в локальное хранилище
+    useEffect(() => {
+        localStorage.setItem('selectedColor', color);
+    }, [color]);
+
+    useEffect(() => {
+        localStorage.setItem('selectedLightColor', lightColor);
+    }, [lightColor]);
+
+    // const [color, setColor] = useState(buttonColor);
+    // const [lightColor, setLightColor] = useState('#7bbdff');
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [activeColor, setActiveColor] = useState(null);

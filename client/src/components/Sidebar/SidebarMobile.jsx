@@ -41,6 +41,20 @@ import ModalTheme from '../ModalTheme/ModalTheme';
 
 const SidebarMobile = () => {
 
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
+
     const [clicked, setClicked] = useState({
         home: false,
         explore: false,
@@ -406,7 +420,7 @@ const SidebarMobile = () => {
                                         </Typography>
                                     </ListItemText>
                                 </ListItem>
-                                <ModalTheme open={openModal} onClose={handleCloseModal} />
+                                <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                             </List>
                         </Drawer>
 
@@ -421,8 +435,9 @@ const SidebarMobile = () => {
                     position: 'fixed',
                     top: '80%',
                     left: '70%',
-                    zIndex: '99'
-                }} fontSize='large' color='primary' />
+                    zIndex: '99', 
+                    color: buttonColor
+                }} fontSize='large' />
             </IconButton>
             <TweetFormMobile open={open} onClose={handleClose} />
 
