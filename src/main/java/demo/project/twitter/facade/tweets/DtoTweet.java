@@ -1,20 +1,27 @@
 package demo.project.twitter.facade.tweets;
 
+import demo.project.twitter.model.User;
+import demo.project.twitter.models.enums.TweetType;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
+@Data
 public class DtoTweet {
-/* в зтом классе создаются только те поля, которые необходимы для работы с данной сущностью фронту. Именно эти поля
- будут передаваться в JSON в request и response
- Внимание!!!!!
- Название и тип поля должен полностью совпадать с названием и типом поля в классе соответсвующей entity.
- В этом классе могут быть не все поля соответсвующей entity, а только те, которые необходимы фронту. Порядок
- декларирования полей значения не имеет.
-  */
 
-/*******************Данные поля созданы для примера**************************/
     private Long id;
+    private String tweetBody;
+    private Date createdDate;
+    private TweetType tweetType;
 
 
+    private Long user_id;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String av_imagerUrl;
 
 }
