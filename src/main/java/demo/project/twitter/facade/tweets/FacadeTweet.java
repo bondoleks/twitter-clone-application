@@ -1,16 +1,23 @@
 package demo.project.twitter.facade.tweets;
 
+import demo.project.twitter.facade.users.ServiceUser;
+import demo.project.twitter.model.User;
+
+import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -19,11 +26,11 @@ import java.util.List;
 public  class FacadeTweet {
 
     private final ServiceTweet service;
+    private final ServiceUser serviceUser;
     private Tweet entity = new Tweet();
     private DtoTweet dto = new DtoTweet();
 
-/*Маппер настроен минимально, только для выполнения основной функции - простого преобразования одного объекта
-* в другой - entity в dto и dto в entity. */
+
     private ModelMapper mapper() {
         ModelMapper mm = new ModelMapper();
         mm.getConfiguration()
@@ -34,12 +41,23 @@ public  class FacadeTweet {
         return mm;
     }
 
- /* Дальнейший код приведен для примера.
-        В данном классе реализуются методы предназначенные для связи контроллера и сервиса, с подкючением ModelMapper
-         для преобразования данных из БД в DTO и обратно
-  */
+    private Tweet transDtoToEntity(DtoTweet dto){
+        Date date = new Date();
+        mapper().map(dto, entity);
+        entity.setTweetType(TweetType.TWEET);
+        User user = serviceUser.getById(dto.getUser_id()).get();
+        entity.setUser(user);
+        entity.setCreatedDate(date);
+        return entity;
+    }
 
-    // ************************************** EXAMPLE START **************************************
+
+    private DtoTweet transEntityToDto(Tweet entity){
+        mapper().map(entity.getUser(), dto);
+        mapper().map(entity, dto);
+        dto.setUser_id(entity.getUser().getId());
+        return dto;
+    }
     public ResponseEntity<?> getEntity (Long id){
 
         if (service.existsById(id)) {
@@ -52,20 +70,29 @@ public  class FacadeTweet {
     }
 
     public DtoTweet saveEntity (DtoTweet requestBody){
-        log.info(":::::::" + requestBody.getTweetBody());
-        entity = mapper().map(requestBody, entity.getClass());
-        log.info("::::::::" + entity.getTweetBody());
+        entity = transDtoToEntity(requestBody);
         Tweet entity2 =service.saveOne(entity);
-        log.info("::::::" + entity2.getTweetBody());
-        dto = mapper().map(entity2, dto.getClass());
-        return dto;
+        return transEntityToDto(entity2);
     }
 
-    public List<Tweet> getAll(){
-        return service.getAll();
+    public Page<Tweet> getAll(Integer sizePage, Integer numberPage){
+        return service.findAll(sizePage, numberPage);
     }
 
-//    ************************************** EXAMPLE END **************************************
+
+    public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage) {
+        Page<Tweet> pTweet= service.getAllTweetById(id, sizePage, numberPage);
+        List<DtoTweet> list = pTweet.stream().
+                map(x -> transEntityToDto(x)).
+                        collect(Collectors.toList());
+        DtoTweetPage dtp = new DtoTweetPage();
+        dtp.setListDto(list);
+        dtp.setTotalElements(pTweet.getTotalElements());
+        dtp.setTotalPage(pTweet.getTotalPages());
+        return dtp;
+    }
+
+
 }
 
 
