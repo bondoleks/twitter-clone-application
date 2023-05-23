@@ -4,9 +4,11 @@ import demo.project.twitter.model.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface RepoNotification extends JpaRepository<Notification, Long> {
-    Iterable<Notification> getAllNotificationByRecieverId(Long userId);
+    List<Notification> getAllNotificationByRecieverId(Long userId);
 
 }
