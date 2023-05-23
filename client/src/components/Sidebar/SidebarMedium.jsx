@@ -109,6 +109,7 @@ export const SidebarMedium = () => {
     };
 
 
+
     return (
         <>
             <Grid container direction="column" spacing={2}>

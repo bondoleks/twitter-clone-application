@@ -101,6 +101,7 @@ export const SidebarDesktop = ({ }) => {
         localStorage.setItem('buttonColor', color);
     };
 
+
     return (
 
         <Stack position='fixed'>

@@ -20,29 +20,15 @@ export const TabsProfile = () => {
         if (savedColor) {
             setButtonColor(savedColor);
         }
-    }, []);
+    }, [buttonColor]);
 
-const [openModal, setOpenModal] = useState(false);
-
-const handleOpenModal = () => {
-    setOpenModal(true);
-    handleCloseMenu();
-};
-
-const handleCloseModal = () => {
-    setOpenModal(false);
-};
-
-const handleColorChange = (color) => {
-    setButtonColor(color);
-    localStorage.setItem('buttonColor', color);
-};
 
     return (
         <>
             <Tabs variant="fullWidth" value={value} onChange={handleChange} sx={{
           "& .MuiTabs-indicator": {
-            backgroundColor: buttonColor,
+            backgroundColor: 'white',
+            borderBottom: `2px solid ${buttonColor}`
           },
           "& .Mui-selected": {
             color: 'black',
@@ -53,7 +39,6 @@ const handleColorChange = (color) => {
                 <Tab label="Media" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Linkes" sx={{ textTransform: 'none' }}></Tab>
             </Tabs>
-            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
 
             <TabContext value={value} >
                 <TabPanel value={0} index={0}>

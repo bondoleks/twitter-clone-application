@@ -55,6 +55,8 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
         setLightColor(lightColors[colorIndex]);
         setActiveColor(selectedColor);
         onColorChange(selectedColor);
+        setButtonColor(selectedColor); // Добавлено обновление buttonColor
+        localStorage.setItem('buttonColor', selectedColor); // Сохранение в localStorage
     };
 
     const handleClick = (event) => {
@@ -67,6 +69,9 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
         onClose();
     };
 
+    useEffect(() => {
+        setActiveColor(color);
+    }, []);
     
 
     return (
@@ -197,8 +202,6 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
                 </Button>
 
             </DialogActions>
-
-
 
         </Dialog>
     );

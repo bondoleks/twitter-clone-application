@@ -54,6 +54,7 @@ const SidebarMobile = () => {
         setButtonColor(color);
         localStorage.setItem('buttonColor', color);
     };
+   
 
     const [clicked, setClicked] = useState({
         home: false,
