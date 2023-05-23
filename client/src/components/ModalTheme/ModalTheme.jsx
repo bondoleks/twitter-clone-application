@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -14,11 +14,9 @@ import CheckIcon from '@mui/icons-material/Check';
 
 
 
-export const ThemeDialog = ({ open, onClose }) => {
+export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
 
-
-
-    const [color, setColor] = useState('#0080ff');
+    const [color, setColor] = useState(buttonColor);
     const [lightColor, setLightColor] = useState('#7bbdff');
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
@@ -34,6 +32,7 @@ export const ThemeDialog = ({ open, onClose }) => {
         setColor(selectedColor);
         setLightColor(lightColors[colorIndex]);
         setActiveColor(selectedColor);
+        onColorChange(selectedColor);
     };
 
     const handleClick = (event) => {
@@ -41,11 +40,12 @@ export const ThemeDialog = ({ open, onClose }) => {
         setActiveButton(selectedColor)
     };
 
-
     const handleClose = () => {
         setSelectedColor(color);
         onClose();
     };
+
+    
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -101,6 +101,7 @@ export const ThemeDialog = ({ open, onClose }) => {
                                 cursor: 'pointer',
                                 position: 'relative',
                             }}
+                            color={buttonColor}
                             onClick={() => handleColorChange(c)}
                         >
                             {activeColor === c && (
@@ -165,14 +166,18 @@ export const ThemeDialog = ({ open, onClose }) => {
                         </Typography>
                     </Button>
                 </Box>
-
             </DialogContent>
+            
 
             <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button onClick={onClose} variant="contained" color="primary" sx={{ marginBottom: '20px', borderRadius: '50px', backgroundColor: color }}>
                     Done
                 </Button>
+
             </DialogActions>
+
+
+
         </Dialog>
     );
 };

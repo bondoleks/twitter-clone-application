@@ -29,9 +29,10 @@ import ModalTheme from '../ModalTheme/ModalTheme';
 
 
 
-export const SidebarDesktop = () => {
+export const SidebarDesktop = ({}) => { 
     
 
+    const [buttonColor, setButtonColor] = useState();
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -89,6 +90,12 @@ export const SidebarDesktop = () => {
     const handleCloseModal = () => {
         setOpenModal(false);
     };
+
+
+      const handleColorChange = (color) => {
+        setButtonColor(color);
+      };
+
 
     return (
 
@@ -194,16 +201,18 @@ export const SidebarDesktop = () => {
                     <KeyboardArrowDownIcon />
                 </MenuItem>
             </Menu>
-            <ModalTheme open={openModal} onClose={handleCloseModal} />
+            
+            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
 
 
             <Button variant="contained" size="medium" onClick={handleOpen}
                 sx={{
                     marginBottom: '50px',
                     marginInline: '30px',
-                    borderRadius: '50px'
+                    borderRadius: '50px',
+                    backgroundColor: buttonColor
                 }}>Tweet</Button>
-            <TweetForm open={open} onClose={handleClose} />
+            <TweetForm open={open} onClose={handleClose}/>
 
 
             <IconButton sx={{
