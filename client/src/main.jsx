@@ -13,8 +13,8 @@ import Messages from './pages/Messages/Messages.jsx';
 import Notifications from './pages/Notifications/Notifications.jsx';
 import Profile from './pages/Profile/Profile.jsx';
 import Bookmarks from './pages/Bookmarks/Bookmarks.jsx';
-import { store } from './redux/store.jsx'
-import theme from './CreateTheme.jsx'
+import { store } from './redux/store.jsx';
+import { ThemeDialog } from './components/ModalTheme/ModalTheme';
 
 const router = createBrowserRouter([
   {
@@ -50,10 +50,10 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
 
-    <Provider store={store}>
+
       <RouterProvider router={router} />
-    </Provider>
 
-
+  </Provider>
 )

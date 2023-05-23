@@ -27,7 +27,11 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 
+
+
 export const SidebarDesktop = () => {
+    
+
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -193,7 +197,7 @@ export const SidebarDesktop = () => {
             <ModalTheme open={openModal} onClose={handleCloseModal} />
 
 
-            <Button variant="contained" color="primary" size="medium" onClick={handleOpen}
+            <Button variant="contained" size="medium" onClick={handleOpen}
                 sx={{
                     marginBottom: '50px',
                     marginInline: '30px',
@@ -211,6 +215,7 @@ export const SidebarDesktop = () => {
             </IconButton>
 
         </Stack>
+
     )
 }
 

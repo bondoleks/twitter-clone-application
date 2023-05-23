@@ -6,31 +6,34 @@ import {
     DialogActions,
     Button,
     Typography,
-    Box,
-    Slider
+    Box
 } from '@mui/material';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CustomizedSteppers from './StepperEl';
+import CheckIcon from '@mui/icons-material/Check';
+
 
 
 export const ThemeDialog = ({ open, onClose }) => {
+
+
 
     const [color, setColor] = useState('#0080ff');
     const [lightColor, setLightColor] = useState('#7bbdff');
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
-    
+    const [activeColor, setActiveColor] = useState(null);
 
     const colors = ['#0080ff', '#f5e33d', '#ff0984', '#8000ff', '#ff8040', '#04ac7e'];
     const lightColors = ['#aed7ff', '#ffff80', '#ffb0d8', '#d0a2ff', '#ffc1a4', '#86ffc2']
 
-    const [selectedColor, setSelectedColor] = useState(`${color}`);
     const [selectedLightColor, setLightColors] = useState(`${lightColor}`)
 
     const handleColorChange = (selectedColor) => {
         const colorIndex = colors.indexOf(selectedColor);
         setColor(selectedColor);
         setLightColor(lightColors[colorIndex]);
+        setActiveColor(selectedColor);
     };
 
     const handleClick = (event) => {
@@ -38,8 +41,10 @@ export const ThemeDialog = ({ open, onClose }) => {
         setActiveButton(selectedColor)
     };
 
+
     const handleClose = () => {
-        setAnchorEl(null);
+        setSelectedColor(color);
+        onClose();
     };
 
     return (
@@ -94,9 +99,22 @@ export const ThemeDialog = ({ open, onClose }) => {
                                 display: 'inline-block',
                                 margin: '4px',
                                 cursor: 'pointer',
+                                position: 'relative',
                             }}
                             onClick={() => handleColorChange(c)}
-                        />
+                        >
+                            {activeColor === c && (
+                                <CheckIcon
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        color: '#fff',
+                                    }}
+                                />
+                            )}
+                        </Box>
                     ))}
                 </Box>
 
@@ -116,7 +134,7 @@ export const ThemeDialog = ({ open, onClose }) => {
                 }}>
                     <Button disableRipple sx={{
                         width: '150px', margin: '12px', textTransform: 'none', color: 'black', backgroundColor: 'white', border: `2px solid ${color}`, '&:hover': {
-                            backgroundColor: 'white' 
+                            backgroundColor: 'white'
                         }
                     }}>
                         <RadioButtonUncheckedIcon sx={{ width: '20px', color: 'gray' }} />
