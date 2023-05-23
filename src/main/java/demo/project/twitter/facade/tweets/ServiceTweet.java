@@ -1,8 +1,12 @@
 package demo.project.twitter.facade.tweets;
 
 
+
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,12 +16,7 @@ import java.util.Optional;
 public class ServiceTweet implements FunctionTweet {
     private final RepoTweet repo;
 
-   /* Дальнейший код приведен для примера.
-        В данном классе создаются методы сервиса, заявленные в интерфейсе Function,
-        в том числе, и с подключением интерфейса Repo (наследник CrudRepository)
-        */
 
-// ************************************** EXAMPLE START **************************************
 
     @Override
     public Tweet saveOne(Tweet tweet) {
@@ -35,10 +34,24 @@ public class ServiceTweet implements FunctionTweet {
 
     @Override
     public List<Tweet> getAll() {
-        return (List<Tweet>) repo.findAll();
+        return null;
     }
 
 
-//    ************************************** EXAMPLE END **************************************
+    public Page<Tweet> findAll(Integer sizePage, Integer numberPage) {
+        Pageable pageable = PageRequest.of(numberPage, sizePage);
+        return repo.findAll(pageable);
+    }
+
+    public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage) {
+        Pageable pageable = PageRequest.of(numberPage, sizePage);
+        return id == 0 ?
+                repo.findAll(pageable) :
+                repo.findAllByUser_id(id, pageable);
+
+    }
+
+
+
 
 }
