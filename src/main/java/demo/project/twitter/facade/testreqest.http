@@ -1,14 +1,14 @@
 ####
-POST http://localhost:8080/test/save
+POST http://localhost:8080/tweets/save
 Content-Type: application/json
 
 {
   "id" : 120,
-  "name": "Alex500",
-  "description" : "des8888"
+  "tweetBody": "Alex500"
+
 }
 ####
-GET http://localhost:8080/test/read/47
+GET http://localhost:8080/tweets/get/all
 
 ###
 GET http://localhost:8080/test/read/all

@@ -50,7 +50,7 @@ public  class FacadeUser {
     }
 
     public DtoUser saveEntity (DtoUser requestBody){
-        entity = mapper().map(dto, entity.getClass());
+        entity = mapper().map(requestBody, entity.getClass());
         User entity2 =service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
         return dto;

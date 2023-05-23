@@ -1,8 +1,11 @@
 package demo.project.twitter.facade.notifications;
 
 
+import demo.project.twitter.model.Notification;
+import demo.project.twitter.model.enums.NotificationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -10,25 +13,33 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("notifications")
 public class ControllerNotification {
-    private final FacadeNotification facade;
+
+    private final ServiceNotification serviceNotification;
+    private final
 
 
-/* Дальнейший код приведен для примера.
-        В данном классе создаются endpoint для обработки запросов фронта.
-        Весь основной процесс обработки происходит в классе Facade
-        */
-
-// ************************************** EXAMPLE START **************************************
-
-    @GetMapping("get/{id}")
-    public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {
-        return facade.getEntity(id);
+    @PostMapping("create/{fromUserId}/{tweetId}")
+    String createNotification(@PathVariable("fromUserId") Long fromUserId, @PathVariable("tweetId") Long tweetId,
+                          @RequestParam NotificationType notificationType, @RequestParam String toUsername, Model model){
+        serviceNotification.createNotification(notificationType, toUsername, fromUserId, tweetId);
+        return "Created";
+//        return "redirect:/ name attribute in front";
     }
 
-    @PostMapping("save")
-    public DtoNotification saveEntity(@RequestBody DtoNotification dto) {
-        return facade.saveEntity(dto);
+    @GetMapping("read/{id}")
+    public String readNotificationsByUserId(@PathVariable("id") Long id, Model model) {
+        Iterable<Notification> posts = serviceNotification.findAllNotificationByRecieverId(id);
+        model.addAttribute("name attribute in front", posts);
+        return posts.toString();
+//        return "name attribute in front";
     }
 
-    //    ************************************** EXAMPLE END **************************************
+    @PostMapping("{id}/delete")
+    public String deleteNotification(@PathVariable(value = "id") Long id, Model model){
+        serviceNotification.deleteNotification(id);
+        return "Deleted";
+//        return "redirect:/ name attribute in front";
+
+    }
+
 }

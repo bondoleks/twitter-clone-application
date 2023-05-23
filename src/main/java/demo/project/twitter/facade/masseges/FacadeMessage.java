@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.masseges;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.chat.Message;
+import demo.project.twitter.model.chat.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -51,7 +50,7 @@ public  class FacadeMessage {
     }
 
     public DtoMessage saveEntity (DtoMessage requestBody){
-        entity = mapper().map(dto, entity.getClass());
+        entity = mapper().map(requestBody, entity.getClass());
         Message entity2 =service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
         return dto;

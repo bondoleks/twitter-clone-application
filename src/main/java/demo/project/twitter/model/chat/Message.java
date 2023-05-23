@@ -1,5 +1,4 @@
-package demo.project.twitter.models.chat;
-
+package demo.project.twitter.model.chat;
 
 import demo.project.twitter.model.BaseEntity;
 import demo.project.twitter.model.User;
@@ -8,20 +7,21 @@ import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "chats_to_users")
+@Table(name = "messages")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatsToUsers extends BaseEntity {
+public class Message extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @JoinColumn(name = "chat_id", referencedColumnName = "id")
-    private Long chatId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "chat_id", referencedColumnName = "id")
+    private Chat chat;
+
+    @Column(name = "text_message")
+    private String textMessage;
 }
