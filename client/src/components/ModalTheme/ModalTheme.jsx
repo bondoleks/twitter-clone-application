@@ -14,7 +14,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 
 
-export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
+export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
     const [color, setColor] = useState(() => {
         // При первом рендере компонента пытаемся получить цвет из локального хранилища
@@ -28,7 +28,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
         return storedLightColor ? storedLightColor : '#7bbdff';
     });
 
-    
+
     // При изменении color или lightColor сохраняем значения в локальное хранилище
     useEffect(() => {
         localStorage.setItem('selectedColor', color);
@@ -72,7 +72,31 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
     useEffect(() => {
         setActiveColor(color);
     }, []);
-    
+
+
+    const [activeBut, setActiveBut] = useState(null);
+
+    const buttons = [
+        {
+            label: 'Default',
+            color: 'black',
+            backgroundColor: 'white',
+        },
+        {
+            label: 'Dim',
+            color: 'white',
+            backgroundColor: '#2f2f2f',
+        },
+        {
+            label: 'Lights out',
+            color: 'white',
+            backgroundColor: 'black',
+        },
+    ];
+
+    const handleButtonClick = (index) => {
+        setActiveBut(index);
+    };
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -160,41 +184,34 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange  }) => {
                     paddingInline: '20px',
                     borderRadius: '12px'
                 }}>
-                    <Button disableRipple sx={{
-                        width: '150px', margin: '12px', textTransform: 'none', color: 'black', backgroundColor: 'white', border: `2px solid ${color}`, '&:hover': {
-                            backgroundColor: 'white'
-                        }
-                    }}>
-                        <RadioButtonUncheckedIcon sx={{ width: '20px', color: 'gray' }} />
-                        <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }} >
-                            Default
-                        </Typography>
-                    </Button>
 
-                    <Button disableRipple sx={{
-                        width: '150px', margin: '12px', textTransform: 'none', color: 'white', backgroundColor: '#2f2f2f', '&:hover': {
-                            backgroundColor: '#2f2f2f'
-                        }
-                    }}>
-                        <RadioButtonUncheckedIcon sx={{ width: '20px', marginRight: '8px', color: 'gray' }} />
-                        <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
-                            Dim
-                        </Typography>
-                    </Button>
-
-                    <Button disableRipple sx={{
-                        width: '150px', margin: '12px', textTransform: 'none', color: 'white', backgroundColor: 'black', '&:hover': {
-                            backgroundColor: 'black'
-                        }
-                    }}>
-                        <RadioButtonUncheckedIcon sx={{ width: '20px', marginRight: '8px', color: 'gray' }} />
-                        <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
-                            Lights out
-                        </Typography>
-                    </Button>
+                    {buttons.map((button, index) => (
+                        <Button
+                            key={index}
+                            disableRipple
+                            sx={{
+                                width: '150px',
+                                margin: '12px',
+                                textTransform: 'none',
+                                color: button.color,
+                                backgroundColor: button.backgroundColor,
+                                border: activeBut === index ? `2px solid ${color}` : 'none',
+                                '&:hover': {
+                                    backgroundColor: button.backgroundColor,
+                                },
+                            }}
+                            onClick={() => handleButtonClick(index)}
+                        >
+                            <RadioButtonUncheckedIcon sx={{ width: '20px', color: 'gray' }} />
+                            <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
+                                {button.label}
+                            </Typography>
+                        </Button>
+                    ))}
+         
                 </Box>
             </DialogContent>
-            
+
 
             <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button onClick={onClose} variant="contained" color="primary" sx={{ marginBottom: '20px', borderRadius: '50px', backgroundColor: color }}>
