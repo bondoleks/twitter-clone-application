@@ -130,7 +130,7 @@ const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
                         />
                         <TextField
                             id="outlined-password-input"
-                            label="Password"
+                            label="PasswordModal"
                             type="password"
                             inputProps={{
                                 style: {
