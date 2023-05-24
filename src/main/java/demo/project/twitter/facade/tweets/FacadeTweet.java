@@ -27,8 +27,8 @@ public  class FacadeTweet {
 
     private final ServiceTweet service;
     private final ServiceUser serviceUser;
-    private Tweet entity = new Tweet();
-    private DtoTweet dto = new DtoTweet();
+
+
 
 
     private ModelMapper mapper() {
@@ -42,6 +42,7 @@ public  class FacadeTweet {
     }
 
     private Tweet transDtoToEntity(DtoTweet dto){
+        Tweet entity = new Tweet();
         Date date = new Date();
         mapper().map(dto, entity);
         entity.setTweetType(TweetType.TWEET);
@@ -53,15 +54,16 @@ public  class FacadeTweet {
 
 
     private DtoTweet transEntityToDto(Tweet entity){
+        DtoTweet dto = new DtoTweet();
         mapper().map(entity.getUser(), dto);
         mapper().map(entity, dto);
         dto.setUser_id(entity.getUser().getId());
         return dto;
     }
     public ResponseEntity<?> getEntity (Long id){
-
+        DtoTweet dto = new DtoTweet();
         if (service.existsById(id)) {
-            entity = service.getById(id).get();
+            Tweet entity = service.getById(id).get();
             dto = mapper().map(entity,dto.getClass());
             return ResponseEntity.accepted().body(dto);
         } else {
@@ -70,7 +72,7 @@ public  class FacadeTweet {
     }
 
     public DtoTweet saveEntity (DtoTweet requestBody){
-        entity = transDtoToEntity(requestBody);
+        Tweet entity = transDtoToEntity(requestBody);
         Tweet entity2 =service.saveOne(entity);
         return transEntityToDto(entity2);
     }
