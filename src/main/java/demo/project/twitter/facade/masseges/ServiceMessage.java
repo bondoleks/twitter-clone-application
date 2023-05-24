@@ -11,13 +11,6 @@ import java.util.Optional;
 public class ServiceMessage implements FunctionMessage {
     private final RepoMessage repo;
 
-   /* Дальнейший код приведен для примера.
-        В данном классе создаются методы сервиса, заявленные в интерфейсе Function,
-        в том числе, и с подключением интерфейса Repo (наследник CrudRepository)
-        */
-
-// ************************************** EXAMPLE START **************************************
-
     @Override
     public Message saveOne(Message message) {
         return repo.save(message);
@@ -31,7 +24,4 @@ public class ServiceMessage implements FunctionMessage {
     public boolean existsById(Long id) {
         return repo.existsById(id);
     }
-
-//    ************************************** EXAMPLE END **************************************
-
 }
