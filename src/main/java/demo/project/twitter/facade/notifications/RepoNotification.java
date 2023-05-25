@@ -1,10 +1,14 @@
 package demo.project.twitter.facade.notifications;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.Notification;
-import org.springframework.data.repository.CrudRepository;
+import demo.project.twitter.model.Notification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 @Repository
-public interface RepoNotification extends CrudRepository<Notification, Long> { }
+public interface RepoNotification extends JpaRepository<Notification, Long> {
+    List<Notification> getAllNotificationByRecieverId(Long userId);
+
+}

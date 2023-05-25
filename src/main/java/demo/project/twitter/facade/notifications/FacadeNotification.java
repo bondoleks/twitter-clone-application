@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.notifications;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.Notification;
+import demo.project.twitter.model.Notification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -51,7 +50,7 @@ public  class FacadeNotification {
     }
 
     public DtoNotification saveEntity (DtoNotification requestBody){
-        entity = mapper().map(dto, entity.getClass());
+        entity = mapper().map(requestBody, entity.getClass());
         Notification entity2 =service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
         return dto;
