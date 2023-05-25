@@ -38,14 +38,6 @@ const router = createBrowserRouter([
   {
     path: "/notifications",
     element: <Notifications />,
-    // children:[
-    //   {path: "/home",
-    //   element: <Tab1 />,},
-    //   {path: "/home/tab2",
-    //   element: <Tab2 />,},
-    //   {path: "/home/tab3",
-    //   element: <Tab3 />,},
-    // ]
   },
   {
     path: "/messages",
