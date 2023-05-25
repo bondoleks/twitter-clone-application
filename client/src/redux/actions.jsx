@@ -5,6 +5,17 @@ export const GET_USER_ERROR = 'user/get/error';
 export const LOG_OUT_USER = 'user/log_out'
 
 
+//Home
+export const GET_TWEETS_REQUEST = 'home/tweets/get/request';
+export const GET_TRENDING_REQUEST = 'home/trending/get/request';
+export const GET_TWEETS_SUCCESS = 'home/tweets/get/succses';
+export const GET_TRENDING_SUCCESS = 'home/trending/get/succses';
+export const GET_HOME_ERROR = 'home/all/get/error';
+export const LOG_OUT_HOME = 'home/log_out';
+export const START_SCROLL_HOME = 'home/scroll/start';
+export const END_SCROLL_HOME = 'home/scroll/end'
+
+
 //loging
 export const LOGIN_SUCCESS = 'user/loging/success'
 export const LOGIN_FAILURE = 'user/loging/fail'
