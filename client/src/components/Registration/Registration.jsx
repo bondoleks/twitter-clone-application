@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, Button, TextField } from '@mui/material';
 
-const RegistrationModal = ({ isOpen, onClose }) => {
-    const style = {
+const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
+    const modalStyle = {
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -14,10 +14,15 @@ const RegistrationModal = ({ isOpen, onClose }) => {
         borderRadius: 5,
         boxShadow: 24,
         p: 4,
+        zIndex: 1,
+    };
+
+    const contentStyle = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        zIndex: 1,
+        justifyContent: 'center',
+        textAlign: 'center',
     };
 
     const handleRegistration = () => {
@@ -25,9 +30,9 @@ const RegistrationModal = ({ isOpen, onClose }) => {
     };
 
     return (
-            <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box sx={{ maxWidth: 364, minWidth: 364 }}>
-                <Box sx={style}>
+                <Box sx={modalStyle}>
                     <Typography
                         onClick={onClose}
                         sx={{
@@ -50,13 +55,14 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                         id="modal-modal-title"
                         variant="h6"
                         component="h2"
-                        sx={{ fontSize: 28, marginBottom: 3, width: 300 }}
+                        sx={{ fontSize: 28, width: 300,  margin: '0 auto', paddingBottom: 3,}}
                     >
                         Join Twitter now!
                     </Typography>
                     <Box
                         component="form"
                         sx={{
+                            ...contentStyle,
                             '& > :not(style)': { m: 1, width: 300, marginBottom: 5 },
                         }}
                         noValidate
@@ -124,7 +130,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                         />
                         <TextField
                             id="outlined-password-input"
-                            label="Password"
+                            label="PasswordModal"
                             type="password"
                             inputProps={{
                                 style: {
@@ -191,6 +197,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                         textDecoration: 'underline',
                                     },
                                 }}
+                                onClick={onLoginClick}
                             >
                                 Login
                             </Typography>

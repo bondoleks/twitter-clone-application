@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
@@ -11,7 +10,10 @@ import Messages from './pages/Messages/Messages.jsx';
 import Notifications from './pages/Notifications/Notifications.jsx';
 import Profile from './pages/Profile/Profile.jsx';
 import Bookmarks from './pages/Bookmarks/Bookmarks.jsx';
-
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { ForYou } from './components/Home/ForYou.jsx';
+import { Following } from './components/Home/Following.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,12 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />,
+    children:[
+      {path: "/home",
+      element: <ForYou />,},
+      {path: "/home/following",
+      element: <Following />,}
+    ]
   },
   {
     path: "/explore",
@@ -42,11 +50,12 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
-  },
+  }
 ]);
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+  <Provider store={store}>
+      <RouterProvider router={router} />
+  </Provider>,
 )
