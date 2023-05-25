@@ -184,31 +184,47 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                     paddingInline: '20px',
                     borderRadius: '12px'
                 }}>
+                    
 
-                    {buttons.map((button, index) => (
-                        <Button
-                            key={index}
-                            disableRipple
-                            sx={{
-                                width: '150px',
-                                margin: '12px',
-                                textTransform: 'none',
-                                color: button.color,
-                                backgroundColor: button.backgroundColor,
-                                border: activeBut === index ? `2px solid ${color}` : 'none',
-                                '&:hover': {
-                                    backgroundColor: button.backgroundColor,
-                                },
-                            }}
-                            onClick={() => handleButtonClick(index)}
-                        >
-                            <RadioButtonUncheckedIcon sx={{ width: '20px', color: 'gray' }} />
-                            <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
-                                {button.label}
-                            </Typography>
-                        </Button>
-                    ))}
-         
+{buttons.map((button, index) => (
+  <Button
+    key={index}
+    disableRipple
+    sx={{
+      width: '150px',
+      margin: '12px',
+      textTransform: 'none',
+      color: button.color,
+      backgroundColor: button.backgroundColor,
+      border: activeBut === index ? `2px solid ${color}` : 'none',
+      '&:hover': {
+        backgroundColor: button.backgroundColor,
+      },
+    }}
+    onClick={() => handleButtonClick(index)}
+  >
+    <div
+      style={{
+        width: '20px',
+        height: '20px',
+        borderRadius: '50%',
+        backgroundColor: activeBut === index ? color : 'transparent',
+        display: 'inline-block',
+        marginRight: '8px',
+      }}
+    >
+      {activeBut === index && (
+        <CheckIcon sx={{ color: '#fff', fontSize: '16px' }} />
+      )}
+    </div>
+    <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
+      {button.label}
+    </Typography>
+  </Button>
+))}
+
+
+
                 </Box>
             </DialogContent>
 

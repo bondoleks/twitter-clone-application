@@ -24,6 +24,22 @@ export default function TweetForm({ open, onClose }) {
         }
     }, []);
 
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+        handleCloseMenu();
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
+
 
     return (
 
