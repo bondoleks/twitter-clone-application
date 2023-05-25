@@ -29,8 +29,6 @@ public  class FacadeTweet {
     private final ServiceUser serviceUser;
 
 
-
-
     private ModelMapper mapper() {
         ModelMapper mm = new ModelMapper();
         mm.getConfiguration()
@@ -42,6 +40,7 @@ public  class FacadeTweet {
     }
 
     private Tweet transDtoToEntity(DtoTweet dto){
+
         Tweet entity = new Tweet();
         mapper().map(dto, entity);
         User user = serviceUser.getById(dto.getUser_id()).get();
@@ -54,6 +53,7 @@ public  class FacadeTweet {
         entity.setCreatedDate(new Date());
         return entity;
     }
+
 
 
     private DtoTweet transEntityToDto(Tweet entity){
@@ -74,9 +74,11 @@ public  class FacadeTweet {
         }
     }
 
+
     public void saveEntity (DtoTweet requestBody){
         Tweet entity = transDtoToEntity(requestBody);
         Tweet entity2 =service.saveOne(entity);
+
 
     }
 

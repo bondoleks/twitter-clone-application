@@ -18,7 +18,9 @@ public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingR
     List<Tweet> getTweetById(Long id);*/
     Page<Tweet> findAll(Pageable pageable);
     Page<Tweet> findAllByUser_id(Long user_id, Pageable pageable);
+
     Tweet getTweetById(Long id);
+
 
 
 }

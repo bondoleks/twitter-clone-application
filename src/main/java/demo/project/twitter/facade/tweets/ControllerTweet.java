@@ -1,12 +1,17 @@
 package demo.project.twitter.facade.tweets;
 
 
+
 import demo.project.twitter.model.enums.TweetType;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.web.JsonPath;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.servlet.view.RedirectView;
+
+
 
 @RequiredArgsConstructor
 @RestController
@@ -33,6 +38,7 @@ public class ControllerTweet {
     }
 
 
+
     @PostMapping("save")
     public void saveTweet(@RequestBody DtoTweet dto) {
         dto.setTweetType(TweetType.TWEET);
@@ -45,11 +51,13 @@ public class ControllerTweet {
         facade.saveEntity(dto);
     }
 
+
     @PostMapping("reply")
     public void saveTweetReplay(@RequestBody DtoTweet dto) {
         dto.setTweetType(TweetType.REPLY);
         facade.saveEntity(dto);
     }
+
 
 
 }
