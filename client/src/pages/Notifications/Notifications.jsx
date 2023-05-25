@@ -15,6 +15,7 @@ import Link from '@mui/material/Link';
 
 import TabsNotifications from "./TabsNotifications.jsx";
 import Search from "../../components/Search/Search.jsx";
+import { Outlet } from 'react-router-dom';
 
 
 const Notifications = () => {
@@ -44,6 +45,8 @@ const Notifications = () => {
           }}>
             Notifications
           </Typography>
+        {/* //Тут описание табов с линками
+          <Outlet/> */}
           <TabsNotifications/>
         </Grid>
 
