@@ -13,5 +13,4 @@ public class DtoTweetPage {
     private Integer totalPage;
     private List<DtoTweet> listDto;
 
-
 }

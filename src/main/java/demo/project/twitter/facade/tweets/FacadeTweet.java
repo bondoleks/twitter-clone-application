@@ -28,6 +28,7 @@ public  class FacadeTweet {
     private final ServiceTweet service;
     private final ServiceUser serviceUser;
 
+
     private ModelMapper mapper() {
         ModelMapper mm = new ModelMapper();
         mm.getConfiguration()
@@ -41,15 +42,18 @@ public  class FacadeTweet {
     private Tweet transDtoToEntity(DtoTweet dto){
 
         Tweet entity = new Tweet();
-
-        Date date = new Date();
         mapper().map(dto, entity);
-        entity.setTweetType(TweetType.TWEET);
         User user = serviceUser.getById(dto.getUser_id()).get();
+        Long tweetId = dto.getParentTweet();
+        if (tweetId != 0) {
+            Tweet parentTweet = service.getTweetById(tweetId);
+            entity.setParentTweet(parentTweet);
+        }
         entity.setUser(user);
-        entity.setCreatedDate(date);
+        entity.setCreatedDate(new Date());
         return entity;
     }
+
 
 
     private DtoTweet transEntityToDto(Tweet entity){
@@ -70,12 +74,12 @@ public  class FacadeTweet {
         }
     }
 
-    public DtoTweet saveEntity (DtoTweet requestBody){
 
+    public void saveEntity (DtoTweet requestBody){
         Tweet entity = transDtoToEntity(requestBody);
-
         Tweet entity2 =service.saveOne(entity);
-        return transEntityToDto(entity2);
+
+
     }
 
     public Page<Tweet> getAll(Integer sizePage, Integer numberPage){
