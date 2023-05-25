@@ -1,30 +1,32 @@
 package demo.project.twitter.rest;
 
-import demo.project.twitter.repository.MessageRepository;
-import demo.project.twitter.webSocket.MessageOnlyTest;
-import demo.project.twitter.webSocket.OutputMessageOnlyTest;
+import demo.project.twitter.dto.TextMessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-@Controller
+@RestController
+@CrossOrigin(origins = "*")
 public class ChatController {
 
-    private final MessageRepository messageRepo;
     @Autowired
-    public ChatController(MessageRepository messageRepo) {
-        this.messageRepo = messageRepo;
-    }
-    @MessageMapping("/chat")
-    @SendTo("/topic/messages")
-    public OutputMessageOnlyTest send(final MessageOnlyTest message) throws Exception {
+    SimpMessagingTemplate template;
 
-        final String time = new SimpleDateFormat("HH:mm").format(new Date());
-        return new OutputMessageOnlyTest(message.getFrom(), message.getText(), time);
+    @PostMapping("/send")
+    public ResponseEntity<Void> sendMessage(@RequestBody TextMessageDTO textMessageDTO) {
+        template.convertAndSend("/topic/message", textMessageDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    @SendTo("/topic/message")
+//    public TextMessageDTO broadcastMessage(@Payload TextMessageDTO textMessageDTO) {
+//        return textMessageDTO;
+//    }
 }
