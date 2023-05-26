@@ -4,15 +4,20 @@ package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 
 import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
+@Log4j2
 public class ServiceTweet implements FunctionTweet {
     private final RepoTweet repo;
 
@@ -20,6 +25,7 @@ public class ServiceTweet implements FunctionTweet {
 
     @Override
     public Tweet saveOne(Tweet tweet) {
+        log.info(":::::::::" + tweet);
         return repo.save(tweet);
     }
     @Override
@@ -39,7 +45,8 @@ public class ServiceTweet implements FunctionTweet {
 
 
     public Page<Tweet> findAll(Integer sizePage, Integer numberPage) {
-        Pageable pageable = PageRequest.of(numberPage, sizePage);
+
+        Pageable pageable = PageRequest.of(numberPage, sizePage, Sort.by("id").ascending());
         return repo.findAll(pageable);
     }
 
@@ -48,8 +55,16 @@ public class ServiceTweet implements FunctionTweet {
         return id == 0 ?
                 repo.findAll(pageable) :
                 repo.findAllByUser_id(id, pageable);
-
     }
+
+    public Tweet getTweetById(Long id){
+        return repo.getSingleTweetById(id);
+    }
+
+    public Integer countTweets(Long tweetId, String tweetType){
+        return repo.countTweets(tweetId, tweetType);
+    };
+
 
 
 
