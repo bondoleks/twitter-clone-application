@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     IconButton,
     Toolbar,
@@ -13,25 +13,36 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 export default function ToolbarTweetForm() {
 
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
+
+
     return (
         <Toolbar sx={{ marginLeft: '-20px' }}>
             <IconButton>
-                <BrokenImageOutlinedIcon sx={{ color: '#1DA1F2' }} />
+                <BrokenImageOutlinedIcon sx={{ color: buttonColor }} />
             </IconButton>
             <IconButton>
-                <GifBoxOutlinedIcon sx={{ color: '#1DA1F2' }} />
+                <GifBoxOutlinedIcon sx={{ color: buttonColor }} />
             </IconButton>
             <IconButton>
-                <BallotOutlinedIcon sx={{ color: '#1DA1F2' }} />
+                <BallotOutlinedIcon sx={{ color: buttonColor }} />
             </IconButton>
             <IconButton>
-                <SentimentSatisfiedOutlinedIcon sx={{ color: '#1DA1F2' }} />
+                <SentimentSatisfiedOutlinedIcon sx={{ color: buttonColor }} />
             </IconButton>
             <IconButton>
-                <WorkHistoryOutlinedIcon sx={{ color: '#1DA1F2' }} />
+                <WorkHistoryOutlinedIcon sx={{ color: buttonColor }} />
             </IconButton>
             <IconButton>
-                <LocationOnOutlinedIcon sx={{ color: '#1DA1F2' }} />
+                <LocationOnOutlinedIcon sx={{ color: buttonColor }} />
             </IconButton>
         </Toolbar>
     );

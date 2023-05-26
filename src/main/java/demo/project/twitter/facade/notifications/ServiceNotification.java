@@ -9,6 +9,7 @@ import demo.project.twitter.model.enums.NotificationType;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
@@ -34,7 +35,7 @@ public class ServiceNotification implements FunctionNotification {
         return repoNotification.existsById(id);
     }
 
-    public Iterable<Notification> findAllNotificationByRecieverId(Long userId){
+    public List<Notification> findAllNotificationByRecieverId(Long userId){
         if(!repoUser.existsById(userId)){
             userId = 0L;
         }

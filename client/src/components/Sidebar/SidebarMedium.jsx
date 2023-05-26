@@ -36,6 +36,15 @@ import ModalTheme from '../ModalTheme/ModalTheme';
 
 export const SidebarMedium = () => {
 
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
     const [clicked, setClicked] = useState({
         home: false,
         explore: false,
@@ -93,6 +102,12 @@ export const SidebarMedium = () => {
     const handleCloseModal = () => {
         setOpenModal(false);
     };
+
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
+
 
 
     return (
@@ -202,12 +217,15 @@ export const SidebarMedium = () => {
                                     <KeyboardArrowDownIcon />
                                 </MenuItem>
                             </Menu>
-                            <ModalTheme open={openModal} onClose={handleCloseModal} />
+                            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                         </Grid>
 
                         <Grid item>
                             <IconButton edge='start' onClick={handleOpen}>
-                                <AddCircleIcon color="primary" fontSize='large' sx={{ margin: '20px' }} />
+                                <AddCircleIcon fontSize='large' sx={{
+                                    margin: '20px',
+                                    color: buttonColor
+                                }} />
                             </IconButton>
                             <TweetForm open={open} onClose={handleClose} />
                         </Grid>

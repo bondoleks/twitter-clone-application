@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import {
     Dialog,
@@ -19,6 +19,16 @@ export default function TweetFormMobile({ open, onClose }) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
+    
     return (
 
         <Dialog open={open} onClose={onClose} fullScreen={fullScreen}>
@@ -36,10 +46,10 @@ export default function TweetFormMobile({ open, onClose }) {
                     </IconButton>
                 </Link>
 
-
                 <Button variant="contained" color="primary" size="small" sx={{ textTransform: 'none',
                  borderRadius: '20px', 
-                 height: '30px' }}>
+                 height: '30px',
+                 backgroundColor: buttonColor }}>
                     Tweet
                 </Button>
             </Box>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Tab, Tabs } from '@mui/material';
 import { TabPanel, TabContext } from '@mui/lab';
 import { Avatar } from '@mui/material';
+import ModalTheme from '../../components/ModalTheme/ModalTheme';
 
 
 export const TabsProfile = () => {
@@ -12,9 +13,27 @@ export const TabsProfile = () => {
         setValue(newValue);
     };
 
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, [buttonColor]);
+
+
     return (
         <>
-            <Tabs variant="fullWidth" value={value} onChange={handleChange}  >
+            <Tabs variant="fullWidth" value={value} onChange={handleChange} sx={{
+          "& .MuiTabs-indicator": {
+            backgroundColor: 'white',
+            borderBottom: `2px solid ${buttonColor}`
+          },
+          "& .Mui-selected": {
+            color: 'black',
+          },
+          }} >
                 <Tab label="Tweets" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Replies" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Media" sx={{ textTransform: 'none' }}></Tab>

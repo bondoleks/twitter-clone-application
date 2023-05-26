@@ -1,12 +1,16 @@
 package demo.project.twitter.facade.tweets;
 
 
+
 import demo.project.twitter.model.enums.TweetType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.web.servlet.view.RedirectView;
+
+
 
 @RequiredArgsConstructor
 @RestController
@@ -28,6 +32,18 @@ public class ControllerTweet {
     public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
         return facade.getAllTweetById(0L, sizePage,numberPage);
     }
+    @GetMapping("all")
+    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
+        return facade.getAllTweetById(0L, sizePage,numberPage);
+    }
+
+    @GetMapping("{id}")
+    public DtoTweetPage getAllTweetById(@PathVariable("id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
+        return facade.getAllTweetById(id, sizePage,numberPage);
+    }
+
+
+
 
     @GetMapping("{id}")
     public DtoTweetPage getAllTweetById(@PathVariable("id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
@@ -49,6 +65,7 @@ public class ControllerTweet {
     public void saveReplay(@RequestBody List<DtoTweet> listDto) {
         facade.save(listDto, TweetType.REPLY, listDto.get(0).getParentTweet());
     }
+
 
 
 }
