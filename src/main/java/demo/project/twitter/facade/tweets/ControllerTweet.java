@@ -1,42 +1,54 @@
 package demo.project.twitter.facade.tweets;
 
 
-
-import demo.project.twitter.model.tweet.Tweet;
+import demo.project.twitter.model.enums.TweetType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-
+@Log4j2
 @RequestMapping("tweets")
 public class ControllerTweet {
     private final FacadeTweet facade;
 
 
-/* Дальнейший код приведен для примера.
-        В данном классе создаются endpoint для обработки запросов фронта.
-        Весь основной процесс обработки происходит в классе Facade
-        */
 
-// ************************************** EXAMPLE START **************************************
 
-    @GetMapping("get/{id}")
-    public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {
-        return facade.getEntity(id);
+
+
+    @GetMapping("tweet/{id}")
+    public DtoTweet getTweetById(@PathVariable("id") Long id) {
+        return facade.getTweetById(id);
+    }
+    @GetMapping("all")
+    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
+        return facade.getAllTweetById(0L, sizePage,numberPage);
     }
 
-    @PostMapping("save")
-    public DtoTweet saveEntity(@RequestBody DtoTweet dto) {
-        return facade.saveEntity(dto);
+    @GetMapping("{id}")
+    public DtoTweetPage getAllTweetById(@PathVariable("id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
+        return facade.getAllTweetById(id, sizePage,numberPage);
     }
 
-    public List<Tweet> getAll(){
-        return facade.getAll();
+
+    @PostMapping("tweet/save")
+    public void saveTweet(@RequestBody List<DtoTweet> listDto) {
+        facade.save(listDto, TweetType.TWEET, 0L);
     }
 
-    //    ************************************** EXAMPLE END **************************************
+    @PostMapping("quote/save")
+    public void saveQuote(@RequestBody List<DtoTweet> listDto) {
+        facade.save(listDto, TweetType.QUOTE_TWEET, listDto.get(0).getParentTweet());
+    }
+
+    @PostMapping("reply/save")
+    public void saveReplay(@RequestBody List<DtoTweet> listDto) {
+        facade.save(listDto, TweetType.REPLY, listDto.get(0).getParentTweet());
+    }
+
+
 }
