@@ -3,6 +3,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { Provider } from 'react-redux';
 import App from './App.jsx';
 import Home from './pages/Home/Home.jsx';
 import Explore from './pages/Explore/Explore.jsx';

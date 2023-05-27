@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Container,
     Typography,
@@ -49,6 +49,15 @@ export default function ContainerBirthday() {
         setYear(event.target.value);
     };
 
+    const [buttonColor, setButtonColor] = useState(null);
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
 
     return (
 
@@ -67,7 +76,8 @@ export default function ContainerBirthday() {
                     }} />
                     <Link onClick={handleOpenMod2} underline="hover" sx={{
                         textDecoration: 'none',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        color: buttonColor
                     }}>
                         Edit
                     </Link>
@@ -89,7 +99,8 @@ export default function ContainerBirthday() {
                     }} />
                     <Link onClick={toggleContainers} underline="hover" sx={{
                         textDecoration: 'none',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        color: buttonColor
                     }}>
                         Cancel
                     </Link>
@@ -100,7 +111,7 @@ export default function ContainerBirthday() {
 
                 <Grid container spacing={2} sx={{marginTop: '12px'}}>
                     <Grid item xs={4}>
-                        <FormControl fullWidth>
+                        <FormControl fullWidth >
                             <InputLabel id="day-label">Day</InputLabel>
                             <Select
                                 labelId="day-label"
