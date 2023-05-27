@@ -40,88 +40,67 @@ export const Profile = () => {
 
   return (
 
-    <Grid container spacing={3} sx={{ height: '100%' }} >
+        <>
+          <ToolbarProfile />
 
-      <Grid item md={3}>
-        <Sidebar />
-      </Grid>
-
-
-      <Grid item xs={12} md={5} sm={8} sx={{
-        borderRight: '1px solid grey',
-        borderLeft: '1px solid grey',
-        width: '100%'
-      }}>
-
-        <ToolbarProfile />
-
-        <Container sx={{ marginTop: '70px', width: '100%' }}>
-          <Box sx={{
-            bgcolor: 'grey.300',
-            width: '115%',
-            marginLeft: '-10%',
-            height: '200px'
-          }}></Box>
+          <Container sx={{ marginTop: '70px', width: '100%' }}>
+            <Box sx={{
+              bgcolor: 'grey.300',
+              width: '115%',
+              marginLeft: '-10%',
+              height: '200px'
+            }}></Box>
 
 
-          <StyledAvatar
-            alt="User Avatar"
-            src='../../img/avatar.png'
+            <StyledAvatar
+                alt="User Avatar"
+                src='../../img/avatar.png'
 
-            sx={{
-              width: '30%',
-              height: '30%',
-              borderRadius: '50%',
-              marginTop: '-15%',
-              marginLeft: '10px',
-              marginBottom: '20px',
-              cursor: 'pointer'
-            }}
-          />
+                sx={{
+                  width: '30%',
+                  height: '30%',
+                  borderRadius: '50%',
+                  marginTop: '-15%',
+                  marginLeft: '10px',
+                  marginBottom: '20px',
+                  cursor: 'pointer'
+                }}
+            />
 
-          <ButEditUser />
+            <ButEditUser />
 
-          <Box>
-            <Typography sx={{
-              fontSize: '24px',
-              fontWeight: '900'
-            }}>User</Typography>
-            <Typography>@nikname</Typography>
-            <Box display={'flex'}
-              marginTop={'10px'}>
-              <IconButton edge='start'>
-                <CalendarMonthIcon />
-              </IconButton>
-              <Typography mt={1}>Joined Mounth year</Typography>
+            <Box>
+              <Typography sx={{
+                fontSize: '24px',
+                fontWeight: '900'
+              }}>User</Typography>
+              <Typography>@nikname</Typography>
+              <Box display={'flex'}
+                   marginTop={'10px'}>
+                <IconButton edge='start'>
+                  <CalendarMonthIcon />
+                </IconButton>
+                <Typography mt={1}>Joined Mounth year</Typography>
+              </Box>
+              <Box display={'flex'}>
+                <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
+                  <Typography mr={2} sx={{
+                    fontSize: '14px',
+                    color: 'black'
+                  }}>N Following</Typography>
+                </Link>
+                <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
+                  <Typography sx={{
+                    fontSize: '14px',
+                    color: 'black'
+                  }}>N Follower</Typography>
+                </Link>
+              </Box>
             </Box>
-            <Box display={'flex'}>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
-                <Typography mr={2} sx={{
-                  fontSize: '14px',
-                  color: 'black'
-                }}>N Following</Typography>
-              </Link>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
-                <Typography sx={{
-                  fontSize: '14px',
-                  color: 'black'
-                }}>N Follower</Typography>
-              </Link>
-            </Box>
-          </Box>
-        </Container>
+          </Container>
 
-        <TabsProfile />
-
-      </Grid>
-
-      <Hidden mdDown>
-        <Grid item xs={3}>
-          <Search />
-        </Grid>
-      </Hidden>
-    </Grid>
-
+          <TabsProfile />
+        </>
   )
 }
 
