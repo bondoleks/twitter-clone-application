@@ -21,20 +21,7 @@ export const Home = () => {
 
 
   return (
-    <Grid container sx={{margin: "48px"}}>
-      <Grid item xs={3}>
-        <Sidebar />
-      </Grid>
-      <Grid item xs={5}>
         <HomeMain/>
-      </Grid>
-      <Hidden lgDown>
-          <Grid item xs={3}>
-            <Search />
-          </Grid>
-      </Hidden>
-    </Grid>
-
   )
 }
 

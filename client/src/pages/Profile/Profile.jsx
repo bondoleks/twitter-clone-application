@@ -67,6 +67,7 @@ export const Profile = () => {
                 }}
             />
 
+
             <ButEditUser />
 
             <Box>

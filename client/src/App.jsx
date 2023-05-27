@@ -58,7 +58,6 @@ function App() {
     const theme = useCallback(() => createTheme({
         palette: {
             background: {
-                default: "#000050"
             },
             primary: {
                 main: color

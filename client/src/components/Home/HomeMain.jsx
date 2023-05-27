@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import ContainerTweetForm from '../TweetForm/ContainerTweetForm';
 import ToolbarTweetForm from '../TweetForm/ToolbarTweetForm';
 import { useState } from 'react';
+import {useFetch} from "../../hooks/useFetch";
+import Tweet from "../Tweet/Tweet";
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   '& .MuiTabs-indicator': {
@@ -32,6 +34,19 @@ export function HomeMain() {
   const location = useLocation();
   const [pageTweets,setPageTweets]= useState(1);
 
+  const [{ data, loading }, getData] = useFetch({
+    initData: [],
+    url: `https://twitter-clone-application.herokuapp.com/tweets/all?sizePage=10&numberPage=1`,
+    method: 'GET',
+    dataTransformer: (data) => {
+      return data.data.listDto
+    },
+    headers: {
+      "Authorization": "Bearer_eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY4NTIwODE5MywiZXhwIjoxNjg1MjExNzkzfQ.2kPkH-K13YnyQHk-SpB3xbAT4F88TZ141CscFWEcq-k"
+    }
+  });
+
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ position: 'sticky', top: 0, backgroundColor: 'rgba(255, 255, 255,0.7)', zIndex: 1 }}>
@@ -57,7 +72,11 @@ export function HomeMain() {
         </Button>
       </Box>
 
-      <Outlet context={{pageTweets,setPageTweets}}/>
+      {loading && "Loading..."}
+      {...data.map(t => <Tweet tweet={t}/>)}
+
+
+      {/*<Outlet context={{pageTweets,setPageTweets}}/>*/}
     </Box>
   );
 }
