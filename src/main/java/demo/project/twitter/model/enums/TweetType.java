@@ -7,7 +7,7 @@ public enum TweetType {
     REPLY(2);
 
     private Integer type;
-
+//##
     TweetType(Integer type){
         this.type = type;
     }
