@@ -39,7 +39,6 @@ public class FacadeTweet {
         return mm;
     }
 
-
     private Tweet transDtoToEntity(DtoTweet dto, TweetType tt) {
 
         Tweet entity = new Tweet();
@@ -59,7 +58,6 @@ public class FacadeTweet {
 
 
     private DtoTweet transEntityToDto(Tweet entity) {
-
         DtoTweet dto = new DtoTweet();
         mapper().map(entity.getUser(), dto);
         mapper().map(entity, dto);
@@ -67,19 +65,16 @@ public class FacadeTweet {
         return dto;
     }
 
-
     public ResponseEntity<?> getEntity(Long id) {
         DtoTweet dto = new DtoTweet();
         if (service.existsById(id)) {
             Tweet entity = service.getById(id).get();
             dto = mapper().map(entity, dto.getClass());
-
             return ResponseEntity.accepted().body(dto);
         } else {
             return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with cod " + id + " not found");
         }
     }
-
 
     public void save(List<DtoTweet> listDto, TweetType tt, Long parentTweet){
         listDto.get(0).setParentTweet(parentTweet);
@@ -92,25 +87,21 @@ public class FacadeTweet {
     }
 
     public Page<Tweet> getAll(Integer sizePage, Integer numberPage) {
-
         return service.findAll(sizePage, numberPage);
     }
 
 
     public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage) {
-
         Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage);
         List<DtoTweet> list = pTweet.stream().
                 map(x -> transEntityToDto(x)).
                 collect(Collectors.toList());
-
         DtoTweetPage dtp = new DtoTweetPage();
         dtp.setListDto(list);
         dtp.setTotalElements(pTweet.getTotalElements());
         dtp.setTotalPage(pTweet.getTotalPages());
         return dtp;
     }
-
 
 
     public DtoTweet getTweetById(Long id) {
@@ -130,7 +121,6 @@ public class FacadeTweet {
         return dto;
 
     }
-
 }
 
 
