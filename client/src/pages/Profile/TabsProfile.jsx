@@ -39,13 +39,13 @@ export const TabsProfile = () => {
 
     return (
         <>
-            <Tabs variant="fullWidth" value={value} onChange={handleChange} sx={{
+            <Tabs variant="fullWidth" value={value} textColor="inherit" onChange={handleChange} sx={{
                 "& .MuiTabs-indicator": {
-                    backgroundColor: 'white',
+                    backgroundColor: 'gray',
                     borderBottom: `2px solid ${buttonColor}`
                 },
                 "& .Mui-selected": {
-                    color: 'black',
+                    color: 'primary',
                 },
             }} >
                 <Tab label="Tweets" sx={{ textTransform: 'none' }}></Tab>
@@ -63,7 +63,7 @@ export const TabsProfile = () => {
                     }}>
                         Who to follow
                     </Typography>
-                    <Typography variant="h4">Tweets</Typography>
+                    <Typography variant="h4" >Tweets</Typography>
                     <Typography variant="body1">Here are the tweets</Typography>
 
                     {loading && "Loading..."}

@@ -81,22 +81,22 @@ export const Profile = () => {
             <Typography>@nikname</Typography>
             <Box display={'flex'}
               marginTop={'10px'}>
-              <IconButton edge='start'>
+              <IconButton edge='start' color='gray'>
                 <CalendarMonthIcon />
               </IconButton>
               <Typography mt={1}>Joined Mounth year</Typography>
             </Box>
             <Box display={'flex'}>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
+              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography mr={2} sx={{
                   fontSize: '14px',
-                  color: 'black'
+                  color: 'gray'
                 }}>N Following</Typography>
               </Link>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
+              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography sx={{
                   fontSize: '14px',
-                  color: 'black'
+                  color: 'gray'
                 }}>N Follower</Typography>
               </Link>
             </Box>
