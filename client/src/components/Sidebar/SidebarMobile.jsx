@@ -442,12 +442,13 @@ const SidebarMobile = ({theme}) => {
             </IconButton>
             <TweetFormMobile open={open} onClose={handleClose} />
 
-            <Box edge="start">
+            <Box edge="start" >
                 <BottomNavigation sx={{
                     position: 'fixed',
                     bottom: '0',
                     width: '100%',
-                    zIndex: '99'
+                    zIndex: '99',
+                    backgroundColor: 'dark' ? '#15202b' : '#ffffff'
                 }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">
@@ -459,20 +460,20 @@ const SidebarMobile = ({theme}) => {
 
                     <Link to={`/explore`}>
                         <Tooltip title="Explore">
-                            <IconButton>
+                            <IconButton color='gray'>
                                 {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                         </Tooltip>
                     </Link>
 
                     <Link to={`/notifications`}>
-                            <IconButton>
+                            <IconButton color='gray'>
                                 {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                     </Link>
 
                     <Link to={`/messages`}>
-                            <IconButton>
+                            <IconButton color='gray'>
                                 {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                     </Link>

@@ -58,7 +58,10 @@ function App() {
             text: {
                 primary: "#232323", // черный шрифт
             },
-        },
+            paper: {
+                main: "#ffffff"
+            },
+        }
     });
 
     const darkTheme = createTheme({
@@ -82,7 +85,6 @@ function App() {
             typography: {
                 color: '#ffffff'
             },
-
         }
     });
 
