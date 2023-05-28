@@ -74,7 +74,9 @@ public class FacadeTweet {
 
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
         dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
+
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
+
 
         return dto;
     }
@@ -153,6 +155,7 @@ public class FacadeTweet {
         return getSingleTweetById(list, id);
     }
 
+
     public String getImageTweet(Long tweetId){
         String s;
         List<AttachmentImage> listIm = servicAttachmentImage.getAttachmentImageByTweetId(tweetId);
@@ -160,6 +163,7 @@ public class FacadeTweet {
                 listIm.get(0).getImagerUrl();
         return s;
     }
+
 
 
 
