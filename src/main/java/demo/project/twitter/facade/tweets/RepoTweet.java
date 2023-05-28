@@ -48,4 +48,11 @@ public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingR
     )
     List<Tweet> getSingleTweet(Long parentTweetId, Long  userId);
 
+
+    @Query(
+            value = "select * from tweets  where tweet_type = 'TWEET'",
+            nativeQuery = true
+    )
+    List<Tweet> getAllTweet();
+
 }

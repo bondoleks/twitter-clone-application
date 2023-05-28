@@ -18,10 +18,18 @@ public class ControllerTweet {
 
 
 
-    /*@GetMapping("tweet/{id}")
-    public List<List<Dt>> getTweetById(@PathVariable("id") Long id) {
-        return facade.getTweetByIdAndReply(id);
-    }*/
+
+
+
+    @GetMapping("tweet/{id}")
+    public List<DtoTweet> getTweetById(@PathVariable("id") Long id) {
+        return facade.getSingleTweetById(id);
+    }
+
+
+
+
+
     @GetMapping("all")
     public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
         return facade.getAllTweetById(0L, sizePage,numberPage);
@@ -47,6 +55,4 @@ public class ControllerTweet {
     public void saveReplay(@RequestBody DtoTweet Dto) {
         facade.save(Dto, TweetType.REPLY, Dto.getParent_Tweet());
     }
-
-
 }

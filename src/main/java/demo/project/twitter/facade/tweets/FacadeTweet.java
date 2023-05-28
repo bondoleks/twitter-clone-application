@@ -1,9 +1,11 @@
 package demo.project.twitter.facade.tweets;
 
+import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.facade.users.ServiceUser;
 import demo.project.twitter.model.User;
 
 import demo.project.twitter.model.enums.TweetType;
+import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,6 +30,7 @@ public class FacadeTweet {
 
     private final ServiceTweet service;
     private final ServiceUser serviceUser;
+    private final ServicAttachmentImage servicAttachmentImage;
 
 
     private ModelMapper mapper() {
@@ -72,6 +75,9 @@ public class FacadeTweet {
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
         dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
 
+        dto.setTweet_imageUrl(getImageTweet(entity.getId()));
+
+
         return dto;
     }
 
@@ -98,8 +104,7 @@ public class FacadeTweet {
 
     public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage) {
         Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage);
-        List<Tweet> tweetTest = pTweet.stream().collect(Collectors.toList());
-        log.info(":::::::: page" + tweetTest.toString());
+
         List<List<DtoTweet>> list = pTweet.
                 stream().
                 map(tweet -> getSingleTweetById(tweet.getId())).
@@ -149,6 +154,16 @@ public class FacadeTweet {
         list.add(transEntityToDto(service.getTweetById(id)));
         return getSingleTweetById(list, id);
     }
+
+
+    public String getImageTweet(Long tweetId){
+        String s;
+        List<AttachmentImage> listIm = servicAttachmentImage.getAttachmentImageByTweetId(tweetId);
+        s = (listIm.size() == 0) ? null :
+                listIm.get(0).getImagerUrl();
+        return s;
+    }
+
 
 
 
