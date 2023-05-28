@@ -73,9 +73,11 @@ public class ServiceTweet implements FunctionTweet {
 
     }
 
+
     public List<Tweet> findAllTweet(){
         return repo.getAllTweet();
     }
+
 
 
 
