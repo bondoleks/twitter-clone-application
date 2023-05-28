@@ -27,5 +27,4 @@ public class DtoTweet {
     private String av_imagerUrl;
 
     private String tweet_imageUrl;
-
 }

@@ -60,7 +60,6 @@ public class FacadeTweet {
         return entity;
     }
 
-
     private DtoTweet transEntityToDto(Tweet entity) {
         DtoTweet dto = new DtoTweet();
         mapper().map(entity.getUser(), dto);

@@ -72,7 +72,6 @@ public class ServiceTweet implements FunctionTweet {
         return repo.getSingleTweet(parentTweetId, userId);
 
     }
-
     public List<Tweet> findAllTweet(){
         return repo.getAllTweet();
     }

@@ -29,7 +29,6 @@ public class ControllerTweet {
 
 
 
-
     @GetMapping("all")
     public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
         return facade.getAllTweetById(0L, sizePage,numberPage);

@@ -18,7 +18,6 @@ public interface FunctionTweet {
     Tweet saveOne(Tweet tweet);
     Optional<Tweet> getById(Long id);
     boolean existsById(Long id);
-
     List<Tweet> getAll();
 
 //    ************************************** EXAMPLE END **************************************

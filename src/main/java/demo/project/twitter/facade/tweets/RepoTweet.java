@@ -29,7 +29,6 @@ public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingR
             nativeQuery = true
     )
     Page<Tweet> findAllByUser_id(Long user_id, Pageable pageable);
-
     @Query(
             value = "select * from tweets  where id > ? and  tweet_type = ?",
             nativeQuery = true

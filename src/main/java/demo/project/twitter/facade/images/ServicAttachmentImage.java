@@ -40,6 +40,4 @@ public class ServicAttachmentImage implements FunctionAttachmentImage {
     public List<AttachmentImage> getAttachmentImageByTweetId(Long id){
         return repo.getAttachmentImageByTweetId(id);
     };
-
-
 }

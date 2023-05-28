@@ -16,4 +16,5 @@ public interface RepoAttachmentImage extends CrudRepository<AttachmentImage, Lon
             nativeQuery = true
     )
     List<AttachmentImage> getAttachmentImageByTweetId(Long id);
+
 }
