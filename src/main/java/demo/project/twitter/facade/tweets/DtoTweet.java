@@ -14,15 +14,10 @@ public class DtoTweet {
     private Long id;
     private String tweetBody;
     private Date createdDate;
-    private Long parentTweet;
+    private Long parent_Tweet;
     private TweetType tweetType;
-    private Integer type;
     private Integer countRetweet;
-    private Integer countReplay;
-
-
-
-
+    private Integer countReply;
 
     private Long user_id;
     private String username;

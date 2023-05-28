@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
 @Log4j2
@@ -20,10 +18,10 @@ public class ControllerTweet {
 
 
 
-    @GetMapping("tweet/{id}")
-    public DtoTweet getTweetById(@PathVariable("id") Long id) {
-        return facade.getTweetById(id);
-    }
+    /*@GetMapping("tweet/{id}")
+    public List<List<Dt>> getTweetById(@PathVariable("id") Long id) {
+        return facade.getTweetByIdAndReply(id);
+    }*/
     @GetMapping("all")
     public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
         return facade.getAllTweetById(0L, sizePage,numberPage);
@@ -36,18 +34,18 @@ public class ControllerTweet {
 
 
     @PostMapping("tweet/save")
-    public void saveTweet(@RequestBody List<DtoTweet> listDto) {
-        facade.save(listDto, TweetType.TWEET, 0L);
+    public void saveTweet(@RequestBody DtoTweet Dto) {
+        facade.save(Dto, TweetType.TWEET, 0L);
     }
 
     @PostMapping("quote/save")
-    public void saveQuote(@RequestBody List<DtoTweet> listDto) {
-        facade.save(listDto, TweetType.QUOTE_TWEET, listDto.get(0).getParentTweet());
+    public void saveQuote(@RequestBody DtoTweet Dto) {
+        facade.save(Dto, TweetType.QUOTE_TWEET, Dto.getParent_Tweet());
     }
 
     @PostMapping("reply/save")
-    public void saveReplay(@RequestBody List<DtoTweet> listDto) {
-        facade.save(listDto, TweetType.REPLY, listDto.get(0).getParentTweet());
+    public void saveReplay(@RequestBody DtoTweet Dto) {
+        facade.save(Dto, TweetType.REPLY, Dto.getParent_Tweet());
     }
 
 
