@@ -50,17 +50,32 @@ public class ServiceTweet implements FunctionTweet {
     public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage) {
         Pageable pageable = PageRequest.of(numberPage, sizePage);
         return id == 0 ?
-                repo.findAll(pageable) :
+                repo.findAllTweet(pageable) :
                 repo.findAllByUser_id(id, pageable);
     }
 
     public Tweet getTweetById(Long id){
-        return repo.getSingleTweetById(id);
+        return repo.getTweetById(id);
     }
 
     public Integer countTweets(Long tweetId, String tweetType){
         return repo.countTweets(tweetId, tweetType);
     };
+
+    public List<Tweet> getAllReplay(Long parentTweetId){
+        return repo.findAllByParentTweetId(repo.getTweetById(parentTweetId).getUser().getId(), parentTweetId, "REPLY");
+    }
+
+    public List<Tweet> getSingleBranch(Long parentTweetId){
+        Long userId = repo.getTweetById(parentTweetId).getUser().getId();
+
+        return repo.getSingleTweet(parentTweetId, userId);
+
+    }
+
+    public List<Tweet> findAllTweet(){
+        return repo.getAllTweet();
+    }
 
 
 
