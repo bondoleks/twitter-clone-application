@@ -15,6 +15,7 @@ import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
+import {CustomThemeContext} from "./context/CustomThemeContext";
 
 const routes = [
     {
@@ -108,29 +109,31 @@ function App() {
 
 
     return (
+        <CustomThemeContext.Provider value={{color, themeMode, setThemeMode, setColor}}>
 
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                <Grid item md={3}>
-                    {/* <Button onClick={() => {setColor("#ffcd07")}}>Dark</Button>
+               <CssBaseline />
+               <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                   <Grid item md={3}>
+                       {/* <Button onClick={() => {setColor("#ffcd07")}}>Dark</Button>
                 <Button onClick={() => {setColor("#0000FF")}}>White</Button> */}
-                    <Button onClick={() => { setThemeMode("dark"); }}>Dark</Button>
-                    <Button onClick={() => { setThemeMode("light"); }}>White</Button>
-                    <Sidebar />
-                </Grid>
-                <Grid item xs={12} md={6} sm={8}>
-                    <Routes>
-                        {...routes.map(r => <Route {...r} />)}
-                    </Routes>
-                </Grid>
-                <Hidden mdDown>
-                    <Grid item md={3}>
-                        <Search />
-                    </Grid>
-                </Hidden>
-            </Grid>
+                       <Button onClick={() => { setThemeMode("dark"); }}>Dark</Button>
+                       <Button onClick={() => { setThemeMode("light"); }}>White</Button>
+                       <Sidebar />
+                   </Grid>
+                   <Grid item xs={12} md={6} sm={8}>
+                       <Routes>
+                           {...routes.map(r => <Route {...r} />)}
+                       </Routes>
+                   </Grid>
+                   <Hidden mdDown>
+                       <Grid item md={3}>
+                           <Search />
+                       </Grid>
+                   </Hidden>
+               </Grid>
         </ThemeProvider>
+        </CustomThemeContext.Provider>
 
     )
 }

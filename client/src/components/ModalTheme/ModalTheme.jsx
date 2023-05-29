@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -11,6 +11,7 @@ import {
 import CustomizedSteppers from './StepperEl';
 import CheckIcon from '@mui/icons-material/Check';
 import { useTheme } from '@mui/material/styles';
+import {CustomThemeContext} from "../../context/CustomThemeContext";
 
 
 export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
@@ -20,6 +21,9 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
     const ModalThemeStyles = {
         backgroundColor: theme.palette.background.default,
     };
+
+    const {themeMode, setThemeMode} = useContext(CustomThemeContext);
+
 
     const [color, setColor] = useState(() => {
         // При первом рендере компонента пытаемся получить цвет из локального хранилища
@@ -85,22 +89,27 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
         {
             label: 'Default',
             color: 'black',
-            backgroundColor: 'white',
+            backgroundColor: '#ffffff',
+            state: "dark"
         },
         {
             label: 'Dim',
             color: 'white',
-            backgroundColor: '#2f2f2f',
+            backgroundColor: '#2f2f2f'
+
         },
         {
             label: 'Lights out',
             color: 'white',
-            backgroundColor: 'black',
+            backgroundColor: '#000000',
+            state: "light"
+
         },
     ];
 
     const handleButtonClick = (index) => {
         setActiveBut(index);
+        setThemeMode(buttons[index].state);
     };
 
     return (
