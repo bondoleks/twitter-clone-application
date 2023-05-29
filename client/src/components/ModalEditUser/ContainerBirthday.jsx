@@ -12,9 +12,14 @@ import {
 import Link from '@mui/material/Link';
 import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSharp';
 import ModalEditBirthdate from "./ModalEditBirthdate";
+import { useTheme } from '@mui/material/styles';
 
 
 export default function ContainerBirthday() {
+
+    const theme = useTheme();
+
+    const borderColor = theme.palette.text.primary; // Цвет бордера
 
     const [openMod2, setOpenMod2] = useState(false);
 
@@ -109,15 +114,32 @@ export default function ContainerBirthday() {
                     This should be the date of birth of the person using the account.
                 </Typography>
 
-                <Grid container spacing={2} sx={{marginTop: '12px'}}>
+                <Grid container spacing={2} sx={{ marginTop: '12px' }}>
                     <Grid item xs={4}>
-                        <FormControl fullWidth >
-                            <InputLabel id="day-label">Day</InputLabel>
+                        <FormControl fullWidth sx={{ '& .MuiOutlinedInput-root': { borderColor: borderColor } }}>
+                            <InputLabel id="day-label" sx={{
+                                color: theme.palette.text.primary, // Светлый цвет для лейбла на темной теме
+                            }}>
+                                Day
+                            </InputLabel>
                             <Select
                                 labelId="day-label"
                                 id="day-select"
                                 value={day}
                                 label="Day"
+                                sx={{
+                                    '& .MuiSelect-icon': {
+                                      color: theme.palette.text.primary, // Светлый цвет для стрелочки
+                                    },
+                                  }}
+                                  MenuProps={{
+                                    PaperProps: {
+                                      sx: {
+                                        backgroundColor: theme.palette.background.default, // Цвет фона выпадающего меню
+                                        color: theme.palette.text.primary, // Цвет текста внутри выпадающего меню
+                                      }
+                                    },
+                                  }}
                                 onChange={handleDayChange}
                             >
                                 {[...Array(31)].map((_, i) => (
@@ -129,15 +151,33 @@ export default function ContainerBirthday() {
                         </FormControl>
                     </Grid>
                     <Grid item xs={4}>
-                        <FormControl fullWidth>
-                            <InputLabel id="month-label">Month</InputLabel>
+                        <FormControl fullWidth sx={{ '& .MuiOutlinedInput-root': { borderColor: borderColor } }}>
+                            <InputLabel id="month-label" sx={{
+                                color: theme.palette.text.primary, // Светлый цвет для лейбла на темной теме
+                            }}>
+                                Month
+                            </InputLabel>
                             <Select
                                 labelId="month-label"
                                 id="month-select"
                                 value={month}
                                 label="Month"
+                                sx={{
+                                    '& .MuiSelect-icon': {
+                                      color: theme.palette.text.primary, // Светлый цвет для стрелочки
+                                    },
+                                  }}
+                                  MenuProps={{
+                                    PaperProps: {
+                                      sx: {
+                                        backgroundColor: theme.palette.background.default, // Цвет фона выпадающего меню
+                                        color: theme.palette.text.primary, // Цвет текста внутри выпадающего меню
+                                      }
+                                    },
+                                  }}
+                                
                                 onChange={handleMonthChange}
-                            >
+                                >
                                 {[
                                     "January",
                                     "February",
@@ -164,6 +204,22 @@ export default function ContainerBirthday() {
                             fullWidth
                             label="Year"
                             value={year}
+                            sx={{
+                                width: '100%',
+                                marginBottom: '10px',
+                                '& .MuiInputBase-input': {
+                                    color: theme.palette.text.primary,
+                                },
+                                '& .MuiOutlinedInput-root': {
+                                    borderColor: theme.palette.text.primary,
+                                },
+                                '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                                    borderColor: theme.palette.text.primary,
+                                },
+                                '& .MuiInputLabel-root': {
+                                    color: theme.palette.text.primary,
+                                },
+                            }}
                             onChange={handleYearChange}
                         />
                     </Grid>
