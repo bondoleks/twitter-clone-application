@@ -19,9 +19,12 @@ import PublicIcon from "@mui/icons-material/Public";
 import PeopleIcon from "@mui/icons-material/People";
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
 import Link from '@mui/material/Link';
+import { useTheme } from '@mui/material/styles';
 
 
 export default function ContainerTweetForm({ open, onClose }) {
+
+    const theme = useTheme();
 
     const [buttonColor, setButtonColor] = useState(null);
 
@@ -193,7 +196,9 @@ export default function ContainerTweetForm({ open, onClose }) {
                 outline: 'none',
                 resize: 'none',
                 fontSize: '20px',
-                fontFamily: 'sans-serif'
+                fontFamily: 'sans-serif',
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.background.default
             }
             } />
 
