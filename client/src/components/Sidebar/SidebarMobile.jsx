@@ -46,7 +46,6 @@ const SidebarMobile = () => {
 
     const bottomNavigationStyles = {
         backgroundColor: theme.palette.background.default,
-        // Add other styles as needed
       };
 
     const [buttonColor, setButtonColor] = useState();

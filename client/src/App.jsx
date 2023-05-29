@@ -66,6 +66,9 @@ function App() {
             paper: {
                 main: "#ffffff"
             },
+            gray: {
+                main: '#000000'
+            },
         }
     });
 

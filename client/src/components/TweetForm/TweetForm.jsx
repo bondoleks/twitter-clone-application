@@ -9,7 +9,6 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
-import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 
 
@@ -19,7 +18,6 @@ export default function TweetForm({ open, onClose }) {
 
     const TweetFormStyles = {
         backgroundColor: theme.palette.background.default,
-        // Add other styles as needed
       };
 
     const [buttonColor, setButtonColor] = useState(null);
