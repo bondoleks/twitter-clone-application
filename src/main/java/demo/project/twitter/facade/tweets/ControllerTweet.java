@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @Log4j2
@@ -24,6 +26,11 @@ public class ControllerTweet {
     @GetMapping("tweet/{id}")
     public List<DtoTweet> getTweetById(@PathVariable("id") Long id) {
         return facade.getSingleTweetById(id);
+    }
+
+    @GetMapping("test")
+    public String test() {
+        return "test";
     }
 
 
