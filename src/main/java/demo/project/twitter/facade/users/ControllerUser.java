@@ -1,6 +1,7 @@
 package demo.project.twitter.facade.users;
 
 
+import demo.project.twitter.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

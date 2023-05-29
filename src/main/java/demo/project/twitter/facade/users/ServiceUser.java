@@ -1,8 +1,10 @@
 package demo.project.twitter.facade.users;
 
 
+import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.model.User;
 
+import demo.project.twitter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class ServiceUser implements FunctionUser {
     private final UserRepository repo;
 
     public Boolean user_exists(User usr) {
-        if (repo.findByUsername(usr.getUsername()) != null) return true;
+        if (repo.getUserIdByUsername(usr.getUsername()) != null) return true;
         else return false;
     }
 

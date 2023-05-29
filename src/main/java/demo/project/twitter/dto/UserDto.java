@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.users;
+package demo.project.twitter.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import demo.project.twitter.model.User;

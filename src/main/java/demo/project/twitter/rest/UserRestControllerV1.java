@@ -1,6 +1,6 @@
 package demo.project.twitter.rest;
 
-import demo.project.twitter.facade.users.UserDto;
+import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.model.User;
 import demo.project.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

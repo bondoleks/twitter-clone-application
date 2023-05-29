@@ -1,5 +1,6 @@
 package demo.project.twitter.facade.users;
 
+import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.model.User;
 import org.springframework.stereotype.Service;
 
