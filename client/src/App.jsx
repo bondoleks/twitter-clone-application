@@ -112,20 +112,20 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                <Grid item xs={3}>
+                <Grid item md={3}>
                     {/* <Button onClick={() => {setColor("#ffcd07")}}>Dark</Button>
                 <Button onClick={() => {setColor("#0000FF")}}>White</Button> */}
                     <Button onClick={() => { setThemeMode("dark"); }}>Dark</Button>
                     <Button onClick={() => { setThemeMode("light"); }}>White</Button>
                     <Sidebar />
                 </Grid>
-                <Grid item xs={12} md={5} sm={8}>
+                <Grid item xs={12} md={6} sm={8}>
                     <Routes>
                         {...routes.map(r => <Route {...r} />)}
                     </Routes>
                 </Grid>
                 <Hidden mdDown>
-                    <Grid item xs={3}>
+                    <Grid item md={3}>
                         <Search />
                     </Grid>
                 </Hidden>
