@@ -69,6 +69,7 @@ function App() {
             gray: {
                 main: '#000000'
             },
+            colorBox: '#f9f9f9'
         }
     });
 
@@ -93,6 +94,7 @@ function App() {
             typography: {
                 color: '#ffffff'
             },
+            colorBox: '#252525'
         }
     });
 
