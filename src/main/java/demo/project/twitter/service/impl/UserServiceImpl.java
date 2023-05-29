@@ -4,7 +4,7 @@ import demo.project.twitter.model.Role;
 import demo.project.twitter.model.Status;
 import demo.project.twitter.model.User;
 import demo.project.twitter.repository.RoleRepository;
-import demo.project.twitter.repository.UserRepository;
+import demo.project.twitter.facade.users.UserRepository;
 import demo.project.twitter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

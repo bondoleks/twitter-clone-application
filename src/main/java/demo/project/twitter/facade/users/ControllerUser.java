@@ -13,22 +13,30 @@ public class ControllerUser {
     private final FacadeUser facade;
 
 
-/* Дальнейший код приведен для примера.
-        В данном классе создаются endpoint для обработки запросов фронта.
-        Весь основной процесс обработки происходит в классе Facade
-        */
-
-// ************************************** EXAMPLE START **************************************
 
     @GetMapping("get/{id}")
     public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {
         return facade.getEntity(id);
     }
 
+    @PostMapping("update")
+    public UserDto updateEntity(@RequestBody UserDto dto) {
+        return facade.updateEntity(dto);
+    }
+
     @PostMapping("save")
-    public DtoUser saveEntity(@RequestBody DtoUser dto) {
+    public UserDto saveEntity(@RequestBody UserDto dto) {
         return facade.saveEntity(dto);
     }
 
-    //    ************************************** EXAMPLE END **************************************
+    @GetMapping("followers/{id}")
+    public ResponseEntity<?> getFollowers(@PathVariable("id") Long id) {
+        return facade.getFollowers(id);
+    }
+
+    @GetMapping("following/{id}")
+    public ResponseEntity<?> getFollowing(@PathVariable("id") Long id) {
+        return facade.getFollowing(id);
+    }
+
 }

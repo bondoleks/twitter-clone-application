@@ -1,6 +1,7 @@
 package demo.project.twitter.model;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,13 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@SuperBuilder
+@RequiredArgsConstructor
+@Getter
+@Setter
 @Table(name = "users")
 @Data
+
 public class User extends BaseEntity {
 
     @Column(name = "username")
