@@ -4,7 +4,11 @@ import {
     IconButton,
     Tooltip,
     Box,
-    Hidden
+    Hidden,
+    Menu,
+    MenuItem,
+    Typography,
+    Grid
 } from '@mui/material';
 import { Stack } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -25,9 +29,21 @@ import FindInPageIcon from '@mui/icons-material/FindInPage';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import TweetForm from '../TweetForm/TweetForm';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ModalTheme from '../ModalTheme/ModalTheme';
 
 
 export const SidebarMedium = () => {
+
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -53,6 +69,7 @@ export const SidebarMedium = () => {
         });
     }, [location]);
 
+    // відкривання форми для створення твіта по кліку на кнопку Tweet
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -63,114 +80,164 @@ export const SidebarMedium = () => {
         setOpen(false);
     };
 
+    // відкривання меню Settings по натисканню на кнопку More 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleOpenMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+
+    // відкривання модального вікна для налаштування теми по кліку на пункт Settings
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+        handleCloseMenu();
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
 
     return (
         <>
-            <Box sx={{
-                marginRight: '20px',
-                height: 'calc(100vh - 48px)',
-                overflowY: 'auto'
-            }}>
-                <Stack sx={{ margin: '24px' }}>
+            <Grid container direction="column" spacing={2}>
+                <Box sx={{
+                    marginRight: '20px',
+                    height: 'calc(100vh - 48px)',
+                    overflowY: 'auto'
+                }}>
+                    <Stack sx={{ margin: '24px' }}>
 
-                    <Link to={`/`}>
-                        <Tooltip title="Main">
-                            <IconButton>
-                                <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
-
-
-                    <Link to={`/home`}>
-
-                        <Tooltip title="Home">
-                            <IconButton >
-                                {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
-
-                    <Hidden mdUp smDown>
-
-                        <Link to={`/explore`}>
-
-                            <Tooltip title="Explore">
+                        <Link to={`/`}>
+                            <Tooltip title="Main">
                                 <IconButton>
-                                    {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                    <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
                                 </IconButton>
                             </Tooltip>
                         </Link>
-                    </Hidden>
 
-                    <Hidden lgUp mdDown>
 
-                        <Link to={`/explore`}>
-
-                            <Tooltip title="Explore">
-                                <IconButton>
-                                    {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />}
+                        <Link to={`/home`}>
+                            <Tooltip title="Home">
+                                <IconButton >
+                                    {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
                                 </IconButton>
                             </Tooltip>
                         </Link>
-                    </Hidden>
+
+                        <Hidden mdUp smDown>
+
+                            <Link to={`/explore`}>
+                                <Tooltip title="Explore">
+                                    <IconButton color='gray'>
+                                        {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium"  />}
+                                    </IconButton>
+                                </Tooltip>
+                            </Link>
+                        </Hidden>
+
+                        <Hidden lgUp mdDown>
+
+                            <Link to={`/explore`}>
+                                <Tooltip title="Explore">
+                                    <IconButton color='gray'>
+                                        {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />}
+                                    </IconButton>
+                                </Tooltip>
+                            </Link>
+                        </Hidden>
 
 
-                    <Link to={`/notifications`}>
+                        <Link to={`/notifications`}>
+                            <Tooltip title="Notifications">
+                                <IconButton color='gray'>
+                                    {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                </IconButton>
+                            </Tooltip>
+                        </Link>
 
-                        <Tooltip title="Notifications">
-                            <IconButton>
-                                {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+
+                        <Link to={`/messages`}>
+                            <Tooltip title="Messages">
+                                <IconButton color='gray'>
+                                    {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                </IconButton>
+                            </Tooltip>
+                        </Link>
+
+                        <Link to={`/bookmarks`}>
+                            <Tooltip title="Bookmarks">
+                                <IconButton color='gray'>
+                                    {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                </IconButton>
+                            </Tooltip>
+                        </Link>
+
+                        <Link to={`/profile`}>
+                            <Tooltip title="Profile">
+                                <IconButton color='gray'>
+                                    {clicked.profile ? <PersonIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                </IconButton>
+                            </Tooltip>
+                        </Link>
+
+
+                        <Grid item>
+                            <Tooltip title="More">
+                                <IconButton color='gray' onClick={handleOpenMenu}>
+                                    <MoreHorizIcon sx={{ margin: '16px' }} fontSize="medium" />
+                                </IconButton>
+                            </Tooltip>
+
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={handleCloseMenu}
+                                sx={{
+                                    marginTop: '-50px',
+                                    marginLeft: '16px'
+                                }}
+                            >
+                                <MenuItem onClick={handleOpenModal}>
+                                    <Typography sx={{ marginInline: '8px' }}>
+                                        Settings
+                                    </Typography>
+                                    <KeyboardArrowDownIcon />
+                                </MenuItem>
+                            </Menu>
+                            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
+                        </Grid>
+
+                        <Grid item>
+                            <IconButton edge='start' onClick={handleOpen}>
+                                <AddCircleIcon fontSize='large' sx={{
+                                    margin: '20px',
+                                    color: buttonColor
+                                }} />
                             </IconButton>
-                        </Tooltip>
-                    </Link>
+                            <TweetForm open={open} onClose={handleClose} />
+                        </Grid>
 
-
-                    <Link to={`/messages`}>
-
-                        <Tooltip title="Messages">
-                            <IconButton>
-                                {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
-
-                    <Link to={`/bookmarks`}>
-
-                        <Tooltip title="Bookmarks">
-                            <IconButton>
-
-
-                                {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
-
-
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
-
-                    <Link to={`/profile`}>
-
-                        <Tooltip title="Profile">
-                            <IconButton>
-                                {clicked.profile ? <PersonIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
-
-                    <IconButton edge='start' onClick={handleOpen}>
-                        <AddCircleIcon color="primary" fontSize='large' />
-                    </IconButton>
-                    <TweetForm open={open} onClose={handleClose} />
-
-
-                    <Tooltip title="User">
-                        <IconButton edge='start'>
-                            <AccountCircleIcon sx={{ margin: '16px' }} fontSize="large" color="success" />
-                        </IconButton>
-                    </Tooltip>
-
-                </Stack>
-            </Box>
+                        <Grid item>
+                            <Tooltip title="User">
+                                <IconButton edge='start'>
+                                    <AccountCircleIcon sx={{ margin: '20px' }} fontSize="large" color="success" />
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
+                    </Stack>
+                </Box>
+            </Grid>
         </>
     )
 }

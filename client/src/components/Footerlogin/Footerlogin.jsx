@@ -4,12 +4,15 @@ import { BottomNavigation, Box, Typography, Button, Modal } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TextField from '@mui/material/TextField';
 import RegistrationModal from "../Registration/Registration.jsx";
+import PasswordModal from "../Login/PasswordModal.jsx";
 
 const Footerlogin = () => {
 
     // W8 to Redux
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+    const [isNextButtonOpen, setIsNextButtonOpen] = useState(false);
+    const [email, setEmail] = useState('');
 
 
     const handleLoginButtonClick = () => {
@@ -37,6 +40,10 @@ const Footerlogin = () => {
     }
 
 
+    const handleNextButton = () => {
+        setIsNextButtonOpen(true);
+        setIsModalOpen(false);
+    };
 
 
 
@@ -148,9 +155,10 @@ const Footerlogin = () => {
                         >
                             <TextField
                                 id="outlined-login-input"
-                                label="Login"
-                                type="login"
-
+                                label="Email Address"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 inputProps={{
                                     style: {
                                         outline: 'none',
@@ -180,6 +188,7 @@ const Footerlogin = () => {
                         </Box>
 
                         <Button
+                            onClick={handleNextButton}
                             variant="contained" color="secondary" size="small" sx={{ mr: 1,
                             borderRadius: '20px',
                             fontSize: '14px',
@@ -226,6 +235,7 @@ const Footerlogin = () => {
                 </Modal>
             )}
             <RegistrationModal isOpen={isRegistrationModalOpen} onClose={handleRegistrationClose} onLoginClick={handleRegistrationModalLoginClick} />
+            <PasswordModal isOpen={isNextButtonOpen} onClose={() => setIsNextButtonOpen(false)} onNextClick={handleNextButton} emailValue={email} />
         </Box>
     );
 };

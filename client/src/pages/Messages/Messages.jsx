@@ -1,13 +1,21 @@
 import React from 'react'
 import Sidebar from '../../components/Sidebar/Sidebar'
+import MessageMiddleColumn from "./Components/MessageMiddleColumn.jsx";
+import {Grid, Hidden, Typography,} from "@mui/material";
+import MessagesRightColumn from "./Components/MessagesRightColumn.jsx";
 
-export const Messages = () => {
+const Messages = () => {
+
+
   return (
-    <div>
-      <Sidebar />
-      <div>Messages</div>
-    </div>
-  )
-}
+ 
 
-export default Messages
+      <Grid  sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey'}}>
+        <MessageMiddleColumn />
+      </Grid>
+
+  );
+};
+
+export default Messages;
+

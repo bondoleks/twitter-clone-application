@@ -1,14 +1,16 @@
 package demo.project.twitter.facade.images;
 
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.tweet.AttachmentImage;
+import demo.project.twitter.model.tweet.AttachmentImage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
+@Log4j2
 public class ServicAttachmentImage implements FunctionAttachmentImage {
     private final RepoAttachmentImage repo;
 
@@ -34,5 +36,10 @@ public class ServicAttachmentImage implements FunctionAttachmentImage {
     }
 
 //    ************************************** EXAMPLE END **************************************
+
+    public List<AttachmentImage> getAttachmentImageByTweetId(Long id){
+        return repo.getAttachmentImageByTweetId(id);
+    };
+
 
 }

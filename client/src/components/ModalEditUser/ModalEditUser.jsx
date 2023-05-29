@@ -16,10 +16,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import ContainerBirthday from "./ContainerBirthday";
+import { useTheme } from '@mui/material/styles';
 
 export default function ModalEditUser({ open, onClose }) {
 
-    const StyledAvatar = styled(Avatar)(({ theme }) => ({
+    const theme = useTheme();
+
+    const ModalEditUserStyles = {
+        backgroundColor: theme.palette.background.default
+    };
+
+    const StyledAvatar = styled(Avatar)(() => ({
         position: 'relative',
         '&:before': {
             content: '""',
@@ -39,13 +46,13 @@ export default function ModalEditUser({ open, onClose }) {
 
         <Dialog open={open} onClose={onClose} >
 
-            <Toolbar sx={{
+            <Toolbar style={ModalEditUserStyles} sx={{
                 display: 'flex',
                 justifyContent: 'space-between'
             }}>
                 <Toolbar>
                     <IconButton edge='start'>
-                        <CloseIcon onClick={onClose} />
+                        <CloseIcon onClick={onClose} color='gray' />
                     </IconButton>
                     <DialogTitle>Edit profile</DialogTitle>
                 </Toolbar>
@@ -61,7 +68,7 @@ export default function ModalEditUser({ open, onClose }) {
                 </Button>
             </Toolbar>
 
-            <DialogContent sx={{ maxWidth: 'md' }}>
+            <DialogContent sx={{ maxWidth: 'md' }} style={ModalEditUserStyles}>
                 <Container>
                     <div style={{ position: 'relative' }}>
                         <Box sx={{
@@ -110,22 +117,63 @@ export default function ModalEditUser({ open, onClose }) {
 
                 <TextField id="outlined-basic" label="Name" variant="outlined" sx={{
                     width: '100%',
-                    marginBottom: '10px'
+                    marginBottom: '10px',
+                    '& .MuiInputBase-input': {
+                        color: theme.palette.text.primary,
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        borderColor: theme.palette.text.primary,
+                    },
+                    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.palette.text.primary,
+                    },
+                    '& .MuiInputLabel-root': {
+                        color: theme.palette.text.primary,
+                    },
                 }} />
                 <TextareaAutosize id="outlined-basic" placeholder="Bio" variant="outlined" style={{
                     width: '99%',
                     height: '100px',
                     marginBottom: '10px',
                     border: '1px solid gray',
-                    borderRadius: '4px'
+                    borderRadius: '4px',
+                    color: theme.palette.text.primary,
+                    backgroundColor: theme.palette.background.default
                 }} />
-                <TextField id="outlined-basic" label="Location" variant="outlined" sx={{
-                    width: '100%',
-                    marginBottom: '10px'
-                }} />
+                <TextField id="outlined-basic"
+                    label="Location"
+                    variant="outlined"
+                    sx={{
+                        width: '100%',
+                        marginBottom: '10px',
+                        '& .MuiInputBase-input': {
+                            color: theme.palette.text.primary,
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            borderColor: theme.palette.text.primary,
+                        },
+                        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                            borderColor: theme.palette.text.primary,
+                        },
+                        '& .MuiInputLabel-root': {
+                            color: theme.palette.text.primary,
+                        },
+                    }} />
                 <TextField id="outlined-basic" label="Website" variant="outlined" sx={{
                     width: '100%',
-                    marginBottom: '10px'
+                    marginBottom: '10px',
+                    '& .MuiInputBase-input': {
+                        color: theme.palette.text.primary,
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        borderColor: theme.palette.text.primary,
+                    },
+                    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.palette.text.primary,
+                    },
+                    '& .MuiInputLabel-root': {
+                        color: theme.palette.text.primary,
+                    },
                 }} />
 
                 <ContainerBirthday />

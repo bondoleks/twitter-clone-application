@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.masseges;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.chat.Message;
+import demo.project.twitter.model.chat.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -15,14 +14,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 @Log4j2
-public  class FacadeMessage {
+public class FacadeMessage {
 
     private final ServiceMessage service;
     private Message entity = new Message();
     private DtoMessage dto = new DtoMessage();
 
-/*Маппер настроен минимально, только для выполнения основной функции - простого преобразования одного объекта
-* в другой - entity в dto и dto в entity. */
     private ModelMapper mapper() {
         ModelMapper mm = new ModelMapper();
         mm.getConfiguration()
@@ -33,31 +30,23 @@ public  class FacadeMessage {
         return mm;
     }
 
- /* Дальнейший код приведен для примера.
-        В данном классе реализуются методы предназначенные для связи контроллера и сервиса, с подкючением ModelMapper
-         для преобразования данных из БД в DTO и обратно
-  */
-
-    // ************************************** EXAMPLE START **************************************
-    public ResponseEntity<?> getEntity (Long id){
+    public ResponseEntity<?> getEntity(Long id) {
 
         if (service.existsById(id)) {
             entity = service.getById(id).get();
-            dto = mapper().map(entity,dto.getClass());
+            dto = mapper().map(entity, dto.getClass());
             return ResponseEntity.accepted().body(dto);
         } else {
-            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with cod " + id + " not found");
+            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Message with cod " + id + " not found");
         }
     }
 
-    public DtoMessage saveEntity (DtoMessage requestBody){
-        entity = mapper().map(dto, entity.getClass());
-        Message entity2 =service.saveOne(entity);
+    public DtoMessage saveEntity(DtoMessage requestBody) {
+        entity = mapper().map(requestBody, entity.getClass());
+        Message entity2 = service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
         return dto;
     }
-
-//    ************************************** EXAMPLE END **************************************
 }
 
 

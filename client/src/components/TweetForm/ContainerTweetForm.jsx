@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Button,
     Container,
@@ -19,9 +19,21 @@ import PublicIcon from "@mui/icons-material/Public";
 import PeopleIcon from "@mui/icons-material/People";
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
 import Link from '@mui/material/Link';
+import { useTheme } from '@mui/material/styles';
 
 
 export default function ContainerTweetForm({ open, onClose }) {
+
+    const theme = useTheme();
+
+    const [buttonColor, setButtonColor] = useState(null);
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
 
     const StyledAvatar = styled(Avatar)(({ theme }) => ({
         position: 'relative',
@@ -67,28 +79,28 @@ export default function ContainerTweetForm({ open, onClose }) {
     switch (selectedValue2) {
         case "Everyone can reply":
             icon = <PublicIcon sx={{
-                color: "#1DA1F2",
+                color: buttonColor,
                 marginRight: '4px',
                 fontSize: '16px'
             }} />;
             break;
         case "People you follow can reply":
             icon = <PeopleIcon sx={{
-                color: "#1DA1F2",
+                color: buttonColor,
                 marginRight: '4px',
                 fontSize: '16px'
             }} />;
             break;
         case "Only people you mention can reply":
             icon = <AlternateEmailOutlinedIcon sx={{
-                color: "#1DA1F2",
+                color: buttonColor,
                 marginRight: '4px',
                 fontSize: '16px'
             }} />;
             break;
         default:
             icon = <PublicIcon sx={{
-                color: "#1DA1F2",
+                color: buttonColor,
                 marginRight: '4px',
                 fontSize: '16px'
             }} />;
@@ -129,7 +141,7 @@ export default function ContainerTweetForm({ open, onClose }) {
                     </Box>
                 </Box>
                 {selectedValue === 'Twitter Circle' && <CheckIcon sx={{
-                    color: '#1DA1F2',
+                    color: buttonColor,
                     marginLeft: '16px'
                 }} />}
             </MenuItem>
@@ -150,7 +162,7 @@ export default function ContainerTweetForm({ open, onClose }) {
                         textTransform: 'none',
                         border: selectedValue === 'Twitter Circle' ? '1px solid green' : '1px solid black',
                         borderRadius: '20px',
-                        color: selectedValue === 'Twitter Circle' ? 'green' : '#1DA1F2',
+                        color: selectedValue === 'Twitter Circle' ? 'green' : buttonColor,
                     }} >
                     {selectedValue || "Everyone"}
                 </Button>
@@ -160,12 +172,12 @@ export default function ContainerTweetForm({ open, onClose }) {
                     </Typography>
                     <MenuItem onClick={() => handleMenuClose("Everyone")} >
                         <ListItemIcon>
-                            <PublicIcon sx={{ color: '#1DA1F2' }} />
+                            <PublicIcon sx={{ color: buttonColor }} />
                         </ListItemIcon>
                         <ListItemText primary="Everyone" />
                         <ListItemIcon>
                             {selectedValue === "Everyone" && <CheckIcon sx={{
-                                color: '#1DA1F2',
+                                color: buttonColor,
                                 marginLeft: '16px'
                             }} />}
                         </ListItemIcon>
@@ -184,7 +196,9 @@ export default function ContainerTweetForm({ open, onClose }) {
                 outline: 'none',
                 resize: 'none',
                 fontSize: '20px',
-                fontFamily: 'sans-serif'
+                fontFamily: 'sans-serif',
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.background.default
             }
             } />
 
@@ -199,6 +213,7 @@ export default function ContainerTweetForm({ open, onClose }) {
                         borderRadius: "20px",
                         overflow: "hidden",
                         whiteSpace: "nowrap",
+                        color: buttonColor
                     }}
                 >
                     {icon}
@@ -218,33 +233,33 @@ export default function ContainerTweetForm({ open, onClose }) {
                     </Typography>
                     <MenuItem onClick={() => handleMenuClose2("Everyone can reply")} >
                         <ListItemIcon>
-                            <PublicIcon sx={{ color: '#1DA1F2', marginRight: '8px' }} />
+                            <PublicIcon sx={{ color: buttonColor, marginRight: '8px' }} />
                         </ListItemIcon>
                         <ListItemText primary="Everyone" />
                         <ListItemIcon>
-                            {selectedValue2 === "Everyone can reply" && <CheckIcon sx={{ color: '#1DA1F2' }} />}
+                            {selectedValue2 === "Everyone can reply" && <CheckIcon sx={{ color: buttonColor }} />}
                         </ListItemIcon>
                     </MenuItem >
                     <MenuItem onClick={() => handleMenuClose2("People you follow can reply")}>
                         <ListItemIcon>
-                            <PeopleIcon sx={{ color: '#1DA1F2', marginRight: '8px' }} />
+                            <PeopleIcon sx={{ color: buttonColor, marginRight: '8px' }} />
                         </ListItemIcon>
                         <ListItemText primary="People you follow" />
                         <ListItemIcon>
                             {selectedValue2 === "People you follow can reply" && <CheckIcon sx={{
-                                color: '#1DA1F2',
+                                color: buttonColor,
                                 marginLeft: '4px'
                             }} />}
                         </ListItemIcon>
                     </MenuItem>
                     <MenuItem onClick={() => handleMenuClose2("Only people you mention can reply")}>
                         <ListItemIcon>
-                            <AlternateEmailOutlinedIcon sx={{ color: '#1DA1F2', marginRight: '8px' }} />
+                            <AlternateEmailOutlinedIcon sx={{ color: buttonColor, marginRight: '8px' }} />
                         </ListItemIcon>
                         <ListItemText primary="Only people you mention" />
                         <ListItemIcon>
                             {selectedValue2 === "Only people you mention can reply" && <CheckIcon sx={{
-                                color: '#1DA1F2',
+                                color: buttonColor,
                                 marginLeft: '8px'
                             }} />}
                         </ListItemIcon>

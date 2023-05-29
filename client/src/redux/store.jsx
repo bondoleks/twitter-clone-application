@@ -4,6 +4,7 @@ import { userReducer } from './user/userReduser'
 import { followersReducer } from './followers/followersReducer'
 import { registrationReducer } from './registration/registrationReducer'
 import { notificationsReducer } from './notifications/notificationReducer'
+import { homeReducer } from './home/homeReducer'
 
 
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     followers: followersReducer,
     registration : registrationReducer,
     notifications: notificationsReducer,
+    home: homeReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

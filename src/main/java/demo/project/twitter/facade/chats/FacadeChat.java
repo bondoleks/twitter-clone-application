@@ -1,6 +1,6 @@
 package demo.project.twitter.facade.chats;
 
-import demo.project.twitter.models.chat.Chat;
+import demo.project.twitter.model.chat.Chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -50,9 +50,11 @@ public  class FacadeChat {
     }
 
     public DtoChat saveEntity (DtoChat requestBody){
-        entity = mapper().map(dto, entity.getClass());
+
+        entity = mapper().map(requestBody, entity.getClass());
         Chat entity2 =service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
+
         return dto;
     }
 

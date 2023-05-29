@@ -1,5 +1,6 @@
 package demo.project.twitter.facade.users;
 
+import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 
 @RequiredArgsConstructor
 @Service
@@ -18,10 +21,9 @@ public  class FacadeUser {
 
     private final ServiceUser service;
     private User entity = new User();
-    private DtoUser dto = new DtoUser();
+    private UserDto dto = new UserDto();
 
-/*Маппер настроен минимально, только для выполнения основной функции - простого преобразования одного объекта
-* в другой - entity в dto и dto в entity. */
+
     private ModelMapper mapper() {
         ModelMapper mm = new ModelMapper();
         mm.getConfiguration()
@@ -32,31 +34,64 @@ public  class FacadeUser {
         return mm;
     }
 
- /* Дальнейший код приведен для примера.
-        В данном классе реализуются методы предназначенные для связи контроллера и сервиса, с подкючением ModelMapper
-         для преобразования данных из БД в DTO и обратно
-  */
-
-    // ************************************** EXAMPLE START **************************************
     public ResponseEntity<?> getEntity (Long id){
 
-        if (service.existsById(id)) {
-            entity = service.getById(id).get();
+        if (service.user_exists(service.findById(id))) {
+            entity = service.findById(id);
             dto = mapper().map(entity,dto.getClass());
             return ResponseEntity.accepted().body(dto);
         } else {
-            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with cod " + id + " not found");
+            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with code " + id + " not found");
         }
     }
 
-    public DtoUser saveEntity (DtoUser requestBody){
-        entity = mapper().map(dto, entity.getClass());
-        User entity2 =service.saveOne(entity);
+    public ResponseEntity<?> saveEntity (Long id, UserDto data){
+
+        if (service.user_exists(service.findById(id))) {
+            entity = service.updateUser(service.findById(id), data);
+            dto = mapper().map(entity,dto.getClass());
+            return ResponseEntity.accepted().body(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with code " + id + " not found");
+        }
+    }
+
+    public UserDto saveEntity (UserDto requestBody){
+        entity = mapper().map(requestBody, entity.getClass());
+        User entity2 = service.saveUser(entity);
         dto = mapper().map(entity2, dto.getClass());
         return dto;
     }
 
-//    ************************************** EXAMPLE END **************************************
+    public UserDto updateEntity (UserDto requestBody){
+        entity = mapper().map(requestBody, entity.getClass());
+        User entity2 = service.updateUser(entity, requestBody);
+        dto = mapper().map(entity2, dto.getClass());
+        return dto;
+    }
+
+    public ResponseEntity<?> getFollowers (Long id){
+
+        if (service.user_exists(service.findById(id))) {
+            Set <User> followers = service.getFollowers(service.findById(id));
+            dto = mapper().map(followers,dto.getClass());
+            return ResponseEntity.accepted().body(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.valueOf(404)).body("followers of " + id + " not found");
+        }
+    }
+
+    public ResponseEntity<?> getFollowing (Long id){
+
+        if (service.user_exists(service.findById(id))) {
+            Set <User> followers = service.getFollowing(service.findById(id));
+            dto = mapper().map(followers,dto.getClass());
+            return ResponseEntity.accepted().body(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.valueOf(404)).body("followings of " + id + " not found");
+        }
+    }
+
 }
 
 

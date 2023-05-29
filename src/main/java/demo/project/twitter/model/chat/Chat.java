@@ -1,4 +1,4 @@
-package demo.project.twitter.models.chat;
+package demo.project.twitter.model.chat;
 
 import demo.project.twitter.model.BaseEntity;
 import demo.project.twitter.model.User;
@@ -6,7 +6,9 @@ import javax.persistence.*;
 import lombok.*;
 
 import javax.persistence.JoinColumn;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -23,5 +25,11 @@ public class Chat extends BaseEntity {
 
     @OneToMany(mappedBy = "chat")
     private List<Message> messages;
+
+
+    @ManyToMany
+    @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<Chat> chats= new HashSet<>();
 
 }

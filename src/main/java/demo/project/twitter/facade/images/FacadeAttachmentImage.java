@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.images;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.tweet.AttachmentImage;
+import demo.project.twitter.model.tweet.AttachmentImage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -51,7 +50,7 @@ public  class FacadeAttachmentImage {
     }
 
     public DtoAttachmentImage saveEntity (DtoAttachmentImage requestBody){
-        entity = mapper().map(dto, entity.getClass());
+        entity = mapper().map(requestBody, entity.getClass());
         AttachmentImage entity2 =service.saveOne(entity);
         dto = mapper().map(entity2, dto.getClass());
         return dto;
