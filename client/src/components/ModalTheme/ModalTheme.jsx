@@ -8,13 +8,18 @@ import {
     Typography,
     Box
 } from '@mui/material';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CustomizedSteppers from './StepperEl';
 import CheckIcon from '@mui/icons-material/Check';
-
+import { useTheme } from '@mui/material/styles';
 
 
 export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
+
+    const theme = useTheme();
+
+    const ModalThemeStyles = {
+        backgroundColor: theme.palette.background.default,
+    };
 
     const [color, setColor] = useState(() => {
         // При первом рендере компонента пытаемся получить цвет из локального хранилища
@@ -100,142 +105,141 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle sx={{ textAlign: 'center', fontWeight: '700' }}>Customize your view</DialogTitle>
-            <DialogContent>
-                <Typography sx={{ marginBottom: '24px', color: 'gray', fontSize: '14px', textAlign: 'center' }}>
-                    These settings affect all the Twitter accounts on this browser.
-                </Typography>
-                <Typography sx={{ fontSize: '12px', fontWeight: '700' }}>
-                    Font size
-                </Typography>
+            <Box style={ModalThemeStyles}>
+                <DialogTitle sx={{ textAlign: 'center', fontWeight: '700' }}>Customize your view</DialogTitle>
+                <DialogContent>
+                    <Typography sx={{ marginBottom: '24px', color: 'gray', fontSize: '14px', textAlign: 'center' }}>
+                        These settings affect all the Twitter accounts on this browser.
+                    </Typography>
+                    <Typography sx={{ fontSize: '12px', fontWeight: '700' }}>
+                        Font size
+                    </Typography>
 
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: '90%',
-                    backgroundColor: '#f9f9f9',
-                    marginTop: '4px',
-                    marginBottom: '4px',
-                    paddingInline: '20px',
-                    borderRadius: '12px'
-                }}>
-                    <Typography sx={{ fontSize: '10px' }}>Aa</Typography>
-                    <CustomizedSteppers selectedColor={color} selectedLightColor={lightColor} />
-                    <Typography sx={{ fontSize: '28px' }}>Aa</Typography>
-                </Box>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: '90%',
+                        backgroundColor: theme.palette.colorBox,
+                        marginTop: '4px',
+                        marginBottom: '4px',
+                        paddingInline: '20px',
+                        borderRadius: '12px'
+                    }}>
+                        <Typography sx={{ fontSize: '10px' }}>Aa</Typography>
+                        <CustomizedSteppers selectedColor={color} selectedLightColor={lightColor} />
+                        <Typography sx={{ fontSize: '28px' }}>Aa</Typography>
+                    </Box>
 
-                <Typography sx={{ fontSize: '12px', fontWeight: '700' }}>
-                    Color
-                </Typography>
+                    <Typography sx={{ fontSize: '12px', fontWeight: '700' }}>
+                        Color
+                    </Typography>
 
-                <Box p={2} sx={{
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    width: '90%',
-                    backgroundColor: '#f9f9f9',
-                    marginTop: '4px',
-                    marginBottom: '4px',
-                    paddingInline: '20px',
-                    borderRadius: '12px'
-                }}>
-                    {colors.map((c) => (
-                        <Box
-                            key={c}
-                            style={{
-                                width: '32px',
-                                height: '32px',
-                                borderRadius: '50%',
-                                backgroundColor: c,
-                                display: 'inline-block',
-                                margin: '4px',
-                                cursor: 'pointer',
-                                position: 'relative',
-                            }}
-                            color={buttonColor}
-                            onClick={() => handleColorChange(c)}
-                        >
-                            {activeColor === c && (
-                                <CheckIcon
+                    <Box p={2} sx={{
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                        alignItems: 'center',
+                        width: '90%',
+                        backgroundColor: theme.palette.colorBox,
+                        marginTop: '4px',
+                        marginBottom: '4px',
+                        paddingInline: '20px',
+                        borderRadius: '12px'
+                    }}>
+                        {colors.map((c) => (
+                            <Box
+                                key={c}
+                                style={{
+                                    width: '32px',
+                                    height: '32px',
+                                    borderRadius: '50%',
+                                    backgroundColor: c,
+                                    display: 'inline-block',
+                                    margin: '4px',
+                                    cursor: 'pointer',
+                                    position: 'relative',
+                                }}
+                                color={buttonColor}
+                                onClick={() => handleColorChange(c)}
+                            >
+                                {activeColor === c && (
+                                    <CheckIcon
+                                        style={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            color: '#fff',
+                                        }}
+                                    />
+                                )}
+                            </Box>
+                        ))}
+                    </Box>
+
+                    <Typography sx={{ fontSize: '12px', fontWeight: '700' }}>
+                        Background
+                    </Typography>
+
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: '90%',
+                        backgroundColor: theme.palette.colorBox,
+                        marginTop: '4px',
+                        marginBottom: '4px',
+                        paddingInline: '20px',
+                        borderRadius: '12px'
+                    }}>
+
+                        {buttons.map((button, index) => (
+                            <Button
+                                key={index}
+                                disableRipple
+                                sx={{
+                                    width: '150px',
+                                    margin: '12px',
+                                    textTransform: 'none',
+                                    color: button.color,
+                                    backgroundColor: button.backgroundColor,
+                                    border: activeBut === index ? `2px solid ${color}` : 'none',
+                                    '&:hover': {
+                                        backgroundColor: button.backgroundColor,
+                                    },
+                                }}
+                                onClick={() => handleButtonClick(index)}
+                            >
+                                <div
                                     style={{
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: '50%',
-                                        transform: 'translate(-50%, -50%)',
-                                        color: '#fff',
+                                        width: '20px',
+                                        height: '20px',
+                                        borderRadius: '50%',
+                                        backgroundColor: activeBut === index ? color : 'transparent',
+                                        display: 'inline-block',
+                                        marginRight: '8px',
                                     }}
-                                />
-                            )}
-                        </Box>
-                    ))}
-                </Box>
+                                >
+                                    {activeBut === index && (
+                                        <CheckIcon sx={{ color: '#fff', fontSize: '16px' }} />
+                                    )}
+                                </div>
+                                <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
+                                    {button.label}
+                                </Typography>
+                            </Button>
+                        ))}
 
-                <Typography sx={{ fontSize: '12px', fontWeight: '700' }}>
-                    Background
-                </Typography>
-
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: '90%',
-                    backgroundColor: '#f9f9f9',
-                    marginTop: '4px',
-                    marginBottom: '4px',
-                    paddingInline: '20px',
-                    borderRadius: '12px'
-                }}>
-                    
-
-{buttons.map((button, index) => (
-  <Button
-    key={index}
-    disableRipple
-    sx={{
-      width: '150px',
-      margin: '12px',
-      textTransform: 'none',
-      color: button.color,
-      backgroundColor: button.backgroundColor,
-      border: activeBut === index ? `2px solid ${color}` : 'none',
-      '&:hover': {
-        backgroundColor: button.backgroundColor,
-      },
-    }}
-    onClick={() => handleButtonClick(index)}
-  >
-    <div
-      style={{
-        width: '20px',
-        height: '20px',
-        borderRadius: '50%',
-        backgroundColor: activeBut === index ? color : 'transparent',
-        display: 'inline-block',
-        marginRight: '8px',
-      }}
-    >
-      {activeBut === index && (
-        <CheckIcon sx={{ color: '#fff', fontSize: '16px' }} />
-      )}
-    </div>
-    <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
-      {button.label}
-    </Typography>
-  </Button>
-))}
+                    </Box>
+                </DialogContent>
 
 
+                <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button onClick={onClose} variant="contained" color="primary" sx={{ marginBottom: '20px', borderRadius: '50px', backgroundColor: color }}>
+                        Done
+                    </Button>
 
-                </Box>
-            </DialogContent>
+                </DialogActions>
 
-
-            <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button onClick={onClose} variant="contained" color="primary" sx={{ marginBottom: '20px', borderRadius: '50px', backgroundColor: color }}>
-                    Done
-                </Button>
-
-            </DialogActions>
-
+            </Box>
         </Dialog>
     );
 };

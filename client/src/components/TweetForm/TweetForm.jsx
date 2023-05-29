@@ -9,11 +9,16 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
-import { styled } from '@mui/system';
-
+import { useTheme } from '@mui/material/styles';
 
 
 export default function TweetForm({ open, onClose }) {
+
+    const theme = useTheme();
+
+    const TweetFormStyles = {
+        backgroundColor: theme.palette.background.default,
+      };
 
     const [buttonColor, setButtonColor] = useState(null);
 
@@ -43,13 +48,13 @@ export default function TweetForm({ open, onClose }) {
 
     return (
 
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} >
 
             <IconButton sx={{ position: 'absolute', top: '0', left: '0' }}>
-                <CloseIcon onClick={onClose} />
+                <CloseIcon onClick={onClose} color='gray' />
             </IconButton>
 
-            <DialogContent sx={{ maxWidth: 'md' }}>
+            <DialogContent sx={{ maxWidth: 'md' }} style={TweetFormStyles}>
 
                 <ContainerTweetForm />
 

@@ -15,15 +15,13 @@ export const ToolbarProfile = () => {
     return (
         <>
             <Hidden mdUp>
-                <Box position='fixed' bgcolor={'white'} sx={{
-                    width: '68%',
+                <Box position='fixed' bgcolor={'default'} sx={{
                     zIndex: '99',
                     top: '0',
-                    left: '19%'
                 }}>
                     <Toolbar >
                         <RouterLink to={'/home'}>
-                            <IconButton>
+                            <IconButton color='gray'>
                                 <WestIcon />
                             </IconButton>
                         </RouterLink>
@@ -36,15 +34,16 @@ export const ToolbarProfile = () => {
             </Hidden >
 
             <Hidden mdDown>
-                <Box position='fixed' bgcolor={'white'} sx={{
-                    width: '41.5%',
+                <Box position='fixed' bgcolor={'default'} sx={{
+                    width: '40%',
+                    maxWidth: "470px",
+                    marginLeft: '-20px',
                     zIndex: '99',
                     top: '0',
-                    left: '24%'
                 }}>
                     <Toolbar>
                         <RouterLink to={'/home'}>
-                            <IconButton >
+                            <IconButton color='gray' >
                                 <WestIcon />
                             </IconButton>
                         </RouterLink>
@@ -54,7 +53,7 @@ export const ToolbarProfile = () => {
                         </Box>
                     </Toolbar>
                 </Box>
-            </Hidden>
+            </Hidden>           
         </>
     )
 }

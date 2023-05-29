@@ -6,9 +6,22 @@ import {
     DialogActions,
     Button
 } from "@mui/material";
+import { useTheme } from '@mui/material/styles';
 
 
 export default function ModalEditBirthdate({ open, onClose, toggleContainers }) {
+
+    const theme = useTheme();
+
+    const ModalEditBirthdateStyles = {
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.gray.main
+    };
+
+    const ModalEditBirthdateStylesInvert = {
+        backgroundColor: theme.palette.gray.main,
+        color: theme.palette.background.default,
+    }
 
     return (
 
@@ -22,22 +35,20 @@ export default function ModalEditBirthdate({ open, onClose, toggleContainers }) 
           }}
             open={open}
             onClose={onClose} >
-            <DialogTitle edge='start'>Edit date of birth?</DialogTitle>
-            <DialogContent >
+            <DialogTitle style={ModalEditBirthdateStyles} edge='start'>Edit date of birth?</DialogTitle>
+            <DialogContent style={ModalEditBirthdateStyles} sx={{fontSize: '14px'}}>
                 This can only be changed a few times. Make sure you enter the age of the person using the account.
             </DialogContent>
-            <DialogActions sx={{
+            <DialogActions style={ModalEditBirthdateStyles} sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
 
-                <Button onClick={toggleContainers} sx={{
+                <Button onClick={toggleContainers} style={ModalEditBirthdateStylesInvert} sx={{
                     width: '90%',
                     margin: '4px',
-                    color: 'white',
-                    backgroundColor: 'black',
                     border: '1px solid black',
                     height: '30px',
                     borderRadius: '20px',
@@ -48,11 +59,10 @@ export default function ModalEditBirthdate({ open, onClose, toggleContainers }) 
                     Edit
                 </Button>
 
-                <Button onClick={onClose} sx={{
+                <Button onClick={onClose} style={ModalEditBirthdateStyles} sx={{
                     width: '90%',
                     margin: '4px',
-                    color: 'black',
-                    border: '1px solid black',
+                    border: '1px solid ',
                     height: '30px',
                     borderRadius: '20px',
                     textTransform: 'none',
@@ -60,8 +70,8 @@ export default function ModalEditBirthdate({ open, onClose, toggleContainers }) 
                 }}>
                     Cancel
                 </Button>
-            </DialogActions>
 
+            </DialogActions>
         </Dialog>
     );
 }
