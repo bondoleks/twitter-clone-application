@@ -17,6 +17,7 @@ import {
     Avatar
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HomeIcon from '@mui/icons-material/Home';
@@ -39,7 +40,14 @@ import WestIcon from '@mui/icons-material/West';
 import ModalTheme from '../ModalTheme/ModalTheme';
 
 
-const SidebarMobile = ({theme}) => {
+const SidebarMobile = () => {
+
+    const theme = useTheme();
+
+    const bottomNavigationStyles = {
+        backgroundColor: theme.palette.background.default,
+        // Add other styles as needed
+      };
 
     const [buttonColor, setButtonColor] = useState();
 
@@ -55,6 +63,7 @@ const SidebarMobile = ({theme}) => {
         localStorage.setItem('buttonColor', color);
     };
    
+
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -443,12 +452,11 @@ const SidebarMobile = ({theme}) => {
             <TweetFormMobile open={open} onClose={handleClose} />
 
             <Box edge="start" >
-                <BottomNavigation sx={{
+                <BottomNavigation style={bottomNavigationStyles} sx={{
                     position: 'fixed',
                     bottom: '0',
                     width: '100%',
-                    zIndex: '99',
-                    backgroundColor: 'dark' ? '#15202b' : '#ffffff'
+                    zIndex: '99'
                 }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">
