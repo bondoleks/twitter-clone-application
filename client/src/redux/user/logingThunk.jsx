@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions';
+import {setAuthToken} from "../tokens/tokens";
+import {api} from "../service/api";
 
-export function logingThunk({ login, password }) {
+export function logingThunk({ username, password }) {
   return async function(dispatch) {
     try {
-      const response = await axios.post('/api/v1/login', { login, password });
-      const token = response.data.token;
+      const response = await api.post('auth/login', { username, password });
+      const token = response.token;
       if (token) {
+        setAuthToken(token);
         dispatch({ type: LOGIN_SUCCESS, token });
       } else {
         dispatch({ type: LOGIN_FAILURE });

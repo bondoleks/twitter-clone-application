@@ -5,6 +5,8 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import TextField from '@mui/material/TextField';
 import RegistrationModal from "../Registration/Registration.jsx";
 import PasswordModal from "../Login/PasswordModal.jsx";
+import {useDispatch} from "react-redux";
+import {logingThunk} from "../../redux/user/logingThunk";
 
 const Footerlogin = () => {
 
@@ -13,6 +15,13 @@ const Footerlogin = () => {
     const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
     const [isNextButtonOpen, setIsNextButtonOpen] = useState(false);
     const [email, setEmail] = useState('');
+
+    const dispatch = useDispatch();
+
+    const handleLogin = (password) => {
+        dispatch(logingThunk({username: email, password}))
+        setIsNextButtonOpen(false)
+    }
 
 
     const handleLoginButtonClick = () => {
@@ -235,7 +244,7 @@ const Footerlogin = () => {
                 </Modal>
             )}
             <RegistrationModal isOpen={isRegistrationModalOpen} onClose={handleRegistrationClose} onLoginClick={handleRegistrationModalLoginClick} />
-            <PasswordModal isOpen={isNextButtonOpen} onClose={() => setIsNextButtonOpen(false)} onNextClick={handleNextButton} emailValue={email} />
+            <PasswordModal isOpen={isNextButtonOpen} onClose={() => setIsNextButtonOpen(false)} onNextClick={handleLogin} emailValue={email} />
         </Box>
     );
 };

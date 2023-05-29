@@ -29,12 +29,10 @@ export const TabsProfile = () => {
         url: `https://twitter-clone-application.herokuapp.com/tweets/all?sizePage=10&numberPage=1`,
         method: 'GET',
         dataTransformer: (data) => {
-            return data.data.listDto
-        },
-        headers: {
-            "Authorization": "Bearer_eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY4NTIwODE5MywiZXhwIjoxNjg1MjExNzkzfQ.2kPkH-K13YnyQHk-SpB3xbAT4F88TZ141CscFWEcq-k"
+            return data.listDto
         }
     });
+
 
 
     return (
