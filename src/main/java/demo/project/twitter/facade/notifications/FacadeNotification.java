@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.notifications;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.Notification;
+import demo.project.twitter.model.Notification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

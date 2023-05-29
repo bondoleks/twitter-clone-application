@@ -1,10 +1,19 @@
 package demo.project.twitter.facade.images;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.models.tweet.AttachmentImage;
+import demo.project.twitter.model.tweet.AttachmentImage;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
-public interface RepoAttachmentImage extends CrudRepository<AttachmentImage, Long> { }
+public interface RepoAttachmentImage extends CrudRepository<AttachmentImage, Long> {
+
+    @Query(
+            value = "select * from images  where tweet_id = ?",
+            nativeQuery = true
+    )
+    List<AttachmentImage> getAttachmentImageByTweetId(Long id);
+}

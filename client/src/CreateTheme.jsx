@@ -1,33 +1,60 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material';
 
-// Светлая тема
-const lightTheme = createTheme({
+export const theme = createTheme({
   palette: {
-    mode: 'light',
     primary: {
-      main: '#1DA1F2',
+      main: '#FF0000', // Основной цвет
     },
     secondary: {
-      main: '#FFAD1F',
+      main: '#00FF00', // Вторичный цвет
     },
-    // Дополнительные настройки цветов...
+    error: {
+      main: '#FF0000', // Цвет ошибки
+    },
+    warning: {
+      main: '#FFC107', // Цвет предупреждения
+    },
+    info: {
+      main: '#2196F3', // Цвет информации
+    },
+    success: {
+      main: '#4CAF50', // Цвет успешного выполнения
+    },
   },
-  // Дополнительные настройки стилей...
 });
 
-// Темная тема
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#1DA1F2',
-    },
-    secondary: {
-      main: '#FFAD1F',
-    },
-    // Дополнительные настройки цветов...
-  },
-  // Дополнительные настройки стилей...
-});
 
-export { lightTheme, darkTheme };
+
+
+
+// // Светлая тема
+// export const lightTheme = createTheme({
+//   palette: {
+//     mode: 'light',
+//     primary: {
+//       main: '#1DA1F2',
+//     },
+//     secondary: {
+//       main: '#FFAD1F',
+//     },
+//     // Дополнительные настройки цветов...
+//   },
+//   // Дополнительные настройки стилей...
+// });
+
+// // Темная тема
+// export const darkTheme = createTheme({
+//   palette: {
+//     mode: 'dark',
+//     primary: {
+//       main: '#1DA1F2',
+//     },
+//     secondary: {
+//       main: '#FFAD1F',
+//     },
+//     // Дополнительные настройки цветов...
+//   },
+//   // Дополнительные настройки стилей...
+// });
+
+export default { theme };

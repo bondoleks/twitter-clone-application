@@ -1,6 +1,6 @@
 package demo.project.twitter.facade.chats;
 
-import demo.project.twitter.models.chat.Chat;
+import demo.project.twitter.model.chat.Chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

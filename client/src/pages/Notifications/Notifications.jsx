@@ -3,6 +3,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import {
   Grid,
   Hidden,
+
   IconButton,
   Container,
   Typography,
@@ -11,8 +12,10 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Link from '@mui/material/Link';
+
 import TabsNotifications from "./TabsNotifications.jsx";
 import Search from "../../components/Search/Search.jsx";
+import { Outlet } from 'react-router-dom';
 
 
 const Notifications = () => {
@@ -42,6 +45,8 @@ const Notifications = () => {
           }}>
             Notifications
           </Typography>
+        {/* //Тут описание табов с линками
+          <Outlet/> */}
           <TabsNotifications/>
         </Grid>
 

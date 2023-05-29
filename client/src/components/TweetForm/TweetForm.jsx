@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     Dialog,
     DialogContent,
@@ -9,9 +9,37 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
+import { styled } from '@mui/system';
+
 
 
 export default function TweetForm({ open, onClose }) {
+
+    const [buttonColor, setButtonColor] = useState(null);
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+        handleCloseMenu();
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
+
 
     return (
 
@@ -38,8 +66,13 @@ export default function TweetForm({ open, onClose }) {
                 }}>
 
                     <ToolbarTweetForm />
-            
-                    <Button variant="contained" color="primary" size="small" sx={{ textTransform: 'none', borderRadius: '20px', height: '30px' }}>
+
+                    <Button variant="contained" size="small" sx={{
+                        textTransform: 'none',
+                        borderRadius: '20px',
+                        height: '30px',
+                        background: buttonColor
+                    }}>
                         Tweet
                     </Button>
 
@@ -50,3 +83,15 @@ export default function TweetForm({ open, onClose }) {
         </Dialog>
     );
 }
+
+
+
+
+
+
+
+
+
+
+
+
