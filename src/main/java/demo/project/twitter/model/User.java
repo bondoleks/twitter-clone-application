@@ -16,10 +16,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@SuperBuilder
-@RequiredArgsConstructor
-@Getter
-@Setter
 @Table(name = "users")
 @Data
 

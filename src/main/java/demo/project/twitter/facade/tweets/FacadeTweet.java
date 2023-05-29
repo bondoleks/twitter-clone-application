@@ -48,7 +48,7 @@ public class FacadeTweet {
         Tweet entity = new Tweet();
         mapper().map(dto, entity);
         entity.setTweetType(tt);
-        User user = serviceUser.getById(dto.getUser_id()).get();
+        User user = serviceUser.findById(dto.getUser_id());
         Long tweetId = dto.getParent_Tweet();
         if (tweetId != 0) {
             Tweet parentTweet = service.getTweetById(tweetId);
