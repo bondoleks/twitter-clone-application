@@ -8,7 +8,6 @@ const Messages = () => {
 
 
   return (
- 
 
       <Grid  sx={{ borderRight: '1px solid grey', borderLeft: '1px solid grey'}}>
         <MessageMiddleColumn />

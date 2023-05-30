@@ -1,0 +1,56 @@
+####
+POST http://localhost:8080/tweets/tweet/save
+Content-Type: application/json
+
+
+{
+  "tweetBody": "создание твита versionNext",
+  "user_id": 20,
+  "parentTweet": 0
+}
+####
+
+POST http://localhost:8080/tweets/quote/save
+Content-Type: application/json
+
+
+{
+  "tweetBody": "создание ретвита versionNext",
+  "user_id": 20,
+  "parent_Tweet": 32
+}
+###
+GET http://localhost:8080/tweets/image/57
+
+###
+GET http://localhost:8080/tweets/tweet/all/8?sizePage=5&numberPage=0
+
+###
+GET http://localhost:8080/tweets/tweet/all?sizePage=10&numberPage=0
+
+###
+GET http://localhost:8080/tweets/reply/all/64?sizePage=10&numberPage=0
+
+###
+POST http://localhost:8080/tweets/reply/save
+Content-Type: application/json
+
+
+{
+  "tweetBody": "создание коммента versionNext",
+  "user_id": 20,
+  "parent_Tweet": 48
+}
+
+
+###
+
+GET http://localhost:8080/tweets/tweet/40
+
+
+####
+
+DELETE http://localhost:8080/test/remove/38
+
+####
+DELETE http://localhost:8080/test/remove/all

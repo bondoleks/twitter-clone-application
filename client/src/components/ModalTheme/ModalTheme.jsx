@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect, useContext } from 'react';
+
 import {
     Dialog,
     DialogTitle,
@@ -16,18 +18,21 @@ import { CustomThemeContext } from "../../context/CustomThemeContext";
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 
+
 export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
     const theme = useTheme();
+
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const ModalThemeStyles = {
+
         backgroundColor: theme.palette.backgroundModal,
         color: theme.palette.text.primary
     };
 
-    const { themeMode, setThemeMode } = useContext(CustomThemeContext);
 
+    const { themeMode, setThemeMode } = useContext(CustomThemeContext);
 
     const [color, setColor] = useState(() => {
         // При первом рендере компонента пытаемся получить цвет из локального хранилища
@@ -118,6 +123,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
         const storedActiveButton = localStorage.getItem('activeButton');
         const storedThemeMode = localStorage.getItem('themeMode');
         if (storedActiveButton !== null) {
+
             setActiveBut(parseInt(storedActiveButton));
         }
         if (storedThemeMode !== null) {
@@ -128,6 +134,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
     return (
 
         <Dialog open={open} onClose={onClose} fullScreen={isMobile} style={ModalThemeStyles}>
+
             <Box style={ModalThemeStyles}>
                 <DialogTitle sx={{ textAlign: 'center', fontWeight: '700' }}>Customize your view</DialogTitle>
                 <DialogContent>
@@ -141,7 +148,9 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center',
+
                         width: '100%',
+
                         backgroundColor: theme.palette.colorBox,
                         marginTop: '4px',
                         marginBottom: '4px',
@@ -172,6 +181,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                             <Box
                                 key={c}
                                 style={{
+
                                     width: isMobile ? '20px' : '32px',
                                     height: isMobile ? '20px' : '32px',
                                     borderRadius: '50%',
@@ -193,6 +203,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                                             transform: 'translate(-50%, -50%)',
                                             color: '#fff',
                                             fontSize: isMobile ? '12px' : '22px'
+
                                         }}
                                     />
                                 )}
@@ -206,8 +217,8 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
                     <Box sx={{
                         display: 'flex',
+
                         flexDirection: isMobile ? 'column' : 'row',
-                        // justifyContent: 'center',
                         alignItems: 'center',
                         width: '100%',
                         backgroundColor: theme.palette.colorBox,
@@ -228,12 +239,14 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                                     color: button.color,
                                     backgroundColor: button.backgroundColor,
                                     textAlign: 'left',
+
                                     border: activeBut === index ? `2px solid ${color}` : 'none',
                                     '&:hover': {
                                         backgroundColor: button.backgroundColor,
                                     },
                                 }}
                                 onClick={() => handleButtonClick(index)}
+
                                 startIcon={
                                     <div
                                         style={{

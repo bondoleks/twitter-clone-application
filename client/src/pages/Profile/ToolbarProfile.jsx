@@ -23,6 +23,7 @@ export const ToolbarProfile = () => {
     return (
         <>
             <Hidden mdUp>
+
                 <Box position='fixed' sx={{
                     zIndex: '99',
                     top: '0',
@@ -42,9 +43,11 @@ export const ToolbarProfile = () => {
             </Hidden >
 
             <Hidden mdDown>
+
                 <Box position='fixed'  sx={{
                     width: '49%',
                     maxWidth: "530px",
+
                     zIndex: '99',
                     top: '0',
                 }}>
