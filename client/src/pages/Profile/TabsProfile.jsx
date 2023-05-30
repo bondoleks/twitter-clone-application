@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Tab, Tabs } from '@mui/material';
 import { TabPanel, TabContext } from '@mui/lab';
 import { Avatar } from '@mui/material';
-import ModalTheme from '../../components/ModalTheme/ModalTheme';
 import { useFetch } from "../../hooks/UseFetch";
 import Tweet from "../../components/Tweet/Tweet";
 
@@ -32,7 +31,9 @@ export const TabsProfile = () => {
             return data.data.listDto
         },
         headers: {
-            "Authorization": "Bearer_eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY4NTIwODE5MywiZXhwIjoxNjg1MjExNzkzfQ.2kPkH-K13YnyQHk-SpB3xbAT4F88TZ141CscFWEcq-k"
+
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY4NTI2NTg4NSwiZXhwIjoxNjg1MjY5NDg1fQ.Ii1QsMsbYmrD_1IzPvMOssa8vjLUTQgZ3uPCPJ1sv6I"
+
         }
     });
 

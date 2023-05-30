@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -12,14 +12,24 @@ import CustomizedSteppers from './StepperEl';
 import CheckIcon from '@mui/icons-material/Check';
 import { useTheme } from '@mui/material/styles';
 
+import {CustomThemeContext} from "../../context/CustomThemeContext";
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+
+
 
 export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
     const theme = useTheme();
 
     const ModalThemeStyles = {
-        backgroundColor: theme.palette.background.default,
+
+        backgroundColor: theme.palette.backgroundModal,
+        color: theme.palette.text.primary
     };
+
+    const {themeMode, setThemeMode} = useContext(CustomThemeContext);
+
+
 
     const [color, setColor] = useState(() => {
         // При первом рендере компонента пытаемся получить цвет из локального хранилища
@@ -43,8 +53,6 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
         localStorage.setItem('selectedLightColor', lightColor);
     }, [lightColor]);
 
-    // const [color, setColor] = useState(buttonColor);
-    // const [lightColor, setLightColor] = useState('#7bbdff');
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [activeColor, setActiveColor] = useState(null);
@@ -60,7 +68,6 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
         setLightColor(lightColors[colorIndex]);
         setActiveColor(selectedColor);
         onColorChange(selectedColor);
-        setButtonColor(selectedColor); // Добавлено обновление buttonColor
         localStorage.setItem('buttonColor', selectedColor); // Сохранение в localStorage
     };
 
@@ -84,24 +91,41 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
     const buttons = [
         {
             label: 'Default',
-            color: 'black',
-            backgroundColor: 'white',
+            color: '#000000',
+            backgroundColor: '#ffffff',
+            state: "light"
         },
         {
             label: 'Dim',
-            color: 'white',
+            color: '#ffffff',
             backgroundColor: '#2f2f2f',
+            state: "dark"
         },
         {
             label: 'Lights out',
-            color: 'white',
-            backgroundColor: 'black',
+            color: '#ffffff',
+            backgroundColor: '#000000',
+            state: "black"
         },
     ];
 
     const handleButtonClick = (index) => {
         setActiveBut(index);
+        setThemeMode(buttons[index].state);
+        localStorage.setItem('activeButton', index); // Сохранение выбранной кнопки в localStorage
+        localStorage.setItem('themeMode', buttons[index].state); // Сохранение выбранной темы в localStorage
     };
+
+    useEffect(() => {
+        const storedActiveButton = localStorage.getItem('activeButton');
+        const storedThemeMode = localStorage.getItem('themeMode');
+        if (storedActiveButton !== null) {
+          setActiveBut(parseInt(storedActiveButton));
+        } 
+        if (storedThemeMode !== null) {
+            setThemeMode(storedThemeMode);
+          }
+      }, []);
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -207,21 +231,30 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                                     },
                                 }}
                                 onClick={() => handleButtonClick(index)}
-                            >
-                                <div
-                                    style={{
+
+                                startIcon={
+                                    <div
+                                      style={{
                                         width: '20px',
                                         height: '20px',
                                         borderRadius: '50%',
-                                        backgroundColor: activeBut === index ? color : 'transparent',
-                                        display: 'inline-block',
-                                        marginRight: '8px',
-                                    }}
-                                >
-                                    {activeBut === index && (
+                                        backgroundColor:
+                                          activeBut === index ? color : 'transparent',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                      }}
+                                    >
+                                      {activeBut === index ? (
                                         <CheckIcon sx={{ color: '#fff', fontSize: '16px' }} />
-                                    )}
-                                </div>
+                                      ) : (
+                                        <RadioButtonUncheckedIcon />
+                                      )}
+                                    </div>
+                                  }
+                            >
+                               
+
                                 <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
                                     {button.label}
                                 </Typography>
@@ -245,3 +278,4 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 };
 
 export default ThemeDialog;
+
