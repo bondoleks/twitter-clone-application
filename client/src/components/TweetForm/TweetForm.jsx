@@ -11,7 +11,6 @@ import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
 import { useTheme } from '@mui/material/styles';
 
-
 export default function TweetForm({ open, onClose }) {
 
     const theme = useTheme();
@@ -88,15 +87,3 @@ export default function TweetForm({ open, onClose }) {
         </Dialog>
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-

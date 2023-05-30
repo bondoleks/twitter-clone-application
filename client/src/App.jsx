@@ -73,7 +73,7 @@ function App() {
                 main: "#ffffff"
             },
             gray: {
-                main: '#000000'
+                main: '#555555'
             },
             colorBox: '#f9f9f9'
         }
