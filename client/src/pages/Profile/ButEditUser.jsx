@@ -20,7 +20,9 @@ export const ButEditUser = () => {
                 <Button variant="outlined" onClick={handleOpen} sx={{
                     position: 'absolute',
                     top: '300px',
-                    left: '56%',
+
+                    left: '59%',
+
                     color: 'primary',
                     border: '1px solid primary',
                     borderRadius: '50px',
@@ -34,7 +36,7 @@ export const ButEditUser = () => {
             <Hidden mdUp smDown>
                 <Button variant="outlined" onClick={handleOpen} sx={{ position: 'absolute', 
                 top: '300px', 
-                left: '70%', 
+                left: '67%', 
                 color: 'primary', 
                 border: '1px solid primary', 
                 borderRadius: '50px', 

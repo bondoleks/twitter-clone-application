@@ -11,6 +11,5 @@ public class DtoTweetPage {
 
     private Long totalElements;
     private Integer totalPage;
-    private List<DtoTweet> listDto;
-
+    private List<List<DtoTweet>> listDto;
 }

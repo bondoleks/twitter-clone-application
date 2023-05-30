@@ -21,21 +21,13 @@ import { Outlet } from 'react-router-dom';
 const Notifications = () => {
   return (
     <>
-      <Grid container spacing={3} sx={{ height: '100%' }} >
-
-        <Grid item md={3}>
-          <Sidebar />
-        </Grid>
-
-
         <Grid
             item xs={12}
-            md={5}
-            sm={8}
+            // md={5}
+            // sm={8}
             sx={{
           borderRight: '1px solid grey',
           borderLeft: '1px solid grey',
-          width: '100%'
         }}>
           <Typography
           sx={{
@@ -49,14 +41,6 @@ const Notifications = () => {
           <Outlet/> */}
           <TabsNotifications/>
         </Grid>
-
-        <Hidden mdDown>
-          <Grid item xs={3}>
-            <Search />
-          </Grid>
-        </Hidden>
-
-      </Grid>
     </>
   )
 }

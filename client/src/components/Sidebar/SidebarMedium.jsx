@@ -32,9 +32,26 @@ import TweetForm from '../TweetForm/TweetForm';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
+import { useTheme } from '@mui/material/styles';
 
 
 export const SidebarMedium = () => {
+
+    const [buttonColor, setButtonColor] = useState();
+
+    const theme = useTheme();
+
+    const DropStyles = {
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.default
+      };
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -94,6 +111,10 @@ export const SidebarMedium = () => {
         setOpenModal(false);
     };
 
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
 
     return (
         <>
@@ -126,8 +147,8 @@ export const SidebarMedium = () => {
 
                             <Link to={`/explore`}>
                                 <Tooltip title="Explore">
-                                    <IconButton>
-                                        {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                    <IconButton color='gray'>
+                                        {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium"  />}
                                     </IconButton>
                                 </Tooltip>
                             </Link>
@@ -137,7 +158,7 @@ export const SidebarMedium = () => {
 
                             <Link to={`/explore`}>
                                 <Tooltip title="Explore">
-                                    <IconButton>
+                                    <IconButton color='gray'>
                                         {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />}
                                     </IconButton>
                                 </Tooltip>
@@ -147,7 +168,7 @@ export const SidebarMedium = () => {
 
                         <Link to={`/notifications`}>
                             <Tooltip title="Notifications">
-                                <IconButton>
+                                <IconButton color='gray'>
                                     {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
                                 </IconButton>
                             </Tooltip>
@@ -156,7 +177,7 @@ export const SidebarMedium = () => {
 
                         <Link to={`/messages`}>
                             <Tooltip title="Messages">
-                                <IconButton>
+                                <IconButton color='gray'>
                                     {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
                                 </IconButton>
                             </Tooltip>
@@ -164,7 +185,7 @@ export const SidebarMedium = () => {
 
                         <Link to={`/bookmarks`}>
                             <Tooltip title="Bookmarks">
-                                <IconButton>
+                                <IconButton color='gray'>
                                     {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
                                 </IconButton>
                             </Tooltip>
@@ -172,7 +193,7 @@ export const SidebarMedium = () => {
 
                         <Link to={`/profile`}>
                             <Tooltip title="Profile">
-                                <IconButton>
+                                <IconButton color='gray'>
                                     {clicked.profile ? <PersonIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
                                 </IconButton>
                             </Tooltip>
@@ -181,7 +202,7 @@ export const SidebarMedium = () => {
 
                         <Grid item>
                             <Tooltip title="More">
-                                <IconButton onClick={handleOpenMenu}>
+                                <IconButton color='gray' onClick={handleOpenMenu}>
                                     <MoreHorizIcon sx={{ margin: '16px' }} fontSize="medium" />
                                 </IconButton>
                             </Tooltip>
@@ -195,19 +216,22 @@ export const SidebarMedium = () => {
                                     marginLeft: '16px'
                                 }}
                             >
-                                <MenuItem onClick={handleOpenModal}>
-                                    <Typography sx={{ marginInline: '8px' }}>
+                                <MenuItem onClick={handleOpenModal} style={DropStyles}>
+                                    <Typography sx={{ marginInline: '8px' }} >
                                         Settings
                                     </Typography>
                                     <KeyboardArrowDownIcon />
                                 </MenuItem>
                             </Menu>
-                            <ModalTheme open={openModal} onClose={handleCloseModal} />
+                            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                         </Grid>
 
                         <Grid item>
                             <IconButton edge='start' onClick={handleOpen}>
-                                <AddCircleIcon color="primary" fontSize='large' sx={{ margin: '20px' }} />
+                                <AddCircleIcon fontSize='large' sx={{
+                                    margin: '20px',
+                                    color: buttonColor
+                                }} />
                             </IconButton>
                             <TweetForm open={open} onClose={handleClose} />
                         </Grid>
