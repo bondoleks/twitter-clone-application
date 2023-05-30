@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect, useContext } from 'react';
-
 import {
     Dialog,
     DialogTitle,
@@ -132,8 +130,9 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
     }, []);
 
     return (
+        
 
-        <Dialog open={open} onClose={onClose} fullScreen={isMobile} style={ModalThemeStyles}>
+        <Dialog open={open} onClose={onClose} fullScreen={isMobile} >
 
             <Box style={ModalThemeStyles}>
                 <DialogTitle sx={{ textAlign: 'center', fontWeight: '700' }}>Customize your view</DialogTitle>
@@ -148,9 +147,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center',
-
                         width: '100%',
-
                         backgroundColor: theme.palette.colorBox,
                         marginTop: '4px',
                         marginBottom: '4px',
