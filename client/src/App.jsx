@@ -16,6 +16,8 @@ import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
 import {CustomThemeContext} from "./context/CustomThemeContext";
+import {ForYou} from "./components/Home/ForYou";
+import {Following} from "./components/Home/Following";
 
 const routes = [
     {
@@ -26,6 +28,14 @@ const routes = [
     {
         path: "/home",
         element: <Home />,
+        children: <>
+            <Route path={''} element={<ForYou/>}/>
+            <Route path={'following'} element={<Following/>}/>
+        </>
+    },
+    {
+        path: "/home/forYou",
+        element: <ForYou />,
     },
     {
         path: "/explore",

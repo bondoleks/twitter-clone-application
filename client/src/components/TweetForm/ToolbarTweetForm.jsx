@@ -12,13 +12,12 @@ import WorkHistoryOutlinedIcon from '@mui/icons-material/WorkHistoryOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import axios from "axios";
 import Alert from '@mui/material/Alert';
+import {api} from "../../redux/service/api";
 
-export default function ToolbarTweetForm() {
+export default function ToolbarTweetForm({setTweetText, setFile, file}) {
 
     const [buttonColor, setButtonColor] = useState();
-    const [file, setFile] = useState(null);
     const [filePath, setFilePath] = useState(null);
-    const [tweetText, setTweetText] = useState("");
 
     useEffect(() => {
         const savedColor = localStorage.getItem('buttonColor');
@@ -36,12 +35,12 @@ export default function ToolbarTweetForm() {
         const formData = new FormData();
         const file = e.target.files[0];
         formData.append("file", file);
-        axios({
-            method: "post",
-            url: "myurl",
-            data: formData,
-            headers: { "Content-Type": "multipart/form-data" }
-        });
+        // axios({
+        //     method: "post",
+        //     url: "myurl",
+        //     data: formData,
+        //     headers: { "Content-Type": "multipart/form-data" }
+        // });
         setFile(file);
     };
 
@@ -49,27 +48,6 @@ export default function ToolbarTweetForm() {
         setTweetText(e.target.value);
     }; // Обработчик изменений текстового поля
 
-    const handleTweetSubmit = () => {
-        // Здесь вы можете отправить пост-запрос с tweetText и file
-        // Используйте переменные tweetText и file для доступа к данным
-        console.log("Tweet Text:", tweetText);
-        console.log("File:", file);
-
-        // Здесь можно отправить пост-запрос
-        axios.post("http://localhost:8080/tweets/tweet/save", {
-            tweetBody: tweetText,
-            file: file
-        })
-            .then(response => {
-                console.log(response);
-                <Alert severity="success">Success!</Alert>
-            })
-            .catch(error => {
-                console.error(error);
-                // Действия при ошибке
-                <Alert severity="error">Error!!!</Alert>
-            });
-    };
 
     return (
         <Box>
