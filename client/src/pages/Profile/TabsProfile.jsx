@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Tab, Tabs } from '@mui/material';
 import { TabPanel, TabContext } from '@mui/lab';
 import { Avatar } from '@mui/material';
-import ModalTheme from '../../components/ModalTheme/ModalTheme';
+import { useFetch } from "../../hooks/UseFetch";
+import Tweet from "../../components/Tweet/Tweet";
 
 
 export const TabsProfile = () => {
@@ -22,18 +23,27 @@ export const TabsProfile = () => {
         }
     }, [buttonColor]);
 
+    const [{ data, loading }, getData] = useFetch({
+        initData: [],
+        url: `https://twitter-clone-application.herokuapp.com/tweets/tweet/all?sizePage=10&numberPage=1`,
+        method: 'GET',
+        dataTransformer: (data) => {
+            return data.listDto
+        },
+    });
+
 
     return (
         <>
-            <Tabs variant="fullWidth" value={value} onChange={handleChange} sx={{
-          "& .MuiTabs-indicator": {
-            backgroundColor: 'white',
-            borderBottom: `2px solid ${buttonColor}`
-          },
-          "& .Mui-selected": {
-            color: 'black',
-          },
-          }} >
+            <Tabs variant="fullWidth" value={value} textColor="inherit" onChange={handleChange} sx={{
+                "& .MuiTabs-indicator": {
+                    backgroundColor: 'gray',
+                    borderBottom: `2px solid ${buttonColor}`
+                },
+                "& .Mui-selected": {
+                    color: 'primary',
+                },
+            }} >
                 <Tab label="Tweets" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Replies" sx={{ textTransform: 'none' }}></Tab>
                 <Tab label="Media" sx={{ textTransform: 'none' }}></Tab>
@@ -49,8 +59,12 @@ export const TabsProfile = () => {
                     }}>
                         Who to follow
                     </Typography>
-                    <Typography variant="h4">Tweets</Typography>
+                    <Typography variant="h4" >Tweets</Typography>
                     <Typography variant="body1">Here are the tweets</Typography>
+
+                    {loading && "Loading..."}
+                    {...data.map(t => <Tweet tweet={t} />)}
+
                 </TabPanel>
                 <TabPanel value={1} index={1}>
 
@@ -76,12 +90,12 @@ export const TabsProfile = () => {
                     <Typography mb={2} sx={{
                         fontSize: '28px',
                         fontWeight: '900',
-                        margin: '20px'
+
                     }}>
 
                         Lights, camera … attachments!
                     </Typography>
-                    <Typography variant="body1" sx={{ margin: '20px' }}>
+                    <Typography variant="body1" >
                         When you send Tweets with photos or videos in them, they will show up here.
                     </Typography>
 
@@ -91,12 +105,12 @@ export const TabsProfile = () => {
                     <Typography mb={2} sx={{
                         fontSize: '28px',
                         fontWeight: '900',
-                        margin: '20px'
+
                     }}>
 
                         You don’t have any likes yet
                     </Typography>
-                    <Typography variant="body1" sx={{ margin: '20px' }}>
+                    <Typography variant="body1" >
                         Tap the heart on any Tweet to show it some love. When you do, it’ll show up here.
                     </Typography>
                 </TabPanel>
