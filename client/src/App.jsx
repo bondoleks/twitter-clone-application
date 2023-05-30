@@ -63,6 +63,7 @@ function App() {
             background: {
                 default: "#ffffff", // белый фон
             },
+
             backgroundModal: "#ffffff",
 
             text: {
@@ -77,6 +78,7 @@ function App() {
             colorBox: '#f9f9f9'
         }
     });
+
 
     const darkTheme = createTheme({
         palette: {
@@ -104,6 +106,7 @@ function App() {
             colorBox: '#252525'
         }
     });
+
 
     const blackTheme = createTheme({
         palette: {
