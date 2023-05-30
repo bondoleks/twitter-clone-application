@@ -90,7 +90,7 @@ export default function CustomizedSteppers({ selectedColor, selectedLightColor }
 
               <Tooltip title={label}>
                 <Box sx={{ marginTop: '-40px',
-                  marginLeft: '12px',
+                  marginLeft: '4px',
                   color: 'transparent',
                   cursor: 'pointer' }}>aa</Box>
               </Tooltip></StepLabel>
