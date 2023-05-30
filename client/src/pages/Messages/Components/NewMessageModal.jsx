@@ -37,13 +37,11 @@ const NewMessageModal = ({ open, closeModal }) => {
 
        },
      }}>
-
       <Paper sx={{
         padding: "20px 30px 20px 20px",
         width: fullScreen ? "98%" : "550px",
         height: "500px",
       }}>
-
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton edge="start" onClick={closeModal}>
             <CloseIcon />
