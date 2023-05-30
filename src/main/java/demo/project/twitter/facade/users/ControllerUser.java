@@ -40,4 +40,9 @@ public class ControllerUser {
         return facade.getFollowing(id);
     }
 
+    @GetMapping("getall")
+    public ResponseEntity<?> findAllUsers () {
+        return facade.findAllUsers();
+    }
+
 }
