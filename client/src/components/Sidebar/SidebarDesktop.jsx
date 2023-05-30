@@ -29,6 +29,7 @@ import ModalTheme from '../ModalTheme/ModalTheme';
 import { useTheme } from '@mui/material/styles';
 
 
+
 export const SidebarDesktop = ({ }) => {
 
     const [buttonColor, setButtonColor] = useState();
@@ -126,7 +127,9 @@ export const SidebarDesktop = ({ }) => {
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
+
                     {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='gray' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='gray' />}
+
                     <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.home ? '900' : '400'}}> Home</Typography>
                 </IconButton>
             </Link>
@@ -190,12 +193,14 @@ export const SidebarDesktop = ({ }) => {
             </Link>
 
             <IconButton color='gray' sx={{
+
                 width: '150px',
                 borderRadius: '50px'
             }} onClick={handleOpenMenu}>
                 <MoreHorizIcon sx={{ marginTop: '10px', 
                 marginBottom: '10px',
                  marginRight: '10px' }} fontSize="medium" />
+
                 <Typography variant='h6' color='gray'>
                     More
                 </Typography>

@@ -31,7 +31,9 @@ export const TabsProfile = () => {
             return data.data.listDto
         },
         headers: {
+
             "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY4NTI2NTg4NSwiZXhwIjoxNjg1MjY5NDg1fQ.Ii1QsMsbYmrD_1IzPvMOssa8vjLUTQgZ3uPCPJ1sv6I"
+
         }
     });
 

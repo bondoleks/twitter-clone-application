@@ -1,6 +1,7 @@
 package demo.project.twitter.model;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User extends BaseEntity {
 
     @Column(name = "username")
@@ -64,4 +66,10 @@ public class User extends BaseEntity {
     @JoinTable(name = "followers", joinColumns = @JoinColumn(name = "follower_id"),
             inverseJoinColumns = @JoinColumn(name = "followed_id"))
     private Set<User> followings = new HashSet<>();
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 }

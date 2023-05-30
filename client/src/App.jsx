@@ -1,3 +1,4 @@
+
 import {
     Button,
     createTheme,
@@ -6,6 +7,7 @@ import {
     Hidden,
     ThemeProvider
 } from '@mui/material';
+
 import Sidebar from './components/Sidebar/Sidebar'
 import Search from './components/Search/Search.jsx'
 import { Routes, Route } from "react-router-dom";
@@ -17,7 +19,9 @@ import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
+
 import { CustomThemeContext } from "./context/CustomThemeContext";
+
 
 const routes = [
     {
@@ -63,7 +67,9 @@ function App() {
             background: {
                 default: "#ffffff", // белый фон
             },
+
             backgroundModal: "#ffffff",
+
 
             text: {
                 primary: "#232323", // черный шрифт
@@ -84,6 +90,7 @@ function App() {
             background: {
                 default: "#15202b", // темно-серый фон (как в твиттере)
             },
+
             backgroundModal: "#15202b",
 
             text: {
@@ -104,6 +111,7 @@ function App() {
             colorBox: '#252525'
         }
     });
+
 
     const blackTheme = createTheme({
         palette: {
@@ -164,6 +172,7 @@ function App() {
                 </Grid>
             </ThemeProvider>
         </CustomThemeContext.Provider>
+
 
     )
 }
