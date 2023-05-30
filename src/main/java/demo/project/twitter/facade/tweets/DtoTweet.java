@@ -15,6 +15,7 @@ public class DtoTweet {
     private String tweetBody;
     private Date createdDate;
     private Long parent_Tweet;
+
     private TweetType tweetType;
     private Integer countRetweet;
     private Integer countReply;
@@ -27,5 +28,7 @@ public class DtoTweet {
     private String av_imagerUrl;
 
     private String tweet_imageUrl;
+
+    private DtoTweet parentDto;
 
 }
