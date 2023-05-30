@@ -23,7 +23,7 @@ Content-Type: application/json
 GET http://localhost:8080/tweets/image/57
 
 ###
-GET http://localhost:8080/tweets/tweet/all/8?sizePage=5&numberPage=0
+GET http://localhost:8080/tweets/tweet/all/15?sizePage=5&numberPage=0
 
 ###
 GET http://localhost:8080/tweets/tweet/all?sizePage=10&numberPage=0
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/tweets/tweet/40
+GET http://localhost:8080/tweets/tweet/64
 
 
 ####

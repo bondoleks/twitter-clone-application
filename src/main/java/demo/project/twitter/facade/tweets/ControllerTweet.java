@@ -27,8 +27,8 @@ public class ControllerTweet {
 
 
     @GetMapping("tweet/{tweet_id}")
-    public List<DtoTweet> getTweetById(@PathVariable("tweet_id") Long id) {
-        return facade.getSingleTweetById(id);
+    public DtoTweet getTweetById(@PathVariable("tweet_id") Long id) {
+        return facade.transListTweetInDto(facade.getSingleTweetById(id), new DtoTweet(), 0);
     }
 
     @GetMapping("tweet/all")

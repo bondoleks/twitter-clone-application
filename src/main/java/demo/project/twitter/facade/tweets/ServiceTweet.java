@@ -81,7 +81,6 @@ public class ServiceTweet implements FunctionTweet {
 
     public List<Tweet> getSingleBranch(Long parentTweetId){
         Long userId = repo.getTweetById(parentTweetId).getUser().getId();
-
         return repo.getSingleTweet(parentTweetId, userId);
 
     }
