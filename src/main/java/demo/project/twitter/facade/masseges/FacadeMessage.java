@@ -34,7 +34,7 @@ public class FacadeMessage {
         return mm;
     }
 
-    private Message transDtoToEntity(DtoMessage dto) {
+    public Message transDtoToEntity(DtoMessage dto) {
         Message entity = new Message();
         entity.setTextMessage(dto.getTextMessage());
         entity.setUser(userService.findById(dto.getUser_to()));
@@ -45,7 +45,7 @@ public class FacadeMessage {
     }
 
 
-    private DtoMessage transEntityToDto(Message entity) {
+    public DtoMessage transEntityToDto(Message entity) {
         DtoMessage dto = new DtoMessage();
         dto.setTextMessage(entity.getTextMessage());
         dto.setUser_from(entity.getChat().getInitiator().getId());
