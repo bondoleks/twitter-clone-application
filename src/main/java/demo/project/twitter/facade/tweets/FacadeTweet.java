@@ -102,8 +102,9 @@ public class FacadeTweet {
     }
 
 
-    public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage) {
-        Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage);
+    public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key) {
+
+        Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage, key);
 
         List<List<DtoTweet>> list = pTweet.
                 stream().
