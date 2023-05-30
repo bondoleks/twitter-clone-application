@@ -1,6 +1,8 @@
 package demo.project.twitter.facade.masseges;
 
+import demo.project.twitter.facade.chats.ServiceChat;
 import demo.project.twitter.model.chat.Message;
+import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -16,7 +18,9 @@ import org.springframework.stereotype.Service;
 @Log4j2
 public class FacadeMessage {
 
-    private final ServiceMessage service;
+    private final ServiceMessage messageService;
+    private final UserServiceImpl userService;
+    private final ServiceChat chatService;
     private Message entity = new Message();
     private DtoMessage dto = new DtoMessage();
 
@@ -30,10 +34,30 @@ public class FacadeMessage {
         return mm;
     }
 
+    private Message transDtoToEntity(DtoMessage dto) {
+        Message entity = new Message();
+        entity.setTextMessage(dto.getTextMessage());
+        entity.setUser(userService.findById(dto.getUser_to()));
+        entity.setChat(chatService.getById(dto.getUser_to()).get());
+        //mapper().map(dto, entity);
+
+        return entity;
+    }
+
+
+    private DtoMessage transEntityToDto(Message entity) {
+        DtoMessage dto = new DtoMessage();
+        dto.setTextMessage(entity.getTextMessage());
+        dto.setUser_from(entity.getChat().getInitiator().getId());
+        dto.setChat_id(entity.getChat().getId());
+        dto.setUser_to(entity.getUser().getId());
+        return dto;
+    }
+
     public ResponseEntity<?> getEntity(Long id) {
 
-        if (service.existsById(id)) {
-            entity = service.getById(id).get();
+        if (messageService.existsById(id)) {
+            entity = messageService.getById(id).get();
             dto = mapper().map(entity, dto.getClass());
             return ResponseEntity.accepted().body(dto);
         } else {
@@ -42,10 +66,9 @@ public class FacadeMessage {
     }
 
     public DtoMessage saveEntity(DtoMessage requestBody) {
-        entity = mapper().map(requestBody, entity.getClass());
-        Message entity2 = service.saveOne(entity);
-        dto = mapper().map(entity2, dto.getClass());
-        return dto;
+        entity = transDtoToEntity(requestBody);
+        messageService.saveOne(entity);
+        return transEntityToDto(entity);
     }
 }
 
