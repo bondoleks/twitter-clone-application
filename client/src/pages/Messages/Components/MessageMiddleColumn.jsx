@@ -88,9 +88,3 @@ const MessageMiddleColumn = () => {
 };
 
 export default MessageMiddleColumn;
-
-
-
-
-
-

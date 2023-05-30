@@ -1,4 +1,5 @@
 
+
 import {
     Button,
     createTheme,
@@ -7,7 +8,6 @@ import {
     Hidden,
     ThemeProvider
 } from '@mui/material';
-
 import Sidebar from './components/Sidebar/Sidebar'
 import Search from './components/Search/Search.jsx'
 import { Routes, Route } from "react-router-dom";
@@ -83,6 +83,7 @@ function App() {
             colorBox: '#f9f9f9'
         }
     });
+
 
     const darkTheme = createTheme({
         palette: {
