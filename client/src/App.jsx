@@ -1,11 +1,9 @@
-import {
-    Button,
-    createTheme,
-    CssBaseline,
-    Grid,
-    Hidden,
-    ThemeProvider
-} from '@mui/material';
+import { Button, 
+    createTheme, 
+    CssBaseline, 
+    Grid, 
+    Hidden, 
+    ThemeProvider } from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar'
 import Search from './components/Search/Search.jsx'
 import { Routes, Route } from "react-router-dom";
@@ -17,7 +15,7 @@ import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
-import { CustomThemeContext } from "./context/CustomThemeContext";
+import {CustomThemeContext} from "./context/CustomThemeContext";
 
 const routes = [
     {
@@ -63,9 +61,6 @@ function App() {
             background: {
                 default: "#ffffff", // белый фон
             },
-
-            backgroundModal: "#ffffff",
-
             text: {
                 primary: "#232323", // черный шрифт
             },
@@ -73,12 +68,11 @@ function App() {
                 main: "#ffffff"
             },
             gray: {
-                main: '#555555'
+                main: '#000000'
             },
             colorBox: '#f9f9f9'
         }
     });
-
 
     const darkTheme = createTheme({
         palette: {
@@ -86,8 +80,6 @@ function App() {
             background: {
                 default: "#15202b", // темно-серый фон (как в твиттере)
             },
-            backgroundModal: "#15202b",
-
             text: {
                 primary: "#9a9a9a", // белый шрифт
             },
@@ -107,39 +99,9 @@ function App() {
         }
     });
 
-
-    const blackTheme = createTheme({
-        palette: {
-            type: "black",
-            background: {
-                default: "#000000",
-            },
-            backgroundModal: "#222222",
-
-            text: {
-                primary: "#ffffff",
-            },
-            paper: {
-                main: "#000000"
-            },
-            primary: {
-                main: '#ffffff'
-            },
-            gray: {
-                main: '#ffffff'
-            },
-            typography: {
-                color: '#ffffff'
-            },
-            colorBox: '#252525'
-        }
-    });
-
-    const theme = useCallback(() => {
+     const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
-        } if (themeMode === "black") {
-            return blackTheme;
         } else {
             return darkTheme;
         }
@@ -147,28 +109,34 @@ function App() {
 
 
     return (
-        <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                    <Grid item md={3}>
-                        <Sidebar />
-                    </Grid>
-                    <Grid item xs={12} md={6} sm={8}>
-                        <Routes>
-                            {...routes.map(r => <Route {...r} />)}
-                        </Routes>
-                    </Grid>
-                    <Hidden mdDown>
-                        <Grid item md={3}>
-                            <Search />
-                        </Grid>
-                    </Hidden>
-                </Grid>
-            </ThemeProvider>
+        <CustomThemeContext.Provider value={{color, themeMode, setThemeMode, setColor}}>
+
+        <ThemeProvider theme={theme}>
+               <CssBaseline />
+               <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                   <Grid item md={3}>
+                       {/* <Button onClick={() => {setColor("#ffcd07")}}>Dark</Button>
+                <Button onClick={() => {setColor("#0000FF")}}>White</Button> */}
+                       <Button onClick={() => { setThemeMode("dark"); }}>Dark</Button>
+                       <Button onClick={() => { setThemeMode("light"); }}>White</Button>
+                       <Sidebar />
+                   </Grid>
+                   <Grid item xs={12} md={6} sm={8}>
+                       <Routes>
+                           {...routes.map(r => <Route {...r} />)}
+                       </Routes>
+                   </Grid>
+                   <Hidden mdDown>
+                       <Grid item md={3}>
+                           <Search />
+                       </Grid>
+                   </Hidden>
+               </Grid>
+        </ThemeProvider>
         </CustomThemeContext.Provider>
 
     )
 }
 
 export default App
+
