@@ -26,6 +26,7 @@ import TweetForm from '../TweetForm/TweetForm';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
+import { useTheme } from '@mui/material/styles';
 
 
 export const SidebarDesktop = ({ }) => {
@@ -102,6 +103,12 @@ export const SidebarDesktop = ({ }) => {
         localStorage.setItem('buttonColor', color);
     };
 
+    const theme = useTheme();
+
+    const DropStyles = {
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.default
+      };
 
     return (
 
@@ -119,7 +126,7 @@ export const SidebarDesktop = ({ }) => {
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
-                    {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' />}
+                    {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='gray' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='gray' />}
                     <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.home ? '900' : '400'}}> Home</Typography>
                 </IconButton>
             </Link>
@@ -183,10 +190,12 @@ export const SidebarDesktop = ({ }) => {
             </Link>
 
             <IconButton color='gray' sx={{
-                marginLeft: '-70px',
+                width: '150px',
                 borderRadius: '50px'
             }} onClick={handleOpenMenu}>
-                <MoreHorizIcon sx={{ margin: '10px' }} fontSize="medium" />
+                <MoreHorizIcon sx={{ marginTop: '10px', 
+                marginBottom: '10px',
+                 marginRight: '10px' }} fontSize="medium" />
                 <Typography variant='h6' color='gray'>
                     More
                 </Typography>
@@ -200,8 +209,8 @@ export const SidebarDesktop = ({ }) => {
                     marginLeft: '16px'
                 }}
             >
-                <MenuItem onClick={handleOpenModal}>
-                    <Typography sx={{ marginInline: '8px' }}>
+                <MenuItem onClick={handleOpenModal} style={DropStyles}>
+                    <Typography>
                         Settings
                     </Typography>
                     <KeyboardArrowDownIcon />

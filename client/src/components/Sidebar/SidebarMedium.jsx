@@ -32,11 +32,19 @@ import TweetForm from '../TweetForm/TweetForm';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
+import { useTheme } from '@mui/material/styles';
 
 
 export const SidebarMedium = () => {
 
     const [buttonColor, setButtonColor] = useState();
+
+    const theme = useTheme();
+
+    const DropStyles = {
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.default
+      };
 
     useEffect(() => {
         const savedColor = localStorage.getItem('buttonColor');
@@ -208,8 +216,8 @@ export const SidebarMedium = () => {
                                     marginLeft: '16px'
                                 }}
                             >
-                                <MenuItem onClick={handleOpenModal}>
-                                    <Typography sx={{ marginInline: '8px' }}>
+                                <MenuItem onClick={handleOpenModal} style={DropStyles}>
+                                    <Typography sx={{ marginInline: '8px' }} >
                                         Settings
                                     </Typography>
                                     <KeyboardArrowDownIcon />

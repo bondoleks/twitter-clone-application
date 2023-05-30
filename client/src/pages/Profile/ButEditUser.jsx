@@ -20,7 +20,7 @@ export const ButEditUser = () => {
                 <Button variant="outlined" onClick={handleOpen} sx={{
                     position: 'absolute',
                     top: '300px',
-                    left: '52%',
+                    left: '59%',
                     color: 'primary',
                     border: '1px solid primary',
                     borderRadius: '50px',
