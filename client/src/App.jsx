@@ -1,5 +1,3 @@
-
-
 import {
     Button,
     createTheme,
@@ -19,9 +17,7 @@ import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
-
 import { CustomThemeContext } from "./context/CustomThemeContext";
-
 
 const routes = [
     {
@@ -70,7 +66,6 @@ function App() {
 
             backgroundModal: "#ffffff",
 
-
             text: {
                 primary: "#232323", // черный шрифт
             },
@@ -91,7 +86,6 @@ function App() {
             background: {
                 default: "#15202b", // темно-серый фон (как в твиттере)
             },
-
             backgroundModal: "#15202b",
 
             text: {
@@ -173,7 +167,6 @@ function App() {
                 </Grid>
             </ThemeProvider>
         </CustomThemeContext.Provider>
-
 
     )
 }

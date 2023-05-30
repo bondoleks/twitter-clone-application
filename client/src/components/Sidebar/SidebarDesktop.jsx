@@ -28,8 +28,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 import { useTheme } from '@mui/material/styles';
 
-
-
 export const SidebarDesktop = ({ }) => {
 
     const [buttonColor, setButtonColor] = useState();
