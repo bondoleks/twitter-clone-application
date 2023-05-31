@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar'
 import Search from './components/Search/Search.jsx'
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route, useMatch} from 'react-router-dom';
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Notifications from "./pages/Notifications/Notifications";
@@ -21,6 +21,11 @@ import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
 
 import { CustomThemeContext } from "./context/CustomThemeContext";
+import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
+import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
+import { useLocation } from 'react-router-dom';
+import {MessagesContextProvider} from './context/messagesContext.jsx';
+import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 
 
 const routes = [
@@ -43,7 +48,11 @@ const routes = [
     },
     {
         path: "/messages",
-        element: <Messages />,
+        element: <MessageMiddleColumn />,
+    },
+    {
+        path: "/messages/:id",
+        element: <MessageMiddleColumn />,
     },
     {
         path: "/bookmarks",
@@ -151,28 +160,71 @@ function App() {
         }
     }, [themeMode]);
 
+    const location = useLocation();
+
+    const handleRenderRightColumn = (path) => {
+
+        let isActiveMessage = useMatch("/messages/:id")
+        let rightColumn = null;
+
+        if (path === '/messages') {
+            rightColumn = <MessagesRightColumn />
+        } else if (isActiveMessage) {
+            rightColumn = <ActiveChat />
+        } else {
+            rightColumn = <Search />
+        }
+
+        return (
+          <Grid item md={location.pathname === '/messages' ? 5 : 3}>
+              {rightColumn}
+          </Grid>
+        )
+    }
+
 
     return (
-        <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                    <Grid item md={3}>
-                        <Sidebar />
-                    </Grid>
-                    <Grid item xs={12} md={6} sm={8}>
-                        <Routes>
-                            {...routes.map(r => <Route {...r} />)}
-                        </Routes>
-                    </Grid>
-                    <Hidden mdDown>
-                        <Grid item md={3}>
-                            <Search />
-                        </Grid>
-                    </Hidden>
-                </Grid>
-            </ThemeProvider>
-        </CustomThemeContext.Provider>
+        // <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
+        //     <ThemeProvider theme={theme}>
+        //         <CssBaseline />
+        //         <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+        //             <Grid item md={3}>
+        //                 <Sidebar />
+        //             </Grid>
+        //             <Grid item xs={12} md={6} sm={8}>
+        //                 <Routes>
+        //                     {...routes.map(r => <Route {...r} />)}
+        //                 </Routes>
+        //             </Grid>
+        //             <Hidden mdDown>
+        //                 <Grid item md={3}>
+        //                     {location.pathname === '/messages' ? <MessagesRightColumn /> : <Search />}
+        //                 </Grid>
+        //             </Hidden>
+        //         </Grid>
+        //     </ThemeProvider>
+        // </CustomThemeContext.Provider>
+
+      <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
+          <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <MessagesContextProvider>
+              <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                  <Grid item md={3}>
+                      <Sidebar />
+                  </Grid>
+                  <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
+                      <Routes>
+                          {...routes.map(r => <Route {...r} />)}
+                      </Routes>
+                  </Grid>
+                  <Hidden mdDown>
+                      {handleRenderRightColumn(location.pathname)}
+                  </Hidden>
+              </Grid>
+              </MessagesContextProvider>
+          </ThemeProvider>
+      </CustomThemeContext.Provider>
 
 
     )
