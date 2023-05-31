@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -43,6 +44,13 @@ public  class FacadeUser {
         } else {
             return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with code " + id + " not found");
         }
+    }
+
+    public ResponseEntity<?> findAllUsers() {
+        List<User> allUsers = service.findAllUsers();
+        dto = mapper().map(allUsers,dto.getClass());
+        return ResponseEntity.accepted().body(dto);
+
     }
 
     public ResponseEntity<?> saveEntity (Long id, UserDto data){
