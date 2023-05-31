@@ -1,5 +1,4 @@
 import {GET_TWEETS_REQUEST, GET_HOME_ERROR,GET_TWEETS_SUCCESS, START_SCROLL_HOME  } from '../actions';
-import axios from 'axios';
 import {api} from "../service/api";
 
 
