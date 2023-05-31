@@ -1,26 +1,26 @@
 package demo.project.twitter.model;
 
+import com.sun.istack.NotNull;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 @Data
 @NoArgsConstructor
 public class User extends BaseEntity {
 
+
+    @NotNull
     @Column(name = "username")
     private String username;
 
@@ -30,6 +30,7 @@ public class User extends BaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @NotNull
     @Column(name = "email")
     private String email;
 

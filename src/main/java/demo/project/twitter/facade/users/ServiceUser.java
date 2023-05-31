@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,6 +23,11 @@ public class ServiceUser implements FunctionUser {
     public Boolean user_exists(User usr) {
         if (repo.getUserIdByUsername(usr.getUsername()) != null) return true;
         else return false;
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return repo.findAll();
     }
 
     @Override
