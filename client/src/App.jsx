@@ -18,6 +18,7 @@ import { MainPage } from './pages/MainPage'
 import {CustomThemeContext} from "./context/CustomThemeContext";
 import {ForYou} from "./components/Home/ForYou";
 import {Following} from "./components/Home/Following";
+import { TweetPage } from './pages/TweetPage/TweetPage';
 
 const routes = [
     {
@@ -56,6 +57,10 @@ const routes = [
     {
         path: "/profile",
         element: <Profile />,
+    },
+    {
+        path: "/tweet/:tweet_id",
+        element: <TweetPage />,
     },
 ];
 

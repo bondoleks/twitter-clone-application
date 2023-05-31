@@ -37,3 +37,13 @@ export const GET_FOLLOWERS_ERROR = 'followers/get/error';
 export const GET_NOTIFICATIONS_REQUEST = 'notifications/get/request';
 export const GET_NOTIFICATIONS_SUCCSES = 'notifications/get/succses';
 export const GET_NOTIFICATIONS_ERROR = 'notifications/get/error';
+
+
+//tweet
+
+export const  GET_TWEET_REQUEST = 'tweet/all/request';
+export const  GET_TWEET_SUCCESS = 'tweet/tweet/get/succses';
+export const  GET_COMMENTS_SUCCESS = 'tweet/comments/get/succses';
+export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
+export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
+export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
