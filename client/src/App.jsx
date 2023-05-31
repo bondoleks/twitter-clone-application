@@ -1,13 +1,9 @@
-
-
-import {
-    Button,
+import { Button,
     createTheme,
     CssBaseline,
     Grid,
     Hidden,
-    ThemeProvider
-} from '@mui/material';
+    ThemeProvider } from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar'
 import Search from './components/Search/Search.jsx'
 import {Routes, Route, useMatch} from 'react-router-dom';
@@ -19,8 +15,9 @@ import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
-
-import { CustomThemeContext } from "./context/CustomThemeContext";
+import {CustomThemeContext} from "./context/CustomThemeContext";
+import {ForYou} from "./components/Home/ForYou";
+import {Following} from "./components/Home/Following";
 import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
 import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
 import { useLocation } from 'react-router-dom';
@@ -37,6 +34,14 @@ const routes = [
     {
         path: "/home",
         element: <Home />,
+        children: <>
+            <Route path={''} element={<ForYou/>}/>
+            <Route path={'following'} element={<Following/>}/>
+        </>
+    },
+    {
+        path: "/home/forYou",
+        element: <ForYou />,
     },
     {
         path: "/explore",
@@ -78,8 +83,6 @@ function App() {
             },
 
             backgroundModal: "#ffffff",
-
-
             text: {
                 primary: "#232323", // черный шрифт
             },
@@ -92,7 +95,6 @@ function App() {
             colorBox: '#f9f9f9'
         }
     });
-
 
     const darkTheme = createTheme({
         palette: {
@@ -150,11 +152,11 @@ function App() {
         }
     });
 
-    const theme = useCallback(() => {
+
+
+     const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
-        } if (themeMode === "black") {
-            return blackTheme;
         } else {
             return darkTheme;
         }
@@ -184,50 +186,30 @@ function App() {
 
 
     return (
-        // <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-        //     <ThemeProvider theme={theme}>
-        //         <CssBaseline />
-        //         <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-        //             <Grid item md={3}>
-        //                 <Sidebar />
-        //             </Grid>
-        //             <Grid item xs={12} md={6} sm={8}>
-        //                 <Routes>
-        //                     {...routes.map(r => <Route {...r} />)}
-        //                 </Routes>
-        //             </Grid>
-        //             <Hidden mdDown>
-        //                 <Grid item md={3}>
-        //                     {location.pathname === '/messages' ? <MessagesRightColumn /> : <Search />}
-        //                 </Grid>
-        //             </Hidden>
-        //         </Grid>
-        //     </ThemeProvider>
-        // </CustomThemeContext.Provider>
 
-      <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-          <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <MessagesContextProvider>
-              <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                  <Grid item md={3}>
-                      <Sidebar />
-                  </Grid>
-                  <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
-                      <Routes>
-                          {...routes.map(r => <Route {...r} />)}
-                      </Routes>
-                  </Grid>
-                  <Hidden mdDown>
-                      {handleRenderRightColumn(location.pathname)}
-                  </Hidden>
-              </Grid>
-              </MessagesContextProvider>
-          </ThemeProvider>
-      </CustomThemeContext.Provider>
-
+        <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <MessagesContextProvider>
+            <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                <Grid item md={3}>
+                    <Sidebar />
+                </Grid>
+                <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
+                    <Routes>
+                        {...routes.map(r => <Route {...r} />)}
+                    </Routes>
+                </Grid>
+                <Hidden mdDown>
+                        {handleRenderRightColumn(location.pathname)}
+                </Hidden>
+            </Grid>
+            </MessagesContextProvider>
+        </ThemeProvider>
+        </CustomThemeContext.Provider>
 
     )
 }
 
 export default App
+

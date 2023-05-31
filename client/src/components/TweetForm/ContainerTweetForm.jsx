@@ -22,7 +22,7 @@ import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 
 
-export default function ContainerTweetForm({ open, onClose }) {
+export default function ContainerTweetForm({ open, onClose, setTweetText, tweetText }) {
 
     const theme = useTheme();
 
@@ -187,7 +187,7 @@ export default function ContainerTweetForm({ open, onClose }) {
 
             </Container>
 
-            <TextareaAutosize placeholder="What's happening?" style={{
+            <TextareaAutosize onChange={e => setTweetText(e.target.value)} value={tweetText} placeholder="What's happening?" style={{
                 width: '300px',
                 height: '100px',
                 marginBottom: '10px',
