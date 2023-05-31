@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class User extends BaseEntity {
 
+    @NotEmpty(message = "Username cannot be empty")
     @Column(name = "username")
     private String username;
 
@@ -30,9 +33,12 @@ public class User extends BaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotEmpty(message = "Email cannot be empty")
     @Column(name = "email")
     private String email;
 
+    @NotEmpty(message = "Password cannot be empty")
     @Column(name = "password")
     private String password;
 

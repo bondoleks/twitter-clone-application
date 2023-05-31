@@ -32,12 +32,6 @@ public  class FacadeNotification {
         return mm;
     }
 
- /* Дальнейший код приведен для примера.
-        В данном классе реализуются методы предназначенные для связи контроллера и сервиса, с подкючением ModelMapper
-         для преобразования данных из БД в DTO и обратно
-  */
-
-    // ************************************** EXAMPLE START **************************************
     public ResponseEntity<?> getEntity (Long id){
 
         if (service.existsById(id)) {
@@ -55,8 +49,6 @@ public  class FacadeNotification {
         dto = mapper().map(entity2, dto.getClass());
         return dto;
     }
-
-//    ************************************** EXAMPLE END **************************************
 }
 
 
