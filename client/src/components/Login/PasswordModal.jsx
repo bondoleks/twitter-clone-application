@@ -7,7 +7,7 @@ import {logingThunk} from "../../redux/user/logingThunk";
 const PasswordModal = ({ isOpen, onClose, onNextClick, emailValue }) => {
 
     const [password, setPassword] = useState();
-
+ 
 
     const handleClose = () => {
         onClose();
@@ -32,12 +32,13 @@ const PasswordModal = ({ isOpen, onClose, onNextClick, emailValue }) => {
     };
 
     return (
-        <Modal open={isOpen} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal open={isOpen}
+            onClose={handleClose} 
+            aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box sx={{ maxWidth: 454, minWidth: 454 }}>
                 <Box sx={style}>
                     <TwitterIcon sx={{ marginTop: -2, marginBottom: 2 }} />
-                    <Typography
-                        onClick={handleClose}
+                    <Typography  onClick={handleClose}
                         sx={{
                             position: 'absolute',
                             lineHeight: '18px',

@@ -1,13 +1,16 @@
-import { Avatar, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import BarChartTwoToneIcon from '@mui/icons-material/BarChartTwoTone';
-import { Box, Typography , CardMedia } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Box, Typography , CardMedia, Avatar, IconButton } from '@mui/material';
+import { Retweet } from './Retweet';
+import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 
-function formatDateTime(dateTimeString) {
+export function formatDateTime(dateTimeString) {
   const now = new Date();
   const dateTime = new Date(dateTimeString);
 
@@ -39,56 +42,102 @@ function formatDateTime(dateTimeString) {
     const hours = dateTime.getHours().toString().padStart(2, '0');
     const minutes = dateTime.getMinutes().toString().padStart(2, '0');
     const year = dateTime.getFullYear();
-    return `${month} ${day}, ${year}, ${hours}:${minutes}`;
+    return `${hours}:${minutes} ${month} ${day}, ${year}`;
   }
 }
 
 
-
-
 const Tweet = ({ tweet }) => {
-  const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, avatar, user_id, reply = 54, retweet = 8904, like = 84, view = 154, tweetChildren } = tweet;
+  const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, like = 84, view = 154, parentDto} = tweet;
 
-  return (
-    <Box data-user_id={user_id} data-tweet_id={id} sx={{ display: 'flex', gap: '8px', cursor: 'pointer', ':hover': { backgroundColor: 'rgba(0,0,0, 0.03)' } }}>
-      <Avatar src={avatar} alt={username} />
-      <Box>
-        <Box sx={{ display: 'flex', gap: '12px' }}>
-          <span>{username}</span>
-          <span>{firstName} {lastName}</span>
-          <span>{formatDateTime(createdDate)}</span>
-        </Box>
-        <Box sx={{padding:'8px'}}>
+  let navigate = useNavigate();
+
+const [activeHeart,setActiveHeart] = useState(false);
+
+
+
+return (
+  <Box
+    data-user_id={user_id}
+    data-tweet_id={id}
+    sx={{
+      display: 'flex',
+      gap: '8px',
+      cursor: 'pointer',
+      borderBottom: '1px rgb(239, 243, 244) solid',
+      ':hover': { backgroundColor: 'rgba(0,0,0, 0.03)' }
+    }}
+    onClick={() => navigate(`/tweet/${id}`)}
+  >
+    <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px' }} />
+    <Box>
+      <Box sx={{ display: 'flex', gap: '12px' }}>
+        <Typography
+          component="span"
+          variant="body1"
+          fontWeight="bold"
+          sx={{
+            textDecoration: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
+          }}
+        >
+          {firstName} {lastName}
+        </Typography>
+        <span>{username}</span>
+        <span>· {formatDateTime(createdDate)}</span>
+      </Box>
+      <Box sx={{ padding: '8px' }}>
         {tweetBody && <p>{tweetBody}</p>}
-        {av_imagerUrl && <CardMedia component="img" src={av_imagerUrl} />}
-        {tweetChildren && tweetChildren.map(childTweet => (
-          <Tweet key={childTweet.id} tweet={childTweet} />
-        ))}
-        </Box>
-        <Box>
-          <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}>
-            <ChatBubbleIcon />
-            <Typography variant="body2">{reply}</Typography>
-          </IconButton>
-          <IconButton sx={{ "&:hover": { color: "rgb(0, 186, 124)" } }}>
-            <RepeatIcon />
-            <Typography>{retweet}</Typography>
-          </IconButton>
-          <IconButton sx={{ "&:hover": { color: "rgb(249, 24, 128)" } }}>
-            <FavoriteIcon />
-            <Typography>{like}</Typography>
-          </IconButton>
-          <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}>
-            <BarChartTwoToneIcon />
-            <Typography>{view}</Typography>
-          </IconButton>
-          <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}>
-            <ShareRoundedIcon />
-          </IconButton>
-        </Box>
+        {tweet_imageUrl && <CardMedia component="img" src={tweet_imageUrl} sx={{ borderRadius: '16px' }} />}
+        {parentDto && <Retweet key={parentDto.id} tweet={parentDto} />}
+      </Box>
+      <Box>
+        <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
+          onClick={(event) => {
+              event.stopPropagation();
+          }}
+        >
+          <ChatBubbleIcon />
+          <Typography variant="body2">{countReply}</Typography>
+        </IconButton>
+        <IconButton sx={{ "&:hover": { color: "rgb(0, 186, 124)" } }}
+          onClick={(event) => {
+                    event.stopPropagation();
+          }}
+        >
+          <RepeatIcon />
+          <Typography>{countRetweet}</Typography>
+        </IconButton>
+        <IconButton sx={{ "&:hover": { color: "rgb(249, 24, 128)", zIndex: 3 }, ...(activeHeart && { color: 'rgb(249, 24, 128)' }) }} 
+          onClick={(event) => {
+            event.stopPropagation();
+            !activeHeart ? setActiveHeart(true) : setActiveHeart(false);
+            }}>
+          {!activeHeart ? <FavoriteBorderIcon /> : <FavoriteIcon />}
+          <Typography>{like}</Typography>
+        </IconButton>
+        <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
+        onClick={(event) => {  
+              event.stopPropagation();
+              }}
+        
+        >
+          <BarChartTwoToneIcon />
+          <Typography>{view}</Typography>
+        </IconButton>
+        <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
+            onClick={(event) => {  
+              event.stopPropagation();
+              }}
+        >
+          <ShareRoundedIcon />
+        </IconButton>
       </Box>
     </Box>
-  );
+  </Box>
+);
 };
 
 export default Tweet;

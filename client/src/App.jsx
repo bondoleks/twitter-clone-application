@@ -17,12 +17,12 @@ import { MainPage } from './pages/MainPage'
 import {CustomThemeContext} from "./context/CustomThemeContext";
 import {ForYou} from "./components/Home/ForYou";
 import {Following} from "./components/Home/Following";
+import { TweetPage } from './pages/TweetPage/TweetPage';
 import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
 import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
 import { useLocation } from 'react-router-dom';
 import {MessagesContextProvider} from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
-
 
 const routes = [
     {
@@ -65,6 +65,10 @@ const routes = [
     {
         path: "/profile",
         element: <Profile />,
+    },
+    {
+        path: "/tweet/:tweet_id",
+        element: <TweetPage />,
     },
 ];
 
