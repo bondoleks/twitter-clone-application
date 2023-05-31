@@ -20,7 +20,7 @@ const MessagesRightColumn = () => {
         flexDirection: "column",
         justifyContent: "center",
         height: "100%",
-        margin: "0 50px",
+        padding: "0 50px",
       }}
     >
       <Typography
