@@ -23,7 +23,6 @@ public class ServiceTweet implements FunctionTweet {
 
     @Override
     public Tweet saveOne(Tweet tweet) {
-        log.info(":::::::::" + tweet);
         return repo.save(tweet);
     }
     @Override
@@ -47,11 +46,25 @@ public class ServiceTweet implements FunctionTweet {
         return repo.findAll(pageable);
     }
 
-    public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage) {
+    public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key) {
         Pageable pageable = PageRequest.of(numberPage, sizePage);
-        return id == 0 ?
-                repo.findAllTweet(pageable) :
-                repo.findAllByUser_id(id, pageable);
+       /* private final int ALL_TWEET_USERID = 0;
+        private final int ALL_REPLY_TWEETID = 1;
+        private final int ALL_TWEET = 2;*/
+
+        Page<Tweet> pageTweet = null;
+
+
+        switch (key){
+            case 0: pageTweet = repo.findAllByUser_id(id, pageable); break;
+            case 1: pageTweet = repo.findAllReplyByTweet_id(id, pageable); break;
+            case 2: pageTweet = repo.findAllTweet(pageable); break;
+        }
+        return pageTweet;
+
+//        return id == 0 ?
+//                repo.findAllTweet(pageable) :
+//                repo.findAllByUser_id(id, pageable);
     }
 
     public Tweet getTweetById(Long id){
@@ -68,7 +81,6 @@ public class ServiceTweet implements FunctionTweet {
 
     public List<Tweet> getSingleBranch(Long parentTweetId){
         Long userId = repo.getTweetById(parentTweetId).getUser().getId();
-
         return repo.getSingleTweet(parentTweetId, userId);
 
     }

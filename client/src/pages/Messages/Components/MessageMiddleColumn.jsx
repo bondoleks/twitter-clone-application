@@ -9,7 +9,7 @@ import ModalList from "./ModalList.jsx";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack.js";
 
 
-const MessageMiddleColumn = () => {
+const MessageMiddleColumn = ({mockedUsers}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
 
@@ -31,7 +31,7 @@ const MessageMiddleColumn = () => {
 
   return (
     <>
-      <Box sx={{ pr: 5 }}>
+      <Box sx={{ p: 5,borderRight: '1px solid rgba(128, 128, 128, 0.1)', borderLeft: '1px solid rgba(128, 128, 128, 0.1)', height: "100vh" }}>
         <Box
           sx={{
             display: 'flex',
@@ -75,8 +75,8 @@ const MessageMiddleColumn = () => {
 
             </>
           ) : (
-            <Box onClick={handleInputClick}>
-            <MessagesSearch/>
+            <Box>
+            <MessagesSearch handleInputClick={handleInputClick} />
               <ModalList />
             </Box>
           )}
@@ -88,9 +88,3 @@ const MessageMiddleColumn = () => {
 };
 
 export default MessageMiddleColumn;
-
-
-
-
-
-

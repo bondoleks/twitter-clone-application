@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Tab, Tabs } from '@mui/material';
 import { TabPanel, TabContext } from '@mui/lab';
 import { Avatar } from '@mui/material';
-import ModalTheme from '../../components/ModalTheme/ModalTheme';
 import { useFetch } from "../../hooks/UseFetch";
 import Tweet from "../../components/Tweet/Tweet";
 
@@ -26,14 +25,11 @@ export const TabsProfile = () => {
 
     const [{ data, loading }, getData] = useFetch({
         initData: [],
-        url: `https://twitter-clone-application.herokuapp.com/tweets/all?sizePage=10&numberPage=1`,
+        url: `https://twitter-clone-application.herokuapp.com/tweets/tweet/all?sizePage=10&numberPage=1`,
         method: 'GET',
         dataTransformer: (data) => {
-            return data.data.listDto
+            return data.listDto
         },
-        headers: {
-            "Authorization": "Bearer_eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY4NTIwODE5MywiZXhwIjoxNjg1MjExNzkzfQ.2kPkH-K13YnyQHk-SpB3xbAT4F88TZ141CscFWEcq-k"
-        }
     });
 
 

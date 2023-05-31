@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -6,20 +6,31 @@ import {
     DialogActions,
     Button,
     Typography,
-    Box
+    Box,
+    useTheme,
+    useMediaQuery
 } from '@mui/material';
 import CustomizedSteppers from './StepperEl';
 import CheckIcon from '@mui/icons-material/Check';
-import { useTheme } from '@mui/material/styles';
+import { CustomThemeContext } from "../../context/CustomThemeContext";
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+
 
 
 export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
     const theme = useTheme();
 
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const ModalThemeStyles = {
-        backgroundColor: theme.palette.background.default,
+
+        backgroundColor: theme.palette.backgroundModal,
+        color: theme.palette.text.primary
     };
+
+
+    const { themeMode, setThemeMode } = useContext(CustomThemeContext);
 
     const [color, setColor] = useState(() => {
         // При первом рендере компонента пытаемся получить цвет из локального хранилища
@@ -43,8 +54,6 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
         localStorage.setItem('selectedLightColor', lightColor);
     }, [lightColor]);
 
-    // const [color, setColor] = useState(buttonColor);
-    // const [lightColor, setLightColor] = useState('#7bbdff');
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [activeColor, setActiveColor] = useState(null);
@@ -60,7 +69,6 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
         setLightColor(lightColors[colorIndex]);
         setActiveColor(selectedColor);
         onColorChange(selectedColor);
-        setButtonColor(selectedColor); // Добавлено обновление buttonColor
         localStorage.setItem('buttonColor', selectedColor); // Сохранение в localStorage
     };
 
@@ -84,27 +92,48 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
     const buttons = [
         {
             label: 'Default',
-            color: 'black',
-            backgroundColor: 'white',
+            color: '#000000',
+            backgroundColor: '#ffffff',
+            state: "light"
         },
         {
             label: 'Dim',
-            color: 'white',
+            color: '#ffffff',
             backgroundColor: '#2f2f2f',
+            state: "dark"
         },
         {
             label: 'Lights out',
-            color: 'white',
-            backgroundColor: 'black',
+            color: '#ffffff',
+            backgroundColor: '#000000',
+            state: "black"
         },
     ];
 
     const handleButtonClick = (index) => {
         setActiveBut(index);
+        setThemeMode(buttons[index].state);
+        localStorage.setItem('activeButton', index); // Сохранение выбранной кнопки в localStorage
+        localStorage.setItem('themeMode', buttons[index].state); // Сохранение выбранной темы в localStorage
     };
 
+    useEffect(() => {
+        const storedActiveButton = localStorage.getItem('activeButton');
+        const storedThemeMode = localStorage.getItem('themeMode');
+        if (storedActiveButton !== null) {
+
+            setActiveBut(parseInt(storedActiveButton));
+        }
+        if (storedThemeMode !== null) {
+            setThemeMode(storedThemeMode);
+        }
+    }, []);
+
     return (
-        <Dialog open={open} onClose={onClose}>
+        
+
+        <Dialog open={open} onClose={onClose} fullScreen={isMobile} >
+
             <Box style={ModalThemeStyles}>
                 <DialogTitle sx={{ textAlign: 'center', fontWeight: '700' }}>Customize your view</DialogTitle>
                 <DialogContent>
@@ -118,7 +147,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                     <Box sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        width: '90%',
+                        width: '100%',
                         backgroundColor: theme.palette.colorBox,
                         marginTop: '4px',
                         marginBottom: '4px',
@@ -138,7 +167,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                         display: 'flex',
                         justifyContent: 'space-around',
                         alignItems: 'center',
-                        width: '90%',
+                        width: '100%',
                         backgroundColor: theme.palette.colorBox,
                         marginTop: '4px',
                         marginBottom: '4px',
@@ -149,8 +178,9 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                             <Box
                                 key={c}
                                 style={{
-                                    width: '32px',
-                                    height: '32px',
+
+                                    width: isMobile ? '20px' : '32px',
+                                    height: isMobile ? '20px' : '32px',
                                     borderRadius: '50%',
                                     backgroundColor: c,
                                     display: 'inline-block',
@@ -169,6 +199,8 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                                             left: '50%',
                                             transform: 'translate(-50%, -50%)',
                                             color: '#fff',
+                                            fontSize: isMobile ? '12px' : '22px'
+
                                         }}
                                     />
                                 )}
@@ -182,8 +214,10 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
                     <Box sx={{
                         display: 'flex',
+
+                        flexDirection: isMobile ? 'column' : 'row',
                         alignItems: 'center',
-                        width: '90%',
+                        width: '100%',
                         backgroundColor: theme.palette.colorBox,
                         marginTop: '4px',
                         marginBottom: '4px',
@@ -201,28 +235,39 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
                                     textTransform: 'none',
                                     color: button.color,
                                     backgroundColor: button.backgroundColor,
+                                    textAlign: 'left',
+
                                     border: activeBut === index ? `2px solid ${color}` : 'none',
                                     '&:hover': {
                                         backgroundColor: button.backgroundColor,
                                     },
                                 }}
                                 onClick={() => handleButtonClick(index)}
+
+                                startIcon={
+                                    <div
+                                        style={{
+                                            width: '20px',
+                                            height: '20px',
+                                            borderRadius: '50%',
+                                            backgroundColor:
+                                                activeBut === index ? color : 'transparent',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        {activeBut === index ? (
+                                            <CheckIcon sx={{ color: '#fff', fontSize: '14px' }} />
+                                        ) : (
+                                            <RadioButtonUncheckedIcon sx={{width:'20px',
+                                            height: '20px' }} />
+                                        )}
+                                    </div>
+                                }
                             >
-                                <div
-                                    style={{
-                                        width: '20px',
-                                        height: '20px',
-                                        borderRadius: '50%',
-                                        backgroundColor: activeBut === index ? color : 'transparent',
-                                        display: 'inline-block',
-                                        marginRight: '8px',
-                                    }}
-                                >
-                                    {activeBut === index && (
-                                        <CheckIcon sx={{ color: '#fff', fontSize: '16px' }} />
-                                    )}
-                                </div>
-                                <Typography sx={{ margin: '8px', fontSize: '14px', fontWeight: '700' }}>
+
+                                <Typography sx={{ margin: '8px',  fontWeight: '700' }}>
                                     {button.label}
                                 </Typography>
                             </Button>
@@ -241,7 +286,9 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
             </Box>
         </Dialog>
+
     );
 };
 
 export default ThemeDialog;
+
