@@ -2,10 +2,9 @@ package demo.project.twitter.model.chat;
 
 import demo.project.twitter.model.BaseEntity;
 import demo.project.twitter.model.User;
-import javax.persistence.*;
 import lombok.*;
 
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +29,6 @@ public class Chat extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "chat_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<Chat> chats= new HashSet<>();
+    private Set<Chat> chats = new HashSet<>();
 
 }

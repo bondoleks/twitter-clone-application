@@ -15,8 +15,9 @@ import javax.persistence.ManyToOne;
 @Service
 @Data
 public class DtoMessage {
-    private User user;
-    private Chat chat;
+    private Long user_from;//?
+    private Long user_to;//?
+    private Long chat_id;//?
     private String textMessage;
 
 }

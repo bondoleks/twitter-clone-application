@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, Typography, Button, Modal, TextField } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import {useDispatch} from "react-redux";
+import {logingThunk} from "../../redux/user/logingThunk";
 
 const PasswordModal = ({ isOpen, onClose, onNextClick, emailValue }) => {
-    const handleNextButton = () => {
-        onNextClick();
-    };
+
+    const [password, setPassword] = useState();
+
 
     const handleClose = () => {
         onClose();
@@ -130,6 +132,7 @@ const PasswordModal = ({ isOpen, onClose, onNextClick, emailValue }) => {
                             id="outlined-email-input"
                             label="Password"
                             type="password"
+                            onChange={e => setPassword(e.target.value)}
                             inputProps={{
                                 style: {
                                     outline: 'none',
@@ -163,7 +166,7 @@ const PasswordModal = ({ isOpen, onClose, onNextClick, emailValue }) => {
                         marginTop: 24,
                     }}>
                         <Button
-                            onClick={handleNextButton}
+                            onClick={() => onNextClick(password)}
                             variant="contained"
                             color="secondary"
                             size="small"

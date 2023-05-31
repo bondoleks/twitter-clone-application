@@ -68,9 +68,9 @@ public class FacadeTweet {
 
         dto.setUser_id(entity.getUser().getId());
 
-        if (entity.getTweetType().getType() != 0)
+       /* if (entity.getTweetType().getType() != 0)
             dto.setParent_Tweet(entity.getParentTweet().getId());
-        else dto.setParent_Tweet(0L);
+        else dto.setParent_Tweet(0L);*/
 
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
         dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
@@ -106,10 +106,12 @@ public class FacadeTweet {
 
         Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage, key);
 
-        List<List<DtoTweet>> list = pTweet.
+        List<DtoTweet> list = pTweet.
                 stream().
-                map(tweet -> getSingleTweetById(tweet.getId())).
+                map(x -> getSingleTweetById(x.getId())).
+                map(y-> transListTweetInDto(y, new DtoTweet(), 0)).
                 collect(Collectors.toList());
+
 
         DtoTweetPage dtp = new DtoTweetPage();
         dtp.setListDto(list);
@@ -135,12 +137,12 @@ public class FacadeTweet {
         return dto;
 
     }*/
-    public List<List<DtoTweet>> getTweetByIdAndReply(Long id){
+    /*public List<List<DtoTweet>> getTweetByIdAndReply(Long id){
         List<List<DtoTweet>> list = new ArrayList<>();
         list.add(getSingleTweetById(id));
         return list;
-    }
-    private List<DtoTweet> getSingleTweetById(List<DtoTweet> list, Long id) {
+    }*/
+    /*private List<DtoTweet> getSingleTweetById(List<DtoTweet> list, Long id) {
         List<Tweet> listTweet = service.getSingleBranch(id);
         if (listTweet.size() == 0);
         else {
@@ -154,6 +156,54 @@ public class FacadeTweet {
         List<DtoTweet> list = new ArrayList<>();
         list.add(transEntityToDto(service.getTweetById(id)));
         return getSingleTweetById(list, id);
+    }*/
+
+
+
+    private List<Tweet> getSingleTweetById1(List<Tweet> list, Long id) {
+        log.info(":::::::::::::::::::::::::::::::::START");
+        log.info("::::::::::::::::: list size" + list.size());
+        log.info("::::::: ListTweet " + list.toString());
+        log.info("::::::::::::::::::::::::::::::::::END");
+
+        List<Tweet> listTweet = service.getSingleBranch(id);
+        if (listTweet.size() == 0);
+        else {
+            list.add(listTweet.get(0));
+            id = listTweet.get(0).getId();
+            getSingleTweetById1(list, id);
+        }
+        return list;
+    }
+    public List<Tweet> getSingleTweetById(Long id) {
+        List<Tweet> list = new ArrayList<>();
+
+        Tweet t = service.getTweetById(id);
+
+        list.add(t);
+
+        return getSingleTweetById1(list, id);
+    }
+
+    private DtoTweet transListTweetInDto1(List<Tweet> list, DtoTweet dto, int size) {
+
+        log.info("::::::::DTO" + dto.toString());
+        log.info(":::::::::size = " + size);
+        if (size == 0);
+        else {
+            DtoTweet dtoNew = transEntityToDto(list.get(--size));
+            dtoNew.setParentDto(dto);
+            dto = transListTweetInDto1(list, dtoNew, size);
+        }
+        log.info(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: exit dto = " + dto.toString());
+        return dto;
+    }
+
+    public DtoTweet transListTweetInDto(List<Tweet> list, DtoTweet dto, int size) {
+        size = list.size();
+        dto = transEntityToDto(list.get(--size));
+
+        return transListTweetInDto1(list, dto, size);
     }
 
 

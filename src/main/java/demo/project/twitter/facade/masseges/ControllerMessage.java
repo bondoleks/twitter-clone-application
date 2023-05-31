@@ -21,7 +21,7 @@ public class ControllerMessage {
     }
 
     @PostMapping("save")
-    public DtoMessage seveMessage(@RequestBody DtoMessage dto) {
+    public DtoMessage saveMessage(@RequestBody DtoMessage dto) {
         return facade.saveEntity(dto);
     }
 

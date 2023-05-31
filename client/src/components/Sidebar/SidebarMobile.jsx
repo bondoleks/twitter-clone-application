@@ -46,7 +46,7 @@ const SidebarMobile = () => {
 
     const bottomNavigationStyles = {
         backgroundColor: theme.palette.background.default,
-      };
+    };
 
     const [buttonColor, setButtonColor] = useState();
 
@@ -61,8 +61,6 @@ const SidebarMobile = () => {
         setButtonColor(color);
         localStorage.setItem('buttonColor', color);
     };
-   
-
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -217,7 +215,7 @@ const SidebarMobile = () => {
                             textDecoration: 'none'
                         }
                     }}>
-                        <SettingsOutlinedIcon fontSize="medium" color='gray'/>
+                        <SettingsOutlinedIcon fontSize="medium" color='gray' />
                     </IconButton>
                     <ModalTheme open={openModal} onClose={handleCloseModal} />
                 </Box>
@@ -421,9 +419,10 @@ const SidebarMobile = () => {
                                         <SettingsOutlinedIcon />
                                     </ListItemIcon>
                                     <ListItemText onClick={handleOpenModal}  >
-                                        <Typography sx={{
+                                        <Typography  sx={{
                                             fontWeight: '900',
-                                            fontSize: '20px'
+                                            fontSize: '20px',
+                                            color: '#000000'                        
                                         }}>
                                             Settings
                                         </Typography>
@@ -444,7 +443,7 @@ const SidebarMobile = () => {
                     position: 'fixed',
                     top: '80%',
                     left: '70%',
-                    zIndex: '99', 
+                    zIndex: '99',
                     color: buttonColor
                 }} fontSize='large' />
             </IconButton>
@@ -474,15 +473,15 @@ const SidebarMobile = () => {
                     </Link>
 
                     <Link to={`/notifications`}>
-                            <IconButton color='gray'>
-                                {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                            </IconButton>
+                        <IconButton color='gray'>
+                            {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                        </IconButton>
                     </Link>
 
                     <Link to={`/messages`}>
-                            <IconButton color='gray'>
-                                {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                            </IconButton>
+                        <IconButton color='gray'>
+                            {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                        </IconButton>
                     </Link>
                 </BottomNavigation>
             </Box>
