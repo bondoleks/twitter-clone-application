@@ -36,7 +36,6 @@ public class User extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "Password cannot be empty")
     @Column(name = "password")
     private String password;
 
