@@ -12,6 +12,7 @@ import java.util.Date;
 public class DtoTweet {
 
     private Long id;
+    private Long headBranchId;
     private String tweetBody;
     private Date createdDate;
     private Long parent_Tweet;

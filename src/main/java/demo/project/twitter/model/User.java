@@ -2,7 +2,7 @@ package demo.project.twitter.model;
 
 import com.sun.istack.NotNull;
 import lombok.*;
-
+import javax.validation.constraints.Email;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,6 +30,8 @@ public class User extends BaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
+
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotNull
     @Column(name = "email")
     private String email;
