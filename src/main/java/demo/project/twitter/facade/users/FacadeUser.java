@@ -35,14 +35,14 @@ public  class FacadeUser {
         return mm;
     }
 
-    public ResponseEntity<?> getEntity (Long id){
+    public ResponseEntity<UserDto> getEntity (Long id){
 
         if (service.user_exists(service.findById(id))) {
             entity = service.findById(id);
             dto = mapper().map(entity,dto.getClass());
             return ResponseEntity.accepted().body(dto);
         } else {
-            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with code " + id + " not found");
+            return null;
         }
     }
 
@@ -78,6 +78,7 @@ public  class FacadeUser {
         return dto;
     }
 
+
     public ResponseEntity<?> getFollowers (Long id){
 
         if (service.user_exists(service.findById(id))) {
@@ -98,6 +99,14 @@ public  class FacadeUser {
         } else {
             return ResponseEntity.status(HttpStatus.valueOf(404)).body("followings of " + id + " not found");
         }
+    }
+
+    public void follow(User follower, User following) {
+        service.follow(follower, following);
+    }
+
+    public void unFollow(User follower, User following) {
+        service.unFollow(follower, following);
     }
 
 }

@@ -91,6 +91,22 @@ public class ServiceUser implements FunctionUser {
         else
             return usr.get().getFollowings();
     }
+
+    @Override
+    public void follow(User follower, User following) {
+                  Set <User> followings = follower.getFollowings();
+          followings.add(following);
+            repo.save(follower);
+        }
+
+
+    @Override
+    public void unFollow(User follower, User following) {
+        Set <User> followings = follower.getFollowings();
+        followings.remove(following);
+        repo.save(follower);
+
+    }
 }
 
 

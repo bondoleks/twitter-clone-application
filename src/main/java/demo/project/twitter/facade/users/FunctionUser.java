@@ -16,6 +16,9 @@ public interface FunctionUser {
     User findById (Long id);
     Set<User> getFollowers (User user);
     Set<User> getFollowing (User user);
+    void follow (User follower, User following);
+    void unFollow (User follower, User following);
+
 
 
 

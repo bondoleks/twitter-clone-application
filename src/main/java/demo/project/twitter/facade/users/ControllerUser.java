@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RequiredArgsConstructor
 @RestController
 
@@ -15,7 +16,7 @@ public class ControllerUser {
 
 
 
-    @GetMapping("get/{id}")
+    @GetMapping("getuser/{id}")
     public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {
         return facade.getEntity(id);
     }
@@ -28,6 +29,16 @@ public class ControllerUser {
     @PostMapping("save")
     public UserDto saveEntity(@RequestBody UserDto dto) {
         return facade.saveEntity(dto);
+    }
+
+    @PostMapping("follow/user/{id}")
+    public void follow (@RequestBody UserDto dto, @PathVariable("id") Long id) {
+       facade.follow(dto.toUser(), facade.getEntity(id).getBody().toUser());
+    }
+
+    @PostMapping("unfollow/user/{id}")
+    public void unFollow (@RequestBody UserDto dto, @PathVariable("id") Long id) {
+        facade.unFollow(dto.toUser(), facade.getEntity(id).getBody().toUser());
     }
 
     @GetMapping("followers/{id}")
