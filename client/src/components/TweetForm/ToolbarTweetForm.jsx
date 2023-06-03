@@ -55,7 +55,7 @@ export default function ToolbarTweetForm({setTweetText, setFile, file}) {
                 src={filePath}
                 width={200} // Задайте желаемую ширину картинки
             />}
-            <Toolbar sx={{ marginLeft: '-20px' }}>
+            <Toolbar>
                 <IconButton sx={{ marginTop: '6px' }}>
                     <label htmlFor="file-input">
                         <input
