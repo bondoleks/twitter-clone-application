@@ -11,6 +11,8 @@ export const TabsNotifications = () => {
         setValue(newValue);
     };
 
+
+
     return (
         <>
             <Tabs variant="fullWidth" value={value} onChange={handleChange} indicatorColor="primary">
