@@ -23,7 +23,7 @@ export default function TweetFormMobile({ open, onClose }) {
         backgroundColor: theme.palette.background.default,
         // Add other styles as needed
     };
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [buttonColor, setButtonColor] = useState();
 
@@ -34,17 +34,45 @@ export default function TweetFormMobile({ open, onClose }) {
         }
     }, []);
 
+    const handleTweetSubmit = () => {
+        // Здесь вы можете отправить пост-запрос с tweetText и file
+        // Используйте переменные tweetText и file для доступа к данным
+        console.log("Tweet Text:", tweetText);
+        console.log("File:", file);
+
+
+
+        // Здесь можно отправить пост-запрос
+        api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", {
+            tweetBody: tweetText,
+            parentTweetId: 0,
+            user_id: 1
+            // file: file,
+
+        }
+            )
+            .then(response => {
+                console.log(response);
+                alert("Success!");
+            })
+            .catch(error => {
+                console.error(error);
+                // Действия при ошибке
+                alert("Error!: " + error.message);
+            });
+    };
 
     return (
 
-        <Dialog open={open} onClose={onClose} fullScreen={fullScreen} >
+        <Dialog open={open} onClose={onClose} fullScreen={true} fullWidth >
             <Box style={TweetFormStyles} sx={{height: '100vh'}}>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     marginTop: '8px',
-                    marginInline: '12px'
+                    marginInline: '12px',
+                    padding: '10px'
                 }}>
                     <Link to={`/home`}>
                         <IconButton >
@@ -52,11 +80,12 @@ export default function TweetFormMobile({ open, onClose }) {
                         </IconButton>
                     </Link>
 
-                    <Button variant="contained" color="primary" size="small" sx={{
+                    <Button  variant="contained" color="primary" size="small" sx={{
                         textTransform: 'none',
                         borderRadius: '20px',
                         height: '30px',
-                        backgroundColor: buttonColor
+                        backgroundColor: buttonColor,
+                        paddingRight: '20px'
                     }}>
                         Tweet
                     </Button>
