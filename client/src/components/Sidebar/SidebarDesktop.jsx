@@ -26,8 +26,19 @@ import TweetForm from '../TweetForm/TweetForm';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
+import { useTheme } from '@mui/material/styles';
 
-export const SidebarDesktop = () => {
+export const SidebarDesktop = ({ }) => {
+
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -86,6 +97,18 @@ export const SidebarDesktop = () => {
         setOpenModal(false);
     };
 
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
+
+    const theme = useTheme();
+
+    const DropStyles = {
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.default
+      };
+
     return (
 
         <Stack position='fixed'>
@@ -98,79 +121,85 @@ export const SidebarDesktop = () => {
 
             <Link to={`/home`}>
 
-                <IconButton sx={{
+                <IconButton color='gray' sx={{
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
-                    {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='primary' />}
-                    <Typography variant='h6' sx={{ color: clicked.home ? 'black' : 'inherit' }}> Home</Typography>
+
+                    {clicked.home ? <HomeIcon sx={{ margin: '10px' }} fontSize="medium" color='gray' /> : <HomeOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" color='gray' />}
+
+                    <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.home ? '900' : '400'}}> Home</Typography>
                 </IconButton>
             </Link>
 
 
             <Link to={`/explore`}>
 
-                <IconButton sx={{
+                <IconButton color='gray' sx={{
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
                     {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '10px' }} fontSize="medium" />}
-                    <Typography variant='h6' sx={{ color: clicked.explore ? 'black' : 'inherit' }}> Explore</Typography>
+                    <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.explore ? '900' : '400'}}> Explore</Typography>
                 </IconButton>
             </Link>
 
             <Link to={`/notifications`}>
 
-                <IconButton sx={{
+                <IconButton color='gray' sx={{
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
                     {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '10px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}
-                    <Typography variant='h6' sx={{ color: clicked.notifications ? 'black' : 'inherit' }} >Notifications</Typography>
+                    <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.notifications ? '900' : '400'}} >Notifications</Typography>
                 </IconButton>
             </Link>
 
 
             <Link to={`/messages`} >
 
-                <IconButton sx={{
+                <IconButton color='gray' sx={{
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
                     {clicked.messages ? <MailIcon sx={{ margin: '10px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '10px' }} fontSize="medium" />}
-                    <Typography variant='h6' sx={{ color: clicked.messages ? 'black' : 'inherit' }}>Messages</Typography>
+                    <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.messages ? '900' : '400'}}>Messages</Typography>
                 </IconButton>
             </Link>
 
             <Link to={`/bookmarks`}>
 
-                <IconButton sx={{
+                <IconButton color='gray' sx={{
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
                     {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" />}
-                    <Typography variant='h6' sx={{ color: clicked.bookmarks ? 'black' : 'inherit' }}>Bookmarks</Typography>
+                    <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.bookmarks ? '900' : '400'}}>Bookmarks</Typography>
                 </IconButton>
 
             </Link>
 
 
             <Link to={`/profile`} >
-                <IconButton sx={{
+                <IconButton color='gray' sx={{
                     paddingInline: '20px',
                     borderRadius: '50px'
                 }}>
                     {clicked.profile ? <PersonIcon sx={{ margin: '10px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '10px' }} fontSize="medium" />}
-                    <Typography variant='h6' sx={{ color: clicked.profile ? 'black' : 'inherit' }} >Profile</Typography>
+                    <Typography variant='h6' color='gray' sx={{ fontWeight: clicked.profile ? '900' : '400'}}>Profile</Typography>
                 </IconButton>
             </Link>
 
-            <IconButton sx={{
-                marginLeft: '-70px',
+            <IconButton color='gray' sx={{
+
+                width: '150px',
                 borderRadius: '50px'
             }} onClick={handleOpenMenu}>
-                <MoreHorizIcon sx={{ margin: '10px' }} fontSize="medium" />
-                <Typography variant='h6'>
+                <MoreHorizIcon sx={{ marginTop: '10px', 
+                marginBottom: '10px',
+                 marginRight: '10px' }} fontSize="medium" />
+
+                <Typography variant='h6' color='gray'>
                     More
                 </Typography>
             </IconButton>
@@ -183,21 +212,23 @@ export const SidebarDesktop = () => {
                     marginLeft: '16px'
                 }}
             >
-                <MenuItem onClick={handleOpenModal}>
-                    <Typography sx={{ marginInline: '8px' }}>
+                <MenuItem onClick={handleOpenModal} style={DropStyles}>
+                    <Typography>
                         Settings
                     </Typography>
                     <KeyboardArrowDownIcon />
                 </MenuItem>
             </Menu>
-            <ModalTheme open={openModal} onClose={handleCloseModal} />
+
+            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
 
 
-            <Button variant="contained" color="primary" size="medium" onClick={handleOpen}
+            <Button variant="contained" size="medium" onClick={handleOpen}
                 sx={{
                     marginBottom: '50px',
                     marginInline: '30px',
-                    borderRadius: '50px'
+                    borderRadius: '50px',
+                    backgroundColor: buttonColor
                 }}>Tweet</Button>
             <TweetForm open={open} onClose={handleClose} />
 
@@ -211,6 +242,7 @@ export const SidebarDesktop = () => {
             </IconButton>
 
         </Stack>
+
     )
 }
 

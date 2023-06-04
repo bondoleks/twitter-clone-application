@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.masseges;
 
 
-import demo.project.twitter.facade.users.DtoUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,7 @@ public class ControllerMessage {
     }
 
     @PostMapping("save")
-    public DtoMessage seveMessage(@RequestBody DtoMessage dto) {
+    public DtoMessage saveMessage(@RequestBody DtoMessage dto) {
         return facade.saveEntity(dto);
     }
 

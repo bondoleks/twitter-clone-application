@@ -1,8 +1,6 @@
 import React from 'react';
-import Sidebar from '../../components/Sidebar/Sidebar';
 import {
   Grid,
-  Hidden,
   IconButton,
   Container,
   Typography,
@@ -11,11 +9,11 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Link from '@mui/material/Link';
-import Search from '../../components/Search/Search';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
 import ButEditUser from './ButEditUser';
+
 
 
 export const Profile = () => {
@@ -40,27 +38,21 @@ export const Profile = () => {
 
   return (
 
-    <Grid container spacing={3} sx={{ height: '100%' }} >
+    <>
 
-      <Grid item md={3}>
-        <Sidebar />
-      </Grid>
-
-
-      <Grid item xs={12} md={5} sm={8} sx={{
-        borderRight: '1px solid grey',
-        borderLeft: '1px solid grey',
-        width: '100%'
-      }}>
-
+      <Grid
+        sx={{
+          borderRight: '1px solid grey',
+          borderLeft: '1px solid grey',
+        }}>
         <ToolbarProfile />
 
-        <Container sx={{ marginTop: '70px', width: '100%' }}>
+        <Container sx={{ marginTop: '70px' }}>
           <Box sx={{
             bgcolor: 'grey.300',
-            width: '115%',
-            marginLeft: '-10%',
-            height: '200px'
+            width: '110%',
+            marginLeft: '-5%',
+            height: '200px',
           }}></Box>
 
 
@@ -69,11 +61,11 @@ export const Profile = () => {
             src='../../img/avatar.png'
 
             sx={{
-              width: '30%',
-              height: '30%',
+              width: '25%',
+              height: '25%',
               borderRadius: '50%',
+              marginLeft: '20px',
               marginTop: '-15%',
-              marginLeft: '10px',
               marginBottom: '20px',
               cursor: 'pointer'
             }}
@@ -89,22 +81,22 @@ export const Profile = () => {
             <Typography>@nikname</Typography>
             <Box display={'flex'}
               marginTop={'10px'}>
-              <IconButton edge='start'>
+              <IconButton edge='start' color='gray'>
                 <CalendarMonthIcon />
               </IconButton>
               <Typography mt={1}>Joined Mounth year</Typography>
             </Box>
             <Box display={'flex'}>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
+              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography mr={2} sx={{
                   fontSize: '14px',
-                  color: 'black'
+                  color: 'gray'
                 }}>N Following</Typography>
               </Link>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'black' } }}>
+              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography sx={{
                   fontSize: '14px',
-                  color: 'black'
+                  color: 'gray'
                 }}>N Follower</Typography>
               </Link>
             </Box>
@@ -112,16 +104,8 @@ export const Profile = () => {
         </Container>
 
         <TabsProfile />
-
       </Grid>
-
-      <Hidden mdDown>
-        <Grid item xs={3}>
-          <Search />
-        </Grid>
-      </Hidden>
-    </Grid>
-
+    </>
   )
 }
 

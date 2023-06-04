@@ -1,24 +1,26 @@
 package demo.project.twitter.model;
 
-import lombok.Data;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import com.sun.istack.NotNull;
+import lombok.*;
+import javax.validation.constraints.Email;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 @Data
+@NoArgsConstructor
 public class User extends BaseEntity {
 
+
+    @NotNull
     @Column(name = "username")
     private String username;
 
@@ -28,6 +30,9 @@ public class User extends BaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
+
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotNull
     @Column(name = "email")
     private String email;
 
@@ -64,4 +69,10 @@ public class User extends BaseEntity {
     @JoinTable(name = "followers", joinColumns = @JoinColumn(name = "follower_id"),
             inverseJoinColumns = @JoinColumn(name = "followed_id"))
     private Set<User> followings = new HashSet<>();
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 }

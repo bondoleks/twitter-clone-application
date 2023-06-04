@@ -12,10 +12,14 @@ import java.util.Date;
 public class DtoTweet {
 
     private Long id;
+    private Long headBranchId;
     private String tweetBody;
     private Date createdDate;
-    private TweetType tweetType;
+    private Long parent_Tweet;
 
+    private TweetType tweetType;
+    private Integer countRetweet;
+    private Integer countReply;
 
     private Long user_id;
     private String username;
@@ -23,5 +27,9 @@ public class DtoTweet {
     private String lastName;
     private String email;
     private String av_imagerUrl;
+
+    private String tweet_imageUrl;
+
+    private DtoTweet parentDto;
 
 }

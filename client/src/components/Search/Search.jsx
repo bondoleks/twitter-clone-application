@@ -6,8 +6,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import {styled} from "@mui/system";
 import ModalClue from "./ModalClue.jsx";
 
-const StyledSearchIcon = styled(SearchIcon)(({ inputFocused }) => ({
-  color: inputFocused ? "rgb(29, 155, 240)" : "grey",
+const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
+  color: inputFocus ? "rgb(29, 155, 240)" : "grey",
   "&:focus": {
     color: "rgb(29, 155, 240)",
   },
@@ -36,6 +36,7 @@ const Search = () => {
     setInputValue("");
     inputRef.current.focus();
   };
+
 
   const inputRef = useRef(null);
 
@@ -71,7 +72,7 @@ const Search = () => {
                    sx: {
                      marginRight: "50px",
                      maxHeight: "40px",
-                     maxWidth: "300px",
+                     maxWidth: "100%",
                      borderRadius: "50px",
                      backgroundColor: "#F5F5F5",
                      "&:focus-within": {

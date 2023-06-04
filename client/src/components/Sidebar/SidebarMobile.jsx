@@ -17,6 +17,7 @@ import {
     Avatar
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HomeIcon from '@mui/icons-material/Home';
@@ -40,6 +41,26 @@ import ModalTheme from '../ModalTheme/ModalTheme';
 
 
 const SidebarMobile = () => {
+
+    const theme = useTheme();
+
+    const bottomNavigationStyles = {
+        backgroundColor: theme.palette.background.default,
+    };
+
+    const [buttonColor, setButtonColor] = useState();
+
+    useEffect(() => {
+        const savedColor = localStorage.getItem('buttonColor');
+        if (savedColor) {
+            setButtonColor(savedColor);
+        }
+    }, []);
+
+    const handleColorChange = (color) => {
+        setButtonColor(color);
+        localStorage.setItem('buttonColor', color);
+    };
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -113,7 +134,7 @@ const SidebarMobile = () => {
                         <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
                     </IconButton>
                 </Link>
-            </Box>;
+            </Box>
         </>
     } if (clicked.messages) {
         headerBox = <>
@@ -127,7 +148,7 @@ const SidebarMobile = () => {
                 justifyContent: 'space-between',
                 width: '90%'
             }}>
-                <Typography variant='h6' sx={{ color: 'black' }}>
+                <Typography variant='h6' sx={{ color: 'gray' }}>
                     Messages
                 </Typography>
                 <Box>
@@ -138,7 +159,7 @@ const SidebarMobile = () => {
                             textDecoration: 'none'
                         }
                     }}>
-                        <SettingsOutlinedIcon fontSize="medium" />
+                        <SettingsOutlinedIcon fontSize="medium" color='gray' />
                     </IconButton>
                     <ModalTheme open={openModal} onClose={handleCloseModal} />
                 </Box>
@@ -156,7 +177,7 @@ const SidebarMobile = () => {
                 justifyContent: 'space-between',
                 width: '90%'
             }}>
-                <Typography variant='h6' sx={{ color: 'black' }}>
+                <Typography variant='h6' sx={{ color: 'gray' }}>
                     Notifications
                 </Typography>
                 <Box >
@@ -167,7 +188,7 @@ const SidebarMobile = () => {
                             textDecoration: 'none'
                         }
                     }}>
-                        <SettingsOutlinedIcon fontSize="medium" />
+                        <SettingsOutlinedIcon fontSize="medium" color='gray' />
                     </IconButton>
                     <ModalTheme open={openModal} onClose={handleCloseModal} />
                 </Box>
@@ -194,7 +215,7 @@ const SidebarMobile = () => {
                             textDecoration: 'none'
                         }
                     }}>
-                        <SettingsOutlinedIcon fontSize="medium" />
+                        <SettingsOutlinedIcon fontSize="medium" color='gray' />
                     </IconButton>
                     <ModalTheme open={openModal} onClose={handleCloseModal} />
                 </Box>
@@ -209,20 +230,20 @@ const SidebarMobile = () => {
             <Box sx={{ display: 'flex' }}>
                 <Link to={`/home`}>
                     <IconButton sx={{
-                        color: 'black',
+                        color: 'gray',
                         '&:hover': {
                             backgroundColor: 'white',
                             textDecoration: 'none'
                         }
                     }}>
-                        <WestIcon fontSize="medium" />
+                        <WestIcon fontSize="medium" color='gray' />
                     </IconButton>
                 </Link>
                 <Box ml={5}>
-                    <Typography variant='h6' sx={{ color: 'black' }}>
+                    <Typography variant='h6' sx={{ color: 'gray' }}>
                         User
                     </Typography>
-                    <Typography sx={{ color: 'black' }}>
+                    <Typography sx={{ color: 'gray' }}>
                         N Tweets
                     </Typography>
                 </Box>
@@ -243,14 +264,14 @@ const SidebarMobile = () => {
                             textDecoration: 'none'
                         }
                     }}>
-                        <WestIcon fontSize="medium" />
+                        <WestIcon fontSize="medium" color='gray' />
                     </IconButton>
                 </Link>
                 <Box ml={5}>
-                    <Typography variant='h6' sx={{ color: 'black' }}>
+                    <Typography variant='h6' sx={{ color: 'gray' }}>
                         Bookmarks
                     </Typography>
-                    <Typography sx={{ color: 'black' }}>
+                    <Typography sx={{ color: 'gray' }}>
                         @nikname
                     </Typography>
                 </Box>
@@ -271,20 +292,20 @@ const SidebarMobile = () => {
     return (
 
         <>
-            <AppBar position='fixed' sx={{ backgroundColor: 'white' }} >
+            <AppBar position='fixed' color='paper'>
                 <Container fixed>
-                    <Toolbar>
+                    <Toolbar >
                         <Drawer
                             anchor="left"
                             open={drawerOpen}
                             onClose={handleDrawerClose}
                         >
-                            <List >
+                            <List style={bottomNavigationStyles} sx={{height: '100vh'}}>
                                 <Toolbar sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between'
                                 }}>
-                                    <Typography variant='h6' >
+                                    <Typography variant='h6'>
                                         Account info
                                     </Typography>
                                     <IconButton>
@@ -317,7 +338,7 @@ const SidebarMobile = () => {
                                 }}>
                                     <Typography sx={{
                                         fontSize: '18px',
-                                        fontWeight: '700'
+                                        fontWeight: '700',
                                     }}>User</Typography>
                                     <Typography>@nikname</Typography>
                                     <Box display={'flex'}>
@@ -331,7 +352,6 @@ const SidebarMobile = () => {
                                             <Typography mr={2} sx={{
                                                 display: 'flex',
                                                 fontSize: '14px',
-                                                color: 'black'
                                             }}><Box sx={{
                                                 fontWeight: '700',
                                                 marginInline: '4px'
@@ -346,13 +366,11 @@ const SidebarMobile = () => {
                                             textTransform: 'none',
                                             '&:hover': {
                                                 textDecoration: 'underline',
-                                                color: 'black'
                                             }
                                         }}>
                                             <Typography sx={{
                                                 display: 'flex',
                                                 fontSize: '14px',
-                                                color: 'black'
                                             }}><Box sx={{ fontWeight: '700', marginInline: '4px' }}>N</Box> Followers</Typography>
                                         </Button>
                                     </Box>
@@ -360,17 +378,17 @@ const SidebarMobile = () => {
 
                                 <ListItem sx={{ marginRight: '150px' }}>
                                     <ListItemIcon>
-                                        <Person2OutlinedIcon />
+                                        <Person2OutlinedIcon color='gray' />
                                     </ListItemIcon>
 
                                     <Link to={`/profile`} style={{
                                         textDecoration: 'none',
-                                        color: 'black'
+                                        color: 'gray'
                                     }}>
                                         <ListItemText onClick={handleDrawerClose}  >
                                             <Typography sx={{
                                                 fontWeight: '900',
-                                                fontSize: '20px'
+                                                fontSize: '20px',
                                             }}>
                                                 Profile
                                             </Typography>
@@ -380,9 +398,12 @@ const SidebarMobile = () => {
 
                                 <ListItem >
                                     <ListItemIcon>
-                                        <BookmarkBorderIcon />
+                                        <BookmarkBorderIcon color='gray' />
                                     </ListItemIcon>
-                                    <Link to={`/bookmarks`} style={{ textDecoration: 'none', color: 'black' }}>
+                                    <Link to={`/bookmarks`} style={{
+                                        textDecoration: 'none',
+                                        color: 'gray'
+                                    }}>
                                         <ListItemText onClick={handleDrawerClose}  >
                                             <Typography sx={{
                                                 fontWeight: '900',
@@ -395,18 +416,18 @@ const SidebarMobile = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <SettingsOutlinedIcon />
+                                        <SettingsOutlinedIcon color='gray' />
                                     </ListItemIcon>
                                     <ListItemText onClick={handleOpenModal}  >
                                         <Typography sx={{
                                             fontWeight: '900',
-                                            fontSize: '20px'
+                                            fontSize: '20px',
                                         }}>
                                             Settings
                                         </Typography>
                                     </ListItemText>
                                 </ListItem>
-                                <ModalTheme open={openModal} onClose={handleCloseModal} />
+                                <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                             </List>
                         </Drawer>
 
@@ -419,15 +440,16 @@ const SidebarMobile = () => {
             <IconButton onClick={handleOpen}>
                 <AddCircleIcon sx={{
                     position: 'fixed',
-                    top: '80%',
-                    left: '70%',
-                    zIndex: '99'
-                }} fontSize='large' color='primary' />
+                    top: '500px',
+                    left: '60%',
+                    zIndex: '999',
+                    color: buttonColor
+                }} fontSize='large' />
             </IconButton>
             <TweetFormMobile open={open} onClose={handleClose} />
 
-            <Box edge="start">
-                <BottomNavigation sx={{
+            <Box edge="start" >
+                <BottomNavigation style={bottomNavigationStyles} sx={{
                     position: 'fixed',
                     bottom: '0',
                     width: '100%',
@@ -443,22 +465,22 @@ const SidebarMobile = () => {
 
                     <Link to={`/explore`}>
                         <Tooltip title="Explore">
-                            <IconButton>
+                            <IconButton color='gray'>
                                 {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
                         </Tooltip>
                     </Link>
 
                     <Link to={`/notifications`}>
-                            <IconButton>
-                                {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                            </IconButton>
+                        <IconButton color='gray'>
+                            {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                        </IconButton>
                     </Link>
 
                     <Link to={`/messages`}>
-                            <IconButton>
-                                {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                            </IconButton>
+                        <IconButton color='gray'>
+                            {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                        </IconButton>
                     </Link>
                 </BottomNavigation>
             </Box>

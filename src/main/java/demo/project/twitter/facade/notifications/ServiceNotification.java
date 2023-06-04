@@ -2,11 +2,9 @@ package demo.project.twitter.facade.notifications;
 
 
 import demo.project.twitter.facade.tweets.RepoTweet;
-import demo.project.twitter.facade.users.RepoUser;
+import demo.project.twitter.repository.UserRepository;
 import demo.project.twitter.model.Notification;
-import demo.project.twitter.model.User;
 import demo.project.twitter.model.enums.NotificationType;
-import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.Optional;
 public class ServiceNotification implements FunctionNotification {
 
     private final RepoNotification repoNotification;
-    private final RepoUser repoUser;
+    private final UserRepository repoUser;
     private final RepoTweet repoTweet;
 
     @Override
@@ -40,6 +38,10 @@ public class ServiceNotification implements FunctionNotification {
             userId = 0L;
         }
         return repoNotification.getAllNotificationByRecieverId(userId);
+    }
+    @Override
+    public List<Notification> findAllNotificationByRecieverUsername(String username){
+        return repoNotification.getAllNotificationByRecieverUsername(username);
     }
 
     public void createNotification(NotificationType notificationType, String toUsername, Long fromUserId, Long tweetId){
