@@ -33,7 +33,7 @@ const StyledArrowBackIcon = styled(ArrowBackOutlinedIcon)(({}) => ({
   },
 }));
 
-const MessagesSearch = () => {
+const MessagesSearch = ({handleInputClick}) => {
   const [inputValue, setInputValue] = useState("");
   const [inputClicked, setInputClicked] = useState(false);
 
@@ -60,6 +60,7 @@ const MessagesSearch = () => {
           placeholder="Search Direct Messages"
           value={inputValue}
           onChange={handleInputChange}
+          onClick={handleInputClick}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

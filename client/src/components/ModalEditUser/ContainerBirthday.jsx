@@ -128,18 +128,21 @@ export default function ContainerBirthday() {
                                 value={day}
                                 label="Day"
                                 sx={{
+
                                     '& .MuiSelect-icon': {
-                                      color: theme.palette.text.primary, // Светлый цвет для стрелочки
+                                        color: theme.palette.text.primary, // Светлый цвет для стрелочки
                                     },
-                                  }}
-                                  MenuProps={{
+                                }}
+                                MenuProps={{
                                     PaperProps: {
-                                      sx: {
-                                        backgroundColor: theme.palette.background.default, // Цвет фона выпадающего меню
-                                        color: theme.palette.text.primary, // Цвет текста внутри выпадающего меню
-                                      }
+                                        sx: {
+                                            backgroundColor: theme.palette.background.default, // Цвет фона выпадающего меню
+                                            color: theme.palette.text.primary, // Цвет текста внутри выпадающего меню
+                                            maxHeight: '200px', // Здесь вы можете указать желаемую максимальную высоту
+                                            overflowY: 'auto',
+                                        }
                                     },
-                                  }}
+                                }}
                                 onChange={handleDayChange}
                             >
                                 {[...Array(31)].map((_, i) => (
@@ -164,20 +167,22 @@ export default function ContainerBirthday() {
                                 label="Month"
                                 sx={{
                                     '& .MuiSelect-icon': {
-                                      color: theme.palette.text.primary, // Светлый цвет для стрелочки
+                                        color: theme.palette.text.primary, // Светлый цвет для стрелочки
                                     },
-                                  }}
-                                  MenuProps={{
+                                }}
+                                MenuProps={{
                                     PaperProps: {
-                                      sx: {
-                                        backgroundColor: theme.palette.background.default, // Цвет фона выпадающего меню
-                                        color: theme.palette.text.primary, // Цвет текста внутри выпадающего меню
-                                      }
+                                        sx: {
+                                            backgroundColor: theme.palette.background.default, // Цвет фона выпадающего меню
+                                            color: theme.palette.text.primary, // Цвет текста внутри выпадающего меню
+                                            maxHeight: '200px', // Здесь вы можете указать желаемую максимальную высоту
+                                            overflowY: 'auto',
+                                        }
                                     },
-                                  }}
-                                
+                                }}
+
                                 onChange={handleMonthChange}
-                                >
+                            >
                                 {[
                                     "January",
                                     "February",

@@ -1,5 +1,6 @@
 package demo.project.twitter.facade.tweets;
 
+import demo.project.twitter.facade.Mapper;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.facade.users.ServiceUser;
 import demo.project.twitter.model.User;
@@ -31,22 +32,16 @@ public class FacadeTweet {
     private final ServiceTweet service;
     private final ServiceUser serviceUser;
     private final ServicAttachmentImage servicAttachmentImage;
+    private final Mapper mapper;
 
 
-    private ModelMapper mapper() {
-        ModelMapper mm = new ModelMapper();
-        mm.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setFieldMatchingEnabled(true)
-                .setSkipNullEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-        return mm;
-    }
+
 
     private Tweet transDtoToEntity(DtoTweet dto, TweetType tt) {
 
         Tweet entity = new Tweet();
-        mapper().map(dto, entity);
+
+        mapper.map().map(dto, entity);
         entity.setTweetType(tt);
         User user = serviceUser.findById(dto.getUser_id());
         Long tweetId = dto.getParent_Tweet();
@@ -55,7 +50,7 @@ public class FacadeTweet {
             entity.setParentTweet(parentTweet);
         }
         entity.setUser(user);
-        entity.setCreatedDate(new Date());
+//        entity.setCreatedDate(new Date());
 
         return entity;
     }
@@ -63,19 +58,20 @@ public class FacadeTweet {
 
     private DtoTweet transEntityToDto(Tweet entity) {
         DtoTweet dto = new DtoTweet();
-        mapper().map(entity.getUser(), dto);
-        mapper().map(entity, dto);
+        mapper.map().map(entity.getUser(), dto);
+        mapper.map().map(entity, dto);
 
         dto.setUser_id(entity.getUser().getId());
 
-        if (entity.getTweetType().getType() != 0)
+       /* if (entity.getTweetType().getType() != 0)
             dto.setParent_Tweet(entity.getParentTweet().getId());
-        else dto.setParent_Tweet(0L);
+        else dto.setParent_Tweet(0L);*/
 
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
         dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
 
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
+
 
 
         return dto;
@@ -85,7 +81,7 @@ public class FacadeTweet {
         DtoTweet dto = new DtoTweet();
         if (service.existsById(id)) {
             Tweet entity = service.getById(id).get();
-            dto = mapper().map(entity, dto.getClass());
+            dto = mapper.map().map(entity, dto.getClass());
             return ResponseEntity.accepted().body(dto);
         } else {
             return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with cod " + id + " not found");
@@ -106,10 +102,12 @@ public class FacadeTweet {
 
         Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage, key);
 
-        List<List<DtoTweet>> list = pTweet.
+        List<DtoTweet> list = pTweet.
                 stream().
-                map(tweet -> getSingleTweetById(tweet.getId())).
+                map(x -> getSingleTweetById(x.getId())).
+                map(y-> transListTweetInDto(y)).
                 collect(Collectors.toList());
+
 
         DtoTweetPage dtp = new DtoTweetPage();
         dtp.setListDto(list);
@@ -135,12 +133,12 @@ public class FacadeTweet {
         return dto;
 
     }*/
-    public List<List<DtoTweet>> getTweetByIdAndReply(Long id){
+    /*public List<List<DtoTweet>> getTweetByIdAndReply(Long id){
         List<List<DtoTweet>> list = new ArrayList<>();
         list.add(getSingleTweetById(id));
         return list;
-    }
-    private List<DtoTweet> getSingleTweetById(List<DtoTweet> list, Long id) {
+    }*/
+    /*private List<DtoTweet> getSingleTweetById(List<DtoTweet> list, Long id) {
         List<Tweet> listTweet = service.getSingleBranch(id);
         if (listTweet.size() == 0);
         else {
@@ -154,6 +152,53 @@ public class FacadeTweet {
         List<DtoTweet> list = new ArrayList<>();
         list.add(transEntityToDto(service.getTweetById(id)));
         return getSingleTweetById(list, id);
+    }*/
+
+
+
+    private List<Tweet> getSingleTweetById1(List<Tweet> list, Long id) {
+
+
+        List<Tweet> listTweet = service.getSingleBranch(id);
+        if (listTweet.size() == 0);
+        else {
+            list.add(listTweet.get(0));
+            id = listTweet.get(0).getId();
+            getSingleTweetById1(list, id);
+        }
+        return list;
+    }
+    public List<Tweet> getSingleTweetById(Long id) {
+        List<Tweet> list = new ArrayList<>();
+        Tweet t = service.getTweetById(id);
+        list.add(t);
+        return getSingleTweetById1(list, id);
+    }
+
+    private DtoTweet transListTweetInDto1(List<Tweet> list, DtoTweet dto, int size) {
+
+
+        if (size == 0);
+        else {
+            DtoTweet dtoNew = transEntityToDto(list.get(--size));
+            dtoNew.setParentDto(dto);
+            dto = transListTweetInDto1(list, dtoNew, size);
+        }
+        return dto;
+    }
+
+    public DtoTweet transListTweetInDto(List<Tweet> list) {
+        int sizelist = list.size();
+        DtoTweet dto;
+        dto = transEntityToDto(list.get(--sizelist));
+        dto = transListTweetInDto1(list, dto, sizelist);
+
+        if (sizelist == 0) dto.setHeadBranchId(null);
+        else dto.setHeadBranchId(list.get(0).getId());
+
+
+
+        return dto;
     }
 
 

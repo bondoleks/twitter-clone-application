@@ -25,22 +25,18 @@ export const TabsProfile = () => {
 
     const [{ data, loading }, getData] = useFetch({
         initData: [],
-        url: `https://twitter-clone-application.herokuapp.com/tweets/all?sizePage=10&numberPage=1`,
+        url: `https://twitter-clone-application.herokuapp.com/tweets/tweet/all?sizePage=10&numberPage=1`,
         method: 'GET',
         dataTransformer: (data) => {
-            return data.data.listDto
+            return data.listDto
         },
-        headers: {
-
-            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY4NTI2NTg4NSwiZXhwIjoxNjg1MjY5NDg1fQ.Ii1QsMsbYmrD_1IzPvMOssa8vjLUTQgZ3uPCPJ1sv6I"
-
-        }
     });
 
 
     return (
         <>
             <Tabs variant="fullWidth" value={value} textColor="inherit" onChange={handleChange} sx={{
+                marginTop: '20px',
                 "& .MuiTabs-indicator": {
                     backgroundColor: 'gray',
                     borderBottom: `2px solid ${buttonColor}`

@@ -9,7 +9,7 @@ export const getTokens = () => {
 
 export const setAuthToken = (token) => {
     if (token) {
-        api.defaults.headers.common.Authorization = `${token}`;
+        api.defaults.headers.common.Authorization = `Bearer_${token}`;
         localStorage.setItem('authToken', token);
     } else {
         delete api.defaults.headers.common.Authorization;

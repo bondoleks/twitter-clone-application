@@ -25,7 +25,6 @@ export const ToolbarProfile = () => {
             <Hidden mdUp>
 
                 <Box position='fixed' sx={{
-
                     zIndex: '99',
                     top: '0',
                 }}>
