@@ -294,13 +294,13 @@ const SidebarMobile = () => {
         <>
             <AppBar position='fixed' color='paper'>
                 <Container fixed>
-                    <Toolbar>
+                    <Toolbar >
                         <Drawer
                             anchor="left"
                             open={drawerOpen}
                             onClose={handleDrawerClose}
                         >
-                            <List >
+                            <List style={bottomNavigationStyles} sx={{height: '100vh'}}>
                                 <Toolbar sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between'
@@ -352,7 +352,6 @@ const SidebarMobile = () => {
                                             <Typography mr={2} sx={{
                                                 display: 'flex',
                                                 fontSize: '14px',
-                                                color: 'black'
                                             }}><Box sx={{
                                                 fontWeight: '700',
                                                 marginInline: '4px'
@@ -367,13 +366,11 @@ const SidebarMobile = () => {
                                             textTransform: 'none',
                                             '&:hover': {
                                                 textDecoration: 'underline',
-                                                color: 'black'
                                             }
                                         }}>
                                             <Typography sx={{
                                                 display: 'flex',
                                                 fontSize: '14px',
-                                                color: 'black'
                                             }}><Box sx={{ fontWeight: '700', marginInline: '4px' }}>N</Box> Followers</Typography>
                                         </Button>
                                     </Box>
@@ -381,17 +378,17 @@ const SidebarMobile = () => {
 
                                 <ListItem sx={{ marginRight: '150px' }}>
                                     <ListItemIcon>
-                                        <Person2OutlinedIcon />
+                                        <Person2OutlinedIcon color='gray' />
                                     </ListItemIcon>
 
                                     <Link to={`/profile`} style={{
                                         textDecoration: 'none',
-                                        color: 'black'
+                                        color: 'gray'
                                     }}>
                                         <ListItemText onClick={handleDrawerClose}  >
                                             <Typography sx={{
                                                 fontWeight: '900',
-                                                fontSize: '20px'
+                                                fontSize: '20px',
                                             }}>
                                                 Profile
                                             </Typography>
@@ -401,9 +398,12 @@ const SidebarMobile = () => {
 
                                 <ListItem >
                                     <ListItemIcon>
-                                        <BookmarkBorderIcon />
+                                        <BookmarkBorderIcon color='gray' />
                                     </ListItemIcon>
-                                    <Link to={`/bookmarks`} style={{ textDecoration: 'none', color: 'black' }}>
+                                    <Link to={`/bookmarks`} style={{
+                                        textDecoration: 'none',
+                                        color: 'gray'
+                                    }}>
                                         <ListItemText onClick={handleDrawerClose}  >
                                             <Typography sx={{
                                                 fontWeight: '900',
@@ -416,13 +416,12 @@ const SidebarMobile = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <SettingsOutlinedIcon />
+                                        <SettingsOutlinedIcon color='gray' />
                                     </ListItemIcon>
                                     <ListItemText onClick={handleOpenModal}  >
-                                        <Typography  sx={{
+                                        <Typography sx={{
                                             fontWeight: '900',
                                             fontSize: '20px',
-                                            color: '#000000'                        
                                         }}>
                                             Settings
                                         </Typography>
@@ -441,9 +440,9 @@ const SidebarMobile = () => {
             <IconButton onClick={handleOpen}>
                 <AddCircleIcon sx={{
                     position: 'fixed',
-                    top: '80%',
-                    left: '70%',
-                    zIndex: '99',
+                    top: '500px',
+                    left: '60%',
+                    zIndex: '999',
                     color: buttonColor
                 }} fontSize='large' />
             </IconButton>

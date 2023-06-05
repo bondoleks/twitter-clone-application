@@ -39,6 +39,10 @@ public class ServiceNotification implements FunctionNotification {
         }
         return repoNotification.getAllNotificationByRecieverId(userId);
     }
+    @Override
+    public List<Notification> findAllNotificationByRecieverUsername(String username){
+        return repoNotification.getAllNotificationByRecieverUsername(username);
+    }
 
     public void createNotification(NotificationType notificationType, String toUsername, Long fromUserId, Long tweetId){
         if(!repoUser.existsById(repoUser.getUserIdByUsername(toUsername)) || repoUser.existsById(fromUserId)

@@ -160,8 +160,11 @@ function App() {
      const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
-        } else {
+        } if (themeMode === "dark") {
             return darkTheme;
+        }
+        else {
+            return blackTheme;
         }
     }, [themeMode]);
 
