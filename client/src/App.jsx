@@ -10,9 +10,7 @@ import {Routes, Route, useMatch} from 'react-router-dom';
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Notifications from "./pages/Notifications/Notifications";
-import Messages from "./pages/Messages/Messages";
 import Bookmarks from "./pages/Bookmarks/Bookmarks";
-import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
 import {CustomThemeContext} from "./context/CustomThemeContext";
@@ -24,6 +22,8 @@ import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn
 import { useLocation } from 'react-router-dom';
 import {MessagesContextProvider} from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
+import ProfileId from './pages/Profile/ProfileId';
+import ProfileUser from './pages/Profile/ProfileUser';
 
 const routes = [
     {
@@ -65,7 +65,11 @@ const routes = [
     },
     {
         path: "/profile",
-        element: <Profile />,
+        element: <ProfileUser />,
+    },
+    {
+        path: "/profile:id",
+        element: <ProfileId />,
     },
     {
         path: "/tweet/:tweet_id",
