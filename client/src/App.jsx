@@ -64,7 +64,7 @@ const routes = [
         element: <Bookmarks />,
     },
     {
-        path: "/profile",
+        path: "/profile/:id",
         element: <Profile />,
     },
     {
