@@ -36,6 +36,7 @@ export const TabsProfile = () => {
     return (
         <>
             <Tabs variant="fullWidth" value={value} textColor="inherit" onChange={handleChange} sx={{
+                marginTop: '20px',
                 "& .MuiTabs-indicator": {
                     backgroundColor: 'gray',
                     borderBottom: `2px solid ${buttonColor}`

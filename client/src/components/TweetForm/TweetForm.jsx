@@ -56,15 +56,12 @@ export default function TweetForm({ open, onClose }) {
         console.log("Tweet Text:", tweetText);
         console.log("File:", file);
 
-
-
         // Здесь можно отправить пост-запрос
         api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", {
             tweetBody: tweetText,
             parentTweetId: 0,
             user_id: 1
             // file: file,
-
         }
             )
             .then(response => {
@@ -77,8 +74,6 @@ export default function TweetForm({ open, onClose }) {
                 alert("Error!: " + error.message);
             });
     };
-
-
 
     return (
 

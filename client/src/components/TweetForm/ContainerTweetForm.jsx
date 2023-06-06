@@ -150,7 +150,7 @@ export default function ContainerTweetForm({ open, onClose, setTweetText, tweetT
 
     return (
         <>
-            <Container sx={{ display: 'flex', marginTop: '20px', marginLeft: '-24px' }}>
+            <Container sx={{ display: 'flex', marginTop: '20px' }}>
 
                 <StyledAvatar alt="User Avatar"
                     src='../../img/avatar.png' />
@@ -207,6 +207,7 @@ export default function ContainerTweetForm({ open, onClose, setTweetText, tweetT
                     onClick={handleButtonClick2}
                     sx={{
                         display: "inline-flex",
+                        paddingLeft: "24px",
                         height: "20px",
                         textTransform: "none",
                         border: "none",
