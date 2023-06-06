@@ -13,22 +13,18 @@ public class ControllerChat {
     private final FacadeChat facade;
 
 
-/* Дальнейший код приведен для примера.
-        В данном классе создаются endpoint для обработки запросов фронта.
-        Весь основной процесс обработки происходит в классе Facade
-        */
-
-// ************************************** EXAMPLE START **************************************
-
-    @GetMapping("get/{id}")
-    public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {
+    @GetMapping("get/{userToId}")
+    public ResponseEntity<?> getEntity(@PathVariable("userToId") Long id) {
         return facade.getEntity(id);
     }
-
-    @PostMapping("save")
-    public DtoChat saveEntity(@RequestBody DtoChat dto) {
-        return facade.saveEntity(dto);
+    @GetMapping("getChat")
+    public ResponseEntity<?> getChatBetweenUsers(@RequestBody() DtoChatReq dtoReq) {
+        return facade.getChatBetweenUsers(dtoReq);
     }
 
-    //    ************************************** EXAMPLE END **************************************
+//    @PostMapping("save")
+//    public DtoChatReq saveEntity(@RequestBody DtoChatReq dto) {
+//        return facade.saveEntity(dto);
+//    }
+
 }
