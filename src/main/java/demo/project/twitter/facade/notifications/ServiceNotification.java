@@ -1,58 +1,26 @@
 package demo.project.twitter.facade.notifications;
 
-
-import demo.project.twitter.facade.tweets.RepoTweet;
-import demo.project.twitter.repository.UserRepository;
-import demo.project.twitter.model.Notification;
-import demo.project.twitter.model.enums.NotificationType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Service
+@Service
 @RequiredArgsConstructor
+@Log4j2
 public class ServiceNotification implements FunctionNotification {
 
+    private final FacadeNotification facadeNotification;
     private final RepoNotification repoNotification;
-    private final UserRepository repoUser;
-    private final RepoTweet repoTweet;
 
     @Override
-    public Notification saveOne(Notification not) {
-        return repoNotification.save(not);
-    }
-
-    @Override
-    public Optional<Notification> getById(Long id) {
-        return repoNotification.findById(id);
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return repoNotification.existsById(id);
-    }
-
-    public List<Notification> findAllNotificationByRecieverId(Long userId){
-        if(!repoUser.existsById(userId)){
-            userId = 0L;
-        }
-        return repoNotification.getAllNotificationByRecieverId(userId);
-    }
-    @Override
-    public List<Notification> findAllNotificationByRecieverUsername(String username){
-        return repoNotification.getAllNotificationByRecieverUsername(username);
-    }
-
-    public void createNotification(NotificationType notificationType, String toUsername, Long fromUserId, Long tweetId){
-        if(!repoUser.existsById(repoUser.getUserIdByUsername(toUsername)) || repoUser.existsById(fromUserId)
-        || repoTweet.existsById(tweetId)){
-//            error
-        }
-        Notification notification = new Notification(notificationType,
-                repoUser.getById(repoUser.getUserIdByUsername(toUsername)), repoUser.getById(fromUserId),
-                repoTweet.getById(tweetId), false);
-        repoNotification.save(notification);
+    public List<DtoNotification> findAllNotificationByRecieverUsername(String username){
+        log.info("findAllNotificationByRecieverUsername " + username);
+        return repoNotification.getAllNotificationByRecieverUsername(username).stream()
+                .map(facadeNotification::mapToProductDto)
+                .collect(Collectors.toList());
     }
 
     public void deleteNotification(Long id){
