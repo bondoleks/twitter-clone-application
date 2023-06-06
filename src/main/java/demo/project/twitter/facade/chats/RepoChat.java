@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface RepoChat extends CrudRepository<Chat, Long> { }
+public interface RepoChat extends CrudRepository<Chat, Long> {
+
+}
