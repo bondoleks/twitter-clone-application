@@ -1,29 +1,65 @@
-import { Button,
+import {
     createTheme,
     CssBaseline,
     Grid,
     Hidden,
-    ThemeProvider } from '@mui/material';
+    ThemeProvider
+} from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar'
 import Search from './components/Search/Search.jsx'
-import {Routes, Route, useMatch} from 'react-router-dom';
+// import {Routes, Route, useMatch} from 'react-router-dom';
+import { Routes, Route, Navigate, useMatch } from 'react-router-dom';
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Notifications from "./pages/Notifications/Notifications";
 import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import { useCallback, useState } from "react";
 import { MainPage } from './pages/MainPage'
-import {CustomThemeContext} from "./context/CustomThemeContext";
-import {ForYou} from "./components/Home/ForYou";
-import {Following} from "./components/Home/Following";
+import { CustomThemeContext } from "./context/CustomThemeContext";
+import { ForYou } from "./components/Home/ForYou";
+import { Following } from "./components/Home/Following";
 import { TweetPage } from './pages/TweetPage/TweetPage';
 import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
 import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
 import { useLocation } from 'react-router-dom';
-import {MessagesContextProvider} from './context/messagesContext.jsx';
+import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
+
+
+
+const PrivateRoute = ({ element: Element, ...rest }) => {
+    const isAuthenticated = true; // Здесь необходимо определить условие авторизации
+
+    return isAuthenticated ? (
+        <Element />
+    ) : (
+        <Navigate to="/" replace state={{ from: rest.location.pathname }} />
+    );
+};
+
+
+// const routes = () => {
+//     return (
+
+//         <Routes>
+//             <Route path="/" element={<MainPage />} />
+//             <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+//             <Route path="/home/forYou" element={<ForYou />} />
+//             <Route path="/home/following" element={<Following />} />
+//             <Route path="/explore" element={<Explore />} />
+//             <Route path="/notifications" element={<Notifications />} />
+//             <Route path="/messages" element={<MessageMiddleColumn />} />
+//             <Route path="/messages/:id" element={<MessageMiddleColumn />} />
+//             <Route path="/bookmarks" element={<Bookmarks />} />
+//             <Route path="/profile" element={<ProfileUser />} />
+//             <Route path="/profile/:id" element={<ProfileId />} />
+//             <Route path="/tweet/:tweet_id" element={<TweetPage />} />
+//             <Route path="*" element={<p>There's nothing here: 404!</p>} />
+//         </Routes>
+//     );
+// };
 
 const routes = [
     {
@@ -34,9 +70,10 @@ const routes = [
     {
         path: "/home",
         element: <Home />,
+        // element: <PrivateRoute element={<Home />} redirectPath="/" />,
         children: <>
-            <Route path={''} element={<ForYou/>}/>
-            <Route path={'following'} element={<Following/>}/>
+            <Route path={''} element={<ForYou />} />
+            <Route path={'following'} element={<Following />} />
         </>
     },
     {
@@ -162,7 +199,7 @@ function App() {
 
 
 
-     const theme = useCallback(() => {
+    const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
         } if (themeMode === "dark") {
@@ -189,9 +226,9 @@ function App() {
         }
 
         return (
-          <Grid item md={location.pathname === '/messages' ? 5 : 3}>
-              {rightColumn}
-          </Grid>
+            <Grid item md={location.pathname === '/messages' ? 5 : 3}>
+                {rightColumn}
+            </Grid>
         )
     }
 
@@ -199,24 +236,27 @@ function App() {
     return (
 
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <MessagesContextProvider>
-            <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                <Grid item md={3}>
-                    <Sidebar />
-                </Grid>
-                <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
-                    <Routes>
-                        {...routes.map(r => <Route {...r} />)}
-                    </Routes>
-                </Grid>
-                <Hidden mdDown>
-                        {handleRenderRightColumn(location.pathname)}
-                </Hidden>
-            </Grid>
-            </MessagesContextProvider>
-        </ThemeProvider>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <MessagesContextProvider>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                        <Grid item md={3}>
+                            <Sidebar />
+                        </Grid>
+                        <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
+                            <Routes>
+                                {/* {...routes.map(r => <Route {...r} />)} */}
+                                {routes.map((route, index) => (
+                                    <Route key={index} {...route} />
+                                ))}
+                            </Routes>
+                        </Grid>
+                        <Hidden mdDown>
+                            {handleRenderRightColumn(location.pathname)}
+                        </Hidden>
+                    </Grid>
+                </MessagesContextProvider>
+            </ThemeProvider>
         </CustomThemeContext.Provider>
 
     )
