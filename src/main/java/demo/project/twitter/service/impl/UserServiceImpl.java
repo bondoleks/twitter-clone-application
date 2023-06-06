@@ -5,32 +5,45 @@ import demo.project.twitter.model.Status;
 import demo.project.twitter.model.User;
 import demo.project.twitter.repository.RoleRepository;
 import demo.project.twitter.repository.UserRepository;
+import demo.project.twitter.service.MailSender;
 import demo.project.twitter.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
-@Slf4j
+@Log4j2
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private MailSender mailSender;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, MailSender mailSender) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailSender = mailSender;
     }
 
     @Override
     public User register(User user) {
+        User userFromDbUsername = userRepository.findByUsername(user.getUsername());
+        User userFromDbEmail = userRepository.findByEmail(user.getEmail());
+        if (userFromDbUsername != null && userFromDbEmail != null) {
+            log.info(user + "already registered");
+            return user;
+        }
+
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
@@ -38,12 +51,38 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
+        user.setActivationCode(UUID.randomUUID().toString());
 
         User registeredUser = userRepository.save(user);
+
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Welcome to Twitter. Please, visit next link: http://localhost:8080/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+
+            mailSender.send(user.getEmail(), "Activation code", message);
+        }
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
         return registeredUser;
+    }
+
+    public boolean activateUser(String code) {
+        User user = userRepository.findByActivationCode(code);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setActivationCode(null);
+
+        userRepository.save(user);
+
+        return true;
     }
 
     @Override
@@ -78,4 +117,6 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
         log.info("IN delete - user with id: {} successfully deleted");
     }
+
+
 }
