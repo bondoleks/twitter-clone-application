@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,15 +29,13 @@ public class RegistrationController {
         return ResponseEntity.ok("Wrong password");
     }
 
-    @GetMapping("/activate/{code}")
-    public ResponseEntity activate(@PathVariable String code) {
+    @PostMapping("/activate/{code}")
+    public boolean activate(@PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
         if (isActivated) {
-            log.info("User successfully activated");
-        } else {
-            log.info("Activation code is not found!");
+            return true;
         }
-        return ResponseEntity.ok("User successfully activated");
+        return false;
     }
 
 }
