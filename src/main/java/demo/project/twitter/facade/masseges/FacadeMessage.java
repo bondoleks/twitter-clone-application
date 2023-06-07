@@ -37,8 +37,8 @@ public class FacadeMessage {
     public Message transDtoToEntity(DtoMessage dto) {
         Message entity = new Message();
         entity.setTextMessage(dto.getTextMessage());
-        entity.setUser(userService.findById(dto.getUser_to()));
-        entity.setChat(chatService.getById(dto.getUser_to()).get());
+        entity.setUser(userService.findById(dto.getUser_from()));
+        entity.setChat(chatService.getById(dto.getChat_id()).get());
         //mapper().map(dto, entity);
 
         return entity;
@@ -58,7 +58,7 @@ public class FacadeMessage {
 
         if (messageService.existsById(id)) {
             entity = messageService.getById(id).get();
-            dto = mapper().map(entity, dto.getClass());
+            dto = transEntityToDto(entity);
             return ResponseEntity.accepted().body(dto);
         } else {
             return ResponseEntity.status(HttpStatus.valueOf(404)).body("Message with cod " + id + " not found");

@@ -1,0 +1,9 @@
+####
+GET http://localhost:8080/chat/getChat
+Content-Type: application/json
+
+{
+  "initiator_id": 1,
+  "userToId": 2
+}
+####

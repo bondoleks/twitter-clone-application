@@ -134,7 +134,7 @@ export const ThemeDialog = ({ open, onClose, buttonColor, onColorChange }) => {
 
         <Dialog open={open} onClose={onClose} fullScreen={isMobile} >
 
-            <Box style={ModalThemeStyles}>
+            <Box style={ModalThemeStyles} sx={{height: '100vh'}}>
                 <DialogTitle sx={{ textAlign: 'center', fontWeight: '700' }}>Customize your view</DialogTitle>
                 <DialogContent>
                     <Typography sx={{ marginBottom: '24px', color: 'gray', fontSize: '14px', textAlign: 'center' }}>

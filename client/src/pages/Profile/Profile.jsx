@@ -13,10 +13,11 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
 import ButEditUser from './ButEditUser';
-
+// import { useFetch } from "../../hooks/UseFetch";
 
 
 export const Profile = () => {
+  // const { id, username, firstName, lastName, email, location, birthdate, bio } = user;
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
     position: 'relative',
@@ -36,10 +37,18 @@ export const Profile = () => {
     },
   }));
 
+  // const [{ data, loading }, getData] = useFetch({
+  //   initData: [],
+  //   url: `https://twitter-clone-application.herokuapp.com/user/get/${id}`,
+  //   method: 'GET',
+  //   dataTransformer: (data) => {
+  //     return data.listDto
+  //   },
+  // });
+
   return (
 
     <>
-
       <Grid
         sx={{
           borderRight: '1px solid grey',
@@ -79,6 +88,12 @@ export const Profile = () => {
               fontWeight: '900'
             }}>User</Typography>
             <Typography>@nikname</Typography>
+
+            {/* <Typography sx={{
+              fontSize: '24px',
+              fontWeight: '900'
+            }}>{firstName} {lastName}</Typography>
+            <Typography>{username}</Typography> */}
             <Box display={'flex'}
               marginTop={'10px'}>
               <IconButton edge='start' color='gray'>
