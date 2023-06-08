@@ -16,7 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Optional;
+=======
+
 
 
 @RequiredArgsConstructor
@@ -42,8 +45,7 @@ public class FacadeChat {
 
 
     private DtoChatResp transEntityToDto(Chat entity) {
-        DtoChatResp dto = new DtoChatResp();
-        //mapper.map().map(entity, dto.getClass());
+       DtoChatResp dto = new DtoChatResp();
         dto.setChatId(entity.getId());
 
         //get messages from entity and transfer them to DTOs and set chatDto List<MessageDto>
@@ -66,7 +68,8 @@ public class FacadeChat {
         }
     }
 
-    public ResponseEntity<DtoChatResp> getChat(DtoChatReq dtoReq, Long chatId) {
+
+     public ResponseEntity<DtoChatResp> getChat(DtoChatReq dtoReq, Long chatId) {
         Optional<Chat> maybeChat = chatService.getById(chatId);
         Chat chat = maybeChat.get();
         chat.setMessages(messageService.getAllByChatId(chat.getId()));
@@ -81,17 +84,6 @@ public class FacadeChat {
         return ResponseEntity.accepted().body(requestBody);
     }
 
-//    public ResponseEntity<?> addUserToChat(DtoChatReq dto, Long chatId, Long userId) {
-//        User user = userService.findById(userId);
-//        Chat chat = chatService.getById(chatId).get();
-//
-//    }
-//
-//    public ResponseEntity<?> deleteUserFromChat(DtoChatReq dto, Long chatId, Long userId) {
-//    }
-//
-//    public ResponseEntity<?> deleteEntity(Long id) {
-//    }
 }
 
 

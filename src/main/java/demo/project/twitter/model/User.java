@@ -41,6 +41,9 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "activation_code")
+    private String activationCode;
+
     @Column(name = "bDate")
     private Date birthDate;
 

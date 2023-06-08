@@ -16,37 +16,13 @@ import org.springframework.stereotype.Service;
 @Log4j2
 public  class FacadeNotification {
 
-    private final ServiceNotification service;
-    private Notification entity = new Notification();
-    private DtoNotification dto = new DtoNotification();
-
-/*Маппер настроен минимально, только для выполнения основной функции - простого преобразования одного объекта
-* в другой - entity в dto и dto в entity. */
-    private ModelMapper mapper() {
-        ModelMapper mm = new ModelMapper();
-        mm.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setFieldMatchingEnabled(true)
-                .setSkipNullEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-        return mm;
-    }
-
-    public ResponseEntity<?> getEntity (Long id){
-
-        if (service.existsById(id)) {
-            entity = service.getById(id).get();
-            dto = mapper().map(entity,dto.getClass());
-            return ResponseEntity.accepted().body(dto);
-        } else {
-            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with cod " + id + " not found");
-        }
-    }
-
-    public DtoNotification saveEntity (DtoNotification requestBody){
-        entity = mapper().map(requestBody, entity.getClass());
-        Notification entity2 =service.saveOne(entity);
-        dto = mapper().map(entity2, dto.getClass());
+    public DtoNotification mapToProductDto(Notification notification){
+        DtoNotification dto = new DtoNotification();
+        dto.setId(notification.getId());
+        dto.setNotificationType(notification.getNotificationType());
+        dto.setReciever(notification.getReciever().getUsername());
+        dto.setInvitator(notification.getInvitator().getUsername());
+        dto.setTweet(notification.getTweet());
         return dto;
     }
 }
