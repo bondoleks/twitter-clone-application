@@ -11,6 +11,7 @@ import java.util.Set;
 public interface FunctionUser {
 
     List<User> findAllUsers();
+    List<User> whoToFollow(String email);
     User saveUser(User user);
    User updateUser (User usr, UserDto data);
     User findById (Long id);

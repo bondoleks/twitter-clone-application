@@ -4,7 +4,10 @@ package demo.project.twitter.facade.users;
 import demo.project.twitter.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @RequiredArgsConstructor
@@ -14,6 +17,18 @@ import org.springframework.web.bind.annotation.*;
 public class ControllerUser {
     private final FacadeUser facade;
 
+
+
+   @GetMapping("suggestions")
+   public ResponseEntity<?> getSuggestions(Principal principal){
+       return facade.whoToFollow(principal.getName());
+   }
+
+   @GetMapping("profile")
+   @PreAuthorize("hasRole('ROLE_USER')")
+   public ResponseEntity getProfile (Principal principal){
+       return facade.getEntity(principal.getName());
+   }
 
 
     @GetMapping("getuser/{id}")
@@ -26,10 +41,6 @@ public class ControllerUser {
         return facade.updateEntity(dto);
     }
 
-    @PostMapping("save")
-    public UserDto saveEntity(@RequestBody UserDto dto) {
-        return facade.saveEntity(dto);
-    }
 
     @PostMapping("follow/user/{id}")
     public void follow (@RequestBody UserDto dto, @PathVariable("id") Long id) {
@@ -51,9 +62,5 @@ public class ControllerUser {
         return facade.getFollowing(id);
     }
 
-    @GetMapping("getall")
-    public ResponseEntity<?> findAllUsers () {
-        return facade.findAllUsers();
-    }
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -35,6 +36,7 @@ public  class FacadeUser {
         return mm;
     }
 
+
     public ResponseEntity<UserDto> getEntity (Long id){
 
         if (service.user_exists(service.findById(id))) {
@@ -45,6 +47,8 @@ public  class FacadeUser {
             return null;
         }
     }
+
+
 
     public ResponseEntity<?> findAllUsers() {
         List<User> allUsers = service.findAllUsers();
@@ -99,6 +103,15 @@ public  class FacadeUser {
         } else {
             return ResponseEntity.status(HttpStatus.valueOf(404)).body("followings of " + id + " not found");
         }
+    }
+
+    public ResponseEntity<?> whoToFollow (String email) {
+
+
+            List<User> followers = service.whoToFollow(email);
+            dto = mapper().map(followers, dto.getClass());
+            return ResponseEntity.accepted().body(dto);
+
     }
 
     public void follow(User follower, User following) {

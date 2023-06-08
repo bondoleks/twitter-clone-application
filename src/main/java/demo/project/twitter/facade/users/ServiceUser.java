@@ -31,6 +31,12 @@ public class ServiceUser implements FunctionUser {
     }
 
     @Override
+    public List<User> whoToFollow(String email) {
+        User user = repo.findByEmail(email);
+        return repo.whoToFollow(user.getId());
+    }
+
+    @Override
     public User saveUser(User user) {
         repo.save(user);
         return user;
