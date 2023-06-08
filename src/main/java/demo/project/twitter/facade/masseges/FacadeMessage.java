@@ -40,7 +40,6 @@ public class FacadeMessage {
         entity.setUser(userService.findById(dto.getUser_from()));
         entity.setChat(chatService.getById(dto.getChat_id()).get());
         //mapper().map(dto, entity);
-
         return entity;
     }
 
@@ -50,7 +49,6 @@ public class FacadeMessage {
         dto.setTextMessage(entity.getTextMessage());
         dto.setUser_from(entity.getChat().getInitiator().getId());
         dto.setChat_id(entity.getChat().getId());
-        dto.setUser_to(entity.getUser().getId());
         return dto;
     }
 

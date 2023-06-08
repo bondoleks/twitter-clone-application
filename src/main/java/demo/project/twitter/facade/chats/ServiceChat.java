@@ -19,6 +19,7 @@ public class ServiceChat implements FunctionChat {
     public Chat saveOne(Chat chat) {
         return repo.save(chat);
     }
+
     @Override
     public Optional<Chat> getById(Long id) {
         return repo.findById(id);
@@ -29,9 +30,10 @@ public class ServiceChat implements FunctionChat {
         return repo.existsById(id);
     }
 
-    public List<Chat> getAll(){
+    public List<Chat> getAll() {
         List<Chat> chats = new ArrayList<>();
         return StreamSupport.stream(repo.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
+
 }
