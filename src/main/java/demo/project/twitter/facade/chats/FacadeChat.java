@@ -1,6 +1,7 @@
 package demo.project.twitter.facade.chats;
 
 import demo.project.twitter.config.Mapper;
+import demo.project.twitter.facade.masseges.DtoMessage;
 import demo.project.twitter.facade.masseges.FacadeMessage;
 import demo.project.twitter.facade.masseges.ServiceMessage;
 import demo.project.twitter.model.User;
