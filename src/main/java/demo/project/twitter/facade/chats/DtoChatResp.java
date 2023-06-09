@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 
 public class DtoChatResp {
+  
     private Long chatId;
-    private List<Message> messages;
+    private List<DtoMessage> messages;
+  
 }
