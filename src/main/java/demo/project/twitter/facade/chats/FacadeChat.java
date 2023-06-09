@@ -4,6 +4,7 @@ import demo.project.twitter.facade.Mapper;
 import demo.project.twitter.facade.masseges.DtoMessage;
 import demo.project.twitter.facade.masseges.FacadeMessage;
 import demo.project.twitter.facade.masseges.ServiceMessage;
+import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
 import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.impl.UserServiceImpl;
@@ -15,7 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import java.util.Optional;
+=======
+
 
 
 @RequiredArgsConstructor
@@ -33,20 +37,23 @@ public class FacadeChat {
 
     private Chat transDtoToEntity(DtoChatReq dto) {
         Chat entity = new Chat();
-        mapper.map().map(dto, entity);
-        entity.setInitiator(userService.findById(dto.getInitiator_id()));
+        entity.setInitiator(userService.findById(dto.getUser_initiator()));
         List<Message> messageList = new ArrayList<>();
-
         entity.setMessages(messageList);
         return entity;
     }
 
 
     private DtoChatResp transEntityToDto(Chat entity) {
-        DtoChatResp dto = new DtoChatResp();
-        //mapper.map().map(entity, dto.getClass());
+       DtoChatResp dto = new DtoChatResp();
         dto.setChatId(entity.getId());
-        dto.setMessages(entity.getMessages());
+
+        //get messages from entity and transfer them to DTOs and set chatDto List<MessageDto>
+        List<DtoMessage> messagesDto = new ArrayList<>();
+        List<Message> messages = new ArrayList<>();
+        entity.getMessages().forEach(m -> messagesDto.add(messageFacade.transEntityToDto(m)));
+        dto.setMessages(messagesDto);
+
         return dto;
     }
 
@@ -61,15 +68,21 @@ public class FacadeChat {
         }
     }
 
-    public ResponseEntity<DtoChatResp> getChatBetweenUsers(DtoChatReq dtoReq) {
-        Chat chat = chatService.getAll()
-                .stream().filter(ch ->
-                        ch.getInitiator().getId() == dtoReq.getInitiator_id())
-                .collect(Collectors.toList()).get(0);
-        return ResponseEntity.accepted().body(transEntityToDto(chat));
+
+     public ResponseEntity<DtoChatResp> getChat(DtoChatReq dtoReq, Long chatId) {
+        Optional<Chat> maybeChat = chatService.getById(chatId);
+        Chat chat = maybeChat.get();
+        chat.setMessages(messageService.getAllByChatId(chat.getId()));
+        //chat.getMessages().forEach(m -> System.out.println(m.toString()));
+        return ResponseEntity.accepted().body(transEntityToDto(maybeChat.get()));
 
     }
 
+    public ResponseEntity<?> saveEntity(DtoChatReq requestBody) {
+        entity = transDtoToEntity(requestBody);
+        chatService.saveOne(entity);
+        return ResponseEntity.accepted().body(requestBody);
+    }
 
 }
 

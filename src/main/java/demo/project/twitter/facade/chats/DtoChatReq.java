@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 public class DtoChatReq {
 
-    private Long initiator_id;
-    private Long userToId;
+    private Long user_initiator;
 
 }
