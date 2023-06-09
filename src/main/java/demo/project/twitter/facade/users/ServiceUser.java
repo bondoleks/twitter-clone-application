@@ -30,6 +30,10 @@ public class ServiceUser implements FunctionUser {
         return repo.findAll();
     }
 
+    public User findByEmail (String email){
+        return repo.findByEmail(email);
+    }
+
     @Override
     public List<User> whoToFollow(String email) {
         User user = repo.findByEmail(email);
@@ -75,7 +79,7 @@ public class ServiceUser implements FunctionUser {
 
 
     @Override
-    public Set<User> getFollowers(User user) {
+    public List<User> getFollowers(User user) {
 
         Optional<User> usr = repo.findById(user.getId());
         if (usr.isEmpty()) {
@@ -89,7 +93,7 @@ public class ServiceUser implements FunctionUser {
 
 
     @Override
-    public Set<User> getFollowing(User user) {
+    public List<User> getFollowing(User user) {
         Optional<User> usr = repo.findById(user.getId());
         if (usr.isEmpty()){
             return null;
@@ -100,7 +104,7 @@ public class ServiceUser implements FunctionUser {
 
     @Override
     public void follow(User follower, User following) {
-                  Set <User> followings = follower.getFollowings();
+                  List <User> followings = follower.getFollowings();
           followings.add(following);
             repo.save(follower);
         }
@@ -108,7 +112,7 @@ public class ServiceUser implements FunctionUser {
 
     @Override
     public void unFollow(User follower, User following) {
-        Set <User> followings = follower.getFollowings();
+        List <User> followings = follower.getFollowings();
         followings.remove(following);
         repo.save(follower);
 

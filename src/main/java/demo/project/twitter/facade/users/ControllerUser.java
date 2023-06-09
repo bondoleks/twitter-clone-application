@@ -27,9 +27,8 @@ public class ControllerUser {
    @GetMapping("profile")
    @PreAuthorize("hasRole('ROLE_USER')")
    public ResponseEntity getProfile (Principal principal){
-       return facade.getEntity(principal.getName());
+       return facade.getProfile(principal.getName());
    }
-
 
     @GetMapping("getuser/{id}")
     public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {

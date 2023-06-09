@@ -15,8 +15,8 @@ public interface FunctionUser {
     User saveUser(User user);
    User updateUser (User usr, UserDto data);
     User findById (Long id);
-    Set<User> getFollowers (User user);
-    Set<User> getFollowing (User user);
+    List<User> getFollowers (User user);
+    List<User> getFollowing (User user);
     void follow (User follower, User following);
     void unFollow (User follower, User following);
 
