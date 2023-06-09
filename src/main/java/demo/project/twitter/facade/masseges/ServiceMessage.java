@@ -4,6 +4,7 @@ package demo.project.twitter.facade.masseges;
 import demo.project.twitter.model.chat.Message;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
@@ -23,5 +24,8 @@ public class ServiceMessage implements FunctionMessage {
     @Override
     public boolean existsById(Long id) {
         return repo.existsById(id);
+    }
+    public List<Message> getAllByChatId(Long chatId){
+        return repo.getAllByChatId(chatId);
     }
 }

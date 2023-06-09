@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .antMatchers("/", "/registration", "/activate/*", "login").permitAll()
                 .anyRequest().authenticated()
 //                .anyRequest().permitAll()
                 .and()

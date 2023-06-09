@@ -13,13 +13,14 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
 import ButEditUser from './ButEditUser';
+
 import { useFetch } from "../../hooks/UseFetch";
 import { useParams } from 'react-router-dom';
 
 
+
 export const Profile = ({ withId }) => {
   const { id } = useParams()
-
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
     position: 'relative',
@@ -39,6 +40,7 @@ export const Profile = ({ withId }) => {
     },
   }));
 
+
   const [{ data, loading }, getData] = useFetch({
     initData: {},
     url: withId
@@ -55,10 +57,10 @@ export const Profile = ({ withId }) => {
 
   const { username, firstName, lastName, email, location, birthdate, bio } = data
 
+
   return (
 
     <>
-
       <Grid
         sx={{
           borderRight: '1px solid grey',
@@ -97,6 +99,7 @@ export const Profile = ({ withId }) => {
               fontSize: '24px',
               fontWeight: '900'
             }}>User</Typography>
+
             <Typography>@nikname</Typography> */}
 
             <Typography sx={{
@@ -104,6 +107,7 @@ export const Profile = ({ withId }) => {
               fontWeight: '900'
             }}>{firstName} {lastName}</Typography>
             <Typography>{username}</Typography>
+
             <Box display={'flex'}
               marginTop={'10px'}>
               <IconButton edge='start' color='gray'>

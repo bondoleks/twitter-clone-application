@@ -47,3 +47,12 @@ export const  GET_COMMENTS_SUCCESS = 'tweet/comments/get/succses';
 export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
 export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
 export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
+
+export function registerUserRequest(user) {
+    return {
+        type: REGISTER_USER_REQUEST,
+        payload: {
+            user: user
+        }
+    };
+}
