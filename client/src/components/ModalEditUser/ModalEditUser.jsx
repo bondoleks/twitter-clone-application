@@ -42,6 +42,22 @@ export default function ModalEditUser({ open, onClose }) {
     }));
 
 
+    const styles = {
+        textarea: {
+            width: '100%',
+            height: '100px',
+            marginBottom: '10px',
+            border: '1px solid gray',
+            borderRadius: '4px',
+            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.background.default,
+            fontSize: '16px',
+            padding: '12px',
+            fontFamily: 'Roboto, sans-serif',
+            color: theme.palette.text.primary   
+        }
+    };
+
     return (
 
         <Dialog open={open} onClose={onClose} >
@@ -131,15 +147,26 @@ export default function ModalEditUser({ open, onClose }) {
                         color: theme.palette.text.primary,
                     },
                 }} />
-                <TextareaAutosize id="outlined-basic" placeholder="Bio" variant="outlined" style={{
-                    width: '99%',
-                    height: '100px',
-                    marginBottom: '10px',
-                    border: '1px solid gray',
-                    borderRadius: '4px',
-                    color: theme.palette.text.primary,
-                    backgroundColor: theme.palette.background.default
-                }} />
+
+                <TextareaAutosize
+                     id="outlined-basic"
+                     placeholder="Bio"
+                     variant="outlined"
+                     style={styles.textarea}
+                     inputProps={{ style: { color: theme.palette.text.primary } }}
+                     sx={{
+                       '& .MuiOutlinedInput-root': {
+                         borderColor: theme.palette.text.primary,
+                       },
+                       '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                         borderColor: theme.palette.text.primary,
+                       },
+                       '& .MuiInputLabel-root': {
+                         color: theme.palette.text.primary,
+                       },
+                     }}
+                />
+
                 <TextField id="outlined-basic"
                     label="Location"
                     variant="outlined"
@@ -159,6 +186,7 @@ export default function ModalEditUser({ open, onClose }) {
                             color: theme.palette.text.primary,
                         },
                     }} />
+
                 <TextField id="outlined-basic" label="Website" variant="outlined" sx={{
                     width: '100%',
                     marginBottom: '10px',

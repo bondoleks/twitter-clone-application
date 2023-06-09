@@ -22,13 +22,12 @@ import ProfileUser from './pages/Profile/ProfileUser';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
-    // const isAuthenticated = true; // Здесь необходимо определить условие авторизации
     const isAuthenticated = useSelector(state => state.user.authorized.isAuthenticated)
 
     return isAuthenticated ? (
         <Element />
     ) : (
-        <Navigate to="/" replace />
+        <Navigate to="/" />
     );
 };
 
@@ -55,88 +54,45 @@ const routes = [
     {
         path: "/explore",
         element: <Explore />,
+        // element: <PrivateRoute element={<Explore />} />,
     },
     {
         path: "/notifications",
         element: <Notifications />,
+        // element: <PrivateRoute element={<Notifications />} />,
     },
     {
         path: "/messages",
         element: <MessageMiddleColumn />,
+        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
     },
     {
         path: "/messages/:id",
         element: <MessageMiddleColumn />,
+        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
+        
     },
     {
         path: "/bookmarks",
         element: <Bookmarks />,
+        // element: <PrivateRoute element={<Bookmarks />} />,
     },
     {
         path: "/profile",
         element: <ProfileUser />,
+        // element: <PrivateRoute element={<ProfileUser />} />,
     },
     {
         path: "/profile:id",
         element: <ProfileId />,
+        // element: <PrivateRoute element={<ProfileId />} />,
     },
     {
         path: "/tweet/:tweet_id",
         element: <TweetPage />,
+        // element: <PrivateRoute element={<TweetPage />} />,
     },
 ];
-
-
-
-// import {
-//     createTheme,
-//     CssBaseline,
-//     Grid,
-//     Hidden,
-//     ThemeProvider
-// } from '@mui/material';
-// import Sidebar from './components/Sidebar/Sidebar'
-// import Search from './components/Search/Search.jsx'
-// // import {Routes, Route, useMatch} from 'react-router-dom';
-// import { Routes, Route, Navigate, useMatch } from 'react-router-dom';
-// import Home from "./pages/Home/Home";
-// import Explore from "./pages/Explore/Explore";
-// import Notifications from "./pages/Notifications/Notifications";
-// import Bookmarks from "./pages/Bookmarks/Bookmarks";
-// import { useCallback, useState } from "react";
-// import { MainPage } from './pages/MainPage'
-// import { CustomThemeContext } from "./context/CustomThemeContext";
-// import { ForYou } from "./components/Home/ForYou";
-// import { Following } from "./components/Home/Following";
-// import { TweetPage } from './pages/TweetPage/TweetPage';
-// import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
-// import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
-// import { useLocation } from 'react-router-dom';
-// import { MessagesContextProvider } from './context/messagesContext.jsx';
-// import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
-// import ProfileId from './pages/Profile/ProfileId';
-// import ProfileUser from './pages/Profile/ProfileUser';
-
-// const routes = () => {
-//     return (
-
-//         <Routes>
-//             <Route path="/" element={<MainPage />}>
-//             <Route path="/home" element={<PrivateRoute element={<Home />} />} />
-//             <Route path="/home/forYou" element={<ForYou />} />
-//             <Route path="/home/following" element={<Following />} />
-//             <Route path="/explore" element={<Explore />} />
-//             <Route path="/notifications" element={<Notifications />} />
-//             <Route path="/messages" element={<MessageMiddleColumn />} />
-//             <Route path="/messages/:id" element={<MessageMiddleColumn />} />
-//             <Route path="/bookmarks" element={<Bookmarks />} />
-//             <Route path="/profile" element={<ProfileUser />} />
-//             <Route path="/profile/:id" element={<ProfileId />} />
-//             <Route path="/tweet/:tweet_id" element={<TweetPage />} />
-//             <Route path="*" element={<p>There's nothing here: 404!</p>} />
-//         </Routes>
-//     );
-// };
 
 
 function App() {
