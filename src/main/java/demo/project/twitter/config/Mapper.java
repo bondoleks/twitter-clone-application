@@ -1,4 +1,4 @@
-package demo.project.twitter.facade;
+package demo.project.twitter.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
