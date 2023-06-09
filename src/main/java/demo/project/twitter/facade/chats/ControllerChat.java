@@ -27,9 +27,10 @@ public class ControllerChat {
     public ResponseEntity<?> getEntity(@PathVariable("userToId") Long id) {
         return facade.getEntity(id);
     }
-    @GetMapping("getChat")
+
+    /*@GetMapping("getChat")
     public ResponseEntity<?> getChatBetweenUsers(@RequestBody() DtoChatReq dtoReq) {
         return facade.getChatBetweenUsers(dtoReq);
-    }
+    }*/
 
 }

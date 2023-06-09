@@ -1,7 +1,8 @@
 package demo.project.twitter.facade.users;
 
+import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
-import demo.project.twitter.facade.Mapper;
+
 import demo.project.twitter.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
