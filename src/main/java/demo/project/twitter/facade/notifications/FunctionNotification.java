@@ -9,10 +9,6 @@ import java.util.Optional;
 @Service
 public interface FunctionNotification {
 
-    Notification saveOne(Notification not);
-    Optional<Notification> getById(Long id);
-    boolean existsById(Long id);
-
-    List<Notification> findAllNotificationByRecieverUsername(String username);
+    List<DtoNotification> findAllNotificationByRecieverUsername(String username);
 
 }

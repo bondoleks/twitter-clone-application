@@ -1,6 +1,6 @@
-package demo.project.twitter.rest;
+package demo.project.twitter.controller;
 
-import demo.project.twitter.dto.UserDto;
+import demo.project.twitter.dto.AdminUserDto;
 import demo.project.twitter.model.User;
 import demo.project.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,24 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/users/")
-public class UserRestControllerV1 {
+@RequestMapping(value = "/api/v1/admin/")
+public class AdminRestControllerV1 {
+
     private final UserService userService;
 
     @Autowired
-    public UserRestControllerV1(UserService userService) {
+    public AdminRestControllerV1(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping(value = "{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") Long id){
+    @GetMapping(value = "users/{id}")
+    public ResponseEntity<AdminUserDto> getUserById(@PathVariable(name = "id") Long id) {
         User user = userService.findById(id);
 
-        if(user == null){
+        if (user == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        UserDto result = UserDto.fromUser(user);
+        AdminUserDto result = AdminUserDto.fromUser(user);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

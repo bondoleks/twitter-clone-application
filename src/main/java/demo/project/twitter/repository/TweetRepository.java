@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.tweets;
+package demo.project.twitter.repository;
 
 
 import demo.project.twitter.model.tweet.Tweet;
@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Repository
-public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingRepository<Tweet, Long> {
+public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSortingRepository<Tweet, Long> {
     /*@Query(
             value = "select * from tweets tw where tw.user_id = ? order by tw.created_at desc",
             nativeQuery = true

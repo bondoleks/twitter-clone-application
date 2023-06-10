@@ -1,4 +1,4 @@
-package demo.project.twitter.rest;
+package demo.project.twitter.controller;
 
 import demo.project.twitter.dto.AuthenticationRequestDto;
 import demo.project.twitter.model.User;
