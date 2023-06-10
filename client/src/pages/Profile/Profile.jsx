@@ -16,10 +16,8 @@ import ButEditUser from './ButEditUser';
 import { useFetch } from "../../hooks/UseFetch";
 import { useParams } from 'react-router-dom';
 
-
 export const Profile = ({ withId }) => {
   const { id } = useParams()
-
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
     position: 'relative',
@@ -40,6 +38,7 @@ export const Profile = ({ withId }) => {
   }));
 
   // const [{ data, loading }, getData] = useFetch({
+
   //   initData: {},
   //   url: withId
   //     ? `https://twitter-clone-application.herokuapp.com/user/get/${id}`
@@ -55,10 +54,10 @@ export const Profile = ({ withId }) => {
 
   // const { username, firstName, lastName, email, location, birthdate, bio } = data
 
+
   return (
 
     <>
-
       <Grid
         sx={{
           borderRight: '1px solid grey',
