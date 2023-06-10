@@ -25,22 +25,29 @@ public class ControllerTweet {
     private final int ALL_TWEET_USERID = 0;
     private final int ALL_REPLY_TWEETID = 1;
     private final int ALL_TWEET = 2;
+    private final int ALL_BOOKMARK = 3;
     private final PhotoService photo;
 
 
+    @GetMapping("bookmark")
+    public DtoTweetPage getAllBookmark(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
+        Long profileId = 15L;
+        return facade.getAllTweetById(0L, sizePage,numberPage, ALL_BOOKMARK, profileId);
+    }
 
-
-    @GetMapping("like/{tweet_id}")
-    public void like(@PathVariable("tweet_id") Long id) {
+    @PostMapping("like/{tweet_id}")
+    public DtoTweet like(@PathVariable("tweet_id") Long id) {
         Long profileId = 15L;
         facade.markerLikeBookmark(id,profileId, ActionType.LIKE);
+        return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
 
-    @GetMapping("bookmark/{tweet_id}")
-    public void bookmark(@PathVariable("tweet_id") Long id) {
+    @PostMapping("bookmark/{tweet_id}")
+    public DtoTweet bookmark(@PathVariable("tweet_id") Long id) {
         Long profileId = 15L;
         facade.markerLikeBookmark(id,profileId, ActionType.BOOKMARK);
+        return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
     @GetMapping("tweet/{tweet_id}")
@@ -51,19 +58,19 @@ public class ControllerTweet {
 
     @GetMapping("tweet/all")
     public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 0L;
+        Long profileId = 15L;
         return facade.getAllTweetById(0L, sizePage,numberPage, ALL_TWEET, profileId);
     }
 
     @GetMapping("tweet/all/{user_id}")
     public DtoTweetPage getAllReplyById(@PathVariable("user_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 0L;
+        Long profileId = 15L;
         return facade.getAllTweetById(id, sizePage,numberPage, ALL_TWEET_USERID, profileId);
     }
 
     @GetMapping("reply/all/{tweet_id}")
     public DtoTweetPage getAllTweetById(@PathVariable("tweet_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 0L;
+        Long profileId = 15L;
         return facade.getAllTweetById(id, sizePage,numberPage, ALL_REPLY_TWEETID, profileId);
     }
 
