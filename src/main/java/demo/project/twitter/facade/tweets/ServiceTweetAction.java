@@ -2,7 +2,9 @@ package demo.project.twitter.facade.tweets;
 
 
 
+import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.tweet.Tweet;
+import demo.project.twitter.repository.TweetActionRepository;
 import demo.project.twitter.repository.TweetRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,12 +19,31 @@ import java.util.Optional;
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
 @Log4j2
-public class ServiceTweet implements FunctionTweet {
-    private final TweetRepository repo;
+public class ServiceTweetAction {
+    private final TweetActionRepository repo;
+
+    public Integer countLike(Long tweetId, String actionType) {
+        return repo.countLike(tweetId, "LIKE");
+    }
+
+    public Integer marker(Long tweeId, Long profileId, String actionType){
+        return repo.marker(tweeId, profileId, actionType);
+    }
+
+    public void saveTweetAction(TweetAction tweetAction){
+        repo.save(tweetAction);
+    }
+
+    public Optional<TweetAction> getTweetAction(Long tweetId, Long profileId, String actionType){
+        return repo.getTweetAction(tweetId, profileId, actionType);
+    }
+
+    public void delTweetAction(TweetAction tweetAction){
+        repo.delete(tweetAction);
+    }
 
 
-
-    @Override
+   /* @Override
     public Tweet saveOne(Tweet tweet) {
         return repo.save(tweet);
     }
@@ -49,9 +70,9 @@ public class ServiceTweet implements FunctionTweet {
 
     public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key) {
         Pageable pageable = PageRequest.of(numberPage, sizePage);
-       /* private final int ALL_TWEET_USERID = 0;
+       *//* private final int ALL_TWEET_USERID = 0;
         private final int ALL_REPLY_TWEETID = 1;
-        private final int ALL_TWEET = 2;*/
+        private final int ALL_TWEET = 2;*//*
 
         Page<Tweet> pageTweet = null;
 
@@ -94,5 +115,5 @@ public class ServiceTweet implements FunctionTweet {
 
 
 
-
+*/
 }
