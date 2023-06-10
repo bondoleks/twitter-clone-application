@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import demo.project.twitter.model.chat.Chat;
 import lombok.*;
-
 import javax.validation.constraints.Email;
 import javax.persistence.*;
 import java.util.*;
@@ -68,6 +67,10 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
     private List<User> followers = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "followers", joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id"))
+    private List<User> followings = new ArrayList<>();
 
     @ManyToMany()
     @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "user_id"),
@@ -78,9 +81,5 @@ public class User extends BaseEntity {
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-
-    private void addChat(Chat chat) {
-        this.userChats.add(chat);
     }
 }
