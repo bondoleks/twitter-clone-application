@@ -16,10 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Log4j2
 @RestController
+@RequestMapping(value = "/api/v1/auth/")
 public class RegistrationController {
 
     private final UserServiceImpl userService;
-    @PostMapping("/registration")
+    @PostMapping("registration")
     public ResponseEntity saveUser(@RequestParam String username, @RequestParam String email,
                                    @RequestParam String password, @RequestParam String repeatedPassword) {
         if(repeatedPassword.equals(password)) {
@@ -30,7 +31,7 @@ public class RegistrationController {
         return ResponseEntity.ok("Wrong password");
     }
 
-    @PostMapping("/activate/{code}")
+    @PostMapping("activate/{code}")
     public boolean activate(@PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
         if (isActivated) {
