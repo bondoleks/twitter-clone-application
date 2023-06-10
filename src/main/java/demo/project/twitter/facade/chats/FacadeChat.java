@@ -1,6 +1,5 @@
 package demo.project.twitter.facade.chats;
 
-import demo.project.twitter.facade.Mapper;
 import demo.project.twitter.facade.masseges.DtoMessage;
 import demo.project.twitter.facade.masseges.FacadeMessage;
 import demo.project.twitter.facade.masseges.ServiceMessage;
@@ -27,12 +26,13 @@ public class FacadeChat {
     private final UserServiceImpl userService;
     private final ServiceMessage messageService;
     private final FacadeMessage messageFacade;
-    private final Mapper mapper;
+
     private Chat entity = new Chat();
     private DtoChatResp dto = new DtoChatResp();
 
     private Chat transDtoToEntity(DtoChatReq dto) {
         Chat entity = new Chat();
+        System.out.println(dto.getUser_initiatorId());
         entity.setInitiator(userService.findById(dto.getUser_initiatorId()));
         List<Message> messageList = new ArrayList<>();
         entity.setMessages(messageList);
@@ -53,16 +53,6 @@ public class FacadeChat {
         return dto;
     }
 
-    public ResponseEntity<?> getEntity(Long id) {
-
-        if (chatService.existsById(id)) {
-            entity = chatService.getById(id).get();
-            dto = mapper.map().map(entity, dto.getClass());
-            return ResponseEntity.accepted().body(dto);
-        } else {
-            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with cod " + id + " not found");
-        }
-    }
 
     public ResponseEntity<DtoChatResp> getChat(DtoChatReq dtoReq, Long chatId) {
         Optional<Chat> maybeChat = chatService.getById(chatId);

@@ -24,15 +24,6 @@ public class FacadeMessage {
     private Message entity = new Message();
     private DtoMessage dto = new DtoMessage();
 
-    private ModelMapper mapper() {
-        ModelMapper mm = new ModelMapper();
-        mm.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setFieldMatchingEnabled(true)
-                .setSkipNullEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-        return mm;
-    }
 
     public Message transDtoToEntity(DtoMessage dto) {
         Message entity = new Message();
