@@ -23,14 +23,14 @@ import ProfileUser from './pages/Profile/ProfileUser';
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized.isAuthenticated)
+    // console.log(isAuthenticated)
 
     return isAuthenticated ? (
         <Element />
     ) : (
-        <Navigate to="/" />
+        <Navigate to="/" {...rest} />
     );
 };
-
 
 const routes = [
     {
@@ -40,8 +40,8 @@ const routes = [
     },
     {
         path: "/home",
-        // element: <Home />,
-        element: <PrivateRoute element={<Home />} />,
+        element: <Home />,
+        // element: <PrivateRoute element={<Home />} />,
         children: <>
             <Route path={''} element={<ForYou />} />
             <Route path={'following'} element={<Following />} />

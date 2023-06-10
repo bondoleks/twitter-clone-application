@@ -39,21 +39,21 @@ export const Profile = ({ withId }) => {
     },
   }));
 
-  const [{ data, loading }, getData] = useFetch({
-    initData: {},
-    url: withId
-      ? `https://twitter-clone-application.herokuapp.com/user/get/${id}`
-      : 'https://twitter-clone-application.herokuapp.com/user/get',
-    method: 'GET',
-    dataTransformer: (data) => {
-      return data;
-    },
-  });
+  // const [{ data, loading }, getData] = useFetch({
+  //   initData: {},
+  //   url: withId
+  //     ? `https://twitter-clone-application.herokuapp.com/user/get/${id}`
+  //     : 'https://twitter-clone-application.herokuapp.com/user/get',
+  //   method: 'GET',
+  //   dataTransformer: (data) => {
+  //     return data;
+  //   },
+  // });
   
 
-  if (!loading) <p>loading...</p>
+  // if (!loading) <p>loading...</p>
 
-  const { username, firstName, lastName, email, location, birthdate, bio } = data
+  // const { username, firstName, lastName, email, location, birthdate, bio } = data
 
   return (
 
@@ -93,17 +93,17 @@ export const Profile = ({ withId }) => {
           <ButEditUser />
 
           <Box>
-            {/* <Typography sx={{
-              fontSize: '24px',
-              fontWeight: '900'
-            }}>User</Typography>
-            <Typography>@nikname</Typography> */}
-
             <Typography sx={{
               fontSize: '24px',
               fontWeight: '900'
+            }}>User</Typography>
+            <Typography>@nikname</Typography>
+
+            {/* <Typography sx={{
+              fontSize: '24px',
+              fontWeight: '900'
             }}>{firstName} {lastName}</Typography>
-            <Typography>{username}</Typography>
+            <Typography>{username}</Typography> */}
             <Box display={'flex'}
               marginTop={'10px'}>
               <IconButton edge='start' color='gray'>
