@@ -36,4 +36,15 @@ public class ServiceChat implements FunctionChat {
                 .collect(Collectors.toList());
     }
 
+    public void addUserToChat(Long chatId, Long userId) {
+        repo.addUserToChat(chatId, userId);
+    }
+
+    public void deleteUserFromChat(Long chatId, Long userId) {
+        repo.deleteUserFromChat(chatId, userId);
+    }
+
+    public void deleteById(Long id) {
+        repo.deleteById(id);
+    }
 }

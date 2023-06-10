@@ -68,6 +68,13 @@ public class FacadeMessage {
         messageService.saveOne(entity);
         return transEntityToDto(entity);
     }
+
+    public DtoMessage deleteById(Long id) {
+        Message entity = messageService.getById(id).get();
+        DtoMessage dto = transEntityToDto(entity);
+        messageService.deleteById(id);
+        return dto;
+    }
 }
 
 

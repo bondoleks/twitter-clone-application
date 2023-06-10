@@ -4,7 +4,6 @@ import demo.project.twitter.facade.Mapper;
 import demo.project.twitter.facade.masseges.DtoMessage;
 import demo.project.twitter.facade.masseges.FacadeMessage;
 import demo.project.twitter.facade.masseges.ServiceMessage;
-import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
 import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.impl.UserServiceImpl;
@@ -34,7 +33,7 @@ public class FacadeChat {
 
     private Chat transDtoToEntity(DtoChatReq dto) {
         Chat entity = new Chat();
-        entity.setInitiator(userService.findById(dto.getUser_initiator()));
+        entity.setInitiator(userService.findById(dto.getUser_initiatorId()));
         List<Message> messageList = new ArrayList<>();
         entity.setMessages(messageList);
         return entity;
@@ -43,7 +42,6 @@ public class FacadeChat {
 
     private DtoChatResp transEntityToDto(Chat entity) {
         DtoChatResp dto = new DtoChatResp();
-        //mapper.map().map(entity, dto.getClass());
         dto.setChatId(entity.getId());
 
         //get messages from entity and transfer them to DTOs and set chatDto List<MessageDto>
@@ -77,21 +75,30 @@ public class FacadeChat {
 
     public ResponseEntity<?> saveEntity(DtoChatReq requestBody) {
         entity = transDtoToEntity(requestBody);
+        entity.addUser(userService.
+                findById(requestBody.
+                        getUser_initiatorId()));
+        ;
         chatService.saveOne(entity);
         return ResponseEntity.accepted().body(requestBody);
     }
 
-//    public ResponseEntity<?> addUserToChat(DtoChatReq dto, Long chatId, Long userId) {
-//        User user = userService.findById(userId);
-//        Chat chat = chatService.getById(chatId).get();
-//
-//    }
-//
-//    public ResponseEntity<?> deleteUserFromChat(DtoChatReq dto, Long chatId, Long userId) {
-//    }
-//
-//    public ResponseEntity<?> deleteEntity(Long id) {
-//    }
+
+    public ResponseEntity<?> addUserToChat(Long chatId, Long userId) {
+        chatService.addUserToChat(chatId, userId);
+        return ResponseEntity.accepted().body("added!");
+    }
+
+    public ResponseEntity<?> deleteUserFromChat(Long chatId, Long userId) {
+        chatService.deleteUserFromChat(chatId, userId);
+        return ResponseEntity.accepted().body("deleted!");
+    }
+
+    public ResponseEntity<?> deleteEntity(Long id) {
+        chatService.deleteById(id);
+        return ResponseEntity.accepted().body("deleted!");
+    }
+
 }
 
 

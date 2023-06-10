@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import demo.project.twitter.model.chat.Chat;
 import lombok.*;
+
 import javax.validation.constraints.Email;
 import javax.persistence.*;
 import java.util.Date;
@@ -13,10 +14,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users",
-uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email")
-})
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 @Data
 @NoArgsConstructor
 public class User extends BaseEntity {
@@ -81,5 +82,9 @@ public class User extends BaseEntity {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    private void addChat(Chat chat) {
+        this.userChats.add(chat);
     }
 }
