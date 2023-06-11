@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Log4j2
-@RequestMapping("notifications")
+@RequestMapping("/api/v1/notifications")
 public class ControllerNotification {
 
     private final ServiceNotification serviceNotification;
