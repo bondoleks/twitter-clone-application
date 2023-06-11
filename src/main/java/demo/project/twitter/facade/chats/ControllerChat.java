@@ -23,14 +23,21 @@ public class ControllerChat {
         return facade.saveEntity(dto);
     }
 
-    @GetMapping("get/{userToId}")
-    public ResponseEntity<?> getEntity(@PathVariable("userToId") Long id) {
-        return facade.getEntity(id);
+    @PostMapping("addUser/{chatId}/{userId}")
+    public ResponseEntity<?> addUserToChat(@PathVariable("chatId") Long chatId,
+                                           @PathVariable("userId") Long userId) {
+        return facade.addUserToChat(chatId, userId);
     }
 
-    /*@GetMapping("getChat")
-    public ResponseEntity<?> getChatBetweenUsers(@RequestBody() DtoChatReq dtoReq) {
-        return facade.getChatBetweenUsers(dtoReq);
-    }*/
+    @PostMapping("deleteUser/{chatId}/{userId}")
+    public ResponseEntity<?> deleteUserToChat(@PathVariable("chatId") Long chatId,
+                                              @PathVariable("userId") Long userId) {
+        return facade.deleteUserFromChat(chatId, userId);
+    }
+
+    @PostMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        return facade.deleteEntity(id);
+    }
 
 }
