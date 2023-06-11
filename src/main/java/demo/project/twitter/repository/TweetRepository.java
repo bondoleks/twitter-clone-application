@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.tweets;
+package demo.project.twitter.repository;
 
 
 import demo.project.twitter.model.tweet.Tweet;
@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Repository
-public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingRepository<Tweet, Long> {
+public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSortingRepository<Tweet, Long> {
     /*@Query(
             value = "select * from tweets tw where tw.user_id = ? order by tw.created_at desc",
             nativeQuery = true
@@ -60,5 +60,11 @@ public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingR
             nativeQuery = true
     )
     List<Tweet> getAllTweet();
+
+    @Query(
+            value ="select * from tweets as tw join tweet_actions as twa On tw.id = twa.tweet_id where twa.action_type  = 'BOOKMARK' and twa.user_id = ? order by tw.id desc",
+            nativeQuery = true
+    )
+    Page<Tweet> findAllBookmark(Long profileId, Pageable pageable);
 
 }

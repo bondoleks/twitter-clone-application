@@ -6,12 +6,10 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 @Data
-public class DtoChat {
 
-    private Long initiator_id;
+public class DtoChatResp {
+    private Long chatId;
     private List<DtoMessage> messages;
-
 }

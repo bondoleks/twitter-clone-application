@@ -39,6 +39,7 @@ export const SidebarDesktop = ({ }) => {
         }
     }, []);
 
+    const [profileId, setProfileId] = useState(null);   
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -54,14 +55,22 @@ export const SidebarDesktop = ({ }) => {
     useEffect(() => {
         const path = location.pathname;
         setClicked({
-            home: path === '/home',
-            explore: path === '/explore',
-            notifications: path === '/notifications',
-            messages: path === '/messages',
-            bookmarks: path === '/bookmarks',
-            profile: path === '/profile',
+          home: path === '/home',
+          explore: path === '/explore',
+          notifications: path === '/notifications',
+          messages: path === '/messages',
+          bookmarks: path === '/bookmarks',
+          profile: path === '/profile' || path.startsWith(`/profile/${profileId}`),
         });
-    }, [location]);
+        const profileIdPath = `/profile/${profileId}`; // Здесь нужно указать путь к странице профиля с идентификатором
+        
+        if (path.startsWith(profileIdPath)) {
+          const id = path.substring(profileIdPath.length); // Извлекаем значение "id" из URL
+          setProfileId(id);
+        } else {
+          setProfileId(null);
+        }      
+      }, [location, profileId]);
 
     // відкривання форми для створення твіта по кліку на кнопку Tweet
     const [open, setOpen] = useState(false);

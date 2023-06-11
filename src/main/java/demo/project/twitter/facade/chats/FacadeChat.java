@@ -8,15 +8,13 @@ import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -28,57 +26,67 @@ public class FacadeChat {
     private final UserServiceImpl userService;
     private final ServiceMessage messageService;
     private final FacadeMessage messageFacade;
+
     private Chat entity = new Chat();
-    private DtoChat dto = new DtoChat();
+    private DtoChatResp dto = new DtoChatResp();
 
-    /*Маппер настроен минимально, только для выполнения основной функции - простого преобразования одного объекта
-     * в другой - entity в dto и dto в entity. */
-    private ModelMapper mapper() {
-        ModelMapper mm = new ModelMapper();
-        mm.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setFieldMatchingEnabled(true)
-                .setSkipNullEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-        return mm;
-    }
-
-    private Chat transDtoToEntity(DtoChat dto) {
+    private Chat transDtoToEntity(DtoChatReq dto) {
         Chat entity = new Chat();
-        entity.setInitiator(userService.findById(dto.getInitiator_id()));
+        System.out.println(dto.getUser_initiatorId());
+        entity.setInitiator(userService.findById(dto.getUser_initiatorId()));
         List<Message> messageList = new ArrayList<>();
-        dto.getMessages().forEach(m -> messageList.add(messageFacade.transDtoToEntity(m)));
         entity.setMessages(messageList);
         return entity;
     }
 
 
-    private DtoChat transEntityToDto(Chat entity) {
-        DtoChat dto = new DtoChat();
-        dto.setInitiator_id(entity.getInitiator().getId());
-        List<DtoMessage> messageList = new ArrayList<>();
-        entity.getMessages().forEach(m -> messageList.add(messageFacade.transEntityToDto(m)));
+    private DtoChatResp transEntityToDto(Chat entity) {
+        DtoChatResp dto = new DtoChatResp();
+        dto.setChatId(entity.getId());
+
+        //get messages from entity and transfer them to DTOs and set chatDto List<MessageDto>
+        List<DtoMessage> messagesDto = new ArrayList<>();
+        List<Message> messages = new ArrayList<>();
+        entity.getMessages().forEach(m -> messagesDto.add(messageFacade.transEntityToDto(m)));
+        dto.setMessages(messagesDto);
+
         return dto;
     }
 
-    public ResponseEntity<?> getEntity(Long id) {
 
-        if (chatService.existsById(id)) {
-            entity = chatService.getById(id).get();
-            dto = mapper().map(entity, dto.getClass());
-            return ResponseEntity.accepted().body(dto);
-        } else {
-            return ResponseEntity.status(HttpStatus.valueOf(404)).body("Object with cod " + id + " not found");
-        }
+    public ResponseEntity<DtoChatResp> getChat(DtoChatReq dtoReq, Long chatId) {
+        Optional<Chat> maybeChat = chatService.getById(chatId);
+        Chat chat = maybeChat.get();
+        chat.setMessages(messageService.getAllByChatId(chat.getId()));
+        //chat.getMessages().forEach(m -> System.out.println(m.toString()));
+        return ResponseEntity.accepted().body(transEntityToDto(maybeChat.get()));
+
     }
 
-    public DtoChat saveEntity(DtoChat requestBody) {
+    public ResponseEntity<?> saveEntity(DtoChatReq requestBody) {
+        entity = transDtoToEntity(requestBody);
+        entity.addUser(userService.
+                findById(requestBody.
+                        getUser_initiatorId()));
+        ;
+        chatService.saveOne(entity);
+        return ResponseEntity.accepted().body(requestBody);
+    }
 
-        entity = mapper().map(requestBody, entity.getClass());
-        Chat entity2 = chatService.saveOne(entity);
-        dto = mapper().map(entity2, dto.getClass());
 
-        return dto;
+    public ResponseEntity<?> addUserToChat(Long chatId, Long userId) {
+        chatService.addUserToChat(chatId, userId);
+        return ResponseEntity.accepted().body("added!");
+    }
+
+    public ResponseEntity<?> deleteUserFromChat(Long chatId, Long userId) {
+        chatService.deleteUserFromChat(chatId, userId);
+        return ResponseEntity.accepted().body("deleted!");
+    }
+
+    public ResponseEntity<?> deleteEntity(Long id) {
+        chatService.deleteById(id);
+        return ResponseEntity.accepted().body("deleted!");
     }
 
 }

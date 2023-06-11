@@ -20,6 +20,10 @@ public class DtoTweet {
     private TweetType tweetType;
     private Integer countRetweet;
     private Integer countReply;
+    private Integer countLike;
+    private Integer markerRetweet;
+    private Integer markerLike;
+    private Integer markerBookmark;
 
     private Long user_id;
     private String username;
