@@ -47,7 +47,7 @@ public class ServiceTweet implements FunctionTweet {
         return repo.findAll(pageable);
     }
 
-    public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key) {
+    public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key, Long profileId) {
         Pageable pageable = PageRequest.of(numberPage, sizePage);
        /* private final int ALL_TWEET_USERID = 0;
         private final int ALL_REPLY_TWEETID = 1;
@@ -60,6 +60,7 @@ public class ServiceTweet implements FunctionTweet {
             case 0: pageTweet = repo.findAllByUser_id(id, pageable); break;
             case 1: pageTweet = repo.findAllReplyByTweet_id(id, pageable); break;
             case 2: pageTweet = repo.findAllTweet(pageable); break;
+            case 3: pageTweet = repo.findAllBookmark(profileId, pageable); break;
         }
         return pageTweet;
 
