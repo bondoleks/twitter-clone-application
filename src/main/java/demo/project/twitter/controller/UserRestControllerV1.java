@@ -2,7 +2,7 @@ package demo.project.twitter.controller;
 
 import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.model.User;
-import demo.project.twitter.service.UserService;
+import demo.project.twitter.service.UserServiceImplInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/api/v1/users/")
 public class UserRestControllerV1 {
-    private final UserService userService;
+    private final UserServiceImplInterface userService;
 
     @Autowired
-    public UserRestControllerV1(UserService userService) {
+    public UserRestControllerV1(UserServiceImplInterface userService) {
         this.userService = userService;
     }
 

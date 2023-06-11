@@ -3,7 +3,7 @@ package demo.project.twitter.controller;
 import demo.project.twitter.dto.AuthenticationRequestDto;
 import demo.project.twitter.model.User;
 import demo.project.twitter.security.jwt.JwtTokenProvider;
-import demo.project.twitter.service.UserService;
+import demo.project.twitter.service.UserServiceImplInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,10 +27,10 @@ public class AuthenticationRestControllerV1 {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final UserService userService;
+    private final UserServiceImplInterface userService;
 
     @Autowired
-    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
+    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserServiceImplInterface userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;

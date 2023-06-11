@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.users;
+package demo.project.twitter.service;
 
 import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.model.User;
@@ -13,7 +13,7 @@ public interface FunctionUser {
     List<User> findAllUsers();
     List<User> whoToFollow(String email);
     User saveUser(User user);
-   User updateUser (User usr, UserDto data);
+//   User updateUser (User usr, UserDto data);
     User findById (Long id);
     List<User> getFollowers (User user);
     List<User> getFollowing (User user);

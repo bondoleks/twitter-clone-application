@@ -70,7 +70,7 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "followed_id"))
     private List<User> followings = new ArrayList<>();
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, String location, String birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
         this.username = username;
         this.email = email;
         this.password = password;

@@ -3,7 +3,7 @@ package demo.project.twitter.security;
 import demo.project.twitter.model.User;
 import demo.project.twitter.security.jwt.JwtUser;
 import demo.project.twitter.security.jwt.JwtUserFactory;
-import demo.project.twitter.service.UserService;
+import demo.project.twitter.service.UserServiceImplInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private final UserService userService;
+    private final UserServiceImplInterface userService;
 
     @Autowired
-    public JwtUserDetailsService(UserService userService) {
+    public JwtUserDetailsService(UserServiceImplInterface userService) {
         this.userService = userService;
     }
 

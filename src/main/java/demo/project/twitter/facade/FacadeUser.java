@@ -1,19 +1,18 @@
-package demo.project.twitter.facade.users;
+package demo.project.twitter.facade;
 
 import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.facade.Mapper;
 import demo.project.twitter.model.User;
+import demo.project.twitter.service.ServiceUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -59,13 +58,13 @@ public  class FacadeUser {
 
     }
 
-    public ResponseEntity<UserDto> saveEntity (Long id, UserDto data){
-
-            entity = service.updateUser(service.findById(id), data);
-            dto = makeDto(entity);
-            return ResponseEntity.accepted().body(dto);
-
-    }
+//    public ResponseEntity<UserDto> saveEntity (Long id, UserDto data){
+//
+//            entity = service.updateUser(service.findById(id), data);
+//            dto = makeDto(entity);
+//            return ResponseEntity.accepted().body(dto);
+//
+//    }
 
 //    public UserDto saveEntity (UserDto requestBody){
 //
@@ -76,12 +75,13 @@ public  class FacadeUser {
 //
 //    }
 
-    public UserDto updateEntity (UserDto requestBody){
-        entity = mapper.map().map(requestBody, entity.getClass());
-        User entity2 = service.updateUser(entity, requestBody);
-        dto = mapper.map().map(entity2, dto.getClass());
-        return dto;
-    }
+//    public UserDto updateUser (String username, String firstName, String email, String location, String birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
+//        User usr = new User(username, firstName, email, location, birthDate, bio, avUrl,headUrl);
+//        UserDto entity = makeDto(usr);
+//        User entity2 = service.updateUser(usr, entity);
+//        dto = makeDto(entity2);
+//        return dto;
+//    }
 
 
     public ResponseEntity<List<UserDto>> getFollowers (Long id){

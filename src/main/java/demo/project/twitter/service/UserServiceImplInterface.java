@@ -4,7 +4,7 @@ import demo.project.twitter.model.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserServiceImplInterface {
 
     User register(User user);
 

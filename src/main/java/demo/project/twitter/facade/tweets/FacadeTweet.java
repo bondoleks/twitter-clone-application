@@ -2,7 +2,7 @@ package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.facade.Mapper;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
-import demo.project.twitter.facade.users.ServiceUser;
+import demo.project.twitter.service.ServiceUser;
 import demo.project.twitter.model.User;
 
 import demo.project.twitter.model.enums.TweetType;
@@ -10,16 +10,12 @@ import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

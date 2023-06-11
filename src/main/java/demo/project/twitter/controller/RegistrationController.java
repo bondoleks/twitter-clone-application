@@ -1,15 +1,11 @@
 package demo.project.twitter.controller;
 
-import demo.project.twitter.facade.notifications.DtoNotification;
 import demo.project.twitter.model.User;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -21,7 +17,7 @@ public class RegistrationController {
     public ResponseEntity saveUser(@RequestParam String username, @RequestParam String email,
                                    @RequestParam String password, @RequestParam String repeatedPassword) {
         if(repeatedPassword.equals(password)) {
-            User newUser = new User(username, email, password);
+            User newUser = new User(username, email, password, location, birthDate, bio, avUrl, headUrl);
             userService.register(newUser);
             return ResponseEntity.ok(username + " created");
         }
