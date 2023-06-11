@@ -1,29 +1,36 @@
-import { Button,
-    createTheme,
-    CssBaseline,
-    Grid,
-    Hidden,
-    ThemeProvider } from '@mui/material';
-import Sidebar from './components/Sidebar/Sidebar'
-import Search from './components/Search/Search.jsx'
-import {Routes, Route, useMatch} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { createTheme, CssBaseline, Grid, Hidden, ThemeProvider } from '@mui/material';
+import Sidebar from './components/Sidebar/Sidebar';
+import Search from './components/Search/Search.jsx';
+import { Routes, Route, Navigate, useLocation, useMatch } from 'react-router-dom';
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Notifications from "./pages/Notifications/Notifications";
-import Messages from "./pages/Messages/Messages";
 import Bookmarks from "./pages/Bookmarks/Bookmarks";
-import Profile from "./pages/Profile/Profile";
 import { useCallback, useState } from "react";
-import { MainPage } from './pages/MainPage'
-import {CustomThemeContext} from "./context/CustomThemeContext";
-import {ForYou} from "./components/Home/ForYou";
-import {Following} from "./components/Home/Following";
+import { MainPage } from './pages/MainPage';
+import { CustomThemeContext } from "./context/CustomThemeContext";
+import { ForYou } from "./components/Home/ForYou";
+import { Following } from "./components/Home/Following";
 import { TweetPage } from './pages/TweetPage/TweetPage';
 import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
 import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
-import { useLocation } from 'react-router-dom';
-import {MessagesContextProvider} from './context/messagesContext.jsx';
+import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
+import ProfileId from './pages/Profile/ProfileId';
+import ProfileUser from './pages/Profile/ProfileUser';
+
+
+const PrivateRoute = ({ element: Element, ...rest }) => {
+    const isAuthenticated = useSelector(state => state.user.authorized.isAuthenticated)
+    // console.log(isAuthenticated)
+
+    return isAuthenticated ? (
+        <Element />
+    ) : (
+        <Navigate to="/" {...rest} />
+    );
+};
 
 const routes = [
     {
@@ -34,9 +41,10 @@ const routes = [
     {
         path: "/home",
         element: <Home />,
+        // element: <PrivateRoute element={<Home />} />,
         children: <>
-            <Route path={''} element={<ForYou/>}/>
-            <Route path={'following'} element={<Following/>}/>
+            <Route path={''} element={<ForYou />} />
+            <Route path={'following'} element={<Following />} />
         </>
     },
     {
@@ -46,30 +54,43 @@ const routes = [
     {
         path: "/explore",
         element: <Explore />,
+        // element: <PrivateRoute element={<Explore />} />,
     },
     {
         path: "/notifications",
         element: <Notifications />,
+        // element: <PrivateRoute element={<Notifications />} />,
     },
     {
         path: "/messages",
         element: <MessageMiddleColumn />,
+        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
     },
     {
         path: "/messages/:id",
         element: <MessageMiddleColumn />,
+        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
+        
     },
     {
         path: "/bookmarks",
         element: <Bookmarks />,
+        // element: <PrivateRoute element={<Bookmarks />} />,
     },
     {
         path: "/profile",
-        element: <Profile />,
+        element: <ProfileUser />,
+        // element: <PrivateRoute element={<ProfileUser />} />,
+    },
+    {
+        path: "/profile:id",
+        element: <ProfileId />,
+        // element: <PrivateRoute element={<ProfileId />} />,
     },
     {
         path: "/tweet/:tweet_id",
         element: <TweetPage />,
+        // element: <PrivateRoute element={<TweetPage />} />,
     },
 ];
 
@@ -157,8 +178,7 @@ function App() {
     });
 
 
-
-     const theme = useCallback(() => {
+    const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
         } if (themeMode === "dark") {
@@ -185,9 +205,9 @@ function App() {
         }
 
         return (
-          <Grid item md={location.pathname === '/messages' ? 5 : 3}>
-              {rightColumn}
-          </Grid>
+            <Grid item md={location.pathname === '/messages' ? 5 : 3}>
+                {rightColumn}
+            </Grid>
         )
     }
 
@@ -195,24 +215,27 @@ function App() {
     return (
 
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <MessagesContextProvider>
-            <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                <Grid item md={3}>
-                    <Sidebar />
-                </Grid>
-                <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
-                    <Routes>
-                        {...routes.map(r => <Route {...r} />)}
-                    </Routes>
-                </Grid>
-                <Hidden mdDown>
-                        {handleRenderRightColumn(location.pathname)}
-                </Hidden>
-            </Grid>
-            </MessagesContextProvider>
-        </ThemeProvider>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <MessagesContextProvider>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                        <Grid item md={3}>
+                            <Sidebar />
+                        </Grid>
+                        <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
+                            <Routes>
+                                {/* {...routes.map(r => <Route {...r} />)} */}
+                                {routes.map((route, index) => (
+                                    <Route key={index} {...route} />
+                                ))}
+                            </Routes>
+                        </Grid>
+                        <Hidden mdDown>
+                            {handleRenderRightColumn(location.pathname)}
+                        </Hidden>
+                    </Grid>
+                </MessagesContextProvider>
+            </ThemeProvider>
         </CustomThemeContext.Provider>
 
     )

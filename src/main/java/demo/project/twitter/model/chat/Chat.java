@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import demo.project.twitter.model.BaseEntity;
 import demo.project.twitter.model.User;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -31,6 +33,10 @@ public class Chat extends BaseEntity {
     @ManyToMany(mappedBy = "userChats")
     @JsonIgnore
     private Set<User> users = new HashSet<>();
+
+    public void addUser(User user) {
+        this.users.add(user);
+    }
 //    @ManyToMany
 //    @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "user_id"),
 //            inverseJoinColumns = @JoinColumn(name = "chat_id"))

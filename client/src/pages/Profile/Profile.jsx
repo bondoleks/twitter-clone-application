@@ -13,11 +13,11 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
 import ButEditUser from './ButEditUser';
-// import { useFetch } from "../../hooks/UseFetch";
+import { useFetch } from "../../hooks/UseFetch";
+import { useParams } from 'react-router-dom';
 
-
-export const Profile = () => {
-  // const { id, username, firstName, lastName, email, location, birthdate, bio } = user;
+export const Profile = ({ withId }) => {
+  const { id } = useParams()
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
     position: 'relative',
@@ -38,13 +38,22 @@ export const Profile = () => {
   }));
 
   // const [{ data, loading }, getData] = useFetch({
-  //   initData: [],
-  //   url: `https://twitter-clone-application.herokuapp.com/user/get/${id}`,
+
+  //   initData: {},
+  //   url: withId
+  //     ? `https://twitter-clone-application.herokuapp.com/user/get/${id}`
+  //     : 'https://twitter-clone-application.herokuapp.com/user/get',
   //   method: 'GET',
   //   dataTransformer: (data) => {
-  //     return data.listDto
+  //     return data;
   //   },
   // });
+  
+
+  // if (!loading) <p>loading...</p>
+
+  // const { username, firstName, lastName, email, location, birthdate, bio } = data
+
 
   return (
 

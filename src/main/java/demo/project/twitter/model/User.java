@@ -10,10 +10,10 @@ import java.util.*;
 
 @Entity
 @Table(name = "users",
-uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email")
-})
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 @Data
 @NoArgsConstructor
 public class User extends BaseEntity {
@@ -88,3 +88,4 @@ public class User extends BaseEntity {
         this.email = email;
     }
 }
+

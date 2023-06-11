@@ -16,6 +16,7 @@ public class ServiceMessage implements FunctionMessage {
     public Message saveOne(Message message) {
         return repo.save(message);
     }
+
     @Override
     public Optional<Message> getById(Long id) {
         return repo.findById(id);
@@ -25,7 +26,13 @@ public class ServiceMessage implements FunctionMessage {
     public boolean existsById(Long id) {
         return repo.existsById(id);
     }
-    public List<Message> getAllByChatId(Long chatId){
+
+    public List<Message> getAllByChatId(Long chatId) {
         return repo.getAllByChatId(chatId);
     }
+
+    public void deleteById(Long id) {
+        repo.deleteById(id);
+    }
+
 }
