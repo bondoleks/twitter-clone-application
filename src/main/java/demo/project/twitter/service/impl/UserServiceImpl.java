@@ -6,11 +6,8 @@ import demo.project.twitter.model.User;
 import demo.project.twitter.repository.RoleRepository;
 import demo.project.twitter.repository.UserRepository;
 import demo.project.twitter.service.MailSender;
-import demo.project.twitter.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import demo.project.twitter.service.UserServiceImplInterface;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +19,7 @@ import java.util.UUID;
 
 @Service
 @Log4j2
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserServiceImplInterface {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;

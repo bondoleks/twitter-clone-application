@@ -2,7 +2,6 @@ package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.config.Mapper;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
-import demo.project.twitter.facade.users.ServiceUser;
 import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.User;
 
@@ -11,6 +10,7 @@ import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
 import demo.project.twitter.service.PhotoService;
+import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +33,7 @@ import java.util.stream.Collectors;
 public class FacadeTweet {
 
     private final ServiceTweet service;
-    private final ServiceUser serviceUser;
+    private final UserService serviceUser;
     private final ServicAttachmentImage serviceImage;
     private final ServiceTweetAction serviceAction;
     private final Mapper mapper;

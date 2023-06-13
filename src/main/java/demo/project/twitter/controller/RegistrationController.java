@@ -5,7 +5,6 @@ import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ public class RegistrationController {
     public ResponseEntity saveUser(@RequestParam String username, @RequestParam String email,
                                    @RequestParam String password, @RequestParam String repeatedPassword) {
         if(repeatedPassword.equals(password)) {
-            User newUser = new User(username, email, password, location, birthDate, bio, avUrl, headUrl);
+            User newUser = new User(username, email, password);
             userService.register(newUser);
             return ResponseEntity.ok(username + " created");
         }

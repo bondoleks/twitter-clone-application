@@ -1,7 +1,5 @@
 package demo.project.twitter.model;
 
-import demo.project.twitter.model.BaseEntity;
-import demo.project.twitter.model.User;
 import demo.project.twitter.model.enums.NotificationType;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.*;

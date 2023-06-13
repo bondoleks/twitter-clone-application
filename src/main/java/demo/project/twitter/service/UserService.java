@@ -1,7 +1,8 @@
-package demo.project.twitter.facade.users;
+package demo.project.twitter.service;
 
 
 import demo.project.twitter.dto.UserDto;
+import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.model.User;
 
 import demo.project.twitter.repository.UserRepository;
@@ -12,13 +13,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ServiceUser implements FunctionUser {
+public class UserService implements FunctionUser {
     private final UserRepository repo;
+    private final ServicAttachmentImage serviceImage;
 
     public Boolean user_exists(User usr) {
         if (repo.getUserIdByUsername(usr.getUsername()) != null) return true;
@@ -60,6 +61,7 @@ public class ServiceUser implements FunctionUser {
             usr.setEmail(Optional.ofNullable(data.getEmail()).orElse(usr.getEmail()));
             usr.setAv_imagerUrl(Optional.ofNullable(data.getAv_imagerUrl()).orElse(usr.getAv_imagerUrl()));
             usr.setHead_imagerUrl(Optional.ofNullable(data.getHead_imagerUrl()).orElse(usr.getHead_imagerUrl()));
+
             return usr;
         } else return null;
     }

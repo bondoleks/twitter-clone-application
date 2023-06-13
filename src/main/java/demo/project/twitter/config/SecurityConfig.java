@@ -1,21 +1,15 @@
 package demo.project.twitter.config;
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.repository.UserRepository;
 import demo.project.twitter.security.jwt.JwtConfigurer;
 import demo.project.twitter.security.jwt.JwtTokenProvider;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 //@EnableWebSecurity

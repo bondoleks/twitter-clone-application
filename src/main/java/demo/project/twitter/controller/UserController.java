@@ -2,7 +2,8 @@ package demo.project.twitter.controller;
 
 
 import demo.project.twitter.dto.UserDto;
-import demo.project.twitter.facade.FacadeUser;
+import demo.project.twitter.facade.UserFacade;
+import demo.project.twitter.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,9 +17,9 @@ import java.security.Principal;
 @RestController
 
 @RequestMapping("api/v1/user")
-public class ControllerUser {
-    private final FacadeUser facade;
-//    private final PhotoService photo;
+public class UserController {
+    private final UserFacade facade;
+    private final PhotoService photo;
 
 
 
@@ -38,17 +39,17 @@ public class ControllerUser {
         return facade.getEntity(id);
     }
 
-//    @PostMapping("update")
-//    public UserDto updateEntity(@RequestParam ("userName") String username,
-//                                @RequestParam ("firstName") String firstName,
-//                                @RequestParam ("email") String email,
-//                                @RequestParam ("location") String location,
-//                                @RequestParam ("birthDate") String birthDate,
-//                                @RequestParam ("bio") String bio,
-//                                @RequestParam ("avatar")MultipartFile avFile,
-//                                @RequestParam ("headimg") MultipartFile headFile) throws Exception {
-//        return facade.updateUser(username, firstName, email, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
-//    }
+    @PostMapping("update")
+    public UserDto updateEntity(@RequestParam ("userName") String username,
+                                @RequestParam ("firstName") String firstName,
+                                @RequestParam ("email") String email,
+                                @RequestParam ("location") String location,
+                                @RequestParam ("birthDate") String birthDate,
+                                @RequestParam ("bio") String bio,
+                                @RequestParam ("avatar") MultipartFile avFile,
+                                @RequestParam ("headimg") MultipartFile headFile) throws Exception {
+        return facade.updateUser(username, firstName, email, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+    }
 
 
     @PostMapping("follow/user/{id}")
