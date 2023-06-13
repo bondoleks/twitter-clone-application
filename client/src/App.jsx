@@ -19,11 +19,13 @@ import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
+import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
+import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
-    const isAuthenticated = useSelector(state => state.user.authorized.isAuthenticated)
-    // console.log(isAuthenticated)
+    const isAuthenticated = useSelector(state => state.user.authorized)
+    console.log(isAuthenticated)
 
     return isAuthenticated ? (
         <Element />
@@ -81,11 +83,23 @@ const routes = [
         path: "/profile",
         element: <ProfileUser />,
         // element: <PrivateRoute element={<ProfileUser />} />,
+        children: <>
+            <Route path={'followers'} element={<ProfileFollowers />} />
+            <Route path={'following'} element={<ProfileFollowing />} />
+        </>
     },
     {
         path: "/profile:id",
         element: <ProfileId />,
         // element: <PrivateRoute element={<ProfileId />} />,
+    },
+    {
+        path: "/profile/following",
+        element: <ProfileFollowing />
+    },
+    {
+        path: "/profile/followers",
+        element: <ProfileFollowers />
     },
     {
         path: "/tweet/:tweet_id",
