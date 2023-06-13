@@ -28,4 +28,9 @@ public class Tweet extends BaseEntity {
     @JoinColumn(name = "parent_tweet_id", referencedColumnName = "id")
     private Tweet parentTweet;
 
+    public Tweet(TweetType tweetType, String tweetBody, User user) {
+        this.tweetType = tweetType;
+        this.tweetBody = tweetBody;
+        this.user = user;
+    }
 }

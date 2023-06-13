@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 
 @RequestMapping("messages")
-public class ControllerMessage {
+public class    ControllerMessage {
     private final FacadeMessage facade;
 
 
@@ -23,6 +23,11 @@ public class ControllerMessage {
     @PostMapping("save")
     public DtoMessage saveMessage(@RequestBody DtoMessage dto) {
         return facade.saveEntity(dto);
+    }
+
+    @PostMapping("delete/{id}")
+    public DtoMessage saveMessage(@PathVariable("id") Long id) {
+        return facade.deleteById(id);
     }
 
 }

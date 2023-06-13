@@ -2,11 +2,10 @@ package demo.project.twitter.facade.tweets;
 
 
 
-import demo.project.twitter.model.User;
-import demo.project.twitter.model.enums.TweetType;
+import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.tweet.Tweet;
+import demo.project.twitter.repository.TweetActionRepository;
 import demo.project.twitter.repository.TweetRepository;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -14,19 +13,37 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
 @Log4j2
-public class ServiceTweet implements FunctionTweet {
-    private final TweetRepository repo;
+public class ServiceTweetAction {
+    private final TweetActionRepository repo;
+
+    public Integer countLike(Long tweetId, String actionType) {
+        return repo.countLike(tweetId, "LIKE");
+    }
+
+    public Integer marker(Long tweeId, Long profileId, String actionType){
+        return repo.marker(tweeId, profileId, actionType);
+    }
+
+    public void saveTweetAction(TweetAction tweetAction){
+        repo.save(tweetAction);
+    }
+
+    public Optional<TweetAction> getTweetAction(Long tweetId, Long profileId, String actionType){
+        return repo.getTweetAction(tweetId, profileId, actionType);
+    }
+
+    public void delTweetAction(TweetAction tweetAction){
+        repo.delete(tweetAction);
+    }
 
 
-
-    @Override
+   /* @Override
     public Tweet saveOne(Tweet tweet) {
         return repo.save(tweet);
     }
@@ -51,18 +68,25 @@ public class ServiceTweet implements FunctionTweet {
         return repo.findAll(pageable);
     }
 
-    public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key, Long profileId) {
+    public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key) {
         Pageable pageable = PageRequest.of(numberPage, sizePage);
+       *//* private final int ALL_TWEET_USERID = 0;
+        private final int ALL_REPLY_TWEETID = 1;
+        private final int ALL_TWEET = 2;*//*
+
         Page<Tweet> pageTweet = null;
+
 
         switch (key){
             case 0: pageTweet = repo.findAllByUser_id(id, pageable); break;
             case 1: pageTweet = repo.findAllReplyByTweet_id(id, pageable); break;
             case 2: pageTweet = repo.findAllTweet(pageable); break;
-            case 3: pageTweet = repo.findAllBookmark(profileId, pageable); break;
         }
         return pageTweet;
 
+//        return id == 0 ?
+//                repo.findAllTweet(pageable) :
+//                repo.findAllByUser_id(id, pageable);
     }
 
     public Tweet getTweetById(Long id){
@@ -89,13 +113,7 @@ public class ServiceTweet implements FunctionTweet {
     }
 
 
-    public void createRetweet(Long id, User user) {
-        Tweet tweet = new Tweet(TweetType.QUOTE_TWEET, null, user, repo.getTweetById(id));
-        tweet.setCreatedDate(new Date());
-        repo.save(tweet);
-    }
 
-    public void deleteRetweet(Long id, Long profileId) {
-        List<Tweet> list = repo.selectRetweet(id, profileId);
-    }
+
+*/
 }

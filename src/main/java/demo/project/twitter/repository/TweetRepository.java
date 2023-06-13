@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.tweets;
+package demo.project.twitter.repository;
 
 
 import demo.project.twitter.model.tweet.Tweet;
@@ -13,14 +13,14 @@ import java.util.List;
 
 
 @Repository
-public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingRepository<Tweet, Long> {
+public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSortingRepository<Tweet, Long> {
     /*@Query(
             value = "select * from tweets tw where tw.user_id = ? order by tw.created_at desc",
             nativeQuery = true
     )
     List<Tweet> getTweetById(Long id);*/
     @Query(
-            value = "select * from tweets where tweet_type != 'REPLY' order by id desc",
+            value = "select * from tweets  where tweet_type = 'TWEET' or (tweet_type = 'QUOTE_TWEET' and tweet_body is not null) order by id desc",
             nativeQuery = true
     )
     Page<Tweet> findAllTweet(Pageable pageable);
@@ -56,9 +56,20 @@ public interface RepoTweet extends JpaRepository<Tweet, Long>, PagingAndSortingR
 
 
     @Query(
-            value = "select * from tweets  where tweet_type = 'TWEET'",
+            value = "select * from tweets  where tweet_type = 'TWEET' or (tweet_type = 'QUOTE_TWEET' and tweet_body is not null)",
             nativeQuery = true
     )
     List<Tweet> getAllTweet();
 
+    @Query(
+            value ="select * from tweets as tw join tweet_actions as twa On tw.id = twa.tweet_id where twa.action_type  = 'BOOKMARK' and twa.user_id = ? order by tw.id desc",
+            nativeQuery = true
+    )
+    Page<Tweet> findAllBookmark(Long profileId, Pageable pageable);
+    @Query(
+            value = "delete from tweets where tweet_type = 'QUOTE_TWEET' and tweet_body is null and parent_tweet_id = ?\n" +
+                    "                      and user_id = ? returning *",
+            nativeQuery = true
+    )
+    List<Tweet> selectRetweet(Long id, Long profileId);
 }
