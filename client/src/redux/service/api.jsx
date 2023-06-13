@@ -17,7 +17,7 @@ api.interceptors.response.use((r) => r.data,
             originalRequest._retry = true;
 
             return await axios
-                .get('/api/v1/auth/refresh', {
+                .get('/auth/refresh', {
                     headers: {
                         'Refresh-token': refreshToken
                     }

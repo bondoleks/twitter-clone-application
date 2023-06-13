@@ -54,6 +54,7 @@ export default function TweetForm({ open, onClose }) {
         formData.append('tweetBody', tweetText);
         formData.append('parentTweetId', 0);
         formData.append('user_id', '1');
+
         formData.append('file', file || null);
         console.log(file)
         
@@ -61,6 +62,7 @@ export default function TweetForm({ open, onClose }) {
         //     formData.append('file', file);
         // } 
         // formData.append('file', file);
+
 
         api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", formData)
             .then(response => {
@@ -245,4 +247,4 @@ export default function TweetForm({ open, onClose }) {
 
 //         </Dialog>
 //     );
-// }
+

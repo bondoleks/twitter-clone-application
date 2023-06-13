@@ -1,41 +1,42 @@
 package demo.project.twitter.facade.notifications;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import demo.project.twitter.model.Notification;
 import demo.project.twitter.model.enums.NotificationType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-
-@RequestMapping("notifications")
+@Log4j2
+@RequestMapping("/api/v1/notifications")
 public class ControllerNotification {
 
     private final ServiceNotification serviceNotification;
 
-
-//    @PostMapping("create/{fromUserId}/{tweetId}")
-//    String createNotification(@PathVariable("fromUserId") Long fromUserId, @PathVariable("tweetId") Long tweetId,
-//                          @RequestParam NotificationType notificationType, @RequestParam String toUsername, Model model){
-//        serviceNotification.createNotification(notificationType, toUsername, fromUserId, tweetId);
-//        return "Created";
-////        return "redirect:/ name attribute in front";
-//    }
-
-    @PostMapping("read/{id}")
-    public List<Notification> readNotificationsByUserId(@PathVariable("id") Long id) {
-        return serviceNotification.findAllNotificationByRecieverId(id);
+    @GetMapping("read")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<DtoNotification>> readNotificationsByUsernameFromToken(Principal principal) {
+        log.info("Get all notifications from: " + principal.getName());
+        return ResponseEntity.ok(serviceNotification.findAllNotificationByRecieverUsername(principal.getName()));
     }
 
     @PostMapping("{id}/delete")
-    public List<Notification> deleteNotification(@PathVariable(value = "id") Long id, Model model){
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<DtoNotification>> deleteNotification(@PathVariable(value = "id") Long id, Principal principal){
         serviceNotification.deleteNotification(id);
-        return serviceNotification.findAllNotificationByRecieverId(id);
+        log.info("Notification id: " + id + " deleted");
+        return ResponseEntity.ok(serviceNotification.findAllNotificationByRecieverUsername(principal.getName()));
     }
 
 }

@@ -19,6 +19,7 @@ import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
+
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 
@@ -26,6 +27,7 @@ import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
     console.log(isAuthenticated)
+
 
     return isAuthenticated ? (
         <Element />
@@ -42,8 +44,10 @@ const routes = [
     },
     {
         path: "/home",
+
         // element: <Home />,
         element: <PrivateRoute element={Home} />,
+
         children: <>
             <Route path={''} element={<ForYou />} />
             <Route path={'following'} element={<Following />} />
@@ -55,6 +59,7 @@ const routes = [
     },
     {
         path: "/explore",
+
         // element: <Explore />,
         element: <PrivateRoute element={Explore} />,
     },
@@ -72,10 +77,12 @@ const routes = [
         path: "/messages/:id",
         // element: <MessageMiddleColumn />,
         element: <PrivateRoute element={MessageMiddleColumn} />,
+
         
     },
     {
         path: "/bookmarks",
+
         // element: <Bookmarks />,
         element: <PrivateRoute element={Bookmarks} />,
     },
@@ -105,6 +112,7 @@ const routes = [
         path: "/tweet/:tweet_id",
         // element: <TweetPage />,
         element: <PrivateRoute element={TweetPage} />,
+
     },
 ];
 

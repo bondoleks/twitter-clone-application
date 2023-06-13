@@ -1,0 +1,12 @@
+####
+POST http://localhost:8080/messages/save
+Content-Type: application/json
+
+{
+  "user_from" : 3,
+  "chat_id" : 4,
+  "textMessage": "qwerty"
+
+}
+####
+GET http://localhost:8080/messages/get/5

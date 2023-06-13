@@ -1,0 +1,16 @@
+####
+GET http://localhost:8080/chat/getChat/4
+Content-Type: application/json
+
+{
+  "user_initiator": 1
+}
+
+####
+POST http://localhost:8080/chat/save
+Content-Type: application/json
+
+{
+  "user_initiator": 3
+}
+####
