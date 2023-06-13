@@ -85,10 +85,14 @@ public class FacadeTweet {
         return entity;
     }
 
-
-    private DtoTweet transEntityToDto(Tweet entity, Long profileId) {
-        final int MARKER_UP = 1;
-        final int MARKER_DOWN = 0;
+    public DtoTweet transEntityToDto(Tweet entity, Long profileId){
+        return transEntityToDto(entity, profileId, 0);
+    }
+    private DtoTweet transEntityToDto(Tweet entity, Long profileId, int count) {
+        /*final int MARKER_UP = 1;
+        final int MARKER_DOWN = 0;*/
+        if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
+                (entity.getTweetBody() == null)) entity = entity.getParentTweet();
         DtoTweet dto = new DtoTweet();
         mapper.map().map(entity.getUser(), dto);
         mapper.map().map(entity, dto);
@@ -103,6 +107,11 @@ public class FacadeTweet {
         dto.setCountLike(serviceAction.countLike(entity.getId(), "LIKE"));
 
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
+
+        if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
+           (entity.getTweetBody() != null) && (count == 0))
+            dto.setParentDto(transEntityToDto(entity.getParentTweet(),profileId, count + 1));
+
 
 
         return dto;
@@ -219,11 +228,13 @@ public class FacadeTweet {
         return getSingleTweetById1(list, id);
     }
 
+
+
     private DtoTweet transListTweetInDto1(List<Tweet> list, DtoTweet dto, int size, Long profileId) {
         if (size == 0) ;
         else {
             DtoTweet dtoNew = transEntityToDto(list.get(--size), profileId);
-            dtoNew.setParentDto(dto);
+            dtoNew.setBranchDto(dto);
             dto = transListTweetInDto1(list, dtoNew, size, profileId);
         }
         return dto;
