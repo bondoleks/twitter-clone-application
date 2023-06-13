@@ -20,7 +20,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSo
     )
     List<Tweet> getTweetById(Long id);*/
     @Query(
-            value = "select * from tweets where tweet_type != 'REPLY' order by id desc",
+            value = "select * from tweets  where tweet_type = 'TWEET' or (tweet_type = 'QUOTE_TWEET' and tweet_body is not null) order by id desc",
             nativeQuery = true
     )
     Page<Tweet> findAllTweet(Pageable pageable);
@@ -56,7 +56,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSo
 
 
     @Query(
-            value = "select * from tweets  where tweet_type = 'TWEET'",
+            value = "select * from tweets  where tweet_type = 'TWEET' or (tweet_type = 'QUOTE_TWEET' and tweet_body is not null)",
             nativeQuery = true
     )
     List<Tweet> getAllTweet();
@@ -66,5 +66,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSo
             nativeQuery = true
     )
     Page<Tweet> findAllBookmark(Long profileId, Pageable pageable);
-
+    @Query(
+            value = "delete from tweets where tweet_type = 'QUOTE_TWEET' and tweet_body is null and parent_tweet_id = ?\n" +
+                    "                      and user_id = ? returning *",
+            nativeQuery = true
+    )
+    List<Tweet> selectRetweet(Long id, Long profileId);
 }

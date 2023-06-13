@@ -3,6 +3,7 @@ package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.model.enums.ActionType;
 import demo.project.twitter.model.enums.TweetType;
+import demo.project.twitter.model.tweet.Tweet;
 import demo.project.twitter.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -30,46 +31,63 @@ public class ControllerTweet {
 
     @GetMapping("bookmark")
     public DtoTweetPage getAllBookmark(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
-        Long profileId = 15L;
+        Long profileId = 10L;
         return facade.getAllTweetById(0L, sizePage, numberPage, ALL_BOOKMARK, profileId);
     }
 
     @PostMapping("like/{tweet_id}")
     public DtoTweet like(@PathVariable("tweet_id") Long id) {
-        Long profileId = 15L;
-        facade.markerLikeBookmark(id, profileId, ActionType.LIKE);
+        Long profileId = 10L;
+        facade.markerLikeBookmarkRetweet(id, profileId, ActionType.LIKE);
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
 
     @PostMapping("bookmark/{tweet_id}")
     public DtoTweet bookmark(@PathVariable("tweet_id") Long id) {
-        Long profileId = 15L;
-        facade.markerLikeBookmark(id, profileId, ActionType.BOOKMARK);
+        Long profileId = 10L;
+        facade.markerLikeBookmarkRetweet(id, profileId, ActionType.BOOKMARK);
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
+    }
+
+    @PostMapping("retweet/{tweet_id}")
+    public DtoTweet retwit(@PathVariable("tweet_id") Long id) {
+        Long profileId = 10L;
+
+        int marker = facade.markerLikeBookmarkRetweet(id, profileId, ActionType.RETWEET);
+        DtoTweet dtoTweet = facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
+        if (marker == 1) {
+            facade.createRetweet(id, profileId);
+            dtoTweet.setCountRetweet(dtoTweet.getCountRetweet() + 1);
+        }
+        else {
+            facade.deleteRetweet(id, profileId);
+            dtoTweet.setCountRetweet(dtoTweet.getCountRetweet() - 1);
+        }
+        return dtoTweet;
     }
 
     @GetMapping("tweet/{tweet_id}")
     public DtoTweet getTweetById(@PathVariable("tweet_id") Long id) {
-        Long profileId = 1L;
+        Long profileId = 10L;
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
     @GetMapping("tweet/all")
     public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
-        Long profileId = 1L;
+        Long profileId = 10L;
         return facade.getAllTweetById(0L, sizePage, numberPage, ALL_TWEET, profileId);
     }
 
     @GetMapping("tweet/all/{user_id}")
     public DtoTweetPage getAllReplyById(@PathVariable("user_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
-        Long profileId = 1L;
+        Long profileId = 10L;
         return facade.getAllTweetById(id, sizePage, numberPage, ALL_TWEET_USERID, profileId);
     }
 
     @GetMapping("reply/all/{tweet_id}")
     public DtoTweetPage getAllTweetById(@PathVariable("tweet_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
-        Long profileId = 1L;
+        Long profileId = 10L;
         return facade.getAllTweetById(id, sizePage, numberPage, ALL_REPLY_TWEETID, profileId);
     }
 
@@ -103,7 +121,8 @@ public class ControllerTweet {
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto) {
         List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
-        facade.saveTweetNew(tweetBody, TweetType.REPLY, parseLong(parentTweetId), parseLong(userId), listUrl);
+        Long parentTweet_id = facade.determParentTweetId(parseLong(parentTweetId));
+        facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, parseLong(userId), listUrl);
     }
 
 
