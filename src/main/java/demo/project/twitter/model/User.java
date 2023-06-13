@@ -1,6 +1,8 @@
 package demo.project.twitter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import demo.project.twitter.model.chat.Chat;
 import lombok.*;
 import javax.validation.constraints.Email;
 import javax.persistence.*;
@@ -8,10 +10,10 @@ import java.util.*;
 
 @Entity
 @Table(name = "users",
-uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email")
-})
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 @Data
 @NoArgsConstructor
 public class User extends BaseEntity {
@@ -70,9 +72,20 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "followed_id"))
     private List<User> followings = new ArrayList<>();
 
-    public User(String username, String email, String password, String location, String birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
+    @ManyToMany()
+    @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    private Set<Chat> userChats = new HashSet<>();
+
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
     }
+
+    public User(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
 }
+

@@ -25,4 +25,9 @@ public class    ControllerMessage {
         return facade.saveEntity(dto);
     }
 
+    @PostMapping("delete/{id}")
+    public DtoMessage saveMessage(@PathVariable("id") Long id) {
+        return facade.deleteById(id);
+    }
+
 }

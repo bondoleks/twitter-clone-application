@@ -3,11 +3,10 @@ POST http://localhost:8080/messages/save
 Content-Type: application/json
 
 {
-  "user_from" : 1,
-  "user_to" : 2,
-  "chat_id" : 1,
-  "textMessage": "test add"
+  "user_from" : 3,
+  "chat_id" : 4,
+  "textMessage": "qwerty"
 
 }
 ####
-GET http://localhost:8080/messages/get/4
+GET http://localhost:8080/messages/get/5

@@ -12,8 +12,8 @@ import java.util.List;
 public interface RepoAttachmentImage extends CrudRepository<AttachmentImage, Long> {
 
     @Query(
-            value = "select * from images  where tweet_id = ?",
+            value = "select image_url from images  where tweet_id = ?",
             nativeQuery = true
     )
-    List<AttachmentImage> getAttachmentImageByTweetId(Long id);
+    List<String> getAttachmentImageUrlByTweetId(Long id);
 }

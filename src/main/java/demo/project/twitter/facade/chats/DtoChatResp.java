@@ -11,5 +11,5 @@ import java.util.List;
 
 public class DtoChatResp {
     private Long chatId;
-    private List<Message> messages;
+    private List<DtoMessage> messages;
 }
