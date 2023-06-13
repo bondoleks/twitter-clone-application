@@ -13,10 +13,13 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TabsProfile from './TabsProfile';
 import ToolbarProfile from './ToolbarProfile';
 import ButEditUser from './ButEditUser';
+import { useFetch } from "../../hooks/UseFetch";
+import { useParams } from 'react-router-dom';
 
 
+export const Profile = ({ withId }) => {
+  const { id } = useParams()
 
-export const Profile = () => {
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
     position: 'relative',
@@ -35,6 +38,22 @@ export const Profile = () => {
       opacity: 1,
     },
   }));
+
+  const [{ data, loading }, getData] = useFetch({
+    initData: {},
+    url: withId
+      ? `user/getuser/${id}`
+      : 'user/profile',
+    method: 'GET',
+    dataTransformer: (data) => {
+      return data;
+    },
+  });
+  
+
+  if (!loading) <p>loading...</p>
+
+  const { username, firstName, lastName, email, location, birthdate, bio } = data
 
   return (
 
@@ -74,11 +93,17 @@ export const Profile = () => {
           <ButEditUser />
 
           <Box>
-            <Typography sx={{
+            {/* <Typography sx={{
               fontSize: '24px',
               fontWeight: '900'
             }}>User</Typography>
-            <Typography>@nikname</Typography>
+            <Typography>@nikname</Typography> */}
+
+            <Typography sx={{
+              fontSize: '24px',
+              fontWeight: '900'
+            }}>{firstName} {lastName}</Typography>
+            <Typography>{username}</Typography>
             <Box display={'flex'}
               marginTop={'10px'}>
               <IconButton edge='start' color='gray'>
@@ -87,17 +112,17 @@ export const Profile = () => {
               <Typography mt={1}>Joined Mounth year</Typography>
             </Box>
             <Box display={'flex'}>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
+              <Link href="/profile/following" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography mr={2} sx={{
                   fontSize: '14px',
                   color: 'gray'
                 }}>N Following</Typography>
               </Link>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
+              <Link href="/profile/followers" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography sx={{
                   fontSize: '14px',
                   color: 'gray'
-                }}>N Follower</Typography>
+                }}>N Followers</Typography>
               </Link>
             </Box>
           </Box>
