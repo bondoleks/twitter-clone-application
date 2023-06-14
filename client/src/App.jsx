@@ -44,8 +44,10 @@ const routes = [
     },
     {
         path: "/home",
-        element: <Home />,
-        // element: <PrivateRoute element={<Home />} />,
+
+        // element: <Home />,
+        element: <PrivateRoute element={Home} />,
+
         children: <>
             <Route path={''} element={<ForYou />} />
             <Route path={'following'} element={<Following />} />
@@ -57,34 +59,38 @@ const routes = [
     },
     {
         path: "/explore",
-        element: <Explore />,
-        // element: <PrivateRoute element={<Explore />} />,
+
+        // element: <Explore />,
+        element: <PrivateRoute element={Explore} />,
     },
     {
         path: "/notifications",
-        element: <Notifications />,
-        // element: <PrivateRoute element={<Notifications />} />,
+        // element: <Notifications />,
+        element: <PrivateRoute element={Notifications} />,
     },
     {
         path: "/messages",
-        element: <MessageMiddleColumn />,
-        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
+        // element: <MessageMiddleColumn />,
+        element: <PrivateRoute element={MessageMiddleColumn} />,
     },
     {
         path: "/messages/:id",
-        element: <MessageMiddleColumn />,
-        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
+        // element: <MessageMiddleColumn />,
+        element: <PrivateRoute element={MessageMiddleColumn} />,
+
         
     },
     {
         path: "/bookmarks",
-        element: <Bookmarks />,
-        // element: <PrivateRoute element={<Bookmarks />} />,
+
+        // element: <Bookmarks />,
+        element: <PrivateRoute element={Bookmarks} />,
     },
     {
         path: "/profile",
-        element: <ProfileUser />,
-        // element: <PrivateRoute element={<ProfileUser />} />,
+
+        // element: <ProfileUser />,
+        element: <PrivateRoute element={ProfileUser} />,
 
         children: <>
             <Route path={'followers'} element={<ProfileFollowers />} />
@@ -94,8 +100,8 @@ const routes = [
     },
     {
         path: "/profile:id",
-        element: <ProfileId />,
-        // element: <PrivateRoute element={<ProfileId />} />,
+        // element: <ProfileId />,
+        element: <PrivateRoute element={ProfileId} />,
 
     },
     {
@@ -105,12 +111,12 @@ const routes = [
     {
         path: "/profile/followers",
         element: <ProfileFollowers />
-
     },
     {
         path: "/tweet/:tweet_id",
-        element: <TweetPage />,
-        // element: <PrivateRoute element={<TweetPage />} />,
+        // element: <TweetPage />,
+        element: <PrivateRoute element={TweetPage} />,
+
     },
 ];
 

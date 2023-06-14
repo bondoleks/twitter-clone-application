@@ -50,7 +50,6 @@ export default function TweetForm({ open, onClose }) {
     };
 
     const handleTweetSubmit = () => {
-
         const formData = new FormData();
         formData.append('tweetBody', tweetText);
         formData.append('parentTweetId', 0);
@@ -248,4 +247,4 @@ export default function TweetForm({ open, onClose }) {
 
 //         </Dialog>
 //     );
-// }
+
