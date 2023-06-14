@@ -13,7 +13,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+
 import java.util.List;
+
 import java.util.Optional;
 
 
@@ -23,6 +25,7 @@ public interface RepoChat extends JpaRepository<Chat, Long> {
 
     @Transactional
     @Modifying
+
     @Query(
             value = "insert into chats_to_users(chat_id, user_id) values (:chat,:user)",
             nativeQuery = true
@@ -36,6 +39,21 @@ public interface RepoChat extends JpaRepository<Chat, Long> {
             value = "delete from chats_to_users where chat_id = :chat and user_id = :user",
             nativeQuery = true
     )
+
+    @Query(
+            value = "insert into chats_to_users(chat_id, user_id) values (:chat,:user)",
+            nativeQuery = true
+    )
+    void addUserToChat(@Param("chat") Long chatId, @Param("user") Long userId);
+
+
+    @Transactional
+    @Modifying
+    @Query(
+            value = "delete from chats_to_users where chat_id = :chat and user_id = :user",
+            nativeQuery = true
+    )
+
     void deleteUserFromChat(@Param("chat") Long chatId, @Param("user") Long userId);
 
     @Transactional
@@ -47,6 +65,7 @@ public interface RepoChat extends JpaRepository<Chat, Long> {
 
     @Override
     void deleteById(@Param("id") Long id);
+
 
 
     @Query(

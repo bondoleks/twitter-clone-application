@@ -37,6 +37,7 @@ public class ControllerChat {
         return facade.deleteUserFromChat(chatId, userId);
     }
 
+
     @PostMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         return facade.deleteEntity(id);

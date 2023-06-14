@@ -48,7 +48,9 @@ public class ServiceChat implements FunctionChat {
         repo.deleteById(id);
     }
 
+
     public List<Chat> getAllByUserId(Long userId) {
         return repo.getAllByUserId(userId);
     }
+
 }

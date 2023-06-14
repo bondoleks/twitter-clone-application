@@ -7,6 +7,8 @@ import demo.project.twitter.repository.RoleRepository;
 import demo.project.twitter.repository.UserRepository;
 import demo.project.twitter.service.MailSender;
 import demo.project.twitter.service.UserService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class UserServiceImpl implements UserService {
     private MailSender mailSender;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, MailSender mailSender) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
+                           BCryptPasswordEncoder passwordEncoder, MailSender mailSender) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;

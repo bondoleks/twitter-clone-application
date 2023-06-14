@@ -3,6 +3,7 @@ package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.model.enums.ActionType;
 import demo.project.twitter.model.enums.TweetType;
+import demo.project.twitter.model.tweet.Tweet;
 import demo.project.twitter.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,46 +26,72 @@ public class ControllerTweet {
     private final int ALL_TWEET_USERID = 0;
     private final int ALL_REPLY_TWEETID = 1;
     private final int ALL_TWEET = 2;
-    private final PhotoService photo;
+    private final int ALL_BOOKMARK = 3;
 
 
+    @GetMapping("bookmark")
+    public DtoTweetPage getAllBookmark(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
+        Long profileId = 10L;
+        return facade.getAllTweetById(0L, sizePage, numberPage, ALL_BOOKMARK, profileId);
+    }
 
-
-    @GetMapping("like/{tweet_id}")
-    public void like(@PathVariable("tweet_id") Long id) {
-        Long profileId = 15L;
-        facade.markerLikeBookmark(id,profileId, ActionType.LIKE);
+    @PostMapping("like/{tweet_id}")
+    public DtoTweet like(@PathVariable("tweet_id") Long id) {
+        Long profileId = 10L;
+        Long tweet_id = facade.determParentTweetId(id);
+        facade.markerLikeBookmarkRetweet(tweet_id, profileId, ActionType.LIKE);
+        return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
 
-    @GetMapping("bookmark/{tweet_id}")
+    @PostMapping("bookmark/{tweet_id}")
     public void bookmark(@PathVariable("tweet_id") Long id) {
-        Long profileId = 15L;
-        facade.markerLikeBookmark(id,profileId, ActionType.BOOKMARK);
+        Long profileId = 10L;
+        Long tweetid = facade.determParentTweetId(id);
+        facade.markerLikeBookmarkRetweet(tweetid, profileId, ActionType.BOOKMARK);
+    }
+
+    @PostMapping("retweet/{tweet_id}")
+    public DtoTweet retwit(@PathVariable("tweet_id") Long id) {
+        Long profileId = 10L;
+        Long tweetid = facade.determParentTweetId(id);
+
+        int marker = facade.markerLikeBookmarkRetweet(tweetid, profileId, ActionType.RETWEET);
+        DtoTweet dtoTweet = facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
+        if (marker == 1) {
+            facade.createRetweet(tweetid, profileId);
+            dtoTweet.setCountRetweet(dtoTweet.getCountRetweet() + 1);
+        }
+        else {
+            facade.deleteRetweet(tweetid, profileId);
+            dtoTweet.setCountRetweet(dtoTweet.getCountRetweet() - 1);
+        }
+        return dtoTweet;
     }
 
     @GetMapping("tweet/{tweet_id}")
     public DtoTweet getTweetById(@PathVariable("tweet_id") Long id) {
-        Long profileId = 15L;
+        Long profileId = 10L;
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
     @GetMapping("tweet/all")
-    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 0L;
-        return facade.getAllTweetById(0L, sizePage,numberPage, ALL_TWEET, profileId);
+    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
+        Long profileId = 10L;
+        return facade.getAllTweetById(0L, sizePage, numberPage, ALL_TWEET, profileId);
     }
 
     @GetMapping("tweet/all/{user_id}")
-    public DtoTweetPage getAllReplyById(@PathVariable("user_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 0L;
-        return facade.getAllTweetById(id, sizePage,numberPage, ALL_TWEET_USERID, profileId);
+    public DtoTweetPage getAllReplyById(@PathVariable("user_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
+        Long profileId = 10L;
+        return facade.getAllTweetById(id, sizePage, numberPage, ALL_TWEET_USERID, profileId);
     }
 
     @GetMapping("reply/all/{tweet_id}")
-    public DtoTweetPage getAllTweetById(@PathVariable("tweet_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 0L;
-        return facade.getAllTweetById(id, sizePage,numberPage, ALL_REPLY_TWEETID, profileId);
+    public DtoTweetPage getAllTweetById(@PathVariable("tweet_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
+        Long profileId = 10L;
+        Long tweetid = facade.determParentTweetId(id);
+        return facade.getAllTweetById(tweetid, sizePage, numberPage, ALL_REPLY_TWEETID, profileId);
     }
 
 
@@ -72,30 +99,36 @@ public class ControllerTweet {
     public void saveTweet(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
-                          @RequestParam("file") MultipartFile file) throws Exception {
+                          @RequestParam("file") List<MultipartFile> listPhoto) {
 
-            facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), photo.getPhotoUrl(file));
+
+        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        Long tweetid = facade.determParentTweetId(parseLong(parentTweetId));
+        facade.saveTweetNew(tweetBody, TweetType.TWEET, tweetid, parseLong(userId), listUrl);
     }
+
+
 
 
     @PostMapping("quote/save")
     public void saveQuote(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
-                          @RequestParam("file") MultipartFile file) throws Exception{
-
-            facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, parseLong(parentTweetId), parseLong(userId), photo.getPhotoUrl(file));
-        }
+                          @RequestParam("file") List<MultipartFile> listPhoto){
+        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        Long tweetid = facade.determParentTweetId(parseLong(parentTweetId));
+        facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, tweetid, parseLong(userId), listUrl);
+    }
 
     @PostMapping("reply/save")
     public void saveReply(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
-                          @RequestParam("file") MultipartFile file) throws Exception{
-
-            facade.saveTweetNew(tweetBody, TweetType.REPLY, parseLong(parentTweetId), parseLong(userId), photo.getPhotoUrl(file));
+                          @RequestParam("file") List<MultipartFile> listPhoto) {
+        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        Long parentTweet_id = facade.determParentTweetId(parseLong(parentTweetId));
+        facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, parseLong(userId), listUrl);
     }
-
 
 
    /* @PostMapping("tweet/save")
@@ -115,7 +148,7 @@ public class ControllerTweet {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
-    public String handlerExeption(Exception e){
+    public String handlerExeption(Exception e) {
         return e.getMessage();
 
     }

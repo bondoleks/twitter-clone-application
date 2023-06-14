@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Data
@@ -32,8 +33,11 @@ public class DtoTweet {
     private String email;
     private String av_imagerUrl;
 
-    private String tweet_imageUrl;
+    private List<String> tweet_imageUrl;
+
+    private DtoTweet branchDto;
 
     private DtoTweet parentDto;
+
 
 }

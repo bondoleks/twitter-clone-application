@@ -88,6 +88,7 @@ public class FacadeChat {
         return ResponseEntity.accepted().body("deleted!");
     }
 
+
     public ResponseEntity<List<DtoChatResp>> getAll(Long userId) {
 
         List<DtoChatResp> dtos = new ArrayList<>();
@@ -95,6 +96,7 @@ public class FacadeChat {
         chats.forEach(chat -> dtos.add(transEntityToDto(chat)));
         return ResponseEntity.accepted().body(dtos);
     }
+
 }
 
 
