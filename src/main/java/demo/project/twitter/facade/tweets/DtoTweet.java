@@ -35,6 +35,9 @@ public class DtoTweet {
 
     private List<String> tweet_imageUrl;
 
+    private DtoTweet branchDto;
+
     private DtoTweet parentDto;
+
 
 }
