@@ -55,7 +55,15 @@ export default function TweetForm({ open, onClose }) {
         formData.append('tweetBody', tweetText);
         formData.append('parentTweetId', 0);
         formData.append('user_id', '1');
-        formData.append('file', file);
+
+        formData.append('file', file || null);
+        console.log(file)
+        
+        // if (file) {
+        //     formData.append('file', file);
+        // } 
+        // formData.append('file', file);
+
 
         api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", formData)
             .then(response => {
@@ -66,7 +74,15 @@ export default function TweetForm({ open, onClose }) {
                 console.error(error);
                 // Actions on error
                 alert("Error!: " + error.message);
+                if (error.response) {
+                    console.log("Server Response:", error.response.data);
+                }
             });
+            // .catch(error => {
+            //     console.error(error);
+            //     // Actions on error
+            //     alert("Error!: " + error.message);
+            // });
     };
 
     return (
