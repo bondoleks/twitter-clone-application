@@ -19,7 +19,6 @@ import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
-
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 
@@ -88,18 +87,11 @@ const routes = [
     },
     {
         path: "/profile",
-
         // element: <ProfileUser />,
         element: <PrivateRoute element={ProfileUser} />,
-
-        children: <>
-            <Route path={'followers'} element={<ProfileFollowers />} />
-            <Route path={'following'} element={<ProfileFollowing />} />
-        </>
-
     },
     {
-        path: "/profile:id",
+        path: "/profile/:id",
         // element: <ProfileId />,
         element: <PrivateRoute element={ProfileId} />,
 
