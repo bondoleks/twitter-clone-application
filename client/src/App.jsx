@@ -87,7 +87,6 @@ const routes = [
     },
     {
         path: "/profile",
-
         // element: <ProfileUser />,
         element: <PrivateRoute element={ProfileUser} />,
     },
