@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to Twitter. Please, visit next link: http://localhost:8080/activate/%s",
+                            "Welcome to Twitter. Please, visit next link: http://localhost:8080/api/v1/auth/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
@@ -86,6 +86,29 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return true;
+    }
+
+    public User registerFromGoogle(User user) {
+        User userFromDbUsername = userRepository.findByUsername(user.getUsername());
+        User userFromDbEmail = userRepository.findByEmail(user.getEmail());
+        if (userFromDbUsername != null && userFromDbEmail != null) {
+            log.info(user + "already registered");
+            return user;
+        }
+
+        Role roleUser = roleRepository.findByName("ROLE_USER");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleUser);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(userRoles);
+        user.setStatus(Status.ACTIVE);
+
+        User registeredUser = userRepository.save(user);
+
+        log.info("IN register - user: {} successfully registered", registeredUser);
+
+        return registeredUser;
     }
 
     @Override
