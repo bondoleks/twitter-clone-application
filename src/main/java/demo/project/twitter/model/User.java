@@ -82,7 +82,6 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-}
     public User(String username, String email) {
         this.username = username;
         this.email = email;
