@@ -103,8 +103,7 @@ public class ControllerTweet {
 
 
         List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
-        Long tweetid = facade.determParentTweetId(parseLong(parentTweetId));
-        facade.saveTweetNew(tweetBody, TweetType.TWEET, tweetid, parseLong(userId), listUrl);
+        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listUrl);
     }
 
 
