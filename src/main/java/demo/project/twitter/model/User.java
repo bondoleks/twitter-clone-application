@@ -76,10 +76,15 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Set<Chat> userChats = new HashSet<>();
 
-    public User(String username, String email, String password, String location, String birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
+    public User(String username, String email, String password, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.location = location;
+        this.birthDate = birthDate;
+        this.bio = bio;
+        this.av_imagerUrl = String.valueOf(avUrl);
+        this.head_imagerUrl = String.valueOf(headUrl);
     }
 
     public User(String username, String email) {
