@@ -10,13 +10,17 @@ import demo.project.twitter.model.enums.ActionType;
 import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
+import demo.project.twitter.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,10 +38,24 @@ public class FacadeTweet {
     private final ServicAttachmentImage serviceImage;
     private final ServiceTweetAction serviceAction;
     private final Mapper mapper;
+    private final PhotoService photo;
 
 
+    public List<String> transListPhotoToListUrl(List<MultipartFile> listPhoto) {
+        List<String> listString = new ArrayList<>();
+        if (listPhoto.get(0).getContentType() != null) {
+            listString = listPhoto.stream().map(f -> {
+                try {
+                    return photo.getPhotoUrl(f).get();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).collect(Collectors.toList());
+        }
+        return listString;
+    }
 
-    public void markerLikeBookmark(Long tweetId, Long profileId, ActionType actionType){
+    public void markerLikeBookmark(Long tweetId, Long profileId, ActionType actionType) {
         Optional<TweetAction> marker = serviceAction.getTweetAction(tweetId, profileId, actionType.getType());
         if (marker.isEmpty())
             serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), service.getTweetById(tweetId)));
@@ -64,7 +82,6 @@ public class FacadeTweet {
     }
 
 
-
     private DtoTweet transEntityToDto(Tweet entity, Long profileId) {
         final int MARKER_UP = 1;
         final int MARKER_DOWN = 0;
@@ -84,7 +101,6 @@ public class FacadeTweet {
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
 
 
-
         return dto;
     }
 
@@ -99,12 +115,12 @@ public class FacadeTweet {
         }
     }
 
-    public void save(DtoTweet Dto, TweetType tt, Long parentTweet){
+    public void save(DtoTweet Dto, TweetType tt, Long parentTweet) {
         Dto.setParent_Tweet(parentTweet);
         service.saveOne(transDtoToEntity(Dto, tt));
     }
 
-    public void saveTweetNew(String tweetBody, TweetType tt, Long parentTweetId, Long userId, Optional<String> photoUrl){
+    public void saveTweetNew(String tweetBody, TweetType tt, Long parentTweetId, Long userId, List<String> listUrl) {
         User user = serviceUser.findById(userId);
         Tweet entity = new Tweet(tt, tweetBody, user);
 
@@ -116,8 +132,8 @@ public class FacadeTweet {
         entity.setCreatedDate(new Date());
         Tweet newTweet = service.saveOne(entity);
 
-        if (photoUrl.isPresent()) {
-            serviceImage.saveOne(new AttachmentImage(photoUrl.get(), newTweet));
+        if (listUrl.size() > 0) {
+            listUrl.stream().forEach(s -> serviceImage.saveOne(new AttachmentImage(s, newTweet)));
         }
     }
 
@@ -133,7 +149,7 @@ public class FacadeTweet {
         List<DtoTweet> list = pTweet.
                 stream().
                 map(x -> getSingleTweetById(x.getId())).
-                map(y-> transListTweetInDto(y, profileId)).
+                map(y -> transListTweetInDto(y, profileId)).
                 collect(Collectors.toList());
 
 
@@ -183,12 +199,11 @@ public class FacadeTweet {
     }*/
 
 
-
     private List<Tweet> getSingleTweetById1(List<Tweet> list, Long id) {
 
 
         List<Tweet> listTweet = service.getSingleBranch(id);
-        if (listTweet.size() == 0);
+        if (listTweet.size() == 0) ;
         else {
             list.add(listTweet.get(0));
             id = listTweet.get(0).getId();
@@ -196,6 +211,7 @@ public class FacadeTweet {
         }
         return list;
     }
+
     public List<Tweet> getSingleTweetById(Long id) {
         List<Tweet> list = new ArrayList<>();
         Tweet t = service.getTweetById(id);
@@ -206,7 +222,7 @@ public class FacadeTweet {
     private DtoTweet transListTweetInDto1(List<Tweet> list, DtoTweet dto, int size, Long profileId) {
 
 
-        if (size == 0);
+        if (size == 0) ;
         else {
             DtoTweet dtoNew = transEntityToDto(list.get(--size), profileId);
             dtoNew.setParentDto(dto);
@@ -225,17 +241,12 @@ public class FacadeTweet {
         else dto.setHeadBranchId(list.get(0).getId());
 
 
-
         return dto;
     }
 
 
-    public String getImageTweet(Long tweetId){
-        String s;
-        List<AttachmentImage> listIm = serviceImage.getAttachmentImageByTweetId(tweetId);
-        s = (listIm.size() == 0) ? null :
-                listIm.get(0).getImagerUrl();
-        return s;
+    public List<String> getImageTweet(Long tweetId) {
+        return serviceImage.getAttachmentImageUrlByTweetId(tweetId);
     }
 
 

@@ -26,19 +26,18 @@ public class ControllerTweet {
     private final int ALL_REPLY_TWEETID = 1;
     private final int ALL_TWEET = 2;
     private final int ALL_BOOKMARK = 3;
-    private final PhotoService photo;
 
 
     @GetMapping("bookmark")
-    public DtoTweetPage getAllBookmark(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
+    public DtoTweetPage getAllBookmark(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
         Long profileId = 15L;
-        return facade.getAllTweetById(0L, sizePage,numberPage, ALL_BOOKMARK, profileId);
+        return facade.getAllTweetById(0L, sizePage, numberPage, ALL_BOOKMARK, profileId);
     }
 
     @PostMapping("like/{tweet_id}")
     public DtoTweet like(@PathVariable("tweet_id") Long id) {
         Long profileId = 15L;
-        facade.markerLikeBookmark(id,profileId, ActionType.LIKE);
+        facade.markerLikeBookmark(id, profileId, ActionType.LIKE);
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
@@ -46,32 +45,32 @@ public class ControllerTweet {
     @PostMapping("bookmark/{tweet_id}")
     public DtoTweet bookmark(@PathVariable("tweet_id") Long id) {
         Long profileId = 15L;
-        facade.markerLikeBookmark(id,profileId, ActionType.BOOKMARK);
+        facade.markerLikeBookmark(id, profileId, ActionType.BOOKMARK);
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
     @GetMapping("tweet/{tweet_id}")
     public DtoTweet getTweetById(@PathVariable("tweet_id") Long id) {
-        Long profileId = 15L;
+        Long profileId = 1L;
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
     @GetMapping("tweet/all")
-    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 15L;
-        return facade.getAllTweetById(0L, sizePage,numberPage, ALL_TWEET, profileId);
+    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
+        Long profileId = 1L;
+        return facade.getAllTweetById(0L, sizePage, numberPage, ALL_TWEET, profileId);
     }
 
     @GetMapping("tweet/all/{user_id}")
-    public DtoTweetPage getAllReplyById(@PathVariable("user_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 15L;
-        return facade.getAllTweetById(id, sizePage,numberPage, ALL_TWEET_USERID, profileId);
+    public DtoTweetPage getAllReplyById(@PathVariable("user_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
+        Long profileId = 1L;
+        return facade.getAllTweetById(id, sizePage, numberPage, ALL_TWEET_USERID, profileId);
     }
 
     @GetMapping("reply/all/{tweet_id}")
-    public DtoTweetPage getAllTweetById(@PathVariable("tweet_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage){
-        Long profileId = 15L;
-        return facade.getAllTweetById(id, sizePage,numberPage, ALL_REPLY_TWEETID, profileId);
+    public DtoTweetPage getAllTweetById(@PathVariable("tweet_id") Long id, @RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
+        Long profileId = 1L;
+        return facade.getAllTweetById(id, sizePage, numberPage, ALL_REPLY_TWEETID, profileId);
     }
 
 
@@ -79,30 +78,33 @@ public class ControllerTweet {
     public void saveTweet(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
-                          @RequestParam("file") MultipartFile file) throws Exception {
+                          @RequestParam("file") List<MultipartFile> listPhoto) {
 
-            facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), photo.getPhotoUrl(file));
+
+        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listUrl);
     }
+
+
 
 
     @PostMapping("quote/save")
     public void saveQuote(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
-                          @RequestParam("file") MultipartFile file) throws Exception{
-
-            facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, parseLong(parentTweetId), parseLong(userId), photo.getPhotoUrl(file));
-        }
+                          @RequestParam("file") List<MultipartFile> listPhoto){
+        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, parseLong(parentTweetId), parseLong(userId), listUrl);
+    }
 
     @PostMapping("reply/save")
     public void saveReply(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
-                          @RequestParam("file") MultipartFile file) throws Exception{
-
-            facade.saveTweetNew(tweetBody, TweetType.REPLY, parseLong(parentTweetId), parseLong(userId), photo.getPhotoUrl(file));
+                          @RequestParam("file") List<MultipartFile> listPhoto) {
+        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        facade.saveTweetNew(tweetBody, TweetType.REPLY, parseLong(parentTweetId), parseLong(userId), listUrl);
     }
-
 
 
    /* @PostMapping("tweet/save")
@@ -122,7 +124,7 @@ public class ControllerTweet {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
-    public String handlerExeption(Exception e){
+    public String handlerExeption(Exception e) {
         return e.getMessage();
 
     }
