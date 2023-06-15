@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ public class ServiceTweetAction {
     }
 
     public void saveTweetAction(TweetAction tweetAction){
+        tweetAction.setCreatedDate(new Date());
         repo.save(tweetAction);
     }
 
