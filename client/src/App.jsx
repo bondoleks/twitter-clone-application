@@ -19,11 +19,14 @@ import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
+import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
+import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
-    const isAuthenticated = useSelector(state => state.user.authorized.isAuthenticated)
-    // console.log(isAuthenticated)
+    const isAuthenticated = useSelector(state => state.user.authorized)
+    console.log(isAuthenticated)
+
 
     return isAuthenticated ? (
         <Element />
@@ -40,8 +43,10 @@ const routes = [
     },
     {
         path: "/home",
-        element: <Home />,
-        // element: <PrivateRoute element={<Home />} />,
+
+        // element: <Home />,
+        element: <PrivateRoute element={Home} />,
+
         children: <>
             <Route path={''} element={<ForYou />} />
             <Route path={'following'} element={<Following />} />
@@ -53,44 +58,57 @@ const routes = [
     },
     {
         path: "/explore",
-        element: <Explore />,
-        // element: <PrivateRoute element={<Explore />} />,
+
+        // element: <Explore />,
+        element: <PrivateRoute element={Explore} />,
     },
     {
         path: "/notifications",
-        element: <Notifications />,
-        // element: <PrivateRoute element={<Notifications />} />,
+        // element: <Notifications />,
+        element: <PrivateRoute element={Notifications} />,
     },
     {
         path: "/messages",
-        element: <MessageMiddleColumn />,
-        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
+        // element: <MessageMiddleColumn />,
+        element: <PrivateRoute element={MessageMiddleColumn} />,
     },
     {
         path: "/messages/:id",
-        element: <MessageMiddleColumn />,
-        // element: <PrivateRoute element={<MessageMiddleColumn />} />,
+        // element: <MessageMiddleColumn />,
+        element: <PrivateRoute element={MessageMiddleColumn} />,
+
         
     },
     {
         path: "/bookmarks",
-        element: <Bookmarks />,
-        // element: <PrivateRoute element={<Bookmarks />} />,
+
+        // element: <Bookmarks />,
+        element: <PrivateRoute element={Bookmarks} />,
     },
     {
         path: "/profile",
-        element: <ProfileUser />,
-        // element: <PrivateRoute element={<ProfileUser />} />,
+        // element: <ProfileUser />,
+        element: <PrivateRoute element={ProfileUser} />,
     },
     {
-        path: "/profile:id",
-        element: <ProfileId />,
-        // element: <PrivateRoute element={<ProfileId />} />,
+        path: "/profile/:id",
+        // element: <ProfileId />,
+        element: <PrivateRoute element={ProfileId} />,
+
+    },
+    {
+        path: "/profile/following",
+        element: <ProfileFollowing />
+    },
+    {
+        path: "/profile/followers",
+        element: <ProfileFollowers />
     },
     {
         path: "/tweet/:tweet_id",
-        element: <TweetPage />,
-        // element: <PrivateRoute element={<TweetPage />} />,
+        // element: <TweetPage />,
+        element: <PrivateRoute element={TweetPage} />,
+
     },
 ];
 

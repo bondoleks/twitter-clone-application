@@ -1,6 +1,7 @@
 package demo.project.twitter.facade.tweets;
 
 
+import demo.project.twitter.model.enums.BranchType;
 import demo.project.twitter.model.enums.TweetType;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import java.util.List;
 public class DtoTweet {
 
     private Long id;
-    private Long headBranchId;
+    private BranchType branch;
     private String tweetBody;
     private Date createdDate;
     private Long parent_Tweet;
@@ -35,6 +36,9 @@ public class DtoTweet {
 
     private List<String> tweet_imageUrl;
 
+    private DtoTweet branchDto;
+
     private DtoTweet parentDto;
+
 
 }

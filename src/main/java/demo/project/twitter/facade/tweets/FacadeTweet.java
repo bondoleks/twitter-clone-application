@@ -6,6 +6,7 @@ import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.User;
 
 import demo.project.twitter.model.enums.ActionType;
+import demo.project.twitter.model.enums.BranchType;
 import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
@@ -54,12 +55,15 @@ public class FacadeTweet {
         return listString;
     }
 
-    public void markerLikeBookmark(Long tweetId, Long profileId, ActionType actionType) {
+    public int markerLikeBookmarkRetweet(Long tweetId, Long profileId, ActionType actionType) {
         Optional<TweetAction> marker = serviceAction.getTweetAction(tweetId, profileId, actionType.getType());
-        if (marker.isEmpty())
+        if (marker.isEmpty()) {
             serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), service.getTweetById(tweetId)));
-        else
+            return 1;
+        } else {
             serviceAction.delTweetAction(marker.get());
+            return 0;
+        }
     }
 
     private Tweet transDtoToEntity(DtoTweet dto, TweetType tt) {
@@ -80,24 +84,31 @@ public class FacadeTweet {
         return entity;
     }
 
+    public DtoTweet transEntityToDto(Tweet entity, Long profileId) {
+        return transEntityToDto(entity, profileId, 0);
+    }
 
-    private DtoTweet transEntityToDto(Tweet entity, Long profileId) {
-        final int MARKER_UP = 1;
-        final int MARKER_DOWN = 0;
+    private DtoTweet transEntityToDto(Tweet entity, Long profileId, int count) {
+
+        if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
+                (entity.getTweetBody() == null)) entity = entity.getParentTweet();
+
         DtoTweet dto = new DtoTweet();
         mapper.map().map(entity.getUser(), dto);
         mapper.map().map(entity, dto);
 
         dto.setUser_id(entity.getUser().getId());
-
-
+        dto.setMarkerRetweet(serviceAction.marker(entity.getId(), profileId, "RETWEET"));
         dto.setMarkerLike(serviceAction.marker(entity.getId(), profileId, "LIKE"));
         dto.setMarkerBookmark(serviceAction.marker(entity.getId(), profileId, "BOOKMARK"));
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
         dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
         dto.setCountLike(serviceAction.countLike(entity.getId(), "LIKE"));
-
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
+
+        if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
+                (entity.getTweetBody() != null) && (count == 0))
+            dto.setParentDto(transEntityToDto(entity.getParentTweet(), profileId, count + 1));
 
 
         return dto;
@@ -142,7 +153,6 @@ public class FacadeTweet {
 
 
     public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key, Long profileId) {
-
         Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage, key, profileId);
 
         List<DtoTweet> list = pTweet.
@@ -150,7 +160,6 @@ public class FacadeTweet {
                 map(x -> getSingleTweetById(x.getId())).
                 map(y -> transListTweetInDto(y, profileId)).
                 collect(Collectors.toList());
-
 
         DtoTweetPage dtp = new DtoTweetPage();
         dtp.setListDto(list);
@@ -199,8 +208,6 @@ public class FacadeTweet {
 
 
     private List<Tweet> getSingleTweetById1(List<Tweet> list, Long id) {
-
-
         List<Tweet> listTweet = service.getSingleBranch(id);
         if (listTweet.size() == 0) ;
         else {
@@ -218,27 +225,33 @@ public class FacadeTweet {
         return getSingleTweetById1(list, id);
     }
 
+
     private DtoTweet transListTweetInDto1(List<Tweet> list, DtoTweet dto, int size, Long profileId) {
-
-
         if (size == 0) ;
         else {
+            dto.setBranch(BranchType.BODYBRANCH);
             DtoTweet dtoNew = transEntityToDto(list.get(--size), profileId);
-            dtoNew.setParentDto(dto);
+            dtoNew.setBranchDto(dto);
             dto = transListTweetInDto1(list, dtoNew, size, profileId);
         }
         return dto;
     }
 
     public DtoTweet transListTweetInDto(List<Tweet> list, Long profileId) {
+        log.info("::::::::: size " + list.size());
+        log.info("::::::::: tweetid " + list.get(0).getId());
         int sizelist = list.size();
-        DtoTweet dto;
-        dto = transEntityToDto(list.get(--sizelist), profileId);
+
+        DtoTweet dto = transEntityToDto(list.get(--sizelist), profileId);
         dto = transListTweetInDto1(list, dto, sizelist, profileId);
 
-        if (sizelist == 0) dto.setHeadBranchId(null);
-        else dto.setHeadBranchId(list.get(0).getId());
+        if (sizelist == 0) dto.setBranch(BranchType.NOTBRANCH);
+        else dto.setBranch(BranchType.HEADBRANCH);
 
+        Long userid = list.get(0).getUser().getId();
+        if ((list.get(0).getParentTweet() != null) &&
+                (list.get(0).getParentTweet().getUser().getId() == userid))
+            dto.setBranch(BranchType.BODYBRANCH);
 
         return dto;
     }
@@ -246,6 +259,21 @@ public class FacadeTweet {
 
     public List<String> getImageTweet(Long tweetId) {
         return serviceImage.getAttachmentImageUrlByTweetId(tweetId);
+    }
+
+    public void createRetweet(Long id, Long profileId) {
+        service.createRetweet(id, serviceUser.findById(profileId));
+    }
+
+    public void deleteRetweet(Long id, Long profileId) {
+        service.deleteRetweet(id, profileId);
+    }
+
+    public Long determParentTweetId(Long parentTweetId) {
+        Tweet tweet = service.getTweetById(parentTweetId);
+        if ((tweet.getTweetType() == TweetType.QUOTE_TWEET) &&
+                (tweet.getTweetBody() == null)) parentTweetId = tweet.getParentTweet().getId();
+        return parentTweetId;
     }
 
 
