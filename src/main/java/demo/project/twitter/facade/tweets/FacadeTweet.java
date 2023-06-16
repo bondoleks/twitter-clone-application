@@ -155,6 +155,8 @@ public class FacadeTweet {
     public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key, Long profileId) {
         Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage, key, profileId);
 
+
+
         List<DtoTweet> list = pTweet.
                 stream().
                 map(x -> getSingleTweetById(x.getId())).
@@ -220,9 +222,17 @@ public class FacadeTweet {
 
     public List<Tweet> getSingleTweetById(Long id) {
         List<Tweet> list = new ArrayList<>();
-        Tweet t = service.getTweetById(id);
-        list.add(t);
-        return getSingleTweetById1(list, id);
+        Tweet newTweet = service.getTweetById(id);
+        Long newId = id;
+        if ((newTweet.getTweetType() == TweetType.QUOTE_TWEET) &&
+                (newTweet.getTweetBody() == null)) {
+            newTweet = newTweet.getParentTweet();
+            newId = newTweet.getId();
+        }
+        /*Tweet t = service.getTweetById(id);*/
+
+        list.add(newTweet);
+        return getSingleTweetById1(list, newId);
     }
 
 
@@ -238,8 +248,7 @@ public class FacadeTweet {
     }
 
     public DtoTweet transListTweetInDto(List<Tweet> list, Long profileId) {
-        log.info("::::::::: size " + list.size());
-        log.info("::::::::: tweetid " + list.get(0).getId());
+
         int sizelist = list.size();
 
         DtoTweet dto = transEntityToDto(list.get(--sizelist), profileId);

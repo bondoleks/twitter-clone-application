@@ -23,13 +23,16 @@ Content-Type: application/json
 GET http://localhost:8080/tweets/image/57
 
 ###
-GET http://localhost:8080/tweets/tweet/all/15?sizePage=5&numberPage=0
+GET http://localhost:5050/tweets/tweet/all/10?sizePage=5&numberPage=0
 
 ###
-GET http://localhost:8080/tweets/tweet/all?sizePage=10&numberPage=0
+GET http://localhost:5050/tweets/tweet/all?sizePage=10&numberPage=0
 
 ###
-GET http://localhost:8080/tweets/reply/all/64?sizePage=10&numberPage=0
+GET http://localhost:5050/tweets/bookmark?sizePage=10&numberPage=0
+
+###
+GET http://localhost:5050/tweets/reply/all/1?sizePage=10&numberPage=0
 
 ###
 POST http://localhost:8080/tweets/reply/save
@@ -45,7 +48,20 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/tweets/tweet/64
+GET http://localhost:5050/tweets/tweet/128
+
+###
+
+POST http://localhost:5050/tweets/bookmark/130
+
+###
+
+POST http://localhost:5050/tweets/like/2
+
+###
+
+POST http://localhost:5050/tweets/retweet/15
+
 
 
 ####

@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -74,7 +75,8 @@ public class UserFacade {
     }
 
     public UserDto updateUser (String username, String firstName, String email, String location, String birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
-        User usr = new User(username, firstName, email, location, birthDate, bio, avUrl, headUrl);
+//        User usr = new User(username, firstName, email, location, birthDate, bio, avUrl, headUrl);
+        User usr = new User(username, firstName, email, location, new Date(), bio, avUrl, headUrl);
         UserDto entity = makeDto(usr);
         User entity2 = service.updateUser(usr, entity);
         dto = makeDto(entity2);
