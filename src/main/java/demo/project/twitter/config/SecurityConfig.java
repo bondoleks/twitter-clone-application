@@ -1,5 +1,8 @@
 package demo.project.twitter.config;
 
+import demo.project.twitter.model.User;
+import demo.project.twitter.repository.UserRepository;
+
 import demo.project.twitter.security.jwt.JwtConfigurer;
 import demo.project.twitter.security.jwt.JwtTokenProvider;
 import demo.project.twitter.service.impl.UserServiceImpl;
@@ -10,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+
 
 @Configuration
 //@EnableWebSecurity
