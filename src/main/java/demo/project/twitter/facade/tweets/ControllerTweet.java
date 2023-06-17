@@ -29,6 +29,8 @@ public class ControllerTweet {
     private final int ALL_BOOKMARK = 3;
 
 
+
+
     @GetMapping("bookmark")
     public DtoTweetPage getAllBookmark(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
         Long profileId = 10L;
@@ -42,7 +44,6 @@ public class ControllerTweet {
         facade.markerLikeBookmarkRetweet(tweet_id, profileId, ActionType.LIKE);
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
-
 
     @PostMapping("bookmark/{tweet_id}")
     public void bookmark(@PathVariable("tweet_id") Long id) {
@@ -69,6 +70,14 @@ public class ControllerTweet {
         return dtoTweet;
     }
 
+    @GetMapping("tweet/branch/{tweet_id}")
+    public DtoTweet getBranch(@PathVariable("tweet_id") Long id) {
+        Long profileId = 10L;
+        facade.getHeadBranch(id);
+        return facade.transListTweetInDto(facade.getSingleTweetById(facade.getHeadBranch(id)), profileId);
+
+    }
+
     @GetMapping("tweet/{tweet_id}")
     public DtoTweet getTweetById(@PathVariable("tweet_id") Long id) {
         Long profileId = 10L;
@@ -79,6 +88,12 @@ public class ControllerTweet {
     public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
         Long profileId = 10L;
         return facade.getAllTweetById(0L, sizePage, numberPage, ALL_TWEET, profileId);
+    }
+
+    @GetMapping("tweet/all/notauth")
+    public DtoTweetPage getAllTweetNotauthorization() {
+
+        return facade.getAllTweetById(0L, 10, 0, ALL_TWEET, 0L);
     }
 
     @GetMapping("tweet/all/{user_id}")
@@ -94,7 +109,6 @@ public class ControllerTweet {
         return facade.getAllTweetById(tweetid, sizePage, numberPage, ALL_REPLY_TWEETID, profileId);
     }
 
-
     @PostMapping("tweet/save")
     public void saveTweet(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
@@ -105,9 +119,6 @@ public class ControllerTweet {
         List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
         facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listUrl);
     }
-
-
-
 
     @PostMapping("quote/save")
     public void saveQuote(@RequestParam("tweetBody") String tweetBody,
