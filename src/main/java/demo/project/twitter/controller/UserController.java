@@ -14,6 +14,7 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class UserController {
 
 
    @GetMapping("suggestions")
-   public ResponseEntity<?> getSuggestions(Principal principal){
+   public ResponseEntity<List<UserDto>> getSuggestions(Principal principal){
        return facade.whoToFollow(principal.getName());
    }
 
