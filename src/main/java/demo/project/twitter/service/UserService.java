@@ -36,6 +36,10 @@ public class UserService implements FunctionUser {
         return repo.findByUsername(username);
     }
 
+    public User findByEmail (String email){
+        return repo.findByEmail(email);
+    }
+
     @Override
     public List<User> whoToFollow(String username) {
         User user = repo.findByUsername(username);
