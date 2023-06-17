@@ -12,6 +12,8 @@ public interface UserServiceImplInterface {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
     User findById(Long id);
 
     void delete(Long id);
