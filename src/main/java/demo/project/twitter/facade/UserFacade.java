@@ -40,9 +40,9 @@ public class UserFacade {
 
     }
 
-    public ResponseEntity<UserDto> getProfile (String email){
+    public ResponseEntity<UserDto> getProfile (String userName){
 
-            entity = service.findByEmail(email);
+            entity = service.findByUserName(userName);
             dto = makeDto(entity);
             return ResponseEntity.accepted().body(dto);
     }
@@ -74,9 +74,8 @@ public class UserFacade {
 
     }
 
-    public UserDto updateUser (String username, String firstName, String email, String location, String birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
-//        User usr = new User(username, firstName, email, location, birthDate, bio, avUrl, headUrl);
-        User usr = new User(username, firstName, email, location, new Date(), bio, avUrl, headUrl);
+    public UserDto updateUser (String username, String firstName, String email, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
+        User usr = new User(username, firstName, email, location, birthDate, bio, avUrl, headUrl);
         UserDto entity = makeDto(usr);
         User entity2 = service.updateUser(usr, entity);
         dto = makeDto(entity2);
@@ -103,9 +102,9 @@ public class UserFacade {
 
     }
 
-    public ResponseEntity<?> whoToFollow (String email) {
+    public ResponseEntity<List<UserDto>> whoToFollow (String username) {
 
-        List<User> whoToFollow = service.whoToFollow(email);
+        List<User> whoToFollow = service.whoToFollow(username);
 
         List<UserDto> whoToFollowDto = whoToFollow.stream().
                 map(this::makeDto).collect(Collectors.toList());

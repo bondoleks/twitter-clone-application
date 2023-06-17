@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -24,7 +28,7 @@ public class UserController {
 
 
    @GetMapping("suggestions")
-   public ResponseEntity<?> getSuggestions(Principal principal){
+   public ResponseEntity<List<UserDto>> getSuggestions(Principal principal){
        return facade.whoToFollow(principal.getName());
    }
 
@@ -35,7 +39,7 @@ public class UserController {
    }
 
     @GetMapping("getuser/{id}")
-    public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {
+    public ResponseEntity<UserDto> getEntity(@PathVariable("id") Long id) {
         return facade.getEntity(id);
     }
 
@@ -44,10 +48,13 @@ public class UserController {
                                 @RequestParam ("firstName") String firstName,
                                 @RequestParam ("email") String email,
                                 @RequestParam ("location") String location,
-                                @RequestParam ("birthDate") String birthDate,
+                                @RequestParam ("birthDate") String bDate,
                                 @RequestParam ("bio") String bio,
                                 @RequestParam ("avatar") MultipartFile avFile,
                                 @RequestParam ("headimg") MultipartFile headFile) throws Exception {
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            Date birthDate = format.parse(bDate);
+
         return facade.updateUser(username, firstName, email, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
     }
 
