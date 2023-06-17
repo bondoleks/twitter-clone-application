@@ -22,11 +22,19 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/tweets/image/57
 
+
 ###
-GET http://localhost:5050/tweets/tweet/all/10?sizePage=5&numberPage=0
+GET http://localhost:5050/tweets/tweet/branch/10
+
+
+###
+GET http://localhost:5050/tweets/tweet/all/10?sizePage=10&numberPage=0
 
 ###
 GET http://localhost:5050/tweets/tweet/all?sizePage=10&numberPage=0
+
+###
+GET http://localhost:5050/tweets/tweet/all/notauth
 
 ###
 GET http://localhost:5050/tweets/bookmark?sizePage=10&numberPage=0
@@ -52,7 +60,7 @@ GET http://localhost:5050/tweets/tweet/128
 
 ###
 
-POST http://localhost:5050/tweets/bookmark/130
+POST http://localhost:5050/tweets/bookmark/25
 
 ###
 

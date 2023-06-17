@@ -84,19 +84,36 @@ public class FacadeTweet {
         return entity;
     }
 
+    public BranchType getBranchType(Tweet tweet) {
+        BranchType bt = BranchType.NOTBRANCH;
+        int HEAD = 0;
+        int BODY = 0;
+        Long tweetId = tweet.getId();
+        Long userId = tweet.getUser().getId();
+
+        if (service.getSingleBranch(tweetId).size() > 0) BODY = 1;
+        if ((tweet.getParentTweet() != null) && (tweet.getParentTweet().getUser().getId() == userId)) HEAD = 1;
+
+        if ((BODY == 1) && (HEAD == 0)) bt = BranchType.HEADBRANCH;
+        if ((HEAD == 1)) bt = BranchType.BODYBRANCH;
+
+        return bt;
+    }
+
     public DtoTweet transEntityToDto(Tweet entity, Long profileId) {
         return transEntityToDto(entity, profileId, 0);
     }
 
     private DtoTweet transEntityToDto(Tweet entity, Long profileId, int count) {
 
-        if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
-                (entity.getTweetBody() == null)) entity = entity.getParentTweet();
+      /*  if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
+                (entity.getTweetBody() == null)) entity = entity.getParentTweet();*/
 
         DtoTweet dto = new DtoTweet();
         mapper.map().map(entity.getUser(), dto);
         mapper.map().map(entity, dto);
 
+        dto.setBranch(getBranchType(entity));
         dto.setUser_id(entity.getUser().getId());
         dto.setMarkerRetweet(serviceAction.marker(entity.getId(), profileId, "RETWEET"));
         dto.setMarkerLike(serviceAction.marker(entity.getId(), profileId, "LIKE"));
@@ -154,7 +171,6 @@ public class FacadeTweet {
 
     public DtoTweetPage getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key, Long profileId) {
         Page<Tweet> pTweet = service.getAllTweetById(id, sizePage, numberPage, key, profileId);
-
 
 
         List<DtoTweet> list = pTweet.
@@ -235,11 +251,20 @@ public class FacadeTweet {
         return getSingleTweetById1(list, newId);
     }
 
+    public Long getHeadBranch(Long tweetId) {
+        Tweet tweet = service.getTweetById(tweetId);
+        Long userId = tweet.getUser().getId();
+        if ((tweet.getParentTweet() != null) && (tweet.getParentTweet().getUser().getId() == userId)) {
+            tweetId = getHeadBranch(tweet.getParentTweet().getId());
+        }
+
+        return tweetId;
+    }
 
     private DtoTweet transListTweetInDto1(List<Tweet> list, DtoTweet dto, int size, Long profileId) {
         if (size == 0) ;
         else {
-            dto.setBranch(BranchType.BODYBRANCH);
+            /*dto.setBranch(BranchType.BODYBRANCH);*/
             DtoTweet dtoNew = transEntityToDto(list.get(--size), profileId);
             dtoNew.setBranchDto(dto);
             dto = transListTweetInDto1(list, dtoNew, size, profileId);
@@ -254,13 +279,13 @@ public class FacadeTweet {
         DtoTweet dto = transEntityToDto(list.get(--sizelist), profileId);
         dto = transListTweetInDto1(list, dto, sizelist, profileId);
 
-        if (sizelist == 0) dto.setBranch(BranchType.NOTBRANCH);
-        else dto.setBranch(BranchType.HEADBRANCH);
+       /* if (sizelist == 0) dto.setBranch(BranchType.NOTBRANCH);
+        else dto.setBranch(BranchType.HEADBRANCH);*/
 
-        Long userid = list.get(0).getUser().getId();
+       /* Long userid = list.get(0).getUser().getId();
         if ((list.get(0).getParentTweet() != null) &&
                 (list.get(0).getParentTweet().getUser().getId() == userid))
-            dto.setBranch(BranchType.BODYBRANCH);
+            dto.setBranch(BranchType.BODYBRANCH);*/
 
         return dto;
     }
