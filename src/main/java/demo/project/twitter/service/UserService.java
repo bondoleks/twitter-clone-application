@@ -19,10 +19,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService implements FunctionUser {
     private final UserRepository repo;
-    private final ServicAttachmentImage serviceImage;
+
 
     public Boolean user_exists(User usr) {
-        if (repo.getUserIdByUsername(usr.getUsername()) != null) return true;
+        if (repo.findByUsername(usr.getUsername()) != null) return true;
         else return false;
     }
 
@@ -31,13 +31,14 @@ public class UserService implements FunctionUser {
         return repo.findAll();
     }
 
-    public User findByEmail (String email){
-        return repo.findByEmail(email);
+
+    public User findByUserName (String username){
+        return repo.findByUsername(username);
     }
 
     @Override
-    public List<User> whoToFollow(String email) {
-        User user = repo.findByEmail(email);
+    public List<User> whoToFollow(String username) {
+        User user = repo.findByUsername(username);
         return repo.whoToFollow(user.getId());
     }
 
