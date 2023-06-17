@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, Button, TextField } from '@mui/material';
 import { connect } from 'react-redux';
-import { registerUserRequest } from '../../redux/actions';
-
+import {registerUser} from "../../redux/registration/registrationThunks.jsx";
 
 const RegistrationModal = ({ isOpen, onClose, onLoginClick, registerUser }) => {
-
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleRegistration = () => {
         const user = {
-            name: name,
-            email: email,
-            password: password,
+            name,
+            email,
+            password,
         };
 
         registerUser(user);
@@ -236,12 +233,8 @@ const RegistrationModal = ({ isOpen, onClose, onLoginClick, registerUser }) => {
 }
 
 
-const mapStateToProps = (state) => ({
-    isLoading: state.registration.isLoading,
-});
-
 const mapDispatchToProps = (dispatch) => ({
-    registerUser: (user) => dispatch(registerUserRequest(user)),
+    registerUser: (user) => dispatch(registerUser(user)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegistrationModal);
+export default connect(null, mapDispatchToProps)(RegistrationModal);

@@ -23,7 +23,7 @@ export const LOGIN_FAILURE = 'user/loging/fail'
 
 //Registration
 export const REGISTER_USER_REQUEST = 'user/registration/request'
-export const REGISTER_USER_SUCCSES= 'user/registration/success'
+export const REGISTER_USER_SUCCESS = 'user/registration/success'
 export const REGISTER_USER_ERROR = 'user/registration/fail'
 
 
