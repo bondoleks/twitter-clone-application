@@ -72,16 +72,10 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "followed_id"))
     private List<User> followings = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Set<Chat> userChats = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "user_tweets",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "tweet_id"))
-    private List<Tweet> tweets;
 
     public User(String username, String email, String password, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
 
