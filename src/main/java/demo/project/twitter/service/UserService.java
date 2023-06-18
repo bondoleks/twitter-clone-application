@@ -124,6 +124,10 @@ public class UserService implements FunctionUser {
         repo.save(follower);
 
     }
+
+    public List<User> searchByUser(String searchRequest) {
+        return repo.searchByName(searchRequest.toLowerCase() + "%", "%" + searchRequest + "%");
+    }
 }
 
 
