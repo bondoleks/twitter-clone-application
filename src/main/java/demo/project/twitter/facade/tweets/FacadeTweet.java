@@ -1,6 +1,7 @@
 package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.config.Mapper;
+import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.User;
@@ -21,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -308,6 +306,18 @@ public class FacadeTweet {
         if ((tweet.getTweetType() == TweetType.QUOTE_TWEET) &&
                 (tweet.getTweetBody() == null)) parentTweetId = tweet.getParentTweet().getId();
         return parentTweetId;
+    }
+
+    public List<UserDto> searchByUser(String searchRequest) {
+        String[] listS = searchRequest.split(" ");
+        Arrays.stream(listS).forEach(s -> log.info(":::::s=" + s + "!"));
+        int i = searchRequest.indexOf(" ");
+        String startWord = searchRequest.substring(0, i);
+        log.info("::::::::: startWord = " + startWord);
+        List<User> listUser = serviceUser.searchByUser(searchRequest);
+
+
+        return null;
     }
 
 

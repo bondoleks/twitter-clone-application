@@ -2,6 +2,7 @@ package demo.project.twitter.facade;
 
 import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
+import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.model.User;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class UserFacade {
     private final UserService service;
     private User entity = new User();
     private UserDto dto = new UserDto();
+    private UserSearchDto userSearchDto = new UserSearchDto();
     private final Mapper mapper;
 
 
@@ -30,6 +32,11 @@ public class UserFacade {
 
         dto = mapper.map().map(entity, dto.getClass());
         return dto;
+    }
+
+    private UserSearchDto makeUserSearchDto (User entity) {
+        userSearchDto = mapper.map().map(entity, userSearchDto.getClass());
+        return userSearchDto;
     }
 
     public ResponseEntity<UserDto> getEntity (Long id){
@@ -121,6 +128,14 @@ public class UserFacade {
         service.unFollow(follower, following);
     }
 
+
+    public List<UserSearchDto> searchByUser(String searchRequest) {
+        return service.
+                searchByUser(searchRequest).
+                stream().
+                map(this::makeUserSearchDto).
+                collect(Collectors.toList());
+    }
 }
 
 
