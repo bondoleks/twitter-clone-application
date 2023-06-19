@@ -1,6 +1,6 @@
 package demo.project.twitter.model;
 
-import demo.project.twitter.model.enums.NotificationType;
+import demo.project.twitter.model.enums.ActionType;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.*;
 
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Notification extends BaseEntity {
     @Enumerated(EnumType.STRING)
-    private NotificationType notificationType;
+    private ActionType notificationType;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reciever_id", referencedColumnName = "id")

@@ -1,6 +1,6 @@
 package demo.project.twitter.facade;
 
-import demo.project.twitter.dto.DtoNotification;
+import demo.project.twitter.dto.NotificationDto;
 import demo.project.twitter.model.Notification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Log4j2
 public  class NotificationFacade {
 
-    public DtoNotification mapToProductDto(Notification notification){
-        DtoNotification dto = new DtoNotification();
+    public NotificationDto mapToProductDto(Notification notification){
+        NotificationDto dto = new NotificationDto();
         dto.setId(notification.getId());
         dto.setNotificationType(notification.getNotificationType());
         dto.setReciever(notification.getReciever().getUsername());
