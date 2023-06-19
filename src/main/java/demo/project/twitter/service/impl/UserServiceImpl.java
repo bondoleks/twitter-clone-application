@@ -77,15 +77,13 @@ public class UserServiceImpl implements UserServiceImplInterface {
 
     public boolean activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
-
         if (user == null) {
+            log.info("User = null");
             return false;
         }
-
         user.setActivationCode(null);
-
         userRepository.save(user);
-
+        log.info("Activated user " + user.getUsername());
         return true;
     }
 

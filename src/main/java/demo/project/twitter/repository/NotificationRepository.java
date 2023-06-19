@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.notifications;
+package demo.project.twitter.repository;
 
 import demo.project.twitter.model.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Repository
-public interface RepoNotification extends JpaRepository<Notification, Long> {
+public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
     List<Notification> getAllNotificationByRecieverUsername(String username);
 

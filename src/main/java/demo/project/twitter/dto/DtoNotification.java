@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.notifications;
+package demo.project.twitter.dto;
 
 import demo.project.twitter.model.enums.NotificationType;
 import demo.project.twitter.model.tweet.Tweet;
