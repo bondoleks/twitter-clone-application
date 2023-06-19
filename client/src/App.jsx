@@ -7,7 +7,7 @@ import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Notifications from "./pages/Notifications/Notifications";
 import Bookmarks from "./pages/Bookmarks/Bookmarks";
-import { useCallback, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import { MainPage } from './pages/MainPage';
 import { CustomThemeContext } from "./context/CustomThemeContext";
 import { ForYou } from "./components/Home/ForYou";
@@ -21,6 +21,8 @@ import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -117,6 +119,31 @@ function App() {
     const [color, setColor] = useState("#00ff00");
 
     const [themeMode, setThemeMode] = useState("light");
+
+    useEffect(() => {
+        // Создаем WebSocket-соединение
+        const socket = new SockJS('http://localhost:8080/ws-message');
+        const stompClient = Stomp.over(socket);
+
+        // Устанавливаем колбэк-функцию при успешном соединении
+        stompClient.connect({}, () => {
+            // Подписываемся на каналы
+            stompClient.subscribe('/chat', (message) => {
+                console.log('Received message from /chat:', message.body);
+                // Действия с полученным сообщением
+            });
+
+            stompClient.subscribe('/notification', (message) => {
+                console.log('Received message from /notification:', message.body);
+                // Действия с полученным сообщением
+            });
+        });
+
+        // Возвращаем функцию для закрытия соединения при размонтировании компонента
+        return () => {
+            stompClient.disconnect();
+        };
+    }, []);
 
     const lightTheme = createTheme({
         palette: {

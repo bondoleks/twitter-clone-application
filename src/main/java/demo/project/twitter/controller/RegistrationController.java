@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Log4j2
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping(value = "/api/v1/auth/")
 public class RegistrationController {
 

@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @Log4j2
 @RequestMapping("/api/v1/notifications")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class NotificationController {
 
     private final NotificationService notificationService;
