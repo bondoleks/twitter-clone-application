@@ -27,8 +27,6 @@ public class ChatController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    написати таке саме для нотіфікатіонів
-
     @SendTo("/chat/message")
     public TextMessageDTO broadcastMessage(@Payload TextMessageDTO textMessageDTO) {
         return textMessageDTO;

@@ -13,6 +13,7 @@ import java.util.Date;
 @Service
 @NoArgsConstructor
 public class UserSearchDto {
+
     private Long id;
     private String username;
     private String firstName;

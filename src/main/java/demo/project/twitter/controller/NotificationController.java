@@ -1,10 +1,7 @@
-package demo.project.twitter.facade.notifications;
+package demo.project.twitter.controller;
 
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import demo.project.twitter.dto.TextMessageDTO;
-import demo.project.twitter.model.Notification;
-import demo.project.twitter.model.enums.NotificationType;
+import demo.project.twitter.dto.DtoNotification;
+import demo.project.twitter.service.NotificationServiceFunction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +11,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -27,23 +21,23 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/api/v1/notifications")
 @CrossOrigin(origins = "*")
-public class ControllerNotification {
+public class NotificationController {
 
-    private final ServiceNotification serviceNotification;
+    private final NotificationServiceFunction notificationService;
 
     @GetMapping("read")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<DtoNotification>> readNotificationsByUsernameFromToken(Principal principal) {
         log.info("Get all notifications from: " + principal.getName());
-        return ResponseEntity.ok(serviceNotification.findAllNotificationByRecieverUsername(principal.getName()));
+        return ResponseEntity.ok(notificationService.findAllNotificationByRecieverUsername(principal.getName()));
     }
 
     @PostMapping("{id}/delete")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<DtoNotification>> deleteNotification(@PathVariable(value = "id") Long id, Principal principal){
-        serviceNotification.deleteNotification(id);
+        notificationService.deleteNotification(id);
         log.info("Notification id: " + id + " deleted");
-        return ResponseEntity.ok(serviceNotification.findAllNotificationByRecieverUsername(principal.getName()));
+        return ResponseEntity.ok(notificationService.findAllNotificationByRecieverUsername(principal.getName()));
     }
 
     @Autowired
@@ -56,8 +50,7 @@ public class ControllerNotification {
     }
 
     @SendTo("/notifications")
-    public TextMessageDTO broadcastMessage(@Payload TextMessageDTO textMessageDTO) {
-        return textMessageDTO;
+    public DtoNotification broadcastMessage(@Payload DtoNotification dtoNotification) {
+        return dtoNotification;
     }
-
 }
