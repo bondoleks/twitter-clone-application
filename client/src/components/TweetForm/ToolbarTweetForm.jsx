@@ -28,21 +28,9 @@ export default function ToolbarTweetForm({setTweetText, setFile, file}) {
 
 
     useEffect(() => {
-        if (file) setFilePath(URL.createObjectURL(file));
+        // if (file) setFilePath(URL.createObjectURL(file));
     }, [file]);
 
-    const handleFileChange = (e) => {
-        const formData = new FormData();
-        const file = e.target.files[0];
-        formData.append("file", file);
-        // axios({
-        //     method: "post",
-        //     url: "myurl",
-        //     data: formData,
-        //     headers: { "Content-Type": "multipart/form-data" }
-        // });
-        setFile(file);
-    };
 
     const handleTweetTextChange = (e) => {
         setTweetText(e.target.value);
@@ -60,9 +48,12 @@ export default function ToolbarTweetForm({setTweetText, setFile, file}) {
                     <label htmlFor="file-input">
                         <input
                             id="file-input"
-                            onChange={handleFileChange}
+                            onChange={(e) => {
+                                setFile(e.target.files);
+                            }}
                             accept="image/png, image/gif, image/jpeg"
                             type="file"
+                            multiple
                             style={{ display: "none" }}
                         />
                         <BrokenImageOutlinedIcon sx={{ color: buttonColor }} />

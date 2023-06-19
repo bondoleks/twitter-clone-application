@@ -101,7 +101,7 @@ export default function TweetFormMobile({ open, onClose }) {
                         my: 2
                     }}></Box>
 
-                    <ToolbarTweetForm />
+                    {/*<ToolbarTweetForm/>*/}
 
                 </DialogContent>
 

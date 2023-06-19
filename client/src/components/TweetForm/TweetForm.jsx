@@ -21,7 +21,7 @@ export default function TweetForm({ open, onClose }) {
         backgroundColor: theme.palette.background.default,
     };
 
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState([]);
     const [tweetText, setTweetText] = useState("");
 
     const [buttonColor, setButtonColor] = useState(null);
@@ -55,9 +55,12 @@ export default function TweetForm({ open, onClose }) {
         formData.append('parentTweetId', 0);
         formData.append('user_id', '1');
 
-        formData.append('file', file || null);
-        console.log(file)
-        
+        for (const f of file) {
+            formData.append('file', f);
+            console.log("file", f)
+        }
+
+
         // if (file) {
         //     formData.append('file', file);
         // } 

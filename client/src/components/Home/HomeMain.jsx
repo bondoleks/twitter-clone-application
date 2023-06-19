@@ -59,7 +59,7 @@ export function HomeMain() {
       <Box sx={{ borderTop: '1px solid #e1e8ed', width: '100%', my: 2 }}></Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <ToolbarTweetForm />
+        {/*<ToolbarTweetForm />*/}
 
         <Button variant="contained" size="small" sx={{
           textTransform: 'none',
