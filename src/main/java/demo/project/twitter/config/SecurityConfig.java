@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated().and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
-        http.cors().configurationSource(rq -> new CorsConfiguration().applyPermitDefaultValues());
+//        http.cors().configurationSource(rq -> new CorsConfiguration().applyPermitDefaultValues());
     }
 
 //    @Bean

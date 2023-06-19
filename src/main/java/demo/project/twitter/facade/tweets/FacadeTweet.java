@@ -4,6 +4,7 @@ import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
+import demo.project.twitter.model.Notification;
 import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.User;
 
@@ -12,6 +13,7 @@ import demo.project.twitter.model.enums.BranchType;
 import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
+import demo.project.twitter.service.NotificationService;
 import demo.project.twitter.service.PhotoService;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,7 @@ public class FacadeTweet {
     private final ServiceTweetAction serviceAction;
     private final Mapper mapper;
     private final PhotoService photo;
+    private final NotificationService notificationService;
 
 
     public List<String> transListPhotoToListUrl(List<MultipartFile> listPhoto) {
@@ -58,6 +61,9 @@ public class FacadeTweet {
         Optional<TweetAction> marker = serviceAction.getTweetAction(tweetId, profileId, actionType.getType());
         if (marker.isEmpty()) {
             serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), service.getTweetById(tweetId)));
+            notificationService.createNotification(new Notification(actionType, serviceUser.findById(profileId),// від кого
+                                                                                serviceUser.findById(profileId),// кому
+                                                    service.getTweetById(tweetId), false));
             return 1;
         } else {
             serviceAction.delTweetAction(marker.get());
