@@ -8,6 +8,7 @@ import demo.project.twitter.model.User;
 import demo.project.twitter.model.enums.ActionType;
 import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.Tweet;
+import demo.project.twitter.repository.UserRepository;
 import demo.project.twitter.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,10 +34,24 @@ public class ControllerTweet {
     private final int ALL_TWEET = 2;
     private final int ALL_BOOKMARK = 3;
 
+    private final UserRepository ur;
 
-    @GetMapping("searchusers")
-    public List<UserSearchDto> searchByUser(@RequestParam("search_requеst") String searchRequest) {
-        return facadeUser.searchByUser(searchRequest);
+
+
+
+    @GetMapping("usersearch")
+    public List<UserSearchDto> userSearch(@RequestParam("search_requеst") String searchRequest) {
+        return facadeUser.userSearch(searchRequest);
+    }
+
+    @GetMapping("alluser")
+    public List<User> allUser() {
+        return ur.findAll();
+    }
+
+    @GetMapping("tweetsearch")
+    public List<UserSearchDto> tweetSearch(@RequestParam("search_requеst") String searchRequest) {
+        return facade.tweetSearch(searchRequest);
     }
 
     @GetMapping("bookmark")
