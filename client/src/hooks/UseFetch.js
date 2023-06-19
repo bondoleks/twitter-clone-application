@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import api from 'axios';
 
 export const useFetch = ({
-                             instant = true,
-                             initData = null,
-                             onCompleted = (data) => data,
-                             dataTransformer = (data) => data,
-                             onError = (err) => err,
-                             ...axios
-                         }) => {
+    instant = true,
+    initData = null,
+    onCompleted = (data) => data,
+    dataTransformer = (data) => data,
+    onError = (err) => err,
+    ...axios
+}) => {
     const [data, setData] = useState(initData);
     const [loading, setLoading] = useState(false);
 

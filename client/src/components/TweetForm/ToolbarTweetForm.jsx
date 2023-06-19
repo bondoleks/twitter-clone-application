@@ -14,7 +14,7 @@ import axios from "axios";
 import Alert from '@mui/material/Alert';
 import {api} from "../../redux/service/api";
 
-export default function ToolbarTweetForm({setTweetText, setFile, file}) {
+export default function ToolbarTweetForm({setTweetText, setFiles, file, files}) {
 
     const [buttonColor, setButtonColor] = useState();
     const [filePath, setFilePath] = useState(null);
@@ -31,18 +31,34 @@ export default function ToolbarTweetForm({setTweetText, setFile, file}) {
         if (file) setFilePath(URL.createObjectURL(file));
     }, [file]);
 
-    const handleFileChange = (e) => {
-        const formData = new FormData();
-        const file = e.target.files[0];
-        formData.append("file", file);
-        // axios({
-        //     method: "post",
-        //     url: "myurl",
-        //     data: formData,
-        //     headers: { "Content-Type": "multipart/form-data" }
-        // });
-        setFile(file);
-    };
+    const handleFileChange = (event) => {
+        const selectedFiles = Array.from(event.target.files);
+        const newFiles = selectedFiles.slice(0, 6 - files.length); // Ограничение на 6 файлов
+        setFiles([...files, ...newFiles]);
+      };
+
+    // const handleFileChange = (event) => {
+    //     const fileList = Array.from(event.target.files);
+    //     setFiles([...files, ...fileList]);
+    //   };
+
+    // const handleFileChange = (event) => {
+    //     const fileList = Array.from(event.target.files);
+    //     setFiles(fileList);
+    //   };
+
+    // const handleFileChange = (e) => {
+    //     const formData = new FormData();
+    //     const file = e.target.files[0];
+    //     formData.append("file", file);
+    //     // axios({
+    //     //     method: "post",
+    //     //     url: "myurl",
+    //     //     data: formData,
+    //     //     headers: { "Content-Type": "multipart/form-data" }
+    //     // });
+    //     setFile(file);
+    // };
 
     const handleTweetTextChange = (e) => {
         setTweetText(e.target.value);
@@ -60,6 +76,7 @@ export default function ToolbarTweetForm({setTweetText, setFile, file}) {
                     <label htmlFor="file-input">
                         <input
                             id="file-input"
+                            multiple
                             onChange={handleFileChange}
                             accept="image/png, image/gif, image/jpeg"
                             type="file"

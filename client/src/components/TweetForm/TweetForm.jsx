@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
-    Dialog,
-    DialogContent,
-    Button,
-    IconButton,
-    Box,
+  Dialog,
+  DialogContent,
+  Button,
+  IconButton,
+  Box,
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import ContainerTweetForm from "./ContainerTweetForm";
@@ -14,118 +14,222 @@ import { api } from "../../redux/service/api";
 import Alert from "@mui/material/Alert";
 
 export default function TweetForm({ open, onClose }) {
+  const theme = useTheme();
 
-    const theme = useTheme();
+  const TweetFormStyles = {
+    backgroundColor: theme.palette.background.default,
+  };
 
-    const TweetFormStyles = {
-        backgroundColor: theme.palette.background.default,
-    };
+  const [files, setFiles] = useState([]);
+  const [tweetText, setTweetText] = useState("");
+  const [buttonColor, setButtonColor] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
-    const [file, setFile] = useState(null);
-    const [tweetText, setTweetText] = useState("");
+  useEffect(() => {
+    const savedColor = localStorage.getItem('buttonColor');
+    if (savedColor) {
+      setButtonColor(savedColor);
+    }
+  }, []);
 
-    const [buttonColor, setButtonColor] = useState(null);
+  const handleOpenModal = () => {
+    setOpenModal(true);
+    handleCloseMenu();
+  };
 
-    useEffect(() => {
-        const savedColor = localStorage.getItem('buttonColor');
-        if (savedColor) {
-            setButtonColor(savedColor);
-        }
-    }, []);
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
-    const [openModal, setOpenModal] = useState(false);
+  const handleColorChange = (color) => {
+    setButtonColor(color);
+    localStorage.setItem('buttonColor', color);
+  };
 
-    const handleOpenModal = () => {
-        setOpenModal(true);
-        handleCloseMenu();
-    };
+  const handleTweetSubmit = () => {
+    const formData = new FormData();
+    formData.append('tweetBody', tweetText);
+    formData.append('parentTweetId', 0);
+    formData.append('user_id', '1');
 
-    const handleCloseModal = () => {
-        setOpenModal(false);
-    };
-
-    const handleColorChange = (color) => {
-        setButtonColor(color);
-        localStorage.setItem('buttonColor', color);
-    };
-
-    const handleTweetSubmit = () => {
-        const formData = new FormData();
-        formData.append('tweetBody', tweetText);
-        formData.append('parentTweetId', 0);
-        formData.append('user_id', '1');
-
-        formData.append('file', file || null);
-        console.log(file)
-        
-        // if (file) {
-        //     formData.append('file', file);
-        // } 
-        // formData.append('file', file);
-
-
-        api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", formData)
-            .then(response => {
-                console.log(response);
-                alert("Success!");
-            })
-            .catch(error => {
-                console.error(error);
-                // Actions on error
-                alert("Error!: " + error.message);
-                if (error.response) {
-                    console.log("Server Response:", error.response.data);
-                }
+        files.forEach((file) => {
+              formData.append('file', file);
             });
-            // .catch(error => {
-            //     console.error(error);
-            //     // Actions on error
-            //     alert("Error!: " + error.message);
-            // });
-    };
+   
 
-    return (
+    api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", formData)
+      .then(response => {
+        console.log(response);
+        alert("Success!");
+      })
+      .catch(error => {
+        console.error(error);
+        alert("Error!: " + error.message);
+        if (error.response) {
+          console.log("Server Response:", error.response.data);
+        }
+      });
+  };
 
-        <Dialog open={open} onClose={onClose} >
+  return (
+    <Dialog open={open} onClose={onClose} >
+      <IconButton sx={{ position: 'absolute', top: '0', left: '0' }}>
+        <CloseIcon onClick={onClose} color='gray' />
+      </IconButton>
 
-            <IconButton sx={{ position: 'absolute', top: '0', left: '0' }}>
-                <CloseIcon onClick={onClose} color='gray' />
-            </IconButton>
+      <DialogContent sx={{ maxWidth: 'md' }} style={TweetFormStyles}>
+        <ContainerTweetForm tweetText={tweetText} setTweetText={setTweetText} />
 
-            <DialogContent sx={{ maxWidth: 'md' }} style={TweetFormStyles}>
+        <Box sx={{
+          borderTop: "1px solid #e1e8ed",
+          width: "100%",
+          my: 2
+        }}></Box>
 
-                <ContainerTweetForm tweetText={tweetText} setTweetText={setTweetText} />
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <ToolbarTweetForm files={files} setFiles={setFiles} setTweetText={setTweetText} />
 
-                <Box sx={{
-                    borderTop: "1px solid #e1e8ed",
-                    width: "100%",
-                    my: 2
-                }}></Box>
-
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                }}>
-
-                    <ToolbarTweetForm file={file} setFile={setFile} setTweetText={setTweetText} />
-
-                    <Button onClick={handleTweetSubmit} variant="contained" size="small" sx={{
-                        textTransform: 'none',
-                        borderRadius: '20px',
-                        height: '30px',
-                        background: buttonColor
-                    }}>
-                        Tweet
-                    </Button>
-
-                </Box>
-
-            </DialogContent>
-
-        </Dialog>
-    );
+          <Button onClick={handleTweetSubmit} variant="contained" size="small" sx={{
+            textTransform: 'none',
+            borderRadius: '20px',
+            height: '30px',
+            background: buttonColor
+          }}>
+            Tweet
+          </Button>
+        </Box>
+      </DialogContent>
+    </Dialog>
+  );
 }
+
+
+// import React, { useState, useEffect } from "react";
+// import {
+//     Dialog,
+//     DialogContent,
+//     Button,
+//     IconButton,
+//     Box,
+// } from "@mui/material";
+// import CloseIcon from '@mui/icons-material/Close';
+// import ContainerTweetForm from "./ContainerTweetForm";
+// import ToolbarTweetForm from "./ToolbarTweetForm";
+// import { useTheme } from '@mui/material/styles';
+// import { api } from "../../redux/service/api";
+// import Alert from "@mui/material/Alert";
+
+// export default function TweetForm({ open, onClose }) {
+
+//     const theme = useTheme();
+
+//     const TweetFormStyles = {
+//         backgroundColor: theme.palette.background.default,
+//     };
+
+//     const [files, setFiles] = useState([]);
+//     const [tweetText, setTweetText] = useState("");
+
+//     const [buttonColor, setButtonColor] = useState(null);
+
+//     useEffect(() => {
+//         const savedColor = localStorage.getItem('buttonColor');
+//         if (savedColor) {
+//             setButtonColor(savedColor);
+//         }
+//     }, []);
+
+//     const [openModal, setOpenModal] = useState(false);
+
+//     const handleOpenModal = () => {
+//         setOpenModal(true);
+//         handleCloseMenu();
+//     };
+
+//     const handleCloseModal = () => {
+//         setOpenModal(false);
+//     };
+
+//     const handleColorChange = (color) => {
+//         setButtonColor(color);
+//         localStorage.setItem('buttonColor', color);
+//     };
+
+//     // 
+    
+//     const handleTweetSubmit = () => {
+//         const formData = new FormData();
+//         formData.append('tweetBody', tweetText);
+//         formData.append('parentTweetId', 0);
+//         formData.append('user_id', '1');
+        
+//         // Добавление всех файлов в formData
+//         files.forEach((file) => {
+//           formData.append('files', file);
+//         });
+      
+//         api
+//           .post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", formData)
+//           .then((response) => {
+//             console.log(response);
+//             alert("Success!");
+//           })
+//           .catch((error) => {
+//             console.error(error);
+//             alert("Error!: " + error.message);
+//             if (error.response) {
+//               console.log("Server Response:", error.response.data);
+//             }
+//           });
+//       };
+
+
+//     return (
+
+//         <Dialog open={open} onClose={onClose} >
+
+//             <IconButton sx={{ position: 'absolute', top: '0', left: '0' }}>
+//                 <CloseIcon onClick={onClose} color='gray' />
+//             </IconButton>
+
+//             <DialogContent sx={{ maxWidth: 'md' }} style={TweetFormStyles}>
+
+//                 <ContainerTweetForm tweetText={tweetText} setTweetText={setTweetText} />
+
+//                 <Box sx={{
+//                     borderTop: "1px solid #e1e8ed",
+//                     width: "100%",
+//                     my: 2
+//                 }}></Box>
+
+//                 <Box sx={{
+//                     display: 'flex',
+//                     justifyContent: 'space-between',
+//                     alignItems: 'center'
+//                 }}>
+
+//                     <ToolbarTweetForm file={files} setFile={setFiles} setTweetText={setTweetText} />
+
+//                     <Button onClick={handleTweetSubmit} variant="contained" size="small" sx={{
+//                         textTransform: 'none',
+//                         borderRadius: '20px',
+//                         height: '30px',
+//                         background: buttonColor
+//                     }}>
+//                         Tweet
+//                     </Button>
+
+//                 </Box>
+
+//             </DialogContent>
+
+//         </Dialog>
+//     );
+// }
 
 
 
