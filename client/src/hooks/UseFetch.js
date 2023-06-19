@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import api from 'axios';
+import {api} from "../redux/service/api";
 
 export const useFetch = ({
     instant = true,
