@@ -1,6 +1,6 @@
 package demo.project.twitter.dto;
 
-import demo.project.twitter.model.enums.NotificationType;
+import demo.project.twitter.model.enums.ActionType;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DtoNotification {
+public class NotificationDto {
 
     private Long id;
-    private NotificationType notificationType;
+    private ActionType notificationType;
     private String reciever;
     private String invitator;
     private Tweet tweet;
-
 }

@@ -1,7 +1,7 @@
 package demo.project.twitter.controller;
 
-import demo.project.twitter.dto.DtoNotification;
-import demo.project.twitter.service.NotificationServiceFunction;
+import demo.project.twitter.dto.NotificationDto;
+import demo.project.twitter.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +23,18 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class NotificationController {
 
-    private final NotificationServiceFunction notificationService;
+    private final NotificationService notificationService;
 
     @GetMapping("read")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<DtoNotification>> readNotificationsByUsernameFromToken(Principal principal) {
+    public ResponseEntity<List<NotificationDto>> readNotificationsByUsernameFromToken(Principal principal) {
         log.info("Get all notifications from: " + principal.getName());
         return ResponseEntity.ok(notificationService.findAllNotificationByRecieverUsername(principal.getName()));
     }
 
     @PostMapping("{id}/delete")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<DtoNotification>> deleteNotification(@PathVariable(value = "id") Long id, Principal principal){
+    public ResponseEntity<List<NotificationDto>> deleteNotification(@PathVariable(value = "id") Long id, Principal principal){
         notificationService.deleteNotification(id);
         log.info("Notification id: " + id + " deleted");
         return ResponseEntity.ok(notificationService.findAllNotificationByRecieverUsername(principal.getName()));
@@ -44,13 +44,13 @@ public class NotificationController {
     SimpMessagingTemplate template;
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendMessage(@RequestBody DtoNotification dtoNotification, Principal principal) {
-        template.convertAndSendToUser(principal.getName(), "/notifications", dtoNotification);
+    public ResponseEntity<Void> sendMessage(@RequestBody NotificationDto notificationDto, Principal principal) {
+        template.convertAndSendToUser(principal.getName(), "/notifications", notificationDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @SendTo("/notifications")
-    public DtoNotification broadcastMessage(@Payload DtoNotification dtoNotification) {
-        return dtoNotification;
+    public NotificationDto broadcastMessage(@Payload NotificationDto notificationDto) {
+        return notificationDto;
     }
 }
