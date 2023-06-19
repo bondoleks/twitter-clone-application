@@ -31,8 +31,8 @@ public class Tweet extends BaseEntity {
     @JoinColumn(name = "parent_tweet_id", referencedColumnName = "id")
     private Tweet parentTweet;
 
-    /*@ManyToMany(mappedBy = "tweetModel")
-    private Set<TweetsWord> tweetWordModel;*/
+    @ManyToMany(mappedBy = "listTweet")
+    private List<TweetWord> listTweetWord;
 
     public Tweet(TweetType tweetType, String tweetBody, User user) {
         this.tweetType = tweetType;
@@ -40,10 +40,10 @@ public class Tweet extends BaseEntity {
         this.user = user;
     }
 
-    /*public Tweet(TweetType tweetType, String tweetBody, User user, Tweet parentTweet) {
+    public Tweet(TweetType tweetType, String tweetBody, User user, Tweet parentTweet) {
         this.tweetType = tweetType;
         this.tweetBody = tweetBody;
         this.user = user;
         this.parentTweet = parentTweet;
-    }*/
+    }
 }
