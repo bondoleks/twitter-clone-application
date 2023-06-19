@@ -7,11 +7,13 @@ import { notificationsReducer } from './notifications/notificationReducer'
 import { homeReducer } from './home/homeReducer'
 import {getTokens, setAuthToken} from "./tokens/tokens";
 import { tweetReducer } from './tweet/tweetReducer';
+import { mainPageReducer } from './mainPage/mainPageReducer'
 
 
 
 
 const rootReducer = combineReducers({
+    main: mainPageReducer,
     user: userReducer,
     followers: followersReducer,
     registration : registrationReducer,

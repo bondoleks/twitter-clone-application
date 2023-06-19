@@ -8,9 +8,13 @@ import { Box, Typography , CardMedia, Avatar, IconButton } from '@mui/material';
 import { Retweet } from './Retweet';
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { OpenNoAutorizateModalThunk } from '../../redux/mainPage/OpenNoAutorizateModalThunk';
+
 
 
 export function formatDateTime(dateTimeString) {
+
   const now = new Date();
   const dateTime = new Date(dateTimeString);
 
@@ -49,11 +53,13 @@ export function formatDateTime(dateTimeString) {
 
 const Tweet = ({ tweet }) => {
   const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, like = 84, view = 154, parentDto} = tweet;
-
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
 const [activeHeart,setActiveHeart] = useState(false);
-
+const autorizate = localStorage.getItem('authToken');
+console.log(autorizate);
+console.log(`${firstName} ${lastName}`);
 
 
 return (
@@ -93,10 +99,13 @@ return (
         {tweet_imageUrl && <CardMedia component="img" src={tweet_imageUrl} sx={{ borderRadius: '16px' }} />}
         {parentDto && <Retweet key={parentDto.id} tweet={parentDto} />}
       </Box>
-      <Box>
+      <Box sx={{display:'flex', justifyContent:'space-around'}}>
         <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
           onClick={(event) => {
               event.stopPropagation();
+              if(autorizate === null){
+                dispatch(OpenNoAutorizateModalThunk('reply',`${firstName} ${lastName}`));
+              }
           }}
         >
           <ChatBubbleIcon />
@@ -105,6 +114,9 @@ return (
         <IconButton sx={{ "&:hover": { color: "rgb(0, 186, 124)" } }}
           onClick={(event) => {
                     event.stopPropagation();
+                    if(autorizate === null){
+                      dispatch(OpenNoAutorizateModalThunk('retweet',`${firstName} ${lastName}`));
+                    }
           }}
         >
           <RepeatIcon />
@@ -113,7 +125,11 @@ return (
         <IconButton sx={{ "&:hover": { color: "rgb(249, 24, 128)", zIndex: 3 }, ...(activeHeart && { color: 'rgb(249, 24, 128)' }) }} 
           onClick={(event) => {
             event.stopPropagation();
-            !activeHeart ? setActiveHeart(true) : setActiveHeart(false);
+            if(autorizate === null){
+              dispatch(OpenNoAutorizateModalThunk('like',`${firstName} ${lastName}`));
+            } else{
+              !activeHeart ? setActiveHeart(true) : setActiveHeart(false);
+            }
             }}>
           {!activeHeart ? <FavoriteBorderIcon /> : <FavoriteIcon />}
           <Typography>{like}</Typography>
