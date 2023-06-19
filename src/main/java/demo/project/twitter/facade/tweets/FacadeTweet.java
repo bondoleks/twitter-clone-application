@@ -2,6 +2,7 @@ package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
+import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.User;
@@ -308,13 +309,23 @@ public class FacadeTweet {
         return parentTweetId;
     }
 
-    public List<UserDto> searchByUser(String searchRequest) {
+    /*public List<UserDto> searchByUser(String searchRequest) {
         String[] listS = searchRequest.split(" ");
         Arrays.stream(listS).forEach(s -> log.info(":::::s=" + s + "!"));
         int i = searchRequest.indexOf(" ");
         String startWord = searchRequest.substring(0, i);
         log.info("::::::::: startWord = " + startWord);
         List<User> listUser = serviceUser.searchByUser(searchRequest);
+
+
+        return null;
+    }*/
+
+    public List<UserSearchDto> tweetSearch(String searchRequest) {
+        Arrays.stream(searchRequest.split(" ")).
+                filter(x -> !x.equals("")).
+                forEach(x -> log.info("::::::::: x = " + x));
+
 
 
         return null;

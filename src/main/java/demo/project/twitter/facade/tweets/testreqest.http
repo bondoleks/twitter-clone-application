@@ -23,9 +23,13 @@ Content-Type: application/json
 GET http://localhost:8080/tweets/image/57
 
 ###
+GET http://localhost:8080/tweets/alluser
+
+###
 GET http://localhost:5050/tweets/searchusers?search_requеst=п
 
-
+###
+GET http://localhost:8080/tweets/tweetsearch?search_requеst=шла собака     по роялю
 
 
 ###
