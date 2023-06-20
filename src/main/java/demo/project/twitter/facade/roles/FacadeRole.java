@@ -1,7 +1,6 @@
 package demo.project.twitter.facade.roles;
 
 import demo.project.twitter.model.Role;
-import demo.project.twitter.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

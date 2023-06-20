@@ -23,7 +23,7 @@ export const LOGIN_FAILURE = 'user/loging/fail'
 
 //Registration
 export const REGISTER_USER_REQUEST = 'user/registration/request'
-export const REGISTER_USER_SUCCSES= 'user/registration/success'
+export const REGISTER_USER_SUCCESS = 'user/registration/success'
 export const REGISTER_USER_ERROR = 'user/registration/fail'
 
 
@@ -47,3 +47,20 @@ export const  GET_COMMENTS_SUCCESS = 'tweet/comments/get/succses';
 export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
 export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
 export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
+
+export function registerUserRequest(user) {
+    return {
+        type: REGISTER_USER_REQUEST,
+        payload: {
+            user: user
+        }
+    };
+}
+
+
+//MainPage
+export const  GET_TWEETS_MAIN_REQUEST = 'main/tweets/get/request';
+export const  GET_TWEETS_MAIN_SUCCESS  = 'main/tweets/get/success';
+export const  GET_MAIN_ERROR = 'main/tweets/get/error';
+export const  OPEN_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/open';
+export const  CLOSE_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/close';

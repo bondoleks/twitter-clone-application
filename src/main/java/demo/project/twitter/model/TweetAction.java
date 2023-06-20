@@ -1,8 +1,6 @@
 package demo.project.twitter.model;
 
 import demo.project.twitter.model.tweet.Tweet;
-import demo.project.twitter.model.BaseEntity;
-import demo.project.twitter.model.User;
 import demo.project.twitter.model.enums.ActionType;
 import lombok.*;
 

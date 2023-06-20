@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import ContainerTweetForm from '../TweetForm/ContainerTweetForm';
 import ToolbarTweetForm from '../TweetForm/ToolbarTweetForm';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   '& .MuiTabs-indicator': {
@@ -13,7 +13,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 }));
 
 const StyledTab = styled(Tab)(({ theme }) => ({
-  width:'50%',
+  width: '50%',
   textTransform: 'none',
   fontWeight: 'bold',
   borderBottom: `2px solid transparent`,
@@ -30,10 +30,19 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 
 export function HomeMain() {
   const location = useLocation();
-  const [pageTweets,setPageTweets]= useState(1);
+  const [pageTweets, setPageTweets] = useState(1);
+
+  const [buttonColor, setButtonColor] = useState(null);
+
+  useEffect(() => {
+    const savedColor = localStorage.getItem('buttonColor');
+    if (savedColor) {
+      setButtonColor(savedColor);
+    }
+  }, []);
 
   return (
-    <Box sx={{ width: '100%' ,borderRight:'1px rgb(239, 243, 244) solid',borderLeft:'1px rgb(239, 243, 244) solid'}}>
+    <Box sx={{ width: '100%', borderRight: '1px rgb(239, 243, 244) solid', borderLeft: '1px rgb(239, 243, 244) solid' }}>
       <Box sx={{ position: 'sticky', top: 0, backgroundColor: 'rgba(255, 255, 255,0.7)', zIndex: 1 }}>
         <Typography sx={{ fontSize: 18, fontWeight: 700, py: 2, px: 4 }}>
           Home
@@ -52,12 +61,18 @@ export function HomeMain() {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <ToolbarTweetForm />
 
-        <Button variant="contained" color="primary" size="small" sx={{ textTransform: 'none', borderRadius: '20px', height: '30px' }}>
+        <Button variant="contained" size="small" sx={{
+          textTransform: 'none',
+          borderRadius: '20px',
+          height: '30px',
+          marginRight: '30px',
+          background: buttonColor
+        }}>
           Tweet
         </Button>
       </Box>
 
-      <Outlet context={{pageTweets,setPageTweets}}/>
+      <Outlet context={{ pageTweets, setPageTweets }} />
     </Box>
   );
 }

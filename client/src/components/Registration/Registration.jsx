@@ -1,7 +1,25 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, Button, TextField } from '@mui/material';
+import { connect } from 'react-redux';
+import {registerUser} from "../../redux/registration/registrationThunks.jsx";
 
-const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
+const RegistrationModal = ({ isOpen, onClose, onLoginClick, registerUser }) => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleRegistration = () => {
+        const user = {
+            name,
+            email,
+            password,
+        };
+
+        registerUser(user);
+    };
+
+
+
     const modalStyle = {
         position: 'absolute',
         top: '50%',
@@ -25,9 +43,8 @@ const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
         textAlign: 'center',
     };
 
-    const handleRegistration = () => {
-        // Handle registration logic
-    };
+
+
 
     return (
         <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -72,6 +89,8 @@ const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
                             id="outlined-name-input"
                             label="Name"
                             type="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             inputProps={{
                                 style: {
                                     outline: 'none',
@@ -102,6 +121,8 @@ const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
                             id="outlined-email-input"
                             label="Email"
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             inputProps={{
                                 style: {
                                     outline: 'none',
@@ -132,6 +153,8 @@ const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
                             id="outlined-password-input"
                             label="PasswordModal"
                             type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             inputProps={{
                                 style: {
                                     outline: 'none',
@@ -210,4 +233,8 @@ const RegistrationModal = ({ isOpen, onClose, onLoginClick }) => {
 }
 
 
-export default RegistrationModal;
+const mapDispatchToProps = (dispatch) => ({
+    registerUser: (user) => dispatch(registerUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(RegistrationModal);
