@@ -10,15 +10,16 @@ export const MessagesContextProvider = ({ children }) => {
 
   const mockedUsers = [
     {
-      id: 1,
+      id: "sdf3d-23ed-3dde",
       name: 'Jack',
       date: 'Jan 9, 2014',
       hashtag: 'jacktheuser',
       followers: 100,
-      following: 20
+      following: 20,
+      avatar: "../../img/avatar.png"
     },
     {
-      id: 2,
+      id: "hsj82-bcj9-22xn",
       name: 'Michael',
       date: 'Jan 7, 2014',
       hashtag: 'michaeltheuser',
@@ -34,6 +35,37 @@ export const MessagesContextProvider = ({ children }) => {
       following: 200
     }
   ];
+
+  const mockedMessages = [
+
+    {
+      user_from: "sdf3d-23ed-3dde",
+      chat_id: 1,
+      textMessage: "Hello, Alex! What are you up to?"
+    },
+    {
+      user_from: "hsj82-bcj9-22xn",
+      chat_id: 1,
+      textMessage: "Hello, Joe!, I’m well, thanks! How are you over there?"
+    },
+
+    {
+      user_from: "sdf3d-23ed-3dde",
+      chat_id: 1,
+      textMessage: "Yeah, I’m good, thanks :) See you tomorrow at the office?"
+    },
+    {
+      user_from: "hsj82-bcj9-22xn",
+      chat_id: 1,
+      textMessage: "For sure! Expecting to see you tomorrow!"
+    }
+
+
+  ]
+
+  const usersWithChats = {
+
+  }
 
   const handleFindUser = (user) => {
     setFilter(user)

@@ -31,12 +31,13 @@ const MessageMiddleColumn = ({mockedUsers}) => {
 
   return (
     <>
-      <Box sx={{ p: 5,borderRight: '1px solid rgba(128, 128, 128, 0.1)', borderLeft: '1px solid rgba(128, 128, 128, 0.1)', height: "100vh" }}>
+      <Box sx={{borderRight: '1px solid rgba(128, 128, 128, 0.1)', borderLeft: '1px solid rgba(128, 128, 128, 0.1)', height: "100vh" }}>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            p: "20px "
           }}
         >
           <Typography
@@ -56,11 +57,14 @@ const MessageMiddleColumn = ({mockedUsers}) => {
             </IconButton>
           </Box>
         </Box>
-        <Box sx={{ width: '100%',  }}>
+        <Box sx={{ width: '100wh' }}>
           {clicked ? (
             <>
               <Box sx={{
-                display: "flex", alignItems: "center", marginBottom: "30px"
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+
               }}>
               <IconButton sx={{mt: 2}} onClick={handleArrowClick}>
                 <ArrowBackIcon  />
@@ -68,7 +72,7 @@ const MessageMiddleColumn = ({mockedUsers}) => {
               <MessagesSearch />
               </Box>
               <Box>
-                <Typography sx={{display: "box"}}>
+                <Typography sx={{display: "box", marginTop: "20px", padding: "0 10px"}}>
                   Try searching for people, groups, or messages
                 </Typography>
               </Box>

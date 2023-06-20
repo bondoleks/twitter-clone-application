@@ -48,6 +48,26 @@ export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
 export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
 export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
 
+// chats and messages
+
+export const GET_CHATS_SUCCESS = "GET_CHATS_SUCCESS";
+export const GET_CHATS_LOADING = "GET_CHATS_LOADING";
+export const GET_CHATS_ERROR = "GET_CHATS_ERROR";
+
+export const NEW_CHAT_SUCCESS = "GET_USERS_SUCCESS";
+export const NEW_CHAT_LOADING = "NEW_CHAT_LOADING";
+export const NEW_CHAT_ERROR = "NEW_CHAT_ERROR";
+
+
+export const GET_MESSAGES_SUCCESS = "GET_USERS_SUCCESS";
+export const GET_MESSAGES_LOADING = "GET_USERS_LOADING";
+export const GET_MESSAGES_ERROR = "GET_USERS_ERROR";
+
+export const NEW_MESSAGE_SUCCESS = "NEW_MESSAGE_SUCCESS";
+export const NEW_MESSAGE_LOADING = "NEW_MESSAGE_LOADING";
+export const NEW_MESSAGE_ERROR = "NEW_MESSAGE_ERROR";
+
+
 export function registerUserRequest(user) {
     return {
         type: REGISTER_USER_REQUEST,

@@ -8,6 +8,8 @@ import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined.js";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined.js";
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import {useLocation} from 'react-router-dom';
+import ChatInput from "./ChatInput.jsx";
+import ChatMessages from "./ChatMessages.jsx";
 
 const ActiveChat = () => {
 
@@ -15,21 +17,32 @@ const ActiveChat = () => {
   const user = state?.users && state.users[0];
 
   return (
-    <Box sx={{height: "100vh", padding: "0"}}>
+    <Box sx={{
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between"
+    }}>
       <Box sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         gap: "10px",
-        marginTop: "20px",
+        marginTop: "20px"
+
 
       }}>
         <Box>
           <Avatar
             alt="User Avatar"
-            src='../../img/avatar.png'/>
+            src={ user.avatar}/>
         </Box>
-        <Box>
+        <Box sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
           <Typography sx={{
             fontSize: '24px',
             fontWeight: '900'
@@ -62,62 +75,15 @@ const ActiveChat = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: "70%"
+        flexGrow: 1,
+        overflowY: "auto"
+
 
       }}>
-        <Box>
-          <Typography sx={{
-            textAlign: "center",
-            mt: "200px"
-          }}>
-            Messages
-          </Typography>
-        </Box>
-        <TextField
-          sx={{
-            borderRadius: '20px',
-            padding: '0',
-            '& .MuiInputBase-root': {
-              borderRadius: '20px',
-              padding: '0',
-            },
-          }}
-          id="outlined-multiline-flexible"
-          fullWidth={true}
-          multiline
-          maxRows={4}
-          variant="filled"
-          placeholder="Start a new message"
-          InputProps={{
-            classes: {
-              root: "MuiInputBase-root"
-            },
-            disableUnderline: true,
-            startAdornment: (
-              <InputAdornment position="center">
-                <IconButton>
-                  <BrokenImageOutlinedIcon sx={{ color: "rgb(29, 155, 240)"}} />
-                </IconButton>
-                <IconButton>
-                  <GifBoxOutlinedIcon sx={{ color: "rgb(29, 155, 240)" }} />
-                </IconButton>
-                <IconButton>
-                  <SentimentSatisfiedOutlinedIcon sx={{ color: "rgb(29, 155, 240)" }} />
-                </IconButton>
-
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <DoubleArrowIcon sx={{ color: "rgb(29, 155, 240)" }} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+        <ChatMessages />
 
       </Box>
+      <ChatInput/>
     </Box>
   )
 }

@@ -205,7 +205,7 @@ function App() {
         }
 
         return (
-            <Grid item md={location.pathname === '/messages' ? 5 : 3}>
+            <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
                 {rightColumn}
             </Grid>
         )
@@ -222,7 +222,7 @@ function App() {
                         <Grid item md={3}>
                             <Sidebar />
                         </Grid>
-                        <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
+                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8}>
                             <Routes>
                                 {/* {...routes.map(r => <Route {...r} />)} */}
                                 {routes.map((route, index) => (

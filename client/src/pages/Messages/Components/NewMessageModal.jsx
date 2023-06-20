@@ -93,7 +93,8 @@ const NewMessageModal = ({ open, closeModal }) => {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ fontSize: "26px", fontWeight: "800" }}>New Message</Typography>
-          <Button variant="contained" onClick={openNewChat} disabled={!selectedUsers.length} sx={{ borderRadius: "20px", color: "black" }}>
+          <Button variant="contained" onClick={openNewChat} disabled={!selectedUsers.length} sx={{ borderRadius: "20px", color: "#fff",
+            backgroundColor: "rgb(29, 155, 240)" }}>
             Next
           </Button>
         </Box>
