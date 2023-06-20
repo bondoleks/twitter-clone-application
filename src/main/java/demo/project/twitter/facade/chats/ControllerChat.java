@@ -5,30 +5,46 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 
-@RequestMapping("chat")
+@RequestMapping("/api/v1/chat")
 public class ControllerChat {
     private final FacadeChat facade;
 
-
-/* Дальнейший код приведен для примера.
-        В данном классе создаются endpoint для обработки запросов фронта.
-        Весь основной процесс обработки происходит в классе Facade
-        */
-
-// ************************************** EXAMPLE START **************************************
-
-    @GetMapping("get/{id}")
-    public ResponseEntity<?> getEntity(@PathVariable("id") Long id) {
-        return facade.getEntity(id);
+    @GetMapping("getChat/{id}")
+    public ResponseEntity<?> getChatBetweenUsers(@RequestBody() DtoChatReq dtoReq,
+                                                 @PathVariable("id") Long chatId) {
+        return facade.getChat(dtoReq, chatId);
     }
 
     @PostMapping("save")
-    public DtoChat saveEntity(@RequestBody DtoChat dto) {
+    public ResponseEntity<?> saveEntity(@RequestBody DtoChatReq dto) {
         return facade.saveEntity(dto);
     }
 
-    //    ************************************** EXAMPLE END **************************************
+    @PostMapping("addUser/{chatId}/{userId}")
+    public ResponseEntity<?> addUserToChat(@PathVariable("chatId") Long chatId,
+                                           @PathVariable("userId") Long userId) {
+        return facade.addUserToChat(chatId, userId);
+    }
+
+    @PostMapping("deleteUser/{chatId}/{userId}")
+    public ResponseEntity<?> deleteUserToChat(@PathVariable("chatId") Long chatId,
+                                              @PathVariable("userId") Long userId) {
+        return facade.deleteUserFromChat(chatId, userId);
+    }
+
+
+    @PostMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        return facade.deleteEntity(id);
+    }
+
+    @GetMapping("getAll/{userId}")
+    public ResponseEntity<List<DtoChatResp>> getAll(@PathVariable("userId") Long userId){
+        return facade.getAll(userId);
+    }
 }

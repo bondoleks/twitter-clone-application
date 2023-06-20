@@ -11,6 +11,7 @@ import java.util.Date;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
+
     private Long id;
     private String username;
     private String firstName;
@@ -23,6 +24,7 @@ public class UserDto {
     private String head_imagerUrl;
 
     public User toUser(){
+
         User user = new User();
         user.setId(id);
         user.setUsername(username);
@@ -35,11 +37,11 @@ public class UserDto {
         user.setAv_imagerUrl(av_imagerUrl);
         user.setHead_imagerUrl(head_imagerUrl);
 
-
         return user;
     }
 
     public static UserDto fromUser(User user) {
+
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
@@ -51,7 +53,6 @@ public class UserDto {
         userDto.setBio(user.getBio());
         userDto.setAv_imagerUrl(user.getAv_imagerUrl());
         userDto.setHead_imagerUrl(user.getHead_imagerUrl());
-
 
         return userDto;
     }

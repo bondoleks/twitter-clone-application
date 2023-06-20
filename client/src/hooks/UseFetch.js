@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import {api} from "../redux/service/api";
+import { api } from "../redux/service/api";
 
 export const useFetch = ({
-                             instant = true,
-                             initData = null,
-                             onCompleted = (data) => data,
-                             dataTransformer = (data) => data,
-                             onError = (err) => err,
-                             ...axios
-                         }) => {
+    instant = true,
+    initData = null,
+    onCompleted = (data) => data,
+    dataTransformer = (data) => data,
+    onError = (err) => err,
+    ...axios
+}) => {
     const [data, setData] = useState(initData);
     const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,22 @@ export const useFetch = ({
 
             setLoading(true);
 
-            return api(fetchOptions)
+            const formData = new FormData(); // Create a FormData object
+
+            // Add the request data to the FormData object
+            for (const key in fetchOptions.data) {
+                formData.append(key, fetchOptions.data[key]);
+            }
+
+            fetchOptions.headers = {
+                ...fetchOptions.headers,
+                'Content-Type': 'multipart/form-data' // Set the Content-Type header
+            };
+
+            return api({
+                ...fetchOptions,
+                data: formData // Use the FormData object as the request data
+            })
                 .then(dataTransformer)
                 .then((res) => {
                     setData(res);
@@ -35,7 +50,6 @@ export const useFetch = ({
                     setLoading(false);
                 });
         },
-        // eslint-disable-next-line
         [onCompleted, dataTransformer]
     );
 
@@ -43,7 +57,6 @@ export const useFetch = ({
         if (instant) {
             fetcher(axios);
         }
-        // eslint-disable-next-line
     }, []);
 
     return [

@@ -1,16 +1,22 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box ,Typography} from '@mui/material';
 import Footerlogin from '../components/Footerlogin/Footerlogin';
+import { ListMainPage } from '../components/MainGage/ListMainPage';
+import { ModalNonAutorizate } from '../components/ModalNonAutorizate/ModalNonAutorizate';
 
 export const MainPage = () => {
 
     return (
-        <>
-            <Box sx={{ fontSize: '28px', fontWeight: 600, fontFamily: 'Roboto' }}>Twitter-clone</Box>
+            <Box sx={{ width: '100%', borderRight: '1px rgb(239, 243, 244) solid', borderLeft: '1px rgb(239, 243, 244) solid' }}>
+      <Box sx={{ position: 'sticky', top: 0, backgroundColor: 'rgba(255, 255, 255,0.7)', zIndex: 1 }}>
+        <Typography sx={{ fontSize: 18, fontWeight: 700, py: 2, px: 4 , fontFamily: 'Roboto' }}>
+            Twitter-clone
+        </Typography>
+      </Box>  
+            <ListMainPage/>
+            <ModalNonAutorizate/>
             <Footerlogin />
-
-        </>
+        </Box>
     )
 }
 
-export default MainPage

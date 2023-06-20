@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface FunctionMessage {
 
     Message saveOne(Message message);
+
     Optional<Message> getById(Long id);
+
     boolean existsById(Long id);
 
 }
