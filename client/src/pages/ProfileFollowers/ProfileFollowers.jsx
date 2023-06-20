@@ -69,8 +69,6 @@ const ProfileFollowers = () => {
         <Tab label="Following" href='/profile/following' sx={{ textTransform: 'none' }}></Tab>
       </Tabs>
     </>
-
-
   )
 }
 
