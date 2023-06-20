@@ -24,8 +24,6 @@ import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 
-
-
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
     console.log(isAuthenticated)
@@ -49,7 +47,6 @@ const routes = [
 
         // element: <Home />,
         element: <PrivateRoute element={Home} />,
-
 
         children: <>
             <Route path={''} element={<ForYou />} />
@@ -100,6 +97,7 @@ const routes = [
     },
     {
         path: "/profile:id",
+
         // element: <ProfileId />,
         element: <PrivateRoute element={ProfileId} />,
 
