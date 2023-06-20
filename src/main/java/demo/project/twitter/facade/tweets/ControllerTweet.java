@@ -50,7 +50,7 @@ public class ControllerTweet {
         return ur.findAll();
     }
 
-    @GetMapping("tweetsearch")
+    @GetMapping("ts")
     public List<UserSearchDto> tweetSearch(@RequestParam("search_requеst") String searchRequest) {
         return facade.tweetSearch(searchRequest);
     }

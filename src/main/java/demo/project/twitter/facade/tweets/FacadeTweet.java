@@ -13,7 +13,11 @@ import demo.project.twitter.model.enums.BranchType;
 import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
+
+import demo.project.twitter.model.tweet.TweetWord;
+
 import demo.project.twitter.service.NotificationService;
+
 import demo.project.twitter.service.PhotoService;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +44,11 @@ public class FacadeTweet {
     private final ServiceTweetAction serviceAction;
     private final Mapper mapper;
     private final PhotoService photo;
+
+    private final ServiceTweetWord serviceTweetWord;
+
     private final NotificationService notificationService;
+
 
 
     public List<String> transListPhotoToListUrl(List<MultipartFile> listPhoto) {
@@ -326,15 +334,16 @@ public class FacadeTweet {
 
         return null;
     }*/
+   /* private void saveTweetBodyToTweetWord(String tweetBody, Tweet tweet) {
+        Arrays.stream(tweetBody.split(" ")).
+                filter(x -> !x.equals("")).
+                filter(x -> !serviceTweetWord.existWord(x)).
+                forEach(s -> serviceTweetWord.saveTweetWord(new TweetWord(s).getListTweet().add(tweet)));
+    }*/
 
     public List<UserSearchDto> tweetSearch(String searchRequest) {
-        Arrays.stream(searchRequest.split(" ")).
-                filter(x -> !x.equals("")).
-                forEach(x -> log.info("::::::::: x = " + x));
 
-
-
-        return null;
+         return null;
     }
 
 

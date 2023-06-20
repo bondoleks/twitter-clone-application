@@ -42,7 +42,7 @@ public class ServiceTweet implements FunctionTweet {
 
     @Override
     public List<Tweet> getAll() {
-        return null;
+        return repo.findAll();
     }
 
 
