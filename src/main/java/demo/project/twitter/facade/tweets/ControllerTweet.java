@@ -25,7 +25,8 @@ import static java.lang.Long.parseLong;
 @RequiredArgsConstructor
 @RestController
 @Log4j2
-@RequestMapping("tweets")
+@RequestMapping("api/v1/tweets")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ControllerTweet {
     private final FacadeTweet facade;
     private final UserFacade facadeUser;
