@@ -6,7 +6,7 @@ import {api} from "../service/api";
 export function logingThunk({ email, password }) {
   return async function(dispatch) {
     try {
-      const response = await api.post('auth/login', { email, password });
+      const response = await api.post('auth/login', { email: email, password });
       const token = response.token;
       if (token) {
         setAuthToken(token);

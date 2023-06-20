@@ -1,21 +1,17 @@
 package demo.project.twitter.controller;
 
-import demo.project.twitter.facade.notifications.DtoNotification;
 import demo.project.twitter.model.User;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Log4j2
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping(value = "/api/v1/auth/")
 public class RegistrationController {
 

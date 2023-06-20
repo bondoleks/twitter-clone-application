@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 
-@RequestMapping("chat")
+@RequestMapping("/api/v1/chat")
 public class ControllerChat {
     private final FacadeChat facade;
 
@@ -35,9 +37,14 @@ public class ControllerChat {
         return facade.deleteUserFromChat(chatId, userId);
     }
 
+
     @PostMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         return facade.deleteEntity(id);
     }
 
+    @GetMapping("getAll/{userId}")
+    public ResponseEntity<List<DtoChatResp>> getAll(@PathVariable("userId") Long userId){
+        return facade.getAll(userId);
+    }
 }

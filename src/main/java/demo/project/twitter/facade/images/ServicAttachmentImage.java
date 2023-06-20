@@ -14,12 +14,7 @@ import java.util.Optional;
 public class ServicAttachmentImage implements FunctionAttachmentImage {
     private final RepoAttachmentImage repo;
 
-   /* Дальнейший код приведен для примера.
-        В данном классе создаются методы сервиса, заявленные в интерфейсе Function,
-        в том числе, и с подключением интерфейса Repo (наследник CrudRepository)
-        */
 
-// ************************************** EXAMPLE START **************************************
 
     @Override
     public AttachmentImage saveOne(AttachmentImage img) {
@@ -35,10 +30,10 @@ public class ServicAttachmentImage implements FunctionAttachmentImage {
         return repo.existsById(id);
     }
 
-//    ************************************** EXAMPLE END **************************************
 
-    public List<AttachmentImage> getAttachmentImageByTweetId(Long id){
-        return repo.getAttachmentImageByTweetId(id);
+
+    public List<String> getAttachmentImageUrlByTweetId(Long id){
+        return repo.getAttachmentImageUrlByTweetId(id);
     };
 
 

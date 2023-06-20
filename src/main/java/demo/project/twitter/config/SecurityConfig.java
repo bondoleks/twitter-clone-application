@@ -2,20 +2,20 @@ package demo.project.twitter.config;
 
 import demo.project.twitter.model.User;
 import demo.project.twitter.repository.UserRepository;
+
 import demo.project.twitter.security.jwt.JwtConfigurer;
 import demo.project.twitter.security.jwt.JwtTokenProvider;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
+
+
 
 @Configuration
 //@EnableWebSecurity
@@ -27,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
+    private static final String REGISTRATION_ENDPOINT = "/api/v1/auth/registration";
+    private static final String ACTIVATE_ENDPOINT = "/api/v1/auth/activate/*";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider, UserServiceImpl userService) {
@@ -47,10 +49,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .cors()
+                .and()
                 .authorizeRequests()
+                .antMatchers("/", "/api/v1/auth/login", "/api/v1/auth/registration", "/api/v1/tweets/tweet/all/notauth", "/ws-message/**").permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(REGISTRATION_ENDPOINT).permitAll()
+                .antMatchers(ACTIVATE_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .antMatchers("/", "/registration", "/activate/*", "login").permitAll()
                 .anyRequest().authenticated().and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
 //        http.cors().configurationSource(rq -> new CorsConfiguration().applyPermitDefaultValues());
