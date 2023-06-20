@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
+
 import { Typography, Tab, Tabs, Grid } from '@mui/material';
+
 import { Link as RouterLink } from 'react-router-dom';
 import {
   IconButton,
@@ -9,6 +11,7 @@ import {
 import WestIcon from '@mui/icons-material/West';
 import { useTheme } from '@mui/material/styles';
 import Follower from '../../components/Follower/Follower';
+
 
 const ProfileFollowers = () => {
 
@@ -36,9 +39,11 @@ const ProfileFollowers = () => {
   };
 
 
+
   return (
     <>
       <div>ProfileFollowers</div>
+
       <Grid
         sx={{
           borderRight: '1px solid grey',
@@ -85,6 +90,7 @@ const ProfileFollowers = () => {
         </Box>
       </Grid>
     </>
+
   )
 }
 

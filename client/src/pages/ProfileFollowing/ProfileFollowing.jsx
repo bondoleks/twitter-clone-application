@@ -10,6 +10,7 @@ import WestIcon from '@mui/icons-material/West';
 import { useTheme } from '@mui/material/styles';
 import Following from '../../components/Follower/Following';
 
+
 const ProfileFollowing = () => {
 
   const [value, setValue] = React.useState(1);
@@ -26,7 +27,6 @@ const ProfileFollowing = () => {
       setButtonColor(savedColor);
     }
   }, [buttonColor]);
-
 
   const theme = useTheme();
 
@@ -84,6 +84,7 @@ const ProfileFollowing = () => {
           <Following />
         </Box>
       </Grid>
+
     </>
   )
 }
