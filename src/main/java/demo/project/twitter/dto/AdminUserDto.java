@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdminUserDto {
+
     private Long id;
     private String username;
     private String firstName;

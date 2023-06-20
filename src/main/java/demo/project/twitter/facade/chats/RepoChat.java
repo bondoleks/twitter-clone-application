@@ -13,6 +13,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+
+import java.util.List;
+
 import java.util.Optional;
 
 
@@ -46,4 +49,15 @@ public interface RepoChat extends JpaRepository<Chat, Long> {
 
     @Override
     void deleteById(@Param("id") Long id);
+
+
+    @Query(
+            value = "select c.id from chats as c " +
+                    "inner join chats_to_users on c.id = chats_to_users.chat_id" +
+                    "inner join users on chats_to_users.chat_id = users.id " +
+                    "where id = :userId",
+            nativeQuery = true
+    )
+    List<Chat> getAllByUserId(@Param("userId") Long id);
+
 }

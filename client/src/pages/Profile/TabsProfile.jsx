@@ -25,7 +25,7 @@ export const TabsProfile = () => {
 
     const [{ data, loading }, getData] = useFetch({
         initData: [],
-        url: `https://twitter-clone-application.herokuapp.com/tweets/tweet/all?sizePage=10&numberPage=1`,
+        url: `/tweets/tweet/all?sizePage=10&numberPage=1`,
         method: 'GET',
         dataTransformer: (data) => {
             return data.listDto

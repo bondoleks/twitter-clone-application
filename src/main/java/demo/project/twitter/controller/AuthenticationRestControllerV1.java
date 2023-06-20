@@ -4,6 +4,7 @@ import demo.project.twitter.dto.AuthenticationRequestDto;
 import demo.project.twitter.model.User;
 import demo.project.twitter.security.jwt.JwtTokenProvider;
 import demo.project.twitter.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,16 +12,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/auth/")
+@Log4j2
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthenticationRestControllerV1 {
 
     private final AuthenticationManager authenticationManager;
@@ -39,12 +39,18 @@ public class AuthenticationRestControllerV1 {
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
-            String username = requestDto.getUsername();
+            String email = requestDto.getEmail();
+            String username = userService.findByEmail(email).getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            User user = userService.findByUsername(username);
+            User user = userService.findByEmail(email);
 
             if (user == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
+            }
+
+            if (user.getActivationCode() != null) {
+                log.info("User " + username + " not ACTIVATE");
+                throw new BadCredentialsException("User " + username + " not ACTIVATE");
             }
 
             String token = jwtTokenProvider.createToken(username, user.getRoles());
@@ -55,7 +61,7 @@ public class AuthenticationRestControllerV1 {
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Invalid email or password");
         }
     }
 }

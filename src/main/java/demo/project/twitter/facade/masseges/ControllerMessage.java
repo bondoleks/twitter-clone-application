@@ -10,8 +10,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 
-@RequestMapping("messages")
-public class    ControllerMessage {
+@RequestMapping("/api/v1/messages")
+public class ControllerMessage {
     private final FacadeMessage facade;
 
 

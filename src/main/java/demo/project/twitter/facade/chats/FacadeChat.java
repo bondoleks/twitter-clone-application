@@ -8,7 +8,6 @@ import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -87,6 +86,15 @@ public class FacadeChat {
     public ResponseEntity<?> deleteEntity(Long id) {
         chatService.deleteById(id);
         return ResponseEntity.accepted().body("deleted!");
+    }
+
+
+    public ResponseEntity<List<DtoChatResp>> getAll(Long userId) {
+
+        List<DtoChatResp> dtos = new ArrayList<>();
+        List<Chat> chats = chatService.getAll();
+        chats.forEach(chat -> dtos.add(transEntityToDto(chat)));
+        return ResponseEntity.accepted().body(dtos);
     }
 
 }

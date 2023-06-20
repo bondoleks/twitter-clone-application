@@ -16,8 +16,10 @@ import ButEditUser from './ButEditUser';
 import { useFetch } from "../../hooks/UseFetch";
 import { useParams } from 'react-router-dom';
 
+
 export const Profile = ({ withId }) => {
   const { id } = useParams()
+
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
     position: 'relative',
@@ -37,27 +39,26 @@ export const Profile = ({ withId }) => {
     },
   }));
 
-  // const [{ data, loading }, getData] = useFetch({
-
-  //   initData: {},
-  //   url: withId
-  //     ? `https://twitter-clone-application.herokuapp.com/user/get/${id}`
-  //     : 'https://twitter-clone-application.herokuapp.com/user/get',
-  //   method: 'GET',
-  //   dataTransformer: (data) => {
-  //     return data;
-  //   },
-  // });
+  const [{ data, loading }, getData] = useFetch({
+    initData: {},
+    url: withId
+      ? `user/getuser/${id}`
+      : 'user/profile',
+    method: 'GET',
+    dataTransformer: (data) => {
+      return data;
+    },
+  });
   
 
-  // if (!loading) <p>loading...</p>
+  if (!loading) <p>loading...</p>
 
-  // const { username, firstName, lastName, email, location, birthdate, bio } = data
-
+  const { username, firstName, lastName, email, location, birthdate, bio } = data
 
   return (
 
     <>
+
       <Grid
         sx={{
           borderRight: '1px solid grey',
@@ -92,17 +93,17 @@ export const Profile = ({ withId }) => {
           <ButEditUser />
 
           <Box>
-            <Typography sx={{
-              fontSize: '24px',
-              fontWeight: '900'
-            }}>User</Typography>
-            <Typography>@nikname</Typography>
-
             {/* <Typography sx={{
               fontSize: '24px',
               fontWeight: '900'
+            }}>User</Typography>
+            <Typography>@nikname</Typography> */}
+
+            <Typography sx={{
+              fontSize: '24px',
+              fontWeight: '900'
             }}>{firstName} {lastName}</Typography>
-            <Typography>{username}</Typography> */}
+            <Typography>{username}</Typography>
             <Box display={'flex'}
               marginTop={'10px'}>
               <IconButton edge='start' color='gray'>
@@ -111,17 +112,17 @@ export const Profile = ({ withId }) => {
               <Typography mt={1}>Joined Mounth year</Typography>
             </Box>
             <Box display={'flex'}>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
+              <Link href="/profile/following" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography mr={2} sx={{
                   fontSize: '14px',
                   color: 'gray'
                 }}>N Following</Typography>
               </Link>
-              <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
+              <Link href="/profile/followers" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
                 <Typography sx={{
                   fontSize: '14px',
                   color: 'gray'
-                }}>N Follower</Typography>
+                }}>N Followers</Typography>
               </Link>
             </Box>
           </Box>

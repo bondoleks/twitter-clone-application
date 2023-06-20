@@ -2,7 +2,7 @@ import axios from "axios";
 import {getTokens, setAuthToken, setRefreshToken} from "../tokens/tokens";
 
 export const api = axios.create({
-    baseURL: 'https://twitter-clone-application.herokuapp.com/api/v1'
+    baseURL: 'http://localhost:8080/api/v1'
 });
 
 api.interceptors.response.use((r) => r.data,

@@ -2,8 +2,11 @@ package demo.project.twitter.facade.tweets;
 
 
 
+import demo.project.twitter.model.User;
+import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.Tweet;
 import demo.project.twitter.repository.TweetRepository;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +42,7 @@ public class ServiceTweet implements FunctionTweet {
 
     @Override
     public List<Tweet> getAll() {
-        return null;
+        return repo.findAll();
     }
 
 
@@ -49,12 +53,7 @@ public class ServiceTweet implements FunctionTweet {
 
     public Page<Tweet> getAllTweetById(Long id, Integer sizePage, Integer numberPage, int key, Long profileId) {
         Pageable pageable = PageRequest.of(numberPage, sizePage);
-       /* private final int ALL_TWEET_USERID = 0;
-        private final int ALL_REPLY_TWEETID = 1;
-        private final int ALL_TWEET = 2;*/
-
         Page<Tweet> pageTweet = null;
-
 
         switch (key){
             case 0: pageTweet = repo.findAllByUser_id(id, pageable); break;
@@ -64,9 +63,6 @@ public class ServiceTweet implements FunctionTweet {
         }
         return pageTweet;
 
-//        return id == 0 ?
-//                repo.findAllTweet(pageable) :
-//                repo.findAllByUser_id(id, pageable);
     }
 
     public Tweet getTweetById(Long id){
@@ -93,7 +89,15 @@ public class ServiceTweet implements FunctionTweet {
     }
 
 
+    public void createRetweet(Long id, User user) {
+        Tweet tweet = new Tweet(TweetType.QUOTE_TWEET, null, user, repo.getTweetById(id));
+        tweet.setCreatedDate(new Date());
+        repo.save(tweet);
+    }
 
+    public void deleteRetweet(Long id, Long profileId) {
+        List<Tweet> list = repo.selectRetweet(id, profileId);
+    }
 
 
 }
