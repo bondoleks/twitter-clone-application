@@ -24,7 +24,6 @@ import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 
-
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
     console.log(isAuthenticated)
@@ -78,7 +77,6 @@ const routes = [
         path: "/messages/:id",
         // element: <MessageMiddleColumn />,
         element: <PrivateRoute element={MessageMiddleColumn} />,
-
         
     },
     {
@@ -91,9 +89,15 @@ const routes = [
         path: "/profile",
         // element: <ProfileUser />,
         element: <PrivateRoute element={ProfileUser} />,
+
+        children: <>
+            <Route path={'followers'} element={<ProfileFollowers />} />
+            <Route path={'following'} element={<ProfileFollowing />} />
+        </>
     },
     {
-        path: "/profile/:id",
+        path: "/profile:id",
+
         // element: <ProfileId />,
         element: <PrivateRoute element={ProfileId} />,
 
@@ -110,7 +114,6 @@ const routes = [
         path: "/tweet/:tweet_id",
         // element: <TweetPage />,
         element: <PrivateRoute element={TweetPage} />,
-
     },
 ];
 

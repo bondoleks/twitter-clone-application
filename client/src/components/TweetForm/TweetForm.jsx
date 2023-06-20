@@ -63,7 +63,6 @@ export default function TweetForm({ open, onClose }) {
         // } 
         // formData.append('file', file);
 
-
         api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", formData)
             .then(response => {
                 console.log(response);
@@ -247,4 +246,6 @@ export default function TweetForm({ open, onClose }) {
 
 //         </Dialog>
 //     );
+// }
+
 
