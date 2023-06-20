@@ -19,7 +19,7 @@ const Footerlogin = () => {
     const dispatch = useDispatch();
 
     const handleLogin = (password) => {
-        dispatch(logingThunk({username: email, password}))
+        dispatch(logingThunk({email: email, password}))
         setIsNextButtonOpen(false)
     }
 
