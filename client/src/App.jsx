@@ -90,18 +90,13 @@ const routes = [
     },
     {
         path: "/profile",
-        // element: <ProfileUser />,
-        element: <PrivateRoute element={ProfileUser} />,
-
-        children: <>
-            <Route path={'followers'} element={<ProfileFollowers />} />
-            <Route path={'following'} element={<ProfileFollowing />} />
-        </>
+        element: <ProfileUser />,
+        // element: <PrivateRoute element={ProfileUser} />,
     },
     {
-        path: "/profile:id",
-        // element: <ProfileId />,
-        element: <PrivateRoute element={ProfileId} />,
+        path: "/profile/:id",
+        element: <ProfileId />,
+        // element: <PrivateRoute element={ProfileId} />,
 
     },
     {
