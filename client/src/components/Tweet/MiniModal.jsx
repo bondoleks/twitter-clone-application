@@ -49,9 +49,8 @@ console.log(heightItem);
               {item.text === 'Undo Retweet' &&<RepeatIcon />}
               {item.text ==="Quote Retweet" && <BorderColorOutlinedIcon/>}
               {item.text ==='Copy Link to Tweet' && <LinkOutlinedIcon/>}
-              {item.text ==="Bookmark" && <BookmarkAddOutlinedIcon/>}
-              {item.text ==="Bookmark" && activeBookmark && <BookmarkRemoveOutlinedIcon/>}
-              activeBookmark
+              {item.text ==="Bookmark"  && !activeBookmark ? <BookmarkAddOutlinedIcon/> : null}
+              {item.text === "Bookmark" && activeBookmark ? <BookmarkRemoveOutlinedIcon /> : null}
               <Typography
               sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
               >{item.text}</Typography>
