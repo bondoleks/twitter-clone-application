@@ -103,7 +103,7 @@ export const Profile = ({ withId }) => {
               fontSize: '24px',
               fontWeight: '900'
             }}>{firstName} {lastName}</Typography>
-            <Typography>{username}</Typography>
+            <Typography>@{username}</Typography>
             <Box display={'flex'}
               marginTop={'10px'}>
               <IconButton edge='start' color='gray'>
