@@ -54,9 +54,11 @@ const ProfileFollowers = ({ withId }) => {
   };
 
 
+
   return (
     <>
       <div>ProfileFollowers</div>
+
       <Grid
         sx={{
           borderRight: '1px solid grey',
@@ -75,7 +77,9 @@ const ProfileFollowers = ({ withId }) => {
               </IconButton>
             </RouterLink>
             <Box ml={2}>
+
               <Typography variant='h6'>{username}</Typography>
+
               <Typography>@nikname</Typography>
             </Box>
           </Toolbar>

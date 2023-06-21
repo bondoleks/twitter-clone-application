@@ -6,6 +6,8 @@ import demo.project.twitter.model.enums.TweetType;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -25,9 +27,12 @@ public class TweetWord extends BaseEntity {
     @JoinTable(name = "tweet_word",
             joinColumns = @JoinColumn(name = "word_id"),
             inverseJoinColumns = @JoinColumn(name = "tweet_id"))
-    private List<Tweet> listTweet;
 
-    public TweetWord(String word) {
+    private List<Tweet> listTweet = new ArrayList<>();
+
+    public TweetWord(String word, Tweet tweet) {
         this.word = word;
+        listTweet.add(tweet);
+
     }
 }

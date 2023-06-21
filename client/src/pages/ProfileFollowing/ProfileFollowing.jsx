@@ -30,6 +30,7 @@ const ProfileFollowing = ({ withId }) => {
 
   const { username, firstName, lastName, email, location, birthdate, bio } = data
 
+
   const [value, setValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {
@@ -44,7 +45,6 @@ const ProfileFollowing = ({ withId }) => {
       setButtonColor(savedColor);
     }
   }, [buttonColor]);
-
 
   const theme = useTheme();
 
@@ -74,7 +74,9 @@ const ProfileFollowing = ({ withId }) => {
               </IconButton>
             </RouterLink>
             <Box ml={2}>
+
               <Typography variant='h6'>{username}</Typography>
+
               <Typography>@nikname</Typography>
             </Box>
           </Toolbar>
@@ -102,6 +104,7 @@ const ProfileFollowing = ({ withId }) => {
           <Following />
         </Box>
       </Grid>
+
     </>
   )
 }

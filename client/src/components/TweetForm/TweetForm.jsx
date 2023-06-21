@@ -55,11 +55,11 @@ export default function TweetForm({ open, onClose }) {
         formData.append('parentTweetId', 0);
         formData.append('user_id', '1');
 
+
         for (const f of file) {
             formData.append('file', f);
             console.log("file", f)
         }
-
 
         // if (file) {
         //     formData.append('file', file);
@@ -129,6 +129,7 @@ export default function TweetForm({ open, onClose }) {
         </Dialog>
     );
 }
+
 
 // import React, { useState, useEffect } from "react";
 // import {
@@ -258,6 +259,7 @@ export default function TweetForm({ open, onClose }) {
 //         </Dialog>
 //     );
 // }
+
 
 
 
