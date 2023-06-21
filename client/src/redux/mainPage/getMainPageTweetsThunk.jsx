@@ -7,7 +7,7 @@ export const getMainPageTweetsThunk = () => {
     return (dispatch) => {
       dispatch({ type: GET_TWEETS_MAIN_REQUEST });
   
-      axios.get(`https://twitter-clone-application.herokuapp.com/tweets/tweet/all/notauth`)
+      axios.get(`https://twitter-clone-application.herokuapp.com/api/v1/tweets/tweet/all/notauth`)
         .then((response) => {
             console.log(response.data.listDto);
           dispatch({type:GET_TWEETS_MAIN_SUCCESS,payload:{tweets: response.data.listDto}});

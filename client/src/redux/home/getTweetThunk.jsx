@@ -7,7 +7,7 @@ export const getTweetThunk = (page) => {
     return (dispatch) => {
       dispatch({ type: GET_TWEETS_REQUEST });
   
-      api.get(`https://twitter-clone-application.herokuapp.com/tweets/tweet/all?sizePage=10&numberPage=${page}`)
+      api.get(`tweets/tweet/all?sizePage=10&numberPage=${page}`)
         .then((data) => {
           dispatch({type:GET_TWEETS_SUCCESS,payload:{tweets: data.listDto}});
           dispatch({type: START_SCROLL_HOME})
