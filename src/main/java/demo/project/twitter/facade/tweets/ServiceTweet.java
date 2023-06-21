@@ -101,9 +101,6 @@ public class ServiceTweet implements FunctionTweet {
     }
 
 
-    public void deleteRetweet(Long id, Long profileId) {
-        List<Tweet> list = repo.selectRetweet(id, profileId);
-    }
 
     public List<Tweet> getTweetByWord(String s) {
         return repo.getTweetByWord(s);
