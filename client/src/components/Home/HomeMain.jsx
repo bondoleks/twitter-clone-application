@@ -6,6 +6,7 @@ import ContainerTweetForm from '../TweetForm/ContainerTweetForm';
 import ToolbarTweetForm from '../TweetForm/ToolbarTweetForm';
 import { useState, useEffect } from 'react';
 
+
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   '& .MuiTabs-indicator': {
     backgroundColor: theme.palette.primary.main,
@@ -73,6 +74,7 @@ export function HomeMain() {
       </Box>
 
       <Outlet context={{ pageTweets, setPageTweets }} />
+
     </Box>
   );
 }

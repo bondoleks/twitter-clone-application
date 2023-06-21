@@ -32,9 +32,15 @@ export function ForYou() {
     )
   }
   
+  const sortedTweets = tweetsForYouData.sort((a, b) => {
+    const dateA = new Date(a.createdDate);
+    const dateB = new Date(b.createdDate);
+    return dateB - dateA;
+  });
+
   return (
     <Box>
-      {tweetsForYouData.map((tweet) => (
+      {sortedTweets.map((tweet) => (
         <Tweet
           key={tweet.id}
           tweet={tweet} 
