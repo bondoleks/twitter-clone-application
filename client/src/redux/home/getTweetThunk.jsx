@@ -7,7 +7,9 @@ export const getTweetThunk = (page) => {
     return (dispatch) => {
       dispatch({ type: GET_TWEETS_REQUEST });
   
+
       api.get(`tweets/tweet/all?sizePage=10&numberPage=${page}`)
+
         .then((data) => {
           dispatch({type:GET_TWEETS_SUCCESS,payload:{tweets: data.listDto}});
           dispatch({type: START_SCROLL_HOME})

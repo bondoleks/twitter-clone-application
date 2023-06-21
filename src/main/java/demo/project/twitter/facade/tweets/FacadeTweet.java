@@ -2,7 +2,9 @@ package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
+import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
+import demo.project.twitter.model.Notification;
 import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.User;
 
@@ -11,6 +13,11 @@ import demo.project.twitter.model.enums.BranchType;
 import demo.project.twitter.model.enums.TweetType;
 import demo.project.twitter.model.tweet.AttachmentImage;
 import demo.project.twitter.model.tweet.Tweet;
+
+import demo.project.twitter.model.tweet.TweetWord;
+
+import demo.project.twitter.service.NotificationService;
+
 import demo.project.twitter.service.PhotoService;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +45,10 @@ public class FacadeTweet {
     private final Mapper mapper;
     private final PhotoService photo;
 
+    private final ServiceTweetWord serviceTweetWord;
+
+    private final NotificationService notificationService;
+
 
     public List<String> transListPhotoToListUrl(List<MultipartFile> listPhoto) {
         List<String> listString = new ArrayList<>();
@@ -57,6 +68,11 @@ public class FacadeTweet {
         Optional<TweetAction> marker = serviceAction.getTweetAction(tweetId, profileId, actionType.getType());
         if (marker.isEmpty()) {
             serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), service.getTweetById(tweetId)));
+            notificationService.createNotification(new Notification(actionType, serviceUser.findById(profileId),// від кого
+
+                    serviceUser.findById(profileId),// кому
+                    service.getTweetById(tweetId), false));
+
             return 1;
         } else {
             serviceAction.delTweetAction(marker.get());
@@ -160,6 +176,15 @@ public class FacadeTweet {
         if (listUrl.size() > 0) {
             listUrl.stream().forEach(s -> serviceImage.saveOne(new AttachmentImage(s, newTweet)));
         }
+
+
+        if (tt != TweetType.REPLY) {
+            Arrays.stream(newTweet.getTweetBody().split(" ")).
+                    map(s -> newString(s).toLowerCase()).
+                    filter(s -> !s.equals("")).
+                    forEach(s -> saveWord(s, newTweet));
+        }
+
     }
 
     public Page<Tweet> getAll(Integer sizePage, Integer numberPage) {
@@ -308,7 +333,7 @@ public class FacadeTweet {
         return parentTweetId;
     }
 
-    public List<UserDto> searchByUser(String searchRequest) {
+    /*public List<UserDto> searchByUser(String searchRequest) {
         String[] listS = searchRequest.split(" ");
         Arrays.stream(listS).forEach(s -> log.info(":::::s=" + s + "!"));
         int i = searchRequest.indexOf(" ");
@@ -317,7 +342,103 @@ public class FacadeTweet {
         List<User> listUser = serviceUser.searchByUser(searchRequest);
 
 
+
         return null;
+    }*/
+   /* private void saveTweetBodyToTweetWord(String tweetBody, Tweet tweet) {
+        Arrays.stream(tweetBody.split(" ")).
+                filter(x -> !x.equals("")).
+                filter(x -> !serviceTweetWord.existWord(x)).
+                forEach(s -> serviceTweetWord.saveTweetWord(new TweetWord(s).getListTweet().add(tweet)));
+    }*/
+
+
+    private String newStringLeft(String s) {
+        if (s.length() == 0) return s;
+        else {
+            if (Character.isLetterOrDigit(s.charAt(0))) ;
+            else {
+                s = s.substring(1);
+                s = newStringLeft(s);
+            }
+            return s;
+        }
+    }
+
+    private String newStringRight(String s, int position) {
+        if (Character.isLetterOrDigit(s.charAt(position))) ;
+        else {
+            s = s.substring(0, position--);
+            s = newStringRight(s, position);
+        }
+        return s;
+
+    }
+
+    private String newString(String s) {
+        if (s.length() == 0) return s;
+        else {
+            String newS = newStringLeft(s);
+            if (newS.length() == 0) return newS;
+            else {
+                newS = newStringRight(newS, newS.length() - 1);
+            }
+            return newS;
+        }
+    }
+
+    private void saveWord(String word, Tweet tweet) {
+        if (serviceTweetWord.existWord(word)){
+            TweetWord tw = serviceTweetWord.getTweetWordByWord(word);
+            tw.getListTweet().add(tweet);
+            serviceTweetWord.saveOne(tw);
+        }
+        else {
+            serviceTweetWord.saveOne(new TweetWord(word,tweet));
+        }
+
+    }
+
+    public List<DtoTweet> tweetSearch(String searchRequest, Long profileId) {
+
+        List<String> listString = Arrays.stream(searchRequest.split(" ")).
+                map(s -> newString(s).toLowerCase()).
+                filter(x -> !x.equals("")).
+                collect(Collectors.toList());
+
+        log.info("::::::::: start");
+
+        List<DtoTweet> listDto = service.getTweetByWord(listString.get(0)).stream().
+                map(t -> transEntityToDto(t, profileId)).
+                collect(Collectors.toList());
+
+
+
+        log.info("::::::::: end " + listDto.size());
+        listDto.stream().forEach(t -> log.info("::::::::: dto = " + t.toString()));
+
+        /*listTweet.stream().
+                forEach(t -> log.info("::::::::: tweetId = " + t.getId()));
+*/
+
+
+
+
+
+
+
+       /* List<Tweet> tweet = service.findAllTweet();
+        log.info("::::::::: START");
+        tweet.stream().
+                filter(t-> ((t.getTweetType() == TweetType.QUOTE_TWEET) && (t.getTweetBody() != null))).
+                forEach(tw -> Arrays.stream(tw.getTweetBody().split(" ")).
+                        map(s -> newString(s).toLowerCase()).
+                        filter(x -> !x.equals("")).
+                        forEach(s -> saveWord(s, tw)));*/
+
+
+
+        return listDto;
     }
 
 

@@ -15,6 +15,7 @@ import {api} from '../../redux/service/api';
 
 
 
+
 export function formatDateTime(dateTimeString) {
 
   const now = new Date();
@@ -54,7 +55,9 @@ export function formatDateTime(dateTimeString) {
 
 
 const Tweet = ({ tweet }) => {
+
   const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, countLike, view = 154, parentDto,markerLike,markerRetweet,markerBookmark} = tweet;
+
   const dispatch = useDispatch();
   let navigate = useNavigate();
 //Visible
@@ -101,7 +104,6 @@ function handleCopyLink(id){
   });
   setVisibleShareModal(false);
 }
-
 
 
 const autorizate = localStorage.getItem('authToken');
@@ -194,6 +196,7 @@ return (
             if(autorizate === null){
               dispatch(OpenNoAutorizateModalThunk('like',`${firstName} ${lastName}`));
             } else{
+
               api.post(`/tweets/like/${id}`)
               .then(() => {
                 setActiveHeart(!activeHeart);

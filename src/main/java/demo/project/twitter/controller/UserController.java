@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("api/v1/user")
 public class UserController {
     private final UserFacade facade;

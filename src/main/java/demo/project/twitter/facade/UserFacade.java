@@ -128,7 +128,7 @@ public class UserFacade {
     }
 
 
-    public List<UserSearchDto> searchByUser(String searchRequest) {
+    public List<UserSearchDto> userSearch(String searchRequest) {
         return service.
                 searchByUser(searchRequest).
                 stream().

@@ -27,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
+    private static final String REGISTRATION_ENDPOINT = "/api/v1/auth/registration";
+    private static final String ACTIVATE_ENDPOINT = "/api/v1/auth/activate/*";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider, UserServiceImpl userService) {
@@ -47,13 +49,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .cors()
+                .and()
                 .authorizeRequests()
+                .antMatchers("/", "/api/v1/auth/login", "/api/v1/auth/registration", "/api/v1/tweets/tweet/all/notauth", "/ws-message/**").permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(REGISTRATION_ENDPOINT).permitAll()
+                .antMatchers(ACTIVATE_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .antMatchers("/", "/api/v1/auth/registration", "/api/v1/auth/activate/*", "/login", "/registration").permitAll()
                 .anyRequest().authenticated().and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
-        http.cors().configurationSource(rq -> new CorsConfiguration().applyPermitDefaultValues());
+//        http.cors().configurationSource(rq -> new CorsConfiguration().applyPermitDefaultValues());
     }
 
 //    @Bean

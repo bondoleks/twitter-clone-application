@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ChatController {
 
     @Autowired
@@ -26,8 +26,6 @@ public class ChatController {
         template.convertAndSendToUser(principal.getName(), "/chat/message", textMessageDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-//    написати таке саме для нотіфікатіонів
 
     @SendTo("/chat/message")
     public TextMessageDTO broadcastMessage(@Payload TextMessageDTO textMessageDTO) {

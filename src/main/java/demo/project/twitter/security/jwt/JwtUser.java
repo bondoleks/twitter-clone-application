@@ -15,7 +15,6 @@ public class JwtUser implements UserDetails {
     private final String password;
     private final String email;
     private final boolean enabled;
-//    private final Date lastPasswordResetDate;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(
@@ -26,7 +25,6 @@ public class JwtUser implements UserDetails {
             String email,
             String password, Collection<? extends GrantedAuthority> authorities,
             boolean enabled
-//            Date lastPasswordResetDate
     ) {
         this.id = id;
         this.username = username;
@@ -36,7 +34,6 @@ public class JwtUser implements UserDetails {
         this.password = password;
         this.authorities = authorities;
         this.enabled = enabled;
-//        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     @JsonIgnore
@@ -94,9 +91,4 @@ public class JwtUser implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-
-//    @JsonIgnore
-//    public Date getLastPasswordResetDate() {
-//        return lastPasswordResetDate;
-//    }
 }

@@ -1,14 +1,20 @@
 package demo.project.twitter;
 
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class TwitterApplicationTests {
 
-//	@Test
-//	void contextLoads() {
-////		User user = new User("Test");
-////		Assert.isTrue(user.getName().equals("Test"));
-//	}
+    @Autowired
+    private TwitterApplication twitterApplication;
+
+    @Test
+    public void test() throws Exception {
+        assertThat(twitterApplication).isNotNull();
+    }
 }
