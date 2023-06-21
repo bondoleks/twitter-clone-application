@@ -26,7 +26,7 @@ import static java.lang.Long.parseLong;
 @RestController
 @Log4j2
 @RequestMapping("api/v1/tweets")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin("http://localhost:5173")
 public class ControllerTweet {
     private final FacadeTweet facade;
     private final UserFacade facadeUser;
@@ -36,6 +36,7 @@ public class ControllerTweet {
     private final int ALL_BOOKMARK = 3;
 
     private final UserRepository ur;
+
 
 
 
@@ -52,6 +53,7 @@ public class ControllerTweet {
 
     @GetMapping("tweetsearch")
     public List<DtoTweet> tweetSearch(@RequestParam("search_requеst") String searchRequest) {
+
         Long profileId = 10L;
         return facade.tweetSearch(searchRequest, profileId);
     }
