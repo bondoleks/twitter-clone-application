@@ -48,8 +48,6 @@ public class FacadeTweet {
 
     private final ServiceTweetWord serviceTweetWord;
 
-    private final NotificationService notificationService;
-
 
     public List<String> transListPhotoToListUrl(List<MultipartFile> listPhoto) {
         List<String> listString = new ArrayList<>();
