@@ -44,6 +44,7 @@ public class FacadeTweet {
     private final ServiceTweetAction serviceAction;
     private final Mapper mapper;
     private final PhotoService photo;
+    private final NotificationService notificationService;
 
     private final ServiceTweetWord serviceTweetWord;
 
@@ -69,10 +70,8 @@ public class FacadeTweet {
         if (marker.isEmpty()) {
             serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), service.getTweetById(tweetId)));
             notificationService.createNotification(new Notification(actionType, serviceUser.findById(profileId),// від кого
-
                     serviceUser.findById(profileId),// кому
                     service.getTweetById(tweetId), false));
-
             return 1;
         } else {
             serviceAction.delTweetAction(marker.get());
