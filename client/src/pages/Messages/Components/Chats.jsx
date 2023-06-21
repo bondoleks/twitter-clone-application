@@ -59,12 +59,14 @@ import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
-import { MessagesContext, MessagesContextProvider } from '../../../context/messagesContext.jsx';
 import { Box, Typography } from '@mui/material';
+import {filteredUsersSelector} from '../../../redux/selectors.jsx';
+import {useSelector} from 'react-redux';
 
 const Chats = () => {
-  const usersWithChats = [];
-  const { mockedUsers } = useContext(MessagesContext);
+  const filteredUsers = useSelector(filteredUsersSelector);
+
+  console.log("filteredUsersfilteredUsersfilteredUsers", filteredUsers);
 
   return (
     <List
@@ -77,24 +79,30 @@ const Chats = () => {
         },
       }}
     >
-      <ListItem>
-        <Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              gap: '5px',
-            }}
-          >
-            <Avatar src={mockedUsers[0].avatar} />
-            <ListItemText>{mockedUsers[0].name}</ListItemText>
-            <ListItemText>@{mockedUsers[0].hashtag}</ListItemText>
-            <ListItemText>{'16.06.2023'}</ListItemText>
-          </Box>
-          <Typography>Last message</Typography>
-        </Box>
-      </ListItem>
+      {
+        filteredUsers.length ? filteredUsers.map(({av_imagerUrl, firstName, username}) => {
+          return (
+            <ListItem>
+              <Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: '5px',
+                  }}
+                >
+                  <Avatar src={av_imagerUrl || ""} />
+                  <ListItemText>{firstName}</ListItemText>
+                  <ListItemText>@{username}</ListItemText>
+                  <ListItemText>{'16.06.2023'}</ListItemText>
+                </Box>
+                <Typography>Last message</Typography>
+              </Box>
+            </ListItem>
+          )
+        }) : <Typography>No chats found</Typography>
+      }
     </List>
   );
 };

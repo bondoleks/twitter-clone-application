@@ -7,13 +7,14 @@ import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
-import {MessagesContext, MessagesContextProvider} from '../../../context/messagesContext.jsx';
 import {Box, Typography} from '@mui/material';
 import Chats from "./Chats.jsx";
+import {filteredUsersSelector} from '../../../redux/selectors.jsx';
+import {useSelector} from 'react-redux';
 
 const ModalList = (user) => {
   const usersWithChats = [];
-  const {mockedUsers} = useContext(MessagesContext)
+  const filteredUsers = useSelector(filteredUsersSelector)
 
   return (
 
@@ -36,9 +37,6 @@ const ModalList = (user) => {
       flexDirection: "column",
       paddingTop: "20px"
     }}>
-      <Chats/>
-      <Chats/>
-      <Chats/>
       <Chats/>
     </Box>
 

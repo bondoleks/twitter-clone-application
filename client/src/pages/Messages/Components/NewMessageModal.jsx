@@ -17,7 +17,6 @@ import SearchIcon from "@mui/icons-material/Search.js";
 import Groups2RoundedIcon from "@mui/icons-material/Groups2Rounded";
 import ModalList from "./ModalList.jsx";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {MessagesContext} from '../../../context/messagesContext.jsx';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
@@ -25,6 +24,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import ListItemText from '@mui/material/ListItemText';
 import Autocomplete from '@mui/material/Autocomplete';
 import {useNavigate} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {filteredUsersSelector} from '../../../redux/selectors.jsx';
 
 
 const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
@@ -32,18 +33,33 @@ const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
 }));
 
 const NewMessageModal = ({ open, closeModal }) => {
+
+
+  const [filter, setFilter] = useState('')
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+
+
+  const filteredStateUsers = useSelector(filteredUsersSelector)
+
   const [inputFocus, setInputFocus] = useState(false);
-  const {
-    handleFindUser,
-    filter,
-    filteredUsers,
-    mockedUsers,
-    handleDeleteSelectedUser,
-    setSelectedUsers,
-    selectedUsers,
-    handleResetFilteredUsers} = useContext(MessagesContext)
+
 
   const navigate = useNavigate();
+
+  const handleFindUser = (user) => {
+    setFilter(user)
+    const filtered = filteredStateUsers.filter(({name}) => name.toLowerCase().includes(user.toLowerCase()))
+    setFilteredUsers(filtered)
+    return filtered;
+  }
+
+  const handleResetFilteredUsers = () => setFilteredUsers([]);
+
+  const handleDeleteSelectedUser = (userName) => {
+    const filtered = selectedUsers.filter(({name}) => name !== userName)
+    setSelectedUsers(filtered)
+  }
 
   const handleClearModal = () => {
     setSelectedUsers([]);

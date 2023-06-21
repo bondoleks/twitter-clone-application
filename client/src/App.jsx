@@ -15,7 +15,6 @@ import { Following } from "./components/Home/Following";
 import { TweetPage } from './pages/TweetPage/TweetPage';
 import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
 import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
-import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
@@ -26,7 +25,8 @@ import SockJS from 'sockjs-client';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
-    const isAuthenticated = useSelector(state => state.user.authorized)
+    // const isAuthenticated = useSelector(state => state.user.authorized)
+    const isAuthenticated = true
     console.log(isAuthenticated)
 
 
@@ -79,7 +79,7 @@ const routes = [
         // element: <MessageMiddleColumn />,
         element: <PrivateRoute element={MessageMiddleColumn} />,
 
-        
+
     },
     {
         path: "/bookmarks",
@@ -262,7 +262,6 @@ function App() {
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <MessagesContextProvider>
                     <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
                         <Grid item md={3}>
                             <Sidebar />
@@ -279,7 +278,6 @@ function App() {
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
-                </MessagesContextProvider>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 

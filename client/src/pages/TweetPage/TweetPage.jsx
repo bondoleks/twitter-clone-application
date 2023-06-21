@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { TweetPageMain } from "../../components/TweetPage/TweetPageMain";
 import { useEffect, useState } from "react";
-import { getTweetThunk } from "../../redux/tweet/getTweetThunk";
 import { getCommetsThunk } from "../../redux/tweet/getCommetsThunk";
 import { TweetPageComments } from "../../components/TweetPage/TweetPageComments";
+import {getTweetThunk} from '../../redux/tweet/getTweetThunk.jsx';
 
 
 
@@ -24,7 +24,7 @@ export function TweetPage(){
         dispatch(getCommetsThunk(tweet_id,pageComments));
       }, [dispatch]);
 
-      
+
 
     return(
         <Box sx={{ width: '100%' ,borderRight:'1px rgb(239, 243, 244) solid',borderLeft:'1px rgb(239, 243, 244) solid'}}>
