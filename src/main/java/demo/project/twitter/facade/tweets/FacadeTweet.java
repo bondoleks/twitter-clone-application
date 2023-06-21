@@ -69,8 +69,10 @@ public class FacadeTweet {
         if (marker.isEmpty()) {
             serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), service.getTweetById(tweetId)));
             notificationService.createNotification(new Notification(actionType, serviceUser.findById(profileId),// від кого
+
                     serviceUser.findById(profileId),// кому
                     service.getTweetById(tweetId), false));
+
             return 1;
         } else {
             serviceAction.delTweetAction(marker.get());
@@ -175,12 +177,14 @@ public class FacadeTweet {
             listUrl.stream().forEach(s -> serviceImage.saveOne(new AttachmentImage(s, newTweet)));
         }
 
+
         if (tt != TweetType.REPLY) {
             Arrays.stream(newTweet.getTweetBody().split(" ")).
                     map(s -> newString(s).toLowerCase()).
                     filter(s -> !s.equals("")).
                     forEach(s -> saveWord(s, newTweet));
         }
+
     }
 
     public Page<Tweet> getAll(Integer sizePage, Integer numberPage) {
@@ -336,6 +340,7 @@ public class FacadeTweet {
         String startWord = searchRequest.substring(0, i);
         log.info("::::::::: startWord = " + startWord);
         List<User> listUser = serviceUser.searchByUser(searchRequest);
+
 
 
         return null;

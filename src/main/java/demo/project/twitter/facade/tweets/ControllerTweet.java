@@ -56,6 +56,7 @@ public class ControllerTweet {
 
         Long profileId = 10L;
         return facade.tweetSearch(searchRequest, profileId);
+
     }
 
     @GetMapping("bookmark")
