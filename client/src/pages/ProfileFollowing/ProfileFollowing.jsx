@@ -9,8 +9,26 @@ import {
 import WestIcon from '@mui/icons-material/West';
 import { useTheme } from '@mui/material/styles';
 import Following from '../../components/Follower/Following';
+import { useFetch } from "../../hooks/UseFetch";
+import { useParams } from 'react-router-dom';
 
-const ProfileFollowing = () => {
+const ProfileFollowing = ({ withId }) => {
+  const { id } = useParams()
+
+  const [{ data, loading }, getData] = useFetch({
+    initData: {},
+    url: withId
+      ? `user/getuser/${id}`
+      : 'user/profile',
+    method: 'GET',
+    dataTransformer: (data) => {
+      return data;
+    },
+  });
+
+  if (!loading) <p>loading...</p>
+
+  const { username, firstName, lastName, email, location, birthdate, bio } = data
 
   const [value, setValue] = React.useState(1);
 
@@ -56,7 +74,7 @@ const ProfileFollowing = () => {
               </IconButton>
             </RouterLink>
             <Box ml={2}>
-              <Typography variant='h6'>User</Typography>
+              <Typography variant='h6'>{username}</Typography>
               <Typography>@nikname</Typography>
             </Box>
           </Toolbar>
