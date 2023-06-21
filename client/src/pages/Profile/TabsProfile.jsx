@@ -25,7 +25,7 @@ export const TabsProfile = () => {
 
     const [{ data, loading }, getData] = useFetch({
         initData: [],
-        url: `https://twitter-clone-application.herokuapp.com/tweets/tweet/all?sizePage=10&numberPage=1`,
+        url: `/tweets/tweet/all?sizePage=10&numberPage=1`,
         method: 'GET',
         dataTransformer: (data) => {
             return data.listDto
@@ -60,8 +60,8 @@ export const TabsProfile = () => {
                     }}>
                         Who to follow
                     </Typography>
-                    <Typography variant="h4" >Tweets</Typography>
-                    <Typography variant="body1">Here are the tweets</Typography>
+                    {/* <Typography variant="h4" >Tweets</Typography>
+                    <Typography variant="body1">Here are the tweets</Typography> */}
 
                     {loading && "Loading..."}
                     {...data.map(t => <Tweet tweet={t} />)}

@@ -8,9 +8,16 @@ import { Box, Typography , CardMedia, Avatar, IconButton } from '@mui/material';
 import { Retweet } from './Retweet';
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { OpenNoAutorizateModalThunk } from '../../redux/mainPage/OpenNoAutorizateModalThunk';
+import { MiniModal } from './MiniModal';
+import {api} from '../../redux/service/api';
+
+
 
 
 export function formatDateTime(dateTimeString) {
+
   const now = new Date();
   const dateTime = new Date(dateTimeString);
 
@@ -48,13 +55,59 @@ export function formatDateTime(dateTimeString) {
 
 
 const Tweet = ({ tweet }) => {
-  const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, like = 84, view = 154, parentDto} = tweet;
 
+  const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, countLike, view = 154, parentDto,markerLike,markerRetweet,markerBookmark} = tweet;
+
+  const dispatch = useDispatch();
   let navigate = useNavigate();
+//Visible
+  const [visibleRetweetModal,setVisibleRetweetModal] = useState(false);
+  const [visibleShareModal,setVisibleShareModal] = useState(false);
+//Count
+const [retweetRealyCount,setRetweetRealyCount] = useState(countRetweet);
+const [likeRealyCount,setLikeRealyCount] = useState(countLike);   
+//Marker
+const [activeRetweet,setActiveRetweet] = useState(markerRetweet);  
+const [activeHeart,setActiveHeart] = useState(markerLike);
+const [activeBookmark,setActiveBookmark] = useState(markerBookmark);
 
-const [activeHeart,setActiveHeart] = useState(false);
+
+function headlerMarkRetweet(id){
+  api.post(`/tweets/retweet/${id}`)
+  .then(() => {
+    setActiveRetweet(!activeRetweet);
+    setRetweetRealyCount(activeRetweet ? retweetRealyCount - 1 : retweetRealyCount + 1);
+  });
+  setVisibleRetweetModal(false);
+}
 
 
+function handleQuoteRetweet(id){
+    setVisibleRetweetModal(false);
+}
+
+function headlerBookmark(id){
+  api.post(`/tweets/bookmark/${id}`)
+  .then(() => {
+    setActiveBookmark(!activeBookmark);
+  });
+  setVisibleShareModal(false);
+}
+
+function handleCopyLink(id){
+  navigator.clipboard.writeText(`http://localhost:5173/tweet/${id}`)
+  .then(() => {
+    console.log("Лінк скопійовано до буферу обміну!");
+  })
+  .catch((error) => {
+    console.error("Помилка при копіюванні лінку:", error);
+  });
+  setVisibleShareModal(false);
+}
+
+
+const autorizate = localStorage.getItem('authToken');
+console.log(tweet);
 
 return (
   <Box
@@ -93,30 +146,66 @@ return (
         {tweet_imageUrl && <CardMedia component="img" src={tweet_imageUrl} sx={{ borderRadius: '16px' }} />}
         {parentDto && <Retweet key={parentDto.id} tweet={parentDto} />}
       </Box>
-      <Box>
+      <Box sx={{display:'flex', justifyContent:'space-around'}}>
         <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
           onClick={(event) => {
               event.stopPropagation();
+              if(autorizate === null){
+                dispatch(OpenNoAutorizateModalThunk('reply',`${firstName} ${lastName}`));
+              }
           }}
         >
           <ChatBubbleIcon />
           <Typography variant="body2">{countReply}</Typography>
         </IconButton>
-        <IconButton sx={{ "&:hover": { color: "rgb(0, 186, 124)" } }}
+        <IconButton sx={{ "&:hover": { color: "rgb(0, 186, 124)" }, ...(activeRetweet && { color: 'rgb(0, 186, 124)' }) }}
           onClick={(event) => {
                     event.stopPropagation();
+                    if(autorizate === null){
+                      dispatch(OpenNoAutorizateModalThunk('retweet',`${firstName} ${lastName}`));
+                    } else{
+                      setVisibleRetweetModal(true);
+                    }
           }}
         >
           <RepeatIcon />
-          <Typography>{countRetweet}</Typography>
+          {visibleRetweetModal && (
+            <MiniModal
+            activeBookmark={activeBookmark}
+              setVisibleModal={setVisibleRetweetModal}
+              visibleModal={visibleRetweetModal}
+              data={[
+                {
+                  text: activeRetweet ? 'Undo Retweet' : 'Retweet',
+                  function: headlerMarkRetweet,
+                  id: id
+                },
+                {
+                  text: 'Quote Retweet',
+                  function: handleQuoteRetweet,
+                  id: id
+                }
+              ]}
+            />
+          )}
+<Typography>{retweetRealyCount}</Typography>
         </IconButton>
         <IconButton sx={{ "&:hover": { color: "rgb(249, 24, 128)", zIndex: 3 }, ...(activeHeart && { color: 'rgb(249, 24, 128)' }) }} 
           onClick={(event) => {
             event.stopPropagation();
-            !activeHeart ? setActiveHeart(true) : setActiveHeart(false);
+            if(autorizate === null){
+              dispatch(OpenNoAutorizateModalThunk('like',`${firstName} ${lastName}`));
+            } else{
+
+              api.post(`/tweets/like/${id}`)
+              .then(() => {
+                setActiveHeart(!activeHeart);
+                setLikeRealyCount(activeHeart ? likeRealyCount - 1 : likeRealyCount + 1);
+              });
+            }
             }}>
           {!activeHeart ? <FavoriteBorderIcon /> : <FavoriteIcon />}
-          <Typography>{like}</Typography>
+          <Typography>{likeRealyCount}</Typography>
         </IconButton>
         <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
         onClick={(event) => {  
@@ -130,9 +219,29 @@ return (
         <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
             onClick={(event) => {  
               event.stopPropagation();
+              setVisibleShareModal(true);
               }}
         >
           <ShareRoundedIcon />
+          {visibleShareModal && (
+            <MiniModal
+              activeBookmark={activeBookmark}
+              setVisibleModal={setVisibleShareModal}
+              visibleModal={visibleShareModal}
+              data={[
+                {
+                  text: 'Copy Link to Tweet',
+                  function: handleCopyLink,
+                  id: id
+                },
+                {
+                  text: 'Bookmark',
+                  function: headlerBookmark,
+                  id: id
+                }
+              ]}
+            />
+          )}
         </IconButton>
       </Box>
     </Box>

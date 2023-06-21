@@ -7,7 +7,7 @@ export const getCommetsThunk = (id,page) => {
     return (dispatch) => {
       dispatch({ type: GET_TWEET_REQUEST });
   
-      api.get(`https://twitter-clone-application.herokuapp.com/tweets/reply/all/${id}?sizePage=10&numberPage=${page}`)
+      api.get(`tweets/reply/all/${id}?sizePage=10&numberPage=${page}`)
         .then((data) => {
             console.log(data);
           dispatch({type:GET_COMMENTS_SUCCESS,payload:{comments: data.listDto}});

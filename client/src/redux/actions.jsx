@@ -56,3 +56,11 @@ export function registerUserRequest(user) {
         }
     };
 }
+
+
+//MainPage
+export const  GET_TWEETS_MAIN_REQUEST = 'main/tweets/get/request';
+export const  GET_TWEETS_MAIN_SUCCESS  = 'main/tweets/get/success';
+export const  GET_MAIN_ERROR = 'main/tweets/get/error';
+export const  OPEN_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/open';
+export const  CLOSE_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/close';

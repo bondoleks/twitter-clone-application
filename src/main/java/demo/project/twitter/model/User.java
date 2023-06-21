@@ -32,7 +32,7 @@ public class User extends BaseEntity {
 
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotNull
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
