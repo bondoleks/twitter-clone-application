@@ -7,7 +7,7 @@ export const getTweetThunk = (id) => {
     return (dispatch) => {
       dispatch({ type: GET_TWEET_REQUEST });
   
-      api.get(`https://twitter-clone-application.herokuapp.com/tweets/tweet/${id}`)
+      api.get(`tweets/tweet/${id}`)
         .then((data) => {
             console.log(data);
           dispatch({type:GET_TWEET_SUCCESS,payload:{tweet: data}});

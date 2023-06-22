@@ -60,8 +60,8 @@ export const TabsProfile = () => {
                     }}>
                         Who to follow
                     </Typography>
-                    <Typography variant="h4" >Tweets</Typography>
-                    <Typography variant="body1">Here are the tweets</Typography>
+                    {/* <Typography variant="h4" >Tweets</Typography>
+                    <Typography variant="body1">Here are the tweets</Typography> */}
 
                     {loading && "Loading..."}
                     {...data.map(t => <Tweet tweet={t} />)}
