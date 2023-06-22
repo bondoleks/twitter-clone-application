@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 
 @RequestMapping("/api/v1/chat")
+@CrossOrigin("http://localhost:5173")
 public class ControllerChat {
     private final FacadeChat facade;
 
