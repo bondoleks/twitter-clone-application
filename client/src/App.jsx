@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { createTheme, CssBaseline, Grid, Hidden, ThemeProvider } from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar';
 import Search from './components/Search/Search.jsx';
@@ -22,6 +22,7 @@ import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
+import {getUser} from './redux/user/logingThunk.jsx';
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
@@ -118,8 +119,10 @@ const routes = [
 
 function App() {
     const [color, setColor] = useState("#00ff00");
-
     const [themeMode, setThemeMode] = useState("light");
+    const isAuthenticated = useSelector(state => state.user.authorized);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // Создаем WebSocket-соединение
@@ -145,6 +148,13 @@ function App() {
             stompClient.disconnect();
         };
     }, []);
+
+    // Get initial user data
+    useEffect(() => {
+        if (isAuthenticated){
+            dispatch(getUser());
+        }
+    }, [])
 
     const lightTheme = createTheme({
         palette: {

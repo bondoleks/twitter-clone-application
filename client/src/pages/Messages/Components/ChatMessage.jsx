@@ -2,11 +2,7 @@
 import React from "react";
 import {Box, Button, Typography} from "@mui/material";
 
-const ChatMessage = ({ id }) => {
-  const date = new Date();
-  // const isSentByCurrentUser = id === 2;
-  const isSentByCurrentUser = true
-
+const ChatMessage = ({ isSentByCurrentUser, message, date }) => {
   return (
     <Box
       sx={{
@@ -27,7 +23,7 @@ const ChatMessage = ({ id }) => {
           borderRadius: isSentByCurrentUser ? "15px 15px 0 15px" : "15px 15px 15px 0",
         }}
       >
-        Messages
+        {message}
       </Typography>
       <Typography
         sx={{

@@ -34,7 +34,6 @@ const MessageMiddleColumn = ({mockedUsers}) => {
   };
 
   useEffect(() => {
-    dispatch(handleGetSearchUsers());
     dispatch(handleGetUserChats());
   }, [])
 

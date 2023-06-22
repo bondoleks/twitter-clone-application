@@ -2,7 +2,22 @@ import {Box, Typography} from "@mui/material";
 import ChatMessage from "./ChatMessage.jsx";
 
 
-const ChatMessages = () => {
+const ChatMessages = ({chatUsers, activeChat, user}) => {
+
+  const handleShowChatMessages = () => {
+    if (activeChat?.messages) {
+      return activeChat.messages.map(message => {
+
+        const date = new Date();
+        const isSentByCurrentUser = user.id === message.user_from;
+
+        return (
+          <ChatMessage key={date} date={date} isSentByCurrentUser={isSentByCurrentUser} message={message.textMessage}/>
+        )
+      })
+    }
+    return [];
+  }
 
   return (
   <Box sx={{
@@ -10,20 +25,7 @@ const ChatMessages = () => {
     flexDirection: "column"
 
   }}>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-    <ChatMessage/>
-
-
+    {handleShowChatMessages()}
   </Box>
   )
 }

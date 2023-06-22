@@ -1,4 +1,4 @@
-import react, {useState} from "react";
+import react, {useEffect, useState} from 'react';
 import {Box, Container, IconButton, InputAdornment, TextField, Toolbar, Typography} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth.js";
@@ -10,11 +10,33 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import {useLocation} from 'react-router-dom';
 import ChatInput from "./ChatInput.jsx";
 import ChatMessages from "./ChatMessages.jsx";
+import {useSelector} from 'react-redux';
+import {getActiveChat, getUser} from '../../../redux/selectors.jsx';
+import {api} from '../../../redux/service/api.jsx';
 
 const ActiveChat = () => {
 
-  const {state} = useLocation();
-  const user = state?.users && state.users[0];
+  const activeChat = useSelector(getActiveChat);
+  const user = useSelector(getUser);
+
+  const [chatUsers, setChatUsers] = useState([]);
+
+  const handleGetUsersById = (userIds) => {
+    const promises =  userIds.map(async (userId) =>
+      await api.get(`/user/getuser/${userId}`));
+
+    return Promise.all(promises);
+  }
+
+  const chatUsersIds = [...new Set(activeChat?.messages?.map(message => message.user_from))];
+
+
+  useEffect(() => {
+    handleGetUsersById(chatUsersIds).then((users) => {
+      setChatUsers(users);
+    });
+  }, [JSON.stringify(chatUsersIds)])
+
 
   return (
     <Box sx={{
@@ -35,7 +57,7 @@ const ActiveChat = () => {
         <Box>
           <Avatar
             alt="User Avatar"
-            src={ user.avatar}/>
+            src={ user.av_imagerUrl}/>
         </Box>
         <Box sx={{
           display: "flex",
@@ -46,27 +68,27 @@ const ActiveChat = () => {
           <Typography sx={{
             fontSize: '24px',
             fontWeight: '900'
-          }}>{user.name}</Typography>
-          <Typography>@{user.hashtag}</Typography>
+          }}>{user.firstName}</Typography>
+          <Typography>@{user.username}</Typography>
           <Box display={'flex'}
                marginTop={'10px'}>
             <IconButton edge='start' color='gray'>
               <CalendarMonthIcon />
             </IconButton>
-            <Typography mt={1}>Joined {user.date}</Typography>
+            <Typography mt={1}>Joined now</Typography>
           </Box>
           <Box display={'flex'}>
             <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
               <Typography mr={2} sx={{
                 fontSize: '14px',
                 color: 'gray'
-              }}>{user.following} Following</Typography>
+              }}>1000 Following</Typography>
             </Link>
             <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
               <Typography sx={{
                 fontSize: '14px',
                 color: 'gray'
-              }}>{user.followers} Follower</Typography>
+              }}>1000 Follower</Typography>
             </Link>
           </Box>
         </Box>
@@ -80,7 +102,7 @@ const ActiveChat = () => {
 
 
       }}>
-        <ChatMessages />
+        <ChatMessages chatUsers={chatUsers} activeChat={activeChat} user={user} />
 
       </Box>
       <ChatInput/>

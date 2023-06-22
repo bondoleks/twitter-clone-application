@@ -49,7 +49,7 @@ export const Profile = ({ withId }) => {
       return data;
     },
   });
-  
+
 
   if (!loading) <p>loading...</p>
 
@@ -189,7 +189,7 @@ export default Profile
 //       return data;
 //     },
 //   });
-  
+
 
 //   if (!loading) <p>loading...</p>
 
