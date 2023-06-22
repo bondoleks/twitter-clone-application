@@ -8,6 +8,7 @@ import { homeReducer } from './home/homeReducer'
 import {getTokens, setAuthToken} from "./tokens/tokens";
 import { tweetReducer } from './tweet/tweetReducer';
 import { mainPageReducer } from './mainPage/mainPageReducer'
+import {ChatReducer} from './Messages/Reducers/ChatReducer.js';
 
 
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     notifications: notificationsReducer,
     home: homeReducer,
     tweet: tweetReducer,
+    chat: ChatReducer,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

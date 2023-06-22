@@ -9,8 +9,7 @@ export const getMainPageTweetsThunk = () => {
       dispatch({ type: GET_TWEETS_MAIN_REQUEST });
       api.get(`/tweets/tweet/all/notauth`)
         .then((response) => {
-            console.log(response.data.listDto);
-          dispatch({type:GET_TWEETS_MAIN_SUCCESS,payload:{tweets: response.data.listDto}});
+          dispatch({type:GET_TWEETS_MAIN_SUCCESS,payload:{tweets: response.listDto}});
         })
         .catch((error) => {
             console.log(error);

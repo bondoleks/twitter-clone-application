@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
 @RequestMapping("api/v1/user")
 public class UserController {
     private final UserFacade facade;
