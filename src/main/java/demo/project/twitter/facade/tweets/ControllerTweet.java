@@ -150,7 +150,7 @@ public class ControllerTweet {
         User user = facadeUser.getUserByName(userName);
         Long userIdNew = user.getId();
 
-        log.info(":::::: id = " + userIdNew);
+
 
         List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
         facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);

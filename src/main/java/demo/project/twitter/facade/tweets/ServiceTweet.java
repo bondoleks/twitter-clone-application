@@ -106,4 +106,8 @@ public class ServiceTweet implements FunctionTweet {
         return repo.getTweetByWord(s);
 
     }
+
+    public List<Tweet> getTweetByWordNew(String ddd) {
+        return repo.getTweetByWord(ddd);
+    }
 }
