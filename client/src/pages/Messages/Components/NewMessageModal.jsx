@@ -17,7 +17,6 @@ import SearchIcon from "@mui/icons-material/Search.js";
 import Groups2RoundedIcon from "@mui/icons-material/Groups2Rounded";
 import ModalList from "./ModalList.jsx";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {MessagesContext} from '../../../context/messagesContext.jsx';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
@@ -25,6 +24,9 @@ import ImageIcon from '@mui/icons-material/Image';
 import ListItemText from '@mui/material/ListItemText';
 import Autocomplete from '@mui/material/Autocomplete';
 import {useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {filteredUsersSelector, getUser} from '../../../redux/selectors.jsx';
+import {api} from '../../../redux/service/api.jsx';
 
 
 const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
@@ -32,18 +34,42 @@ const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
 }));
 
 const NewMessageModal = ({ open, closeModal }) => {
+  const [filter, setFilter] = useState('')
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const user = useSelector(getUser);
+
+  const filteredStateUsers = useSelector(filteredUsersSelector)
+
   const [inputFocus, setInputFocus] = useState(false);
-  const {
-    handleFindUser,
-    filter,
-    filteredUsers,
-    mockedUsers,
-    handleDeleteSelectedUser,
-    setSelectedUsers,
-    selectedUsers,
-    handleResetFilteredUsers} = useContext(MessagesContext)
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+
+  const handleFindUser = async (value) => {
+    setFilter(value)
+    const allUsers = await api.get('/tweets/usersearch', {
+      params: {
+        "search_requеst":value
+      },
+    });
+
+    const filteredUsers = allUsers.filter(filteredUser => filteredUser.id !== user.id);
+
+
+    // const filtered = filteredStateUsers.filter(({name}) => name.toLowerCase().includes(user.toLowerCase()))
+    setFilteredUsers(filteredUsers)
+    return filteredUsers;
+  }
+
+  const handleResetFilteredUsers = () => setFilteredUsers([]);
+
+  const handleDeleteSelectedUser = (deletedUserName) => {
+    const filtered = selectedUsers.filter(({username}) => username !== deletedUserName)
+    setSelectedUsers(filtered)
+  }
 
   const handleClearModal = () => {
     setSelectedUsers([]);
@@ -63,10 +89,22 @@ const NewMessageModal = ({ open, closeModal }) => {
     return handleFindUser(e.target.value);
   };
 
-  const openNewChat = () => {
+  const openNewChat = async () => {
+
+    const newChatPayload = {
+      "user_initiatorId": user.id
+    }
+
+    // Create new chat, BE does not return chat ID so we should get the last one from the list
+    await api.post('/chat/save', newChatPayload);
+    const allChats = await api.get(`/chat/getAll/${user.id}`);
+    const newChatId = allChats[allChats.length - 1]?.chatId;
+    await api.post(`/chat/addUser/${newChatId}/${user.id}`);
+    await api.post(`/chat/addUser/${newChatId}/${selectedUsers[0].id}`);
+
+
     handleClearModal();
-    const randomChatId = Math.floor(Math.random() * 1000000000);
-    navigate(`/messages/${randomChatId}`, {state: {chatId: randomChatId, users: selectedUsers}})
+    navigate(`/messages/${newChatId}`, {state: {chatId: newChatId, users: selectedUsers}})
   }
 
   const theme = useTheme();
@@ -93,7 +131,8 @@ const NewMessageModal = ({ open, closeModal }) => {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ fontSize: "26px", fontWeight: "800" }}>New Message</Typography>
-          <Button variant="contained" onClick={openNewChat} disabled={!selectedUsers.length} sx={{ borderRadius: "20px", color: "black" }}>
+          <Button variant="contained" onClick={openNewChat} disabled={!selectedUsers.length} sx={{ borderRadius: "20px", color: "#fff",
+            backgroundColor: "rgb(29, 155, 240)" }}>
             Next
           </Button>
         </Box>
@@ -101,7 +140,7 @@ const NewMessageModal = ({ open, closeModal }) => {
           multiple
           id="users-list"
           options={filteredUsers}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => option.username}
           defaultValue={[]}
           onChange={(e, value) => setSelectedUsers(value)}
           value={selectedUsers}
@@ -134,6 +173,9 @@ const NewMessageModal = ({ open, closeModal }) => {
             />
           )}
           renderOption={(props, option) => {
+              const name = option.firstName || 'Test';
+              const surname = option.lastName || 'User';
+
             return (
               <ListItem {...props} key={option.id}>
                 <ListItemAvatar>
@@ -141,7 +183,7 @@ const NewMessageModal = ({ open, closeModal }) => {
                     <ImageIcon/>
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={option.name} secondary={option.date}/>
+                <ListItemText primary={`${name} ${surname}`} secondary={`@${option.username}`}/>
               </ListItem>
             );
           }}
@@ -153,23 +195,23 @@ const NewMessageModal = ({ open, closeModal }) => {
             <Chip
               key={index}
               avatar={<Avatar><ImageIcon /></Avatar>}
-              label={user.name}
+              label={user.username}
               onDelete={() => {
-                handleDeleteSelectedUser(user.name);
+                handleDeleteSelectedUser(user.username);
               }}
             />
             ))}
             {!!selectedUsers.length && <hr/>}
           </div>
         }
-        <Box sx={{ display: "flex", alignItems: "center", gap: "18px", marginTop: "20px" }}>
-          <IconButton>
-            <Groups2RoundedIcon sx={{ color: "rgb(29, 155, 240)" }} />
-          </IconButton>
-          <Typography sx={{ fontSize: "20px", fontWeight: "600", color: "rgb(29, 155, 240)" }}>
-            Create Group
-          </Typography>
-        </Box>
+        {/*<Box sx={{ display: "flex", alignItems: "center", gap: "18px", marginTop: "20px" }}>*/}
+        {/*  <IconButton>*/}
+        {/*    <Groups2RoundedIcon sx={{ color: "rgb(29, 155, 240)" }} />*/}
+        {/*  </IconButton>*/}
+        {/*  <Typography sx={{ fontSize: "20px", fontWeight: "600", color: "rgb(29, 155, 240)" }}>*/}
+        {/*    Create Group*/}
+        {/*  </Typography>*/}
+        {/*</Box>*/}
         {/*<Box>*/}
         {/*  <ModalList />*/}
         {/*</Box>*/}
