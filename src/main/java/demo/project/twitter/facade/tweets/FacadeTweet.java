@@ -66,13 +66,20 @@ public class FacadeTweet {
     public int markerLikeBookmarkRetweet(Long tweetId, Long profileId, ActionType actionType) {
         Optional<TweetAction> marker = serviceAction.getTweetAction(tweetId, profileId, actionType.getType());
         if (marker.isEmpty()) {
-            serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), service.getTweetById(tweetId)));
-            notificationService.createNotification(new Notification(actionType, serviceUser.findById(profileId),// від кого
-                    serviceUser.findById(profileId),// кому
-                    service.getTweetById(tweetId), false));
+            Tweet tweet = service.getTweetById(tweetId);
+            serviceAction.saveTweetAction(new TweetAction(actionType, serviceUser.findById(profileId), tweet));
+            notificationService.createNotification(new Notification(
+                    actionType,
+                    tweet.getUser(),// кому
+                    serviceUser.findById(profileId),// від кого
+                    tweet, false));
             return 1;
         } else {
             serviceAction.delTweetAction(marker.get());
+            notificationService.deleteNotificationFromTweetId(
+                    tweetId,
+                    profileId,
+                    actionType);
             return 0;
         }
     }
@@ -385,13 +392,12 @@ public class FacadeTweet {
     }
 
     private void saveWord(String word, Tweet tweet) {
-        if (serviceTweetWord.existWord(word)){
+        if (serviceTweetWord.existWord(word)) {
             TweetWord tw = serviceTweetWord.getTweetWordByWord(word);
             tw.getListTweet().add(tweet);
             serviceTweetWord.saveOne(tw);
-        }
-        else {
-            serviceTweetWord.saveOne(new TweetWord(word,tweet));
+        } else {
+            serviceTweetWord.saveOne(new TweetWord(word, tweet));
         }
 
     }
@@ -403,48 +409,16 @@ public class FacadeTweet {
                 filter(x -> !x.equals("")).
                 collect(Collectors.toList());
 
-        log.info("::::::::: start");
-
-        List<DtoTweet> listDto = service.getTweetByWord(listString.get(0)).stream().
+        List<DtoTweet> listDtoTweet = service.getTweetByWordNew(listString.get(0)).
+                stream().
                 map(t -> transEntityToDto(t, profileId)).
                 collect(Collectors.toList());
 
+        listDtoTweet.stream().forEach(t -> log.info(":::::::: tweetId = " + t.getId()));
 
 
-        log.info("::::::::: end " + listDto.size());
-        listDto.stream().forEach(t -> log.info("::::::::: dto = " + t.toString()));
-
-        /*listTweet.stream().
-                forEach(t -> log.info("::::::::: tweetId = " + t.getId()));
-*/
-
-
-
-
-
-
-
-       /* List<Tweet> tweet = service.findAllTweet();
-        log.info("::::::::: START");
-        tweet.stream().
-                filter(t-> ((t.getTweetType() == TweetType.QUOTE_TWEET) && (t.getTweetBody() != null))).
-                forEach(tw -> Arrays.stream(tw.getTweetBody().split(" ")).
-                        map(s -> newString(s).toLowerCase()).
-                        filter(x -> !x.equals("")).
-                        forEach(s -> saveWord(s, tw)));*/
-
-
-
-        return listDto;
+        return listDtoTweet;
     }
-
-
-
-
-     /*   List<Tweet> tweet = service.getSingleBranch(id);
-        log.info(":::::::: tweet" + tweet.toString());
-        return list;
-    }*/
 }
 
 
