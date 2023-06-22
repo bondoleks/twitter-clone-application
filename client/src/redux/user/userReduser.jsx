@@ -13,7 +13,7 @@ export function userReducer(state = initialState, action){
         case GET_USER_REQUEST:
             return {...state, isLoading:true}
         case GET_USER_SUCCSES:
-            return {...state, user:action.user, isLoading: false, error: false}
+            return {...state, user:action.user, isLoading: false, error: false, authorized: true}
         case GET_USER_ERROR:
             return {...state, isLoading: false, error: true}
         case LOG_OUT_USER:
