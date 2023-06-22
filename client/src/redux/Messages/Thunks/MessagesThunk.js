@@ -35,7 +35,8 @@ export const handleGetUserChats = (userId = 11) => {
             dispatch({ type: GET_CHATS_LOADING });
             const userChats = await api.get(`/chat/getAll/${userId}`, {
                 headers: {
-                    'Access-Control-Allow-Origin': 'http://localhost:5173'
+                    'Access-Control-Allow-Origin': 'http://localhost:5173',
+                    'credentials': 'include',
                 }
             });
             console.log("userChatsuserChatsuserChats", userChats);

@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserServiceImplInterface {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to Twitter. Please, visit next link: http://localhost:8080/api/v1/auth/activate/%s",
+                            "Welcome to Twitter. Please, visit next link: https://twitter-clone-application.herokuapp.com/api/v1/auth/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );

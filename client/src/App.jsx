@@ -122,7 +122,7 @@ function App() {
 
     useEffect(() => {
         // Создаем WebSocket-соединение
-        const socket = new SockJS('http://localhost:8080/ws-message');
+        const socket = new SockJS('https://twitter-clone-application.herokuapp.com/ws-message');
         const stompClient = Stomp.over(socket);
 
         // Устанавливаем колбэк-функцию при успешном соединении
