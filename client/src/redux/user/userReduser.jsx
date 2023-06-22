@@ -5,7 +5,7 @@ export function userReducer(state = {user:[],authorized: Boolean(localStorage.ge
         case GET_USER_REQUEST:
             return {...state, isLoading:true}
         case GET_USER_SUCCSES:
-            return {...state, user:action.payload.user, isLoading:false}
+            return {...state, user:action.payload.user, isLoading:false, authorized: true}
         case GET_USER_ERROR:
             return {...state, isLoading:false}
         case LOG_OUT_USER:
