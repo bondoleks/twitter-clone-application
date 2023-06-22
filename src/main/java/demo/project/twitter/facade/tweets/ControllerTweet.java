@@ -26,7 +26,7 @@ import static java.lang.Long.parseLong;
 @RestController
 @Log4j2
 @RequestMapping("api/v1/tweets")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://twitter-clone-application.vercel.app")
 public class ControllerTweet {
     private final FacadeTweet facade;
     private final UserFacade facadeUser;
