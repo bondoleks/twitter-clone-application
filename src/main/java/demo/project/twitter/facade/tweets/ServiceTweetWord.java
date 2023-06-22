@@ -50,6 +50,7 @@ public class ServiceTweetWord implements FunctionTweetWord {
         return repo.existsTweetWordByWord(word);
     }
 
+
     public TweetWord getTweetWordByWord(String word){
         return repo.findTweetWordByWord(word);
     }

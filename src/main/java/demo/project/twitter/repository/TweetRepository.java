@@ -73,9 +73,11 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSo
     )
     List<Tweet> selectRetweet(Long id, Long profileId);
 
+
     @Query(
             value = "select tweets. * from tweetword as tw1 inner join tweet_word as tw2 on tw1.id = tw2.word_id\n" +
                     "    inner join tweets on tw2.tweet_id = tweets.id where word = ? limit 10",
             nativeQuery = true
     )    List<Tweet> getTweetByWord(String s);
+
 }

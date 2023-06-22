@@ -95,13 +95,19 @@ public class ServiceTweet implements FunctionTweet {
         repo.save(tweet);
     }
 
+
     public void deleteRetweet(Long id, Long profileId) {
         List<Tweet> list = repo.selectRetweet(id, profileId);
     }
 
 
+
     public List<Tweet> getTweetByWord(String s) {
         return repo.getTweetByWord(s);
 
+    }
+
+    public List<Tweet> getTweetByWordNew(String ddd) {
+        return repo.getTweetByWord(ddd);
     }
 }

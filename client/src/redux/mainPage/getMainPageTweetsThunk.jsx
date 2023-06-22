@@ -3,10 +3,10 @@ import {api} from "../service/api";
 
 
 
+
 export const getMainPageTweetsThunk = () => {
     return (dispatch) => {
       dispatch({ type: GET_TWEETS_MAIN_REQUEST });
-  
       api.get(`/tweets/tweet/all/notauth`)
         .then((response) => {
             console.log(response.data.listDto);

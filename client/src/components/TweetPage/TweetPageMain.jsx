@@ -36,6 +36,8 @@ export function TweetPageMain(){
     const tweet = useSelector(teweetSelector);
     const [activeHeart,setActiveHeart] = useState(false);
     const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, likes = 84, view = 154, parentDto} = tweet;
+    const fullName = `${firstName} ${lastName}`
+
 
     if(!tweet){
         return(
@@ -66,8 +68,20 @@ export function TweetPageMain(){
                 </Box>
             </Box>
             <Box sx={{ padding: '8px' }}>
-                {tweetBody && <p>{tweetBody}</p>}
-                {tweet_imageUrl && <CardMedia component="img" src={tweet_imageUrl} sx={{ borderRadius: '16px' }} />}
+                {tweetBody && <Typography variant="body1" sx={{p:'14px 0'}}>{tweetBody}</Typography>}
+                <Box sx={{width:'500px',borderRadius: '16px'}}>
+                {tweet_imageUrl && (
+                <>
+                    {tweet_imageUrl.length === 1 ? (
+                    <CardMedia component="img" src={tweet_imageUrl[0]}/>
+                    ) : (
+                    tweet_imageUrl.map((img) => (
+                        <CardMedia component="img" src={img} sx={{  }} key={img} />
+                    ))
+                    )}
+                </>
+                )}
+                </Box>
                 {parentDto && <Retweet key={parentDto.id} tweet={parentDto} />}
             </Box>
             <Box sx={{borderBottom: '1px rgb(239, 243, 244) solid', p:'8px 12px'}}>
