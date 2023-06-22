@@ -16,6 +16,7 @@ import java.util.List;
 @Repository
 public interface TweetWordRepository extends JpaRepository<TweetWord, Long>, PagingAndSortingRepository<TweetWord, Long> {
 
+
     boolean existsTweetWordByWord(String word);
     TweetWord findTweetWordByWord(String word);
 

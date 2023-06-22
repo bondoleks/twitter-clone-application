@@ -8,6 +8,7 @@ import { getMainPageTweetsThunk } from '../../redux/mainPage/getMainPageTweetsTh
 
 
 
+
 export function ListMainPage() {
   const dispatch = useDispatch();  
   const tweetsMainPageTweets = useSelector(tweetsMainPageSelector);
@@ -28,6 +29,7 @@ export function ListMainPage() {
   
   return (
     <Box>
+
       {tweetsMainPageTweets.map((tweet) => (
         <Tweet
           key={tweet.id}
