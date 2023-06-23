@@ -20,7 +20,8 @@ import java.util.List;
 @RestController
 @Log4j2
 @RequestMapping("/api/v1/notifications")
-@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+//@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+@CrossOrigin("http://localhost:5173")
 public class NotificationController {
 
     private final NotificationService notificationService;

@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+//@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+@CrossOrigin("http://localhost:5173")
 @RequestMapping(value = "/api/v1/users/")
 public class UserRestControllerV1 {
     private final UserServiceImplInterface userService;

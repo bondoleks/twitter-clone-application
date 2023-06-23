@@ -20,7 +20,8 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/v1/auth/")
 @Log4j2
-@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+//@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+@CrossOrigin("http://localhost:5173")
 public class AuthenticationRestControllerV1 {
 
     private final AuthenticationManager authenticationManager;
