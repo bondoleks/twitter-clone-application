@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+//@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+@CrossOrigin("http://localhost:5173")
 public class ChatController {
 
     @Autowired
