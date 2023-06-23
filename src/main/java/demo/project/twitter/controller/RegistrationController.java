@@ -21,8 +21,7 @@ public class RegistrationController {
                                    @RequestParam String password, @RequestParam String repeatedPassword) {
         if(repeatedPassword.equals(password)) {
             User newUser = new User(username, email, password);
-            userService.register(newUser);
-            return ResponseEntity.ok(username + " created");
+            return userService.register(newUser);
         }
         return ResponseEntity.ok("Wrong password");
     }

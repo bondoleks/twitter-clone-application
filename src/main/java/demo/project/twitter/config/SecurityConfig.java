@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
 
@@ -52,13 +53,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/api/v1/auth/login", "/api/v1/auth/registration", "/api/v1/tweets/tweet/all/notauth", "/ws-message/**").permitAll()
+                .antMatchers("/", "/api/v1/auth/login", "/api/v1/auth/registration", "/api/v1/tweets/tweet/all/notauth", "/ws-message/**", "logout").permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(REGISTRATION_ENDPOINT).permitAll()
                 .antMatchers(ACTIVATE_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated().and()
-                .apply(new JwtConfigurer(jwtTokenProvider));
+                .apply(new JwtConfigurer(jwtTokenProvider))
+                .and()
+                .logout().permitAll()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .addLogoutHandler(new SecurityContextLogoutHandler())
+                // temporary hardcoded redirect url (we must change redirect url to "/" before deploy)
+                .logoutSuccessUrl("/");
+
 //        http.cors().configurationSource(rq -> new CorsConfiguration().applyPermitDefaultValues());
     }
 
