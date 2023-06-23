@@ -402,23 +402,41 @@ public class FacadeTweet {
 
     }
 
+    private List<Tweet> resultSearch(List<String> listString, int countWord, List<Tweet> listTweet) {
+        if ((listTweet.size() ==0) || (listString.size() == ++ countWord)) return listTweet;
+        else{
+            Long[] arrTweetId = listTweet.stream().map(t -> t.getId()).toArray(Long[]::new);
+            listTweet = service.getTweetByWordAndArrayId(listString.get(countWord), arrTweetId);
+            return resultSearch(listString, countWord, listTweet);
+        }
+    }
+
     public List<DtoTweet> tweetSearch(String searchRequest, Long profileId) {
 
-        List<String> listString = Arrays.stream(searchRequest.split(" ")).
+        List<String> listWord = Arrays.stream(searchRequest.split(" ")).
                 map(s -> newString(s).toLowerCase()).
                 filter(x -> !x.equals("")).
                 collect(Collectors.toList());
 
-        List<DtoTweet> listDtoTweet = service.getTweetByWordNew(listString.get(0)).
-                stream().
-                map(t -> transEntityToDto(t, profileId)).
+
+
+        List<Tweet> listTweet = service.getTweetByWord(listWord.get(0));
+
+
+
+
+
+
+
+
+        return resultSearch(listWord, 0, listTweet).stream().
+                map(t -> transEntityToDto(t,profileId, 0)).
                 collect(Collectors.toList());
-
-        listDtoTweet.stream().forEach(t -> log.info(":::::::: tweetId = " + t.getId()));
-
-
-        return listDtoTweet;
     }
+
+
+
+
 }
 
 
