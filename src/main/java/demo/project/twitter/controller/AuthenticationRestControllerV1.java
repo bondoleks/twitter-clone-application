@@ -61,7 +61,7 @@ public class AuthenticationRestControllerV1 {
             response.put("token", token);
 
             return ResponseEntity.ok(response);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | NullPointerException e) {
             throw new BadCredentialsException("Invalid email or password");
         }
     }
