@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { createTheme, CssBaseline, Grid, Hidden, ThemeProvider } from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar';
 import Search from './components/Search/Search.jsx';
@@ -15,7 +15,6 @@ import { Following } from "./components/Home/Following";
 import { TweetPage } from './pages/TweetPage/TweetPage';
 import MessageMiddleColumn from "./pages/Messages/Components/MessageMiddleColumn.jsx";
 import MessagesRightColumn from "./pages/Messages/Components/MessagesRightColumn.jsx";
-import { MessagesContextProvider } from './context/messagesContext.jsx';
 import ActiveChat from './pages/Messages/Components/ActiveChat.jsx';
 import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
@@ -23,6 +22,7 @@ import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
+import {getUser} from './redux/user/logingThunk.jsx';
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
@@ -77,7 +77,9 @@ const routes = [
         path: "/messages/:id",
         // element: <MessageMiddleColumn />,
         element: <PrivateRoute element={MessageMiddleColumn} />,
-        
+
+
+
     },
     {
         path: "/bookmarks",
@@ -117,12 +119,14 @@ const routes = [
 
 function App() {
     const [color, setColor] = useState("#00ff00");
-
     const [themeMode, setThemeMode] = useState("light");
+    const isAuthenticated = useSelector(state => state.user.authorized);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // Создаем WebSocket-соединение
-        const socket = new SockJS('http://localhost:8080/ws-message');
+        const socket = new SockJS('https://twitter-clone-application.herokuapp.com/ws-message');
         const stompClient = Stomp.over(socket);
 
         // Устанавливаем колбэк-функцию при успешном соединении
@@ -144,6 +148,13 @@ function App() {
             stompClient.disconnect();
         };
     }, []);
+
+    // Get initial user data
+    useEffect(() => {
+        if (isAuthenticated){
+            dispatch(getUser());
+        }
+    }, [])
 
     const lightTheme = createTheme({
         palette: {
@@ -250,7 +261,7 @@ function App() {
         }
 
         return (
-            <Grid item md={location.pathname === '/messages' ? 5 : 3}>
+            <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
                 {rightColumn}
             </Grid>
         )
@@ -262,12 +273,11 @@ function App() {
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <MessagesContextProvider>
                     <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
                         <Grid item md={3}>
                             <Sidebar />
                         </Grid>
-                        <Grid item xs={12} md={location.pathname === '/messages' ? 4 : 6} sm={8}>
+                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8}>
                             <Routes>
                                 {/* {...routes.map(r => <Route {...r} />)} */}
                                 {routes.map((route, index) => (
@@ -279,7 +289,6 @@ function App() {
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
-                </MessagesContextProvider>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 

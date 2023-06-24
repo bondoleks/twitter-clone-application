@@ -136,7 +136,8 @@ public class UserFacade {
                 collect(Collectors.toList());
     }
 
-    public User getUserByName(String userName) {
+
+    public User getUserByName1(String userName) {
         return service.findByUserName(userName);
     }
 }

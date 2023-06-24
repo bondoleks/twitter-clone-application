@@ -29,7 +29,9 @@ GET http://localhost:5050/tweets/alluser
 GET http://localhost:5050/tweets/searchusers?search_requеst=п
 
 ###
-GET http://localhost:5050/api/v1/tweets/tweetsearch?search_requеst=розпочався
+GET http://localhost:5050/api/v1/tweets/tweetsearch?search_requеst=шла собака по
+
+
 
 
 ###
