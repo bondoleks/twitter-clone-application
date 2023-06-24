@@ -420,7 +420,7 @@ public class FacadeTweet {
         if ((listTweet.size() ==0) || (listString.size() == ++ countWord)) return listTweet;
         else{
             Long[] arrTweetId = listTweet.stream().map(t -> t.getId()).toArray(Long[]::new);
-            listTweet = service.getTweetByWordAndArrayId(listString.get(countWord), arrTweetId);
+            listTweet = service.getTweetByWordAndArrayId1(listString.get(countWord), arrTweetId);
             return resultSearch(listString, countWord, listTweet);
         }
     }

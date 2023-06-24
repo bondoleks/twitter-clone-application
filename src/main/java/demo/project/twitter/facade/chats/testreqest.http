@@ -1,0 +1,17 @@
+####
+GET http://localhost:5050/api/v1/chats/chat?user_init=12&user_reciv=11
+
+###
+POST http://localhost:5050/api/v1/chats/chat/meaasge/save
+Content-Type: application/json
+
+{
+
+  "user_from": 12,
+  "chat_id": 21,
+  "textMessage": "ну, наверное, все на сегодня!!"
+
+}
+
+###
+GET http://localhost:5050/api/v1/chats/chat/messages/21?profileId=12&sizePage=15&numberPage=0
