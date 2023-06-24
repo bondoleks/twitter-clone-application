@@ -67,9 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .addLogoutHandler(new SecurityContextLogoutHandler())
                 // temporary hardcoded redirect url (we must change redirect url to "/" before deploy)
-                .logoutSuccessUrl("/");
-
-//        http.cors().configurationSource(rq -> new CorsConfiguration().applyPermitDefaultValues());
+                .logoutSuccessUrl("/api/v1/auth/login");
     }
 
 //    @Bean
