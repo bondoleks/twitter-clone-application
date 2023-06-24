@@ -153,9 +153,9 @@ public class ControllerTweet {
 
 
 
-        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+       /* List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         /*facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);*/
-        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listUrl);
+        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listPhoto);
     }
 
     @PostMapping("quote/save")
@@ -163,9 +163,9 @@ public class ControllerTweet {
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto) {
-        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         Long tweetid = facade.determParentTweetId(parseLong(parentTweetId));
-        facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, tweetid, parseLong(userId), listUrl);
+        facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, tweetid, parseLong(userId), listPhoto);
     }
 
     @PostMapping("reply/save")
@@ -173,9 +173,9 @@ public class ControllerTweet {
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto) {
-        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         Long parentTweet_id = facade.determParentTweetId(parseLong(parentTweetId));
-        facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, parseLong(userId), listUrl);
+        facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, parseLong(userId), listPhoto);
     }
 
 
