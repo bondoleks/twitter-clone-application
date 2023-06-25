@@ -1,8 +1,8 @@
 package demo.project.twitter.facade.chats;
 
-import demo.project.twitter.facade.masseges.DtoMessage;
-import demo.project.twitter.facade.masseges.FacadeMessage;
-import demo.project.twitter.facade.masseges.ServiceMessage;
+import demo.project.twitter.facade.messages.DtoMessage;
+import demo.project.twitter.facade.messages.FacadeMessage;
+import demo.project.twitter.facade.messages.ServiceMessage;
 import demo.project.twitter.model.chat.Chat;
 import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.impl.UserServiceImpl;

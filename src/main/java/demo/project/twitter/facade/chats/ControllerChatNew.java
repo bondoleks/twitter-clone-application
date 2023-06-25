@@ -3,25 +3,12 @@ package demo.project.twitter.facade.chats;
 
 import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
-import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.UserFacade;
-import demo.project.twitter.facade.masseges.DtoMessage;
-import demo.project.twitter.facade.tweets.DtoTweet;
-import demo.project.twitter.facade.tweets.DtoTweetPage;
-import demo.project.twitter.facade.tweets.FacadeTweet;
-import demo.project.twitter.model.User;
+import demo.project.twitter.facade.messages.DtoMessage;
 import demo.project.twitter.model.chat.Chat;
-import demo.project.twitter.model.enums.ActionType;
-import demo.project.twitter.model.enums.TweetType;
-import demo.project.twitter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.security.Principal;
-import java.util.List;
 
 import static java.lang.Long.parseLong;
 
@@ -46,7 +33,7 @@ public class ControllerChatNew {
 
     }
 
-    @PostMapping("chat/meaasge/save")
+    @PostMapping("chat/message/save")
     public String saveMessage(@RequestBody DtoMessage dtoM){
         Long profileID = dtoM.getUser_from();
         facade.saveMessage(profileID, dtoM);

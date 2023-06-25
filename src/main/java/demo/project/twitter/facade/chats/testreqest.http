@@ -2,7 +2,7 @@
 GET http://localhost:5050/api/v1/chats/chat?user_init=12&user_reciv=11
 
 ###
-POST http://localhost:5050/api/v1/chats/chat/meaasge/save
+POST http://localhost:5050/api/v1/chats/chat/message/save
 Content-Type: application/json
 
 {
