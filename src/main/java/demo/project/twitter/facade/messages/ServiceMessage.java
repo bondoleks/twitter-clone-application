@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.masseges;
+package demo.project.twitter.facade.messages;
 
 
 import demo.project.twitter.model.chat.Message;

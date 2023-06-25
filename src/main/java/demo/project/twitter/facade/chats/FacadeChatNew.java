@@ -1,17 +1,14 @@
 package demo.project.twitter.facade.chats;
 
-import demo.project.twitter.facade.masseges.DtoMessage;
-import demo.project.twitter.facade.masseges.FacadeMessage;
-import demo.project.twitter.facade.masseges.ServiceMessage;
+import demo.project.twitter.facade.messages.DtoMessage;
+import demo.project.twitter.facade.messages.ServiceMessage;
 import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
 import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.UserService;
-import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

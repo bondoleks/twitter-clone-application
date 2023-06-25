@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.masseges;
+package demo.project.twitter.facade.messages;
 
 import lombok.Data;
 import org.springframework.stereotype.Service;
