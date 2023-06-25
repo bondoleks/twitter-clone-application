@@ -33,8 +33,9 @@ public class Chat extends BaseEntity {
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 
-    public Chat(User initiator) {
-        this.initiator = initiator;
+
+    public Chat(User initiator1) {
+        this.initiator = initiator1;
 
 
     }

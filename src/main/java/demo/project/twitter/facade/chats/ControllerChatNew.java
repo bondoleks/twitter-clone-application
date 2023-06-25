@@ -29,7 +29,7 @@ public class ControllerChatNew {
     public UserDto getChatByUser(@RequestParam("user_init") Long user_init, @RequestParam("user_reciv") Long user_reciv) {
         Long profileId = user_init;
         Chat chat= facade.getChatByUser(profileId, user_reciv);
-        return mapper.map().map(facadeUser.getUserById(user_reciv), UserDto.class);
+        return mapper.map().map(facadeUser.getUserById1(user_reciv), UserDto.class);
 
     }
 

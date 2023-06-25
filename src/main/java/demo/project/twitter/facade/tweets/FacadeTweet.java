@@ -55,7 +55,7 @@ public class FacadeTweet {
             int[] count = new int[1];
             count[0] = 1;
 
-           /* listPhoto.stream().map(p -> getStringUrlByPhoto(p, count[0]++), newTweet).*/
+            /* listPhoto.stream().map(p -> getStringUrlByPhoto(p, count[0]++), newTweet).*/
             listString = listPhoto.stream().map(f -> {
                 try {
                     return photo.getPhotoUrlNew1(f, count[0]++, tweet).get();
@@ -135,19 +135,26 @@ public class FacadeTweet {
         mapper.map().map(entity.getUser(), dto);
         mapper.map().map(entity, dto);
 
+
         dto.setBranch(getBranchType(entity));
         dto.setUser_id(entity.getUser().getId());
+
         dto.setMarkerRetweet(serviceAction.marker(entity.getId(), profileId, "RETWEET"));
         dto.setMarkerLike(serviceAction.marker(entity.getId(), profileId, "LIKE"));
         dto.setMarkerBookmark(serviceAction.marker(entity.getId(), profileId, "BOOKMARK"));
+
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
         dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
         dto.setCountLike(serviceAction.countLike(entity.getId(), "LIKE"));
+
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
+
 
         if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
                 (entity.getTweetBody() != null) && (count == 0))
             dto.setParentDto(transEntityToDto(entity.getParentTweet(), profileId, count + 1));
+
+
 
 
         return dto;
@@ -183,7 +190,7 @@ public class FacadeTweet {
 
         if (listPhoto.size() > 0) {
             transListPhotoToListUrl(listPhoto, newTweet).
-            stream().forEach(s -> serviceImage.saveOne(new AttachmentImage(s, newTweet)));
+                    stream().forEach(s -> serviceImage.saveOne(new AttachmentImage(s, newTweet)));
         }
 
 
@@ -219,6 +226,8 @@ public class FacadeTweet {
                 map(x -> getSingleTweetById(x.getId())).
                 map(y -> transListTweetInDto(y, profileId)).
                 collect(Collectors.toList());
+
+
 
         DtoTweetPage dtp = new DtoTweetPage();
         dtp.setListDto(list);
@@ -278,6 +287,7 @@ public class FacadeTweet {
     }
 
     public List<Tweet> getSingleTweetById(Long id) {
+
         List<Tweet> list = new ArrayList<>();
         Tweet newTweet = service.getTweetById(id);
         Long newId = id;
@@ -417,10 +427,10 @@ public class FacadeTweet {
     }
 
     private List<Tweet> resultSearch(List<String> listString, int countWord, List<Tweet> listTweet) {
-        if ((listTweet.size() ==0) || (listString.size() == ++ countWord)) return listTweet;
-        else{
+        if ((listTweet.size() == 0) || (listString.size() == ++countWord)) return listTweet;
+        else {
             Long[] arrTweetId = listTweet.stream().map(t -> t.getId()).toArray(Long[]::new);
-            listTweet = service.getTweetByWordAndArrayId1(listString.get(countWord), arrTweetId);
+            listTweet = service.getTweetByWordAndArrayId(listString.get(countWord), arrTweetId);
             return resultSearch(listString, countWord, listTweet);
         }
     }
@@ -433,22 +443,13 @@ public class FacadeTweet {
                 collect(Collectors.toList());
 
 
-
         List<Tweet> listTweet = service.getTweetByWord(listWord.get(0));
 
 
-
-
-
-
-
-
         return resultSearch(listWord, 0, listTweet).stream().
-                map(t -> transEntityToDto(t,profileId, 0)).
+                map(t -> transEntityToDto(t, profileId, 0)).
                 collect(Collectors.toList());
     }
-
-
 
 
 }
