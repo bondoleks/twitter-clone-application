@@ -34,7 +34,7 @@ export const ToolbarProfile = ({ withId }) => {
           return data;
         },
       });
-      
+    
     
       if (!loading) <p>loading...</p>
     
@@ -55,7 +55,7 @@ export const ToolbarProfile = ({ withId }) => {
                             </IconButton>
                         </RouterLink>
                         <Box ml={2}>
-                            <Typography variant='h6'>{username}</Typography>
+                            <Typography variant='h6'>{firstName} {lastName}</Typography>
                             <Typography>N Tweets</Typography>
                         </Box>
                     </Toolbar>
@@ -78,7 +78,7 @@ export const ToolbarProfile = ({ withId }) => {
                             </IconButton>
                         </RouterLink>
                         <Box ml={2}>
-                            <Typography variant='h6'>{username}</Typography>
+                            <Typography variant='h6'>{firstName} {lastName}</Typography>
                             <Typography>N Tweets</Typography>
                         </Box>
                     </Toolbar>

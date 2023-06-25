@@ -46,6 +46,7 @@ export const Profile = ({ withId }) => {
       : 'user/profile',
     method: 'GET',
     dataTransformer: (data) => {
+      console.log(data)
       return data;
     },
   });
@@ -53,7 +54,7 @@ export const Profile = ({ withId }) => {
 
   if (!loading) <p>loading...</p>
 
-  const { username, firstName, lastName, email, location, birthdate, bio } = data
+  const { username, firstName, head_imagerUrl, lastName, email, location, birthdate, av_imagerUrl, bio } = data
 
   return (
 
@@ -74,17 +75,19 @@ export const Profile = ({ withId }) => {
             height: '200px',
           }}></Box>
 
+          
+
 
           <StyledAvatar
             alt="User Avatar"
-            src='../../img/avatar.png'
+            src={av_imagerUrl}
 
             sx={{
-              width: '25%',
-              height: '25%',
+              width: '100px',
+              height: '100px',
               borderRadius: '50%',
               marginLeft: '20px',
-              marginTop: '-15%',
+              marginTop: '-50px',
               marginBottom: '20px',
               cursor: 'pointer'
             }}
