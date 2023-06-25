@@ -148,7 +148,7 @@ public class ControllerTweet {
                           @RequestParam("file") List<MultipartFile> listPhoto, Principal principal) {
 //        String userName = principal.getName();
         String userName = "ssa333";
-        User user = facadeUser.getUserByName1(userName);
+        User user = facadeUser.getUserByName(userName);
         Long userIdNew = user.getId();
 
 

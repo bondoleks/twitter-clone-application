@@ -6,6 +6,7 @@ import demo.project.twitter.model.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,12 +26,18 @@ public class Chat extends BaseEntity {
 
 
     @OneToMany(mappedBy = "chat")
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
 
     @ManyToMany(mappedBy = "userChats")
     @JsonIgnore
     private Set<User> users = new HashSet<>();
+
+    public Chat(User initiator) {
+        this.initiator = initiator;
+
+
+    }
 
     public void addUser(User user) {
         this.users.add(user);

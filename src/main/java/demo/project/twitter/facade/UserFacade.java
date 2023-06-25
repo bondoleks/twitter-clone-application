@@ -137,8 +137,13 @@ public class UserFacade {
     }
 
 
-    public User getUserByName1(String userName) {
+
+    public User getUserByName(String userName) {
         return service.findByUserName(userName);
+    }
+
+    public User getUserById(Long userReciv) {
+        return service.findById(userReciv);
     }
 }
 

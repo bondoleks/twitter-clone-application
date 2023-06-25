@@ -60,4 +60,12 @@ public interface RepoChat extends JpaRepository<Chat, Long> {
     )
     List<Chat> getAllByUserId(@Param("userId") Long id);
 
+
+    @Query(
+            value = "select chats. * from chats_to_users as cu " +
+                    "inner join chats on cu.chat_id = chats.id " +
+                    "where  chats.initiator_id = ? and cu.user_id = ?",
+            nativeQuery = true
+    )
+    List<Chat> getChatByUser(Long userInit, Long userReciv);
 }
