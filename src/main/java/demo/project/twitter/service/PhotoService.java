@@ -30,7 +30,8 @@ public class PhotoService {
         }
     }
 
-    public Optional<String> getPhotoUrlNew(MultipartFile file, int count, Tweet tweet) throws IOException {
+
+    public Optional<String> getPhotoUrlNew1(MultipartFile file, int count, Tweet tweet) throws IOException {
 
         if (file.isEmpty()) return Optional.empty();
         else {
@@ -44,8 +45,7 @@ public class PhotoService {
                     append("_").
                     append(tweet.getId()).append("_photo").append(count);
 
-            log.info(":::::::::: folder = " + folderName.toString());
-            log.info(":::::::::: photoname = " + photoName.toString());
+
 
 
             String s = folderName.toString();
