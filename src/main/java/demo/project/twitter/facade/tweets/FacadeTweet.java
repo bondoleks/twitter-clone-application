@@ -58,7 +58,7 @@ public class FacadeTweet {
            /* listPhoto.stream().map(p -> getStringUrlByPhoto(p, count[0]++), newTweet).*/
             listString = listPhoto.stream().map(f -> {
                 try {
-                    return photo.getPhotoUrlNew(f, count[0]++, tweet).get();
+                    return photo.getPhotoUrlNew1(f, count[0]++, tweet).get();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
