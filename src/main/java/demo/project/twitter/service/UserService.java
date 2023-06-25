@@ -128,6 +128,10 @@ public class UserService implements FunctionUser {
     public List<User> searchByUser(String searchRequest) {
         return repo.searchByName(searchRequest.toLowerCase() + "%", "%" + searchRequest + "%");
     }
+
+    public User saveUser1(User userRe) {
+        return repo.save(userRe);
+    }
 }
 
 

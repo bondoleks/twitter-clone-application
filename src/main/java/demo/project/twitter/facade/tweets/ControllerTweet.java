@@ -26,7 +26,8 @@ import static java.lang.Long.parseLong;
 @RestController
 @Log4j2
 @RequestMapping("api/v1/tweets")
-@CrossOrigin("https://twitter-clone-application.vercel.app")
+//@CrossOrigin("https://twitter-clone-application.vercel.app")
+@CrossOrigin("http://localhost:5173")
 public class ControllerTweet {
     private final FacadeTweet facade;
     private final UserFacade facadeUser;
@@ -145,15 +146,16 @@ public class ControllerTweet {
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto, Principal principal) {
-        String userName = principal.getName();
-//        String userName = "nazik100";
+//        String userName = principal.getName();
+        String userName = "ssa333";
         User user = facadeUser.getUserByName(userName);
         Long userIdNew = user.getId();
 
 
 
-        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
-        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);
+       /* List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
+        /*facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);*/
+        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listPhoto);
     }
 
     @PostMapping("quote/save")
@@ -161,9 +163,9 @@ public class ControllerTweet {
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto) {
-        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         Long tweetid = facade.determParentTweetId(parseLong(parentTweetId));
-        facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, tweetid, parseLong(userId), listUrl);
+        facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, tweetid, parseLong(userId), listPhoto);
     }
 
     @PostMapping("reply/save")
@@ -171,9 +173,9 @@ public class ControllerTweet {
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto) {
-        List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);
+        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         Long parentTweet_id = facade.determParentTweetId(parseLong(parentTweetId));
-        facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, parseLong(userId), listUrl);
+        facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, parseLong(userId), listPhoto);
     }
 
 

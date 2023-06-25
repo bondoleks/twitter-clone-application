@@ -1,12 +1,13 @@
 package demo.project.twitter.service;
 
 import demo.project.twitter.model.User;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface UserServiceImplInterface {
 
-    User register(User user);
+    ResponseEntity register(User user);
 
     List<User> getAll();
 
