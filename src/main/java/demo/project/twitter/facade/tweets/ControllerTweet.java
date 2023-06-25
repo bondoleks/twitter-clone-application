@@ -155,7 +155,7 @@ public class ControllerTweet {
 
        /* List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         /*facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);*/
-        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listPhoto);
+        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId),userIdNew, listPhoto);
     }
 
     @PostMapping("quote/save")
