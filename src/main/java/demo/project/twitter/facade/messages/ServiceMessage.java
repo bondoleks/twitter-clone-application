@@ -1,14 +1,19 @@
-package demo.project.twitter.facade.masseges;
+package demo.project.twitter.facade.messages;
 
 
 import demo.project.twitter.model.chat.Message;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
+@Log4j2
 public class ServiceMessage implements FunctionMessage {
     private final RepoMessage repo;
 
@@ -35,4 +40,8 @@ public class ServiceMessage implements FunctionMessage {
         repo.deleteById(id);
     }
 
+    public Page<Message> getChatAllMessages(Long chatId, Integer sizePage, Integer numberPage) {
+        Pageable pageable = PageRequest.of(numberPage, sizePage);
+        return repo.getChatAllMessages(chatId, pageable);
+    }
 }

@@ -9,9 +9,13 @@ import {
 } from '@mui/material';
 import WestIcon from '@mui/icons-material/West';
 import { useTheme } from '@mui/material/styles';
+import { useFetch } from '../../hooks/UseFetch'; 
+import { useParams } from 'react-router-dom';
 
 
-export const ToolbarProfile = () => {
+export const ToolbarProfile = ({ withId }) => {
+
+    const { id } = useParams()
 
     const theme = useTheme();
 
@@ -19,6 +23,22 @@ export const ToolbarProfile = () => {
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.default
       };
+
+      const [{ data, loading }, getData] = useFetch({
+        initData: {},
+        url: withId
+          ? `user/getuser/${id}`
+          : 'user/profile',
+        method: 'GET',
+        dataTransformer: (data) => {
+          return data;
+        },
+      });
+    
+    
+      if (!loading) <p>loading...</p>
+    
+      const { username, firstName, lastName, email, location, birthdate, bio } = data
 
     return (
         <>
@@ -35,7 +55,7 @@ export const ToolbarProfile = () => {
                             </IconButton>
                         </RouterLink>
                         <Box ml={2}>
-                            <Typography variant='h6'>User</Typography>
+                            <Typography variant='h6'>{firstName} {lastName}</Typography>
                             <Typography>N Tweets</Typography>
                         </Box>
                     </Toolbar>
@@ -58,7 +78,7 @@ export const ToolbarProfile = () => {
                             </IconButton>
                         </RouterLink>
                         <Box ml={2}>
-                            <Typography variant='h6'>User</Typography>
+                            <Typography variant='h6'>{firstName} {lastName}</Typography>
                             <Typography>N Tweets</Typography>
                         </Box>
                     </Toolbar>

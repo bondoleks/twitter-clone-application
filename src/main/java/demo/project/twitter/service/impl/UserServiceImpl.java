@@ -6,13 +6,10 @@ import demo.project.twitter.model.User;
 import demo.project.twitter.repository.RoleRepository;
 import demo.project.twitter.repository.UserRepository;
 import demo.project.twitter.service.MailSender;
-import demo.project.twitter.service.UserService;
 import demo.project.twitter.service.UserServiceImplInterface;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,12 +37,16 @@ public class UserServiceImpl implements UserServiceImplInterface {
     }
 
     @Override
-    public User register(User user) {
+    public ResponseEntity register(User user) {
         User userFromDbUsername = userRepository.findByUsername(user.getUsername());
         User userFromDbEmail = userRepository.findByEmail(user.getEmail());
-        if (userFromDbUsername != null && userFromDbEmail != null) {
-            log.info(user + "already registered");
-            return user;
+        if (userFromDbUsername != null) {
+            log.info(userFromDbUsername.getUsername() + " already register with this username");
+            return ResponseEntity.ok(userFromDbUsername.getUsername() + " already register with this username");
+        }
+        if (userFromDbEmail != null) {
+            log.info(userFromDbEmail.getEmail() + " already register with this email");
+            return ResponseEntity.ok(userFromDbEmail.getEmail() + " already register with this email");
         }
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserServiceImplInterface {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to Twitter. Please, visit next link: http://localhost:8080/api/v1/auth/activate/%s",
+                            "Welcome to Twitter. Please, visit next link: https://twitter-clone-application.vercel.app/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserServiceImplInterface {
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
-        return registeredUser;
+        return ResponseEntity.ok(user.getUsername() + " created");
     }
 
     public boolean activateUser(String code) {
@@ -87,12 +88,16 @@ public class UserServiceImpl implements UserServiceImplInterface {
         return true;
     }
 
-    public User registerFromGoogle(User user) {
+    public ResponseEntity registerFromGoogle(User user) {
         User userFromDbUsername = userRepository.findByUsername(user.getUsername());
         User userFromDbEmail = userRepository.findByEmail(user.getEmail());
-        if (userFromDbUsername != null && userFromDbEmail != null) {
-            log.info(user + "already registered");
-            return user;
+        if (userFromDbUsername != null) {
+            log.info(user + "username");
+            return ResponseEntity.ok("username");
+        }
+        if (userFromDbEmail != null) {
+            log.info(user + "email");
+            return ResponseEntity.ok("email");
         }
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
@@ -102,12 +107,13 @@ public class UserServiceImpl implements UserServiceImplInterface {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
+        user.setActivationCode(UUID.randomUUID().toString());
 
         User registeredUser = userRepository.save(user);
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
-        return registeredUser;
+        return ResponseEntity.ok(user.getUsername() + " created");
     }
 
     @Override

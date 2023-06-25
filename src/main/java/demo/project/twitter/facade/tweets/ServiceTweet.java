@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -95,9 +96,25 @@ public class ServiceTweet implements FunctionTweet {
         repo.save(tweet);
     }
 
+
     public void deleteRetweet(Long id, Long profileId) {
         List<Tweet> list = repo.selectRetweet(id, profileId);
     }
 
 
+
+    /*public List<Tweet> getTweetByWord(String s) {
+        return repo.getTweetByWord(s);
+
+    }*/
+
+    public List<Tweet> getTweetByWord(String ddd) {
+        return repo.getTweetByWord(ddd);
+    }
+
+
+
+    public List<Tweet> getTweetByWordAndArrayId1(String s, Long[] tweetId) {
+        return repo.getTweetByWordAndArrayId1(s, tweetId);
+    }
 }

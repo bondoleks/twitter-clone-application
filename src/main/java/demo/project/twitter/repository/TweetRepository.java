@@ -7,9 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Repository
@@ -72,4 +74,22 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSo
             nativeQuery = true
     )
     List<Tweet> selectRetweet(Long id, Long profileId);
+
+
+    @Query(
+            value = "select tweets. * from tweetword as tw1 inner join tweet_word as tw2 on tw1.id = tw2.word_id\n" +
+                    "    inner join tweets on tw2.tweet_id = tweets.id where word = ? limit 10",
+            nativeQuery = true)
+    List<Tweet> getTweetByWord(String s);
+
+
+
+
+    @Query(
+            value = "select tweets. * from tweetword as tw1 inner join tweet_word as tw2 on tw1.id = tw2.word_id\n" +
+                    "    inner join tweets on tw2.tweet_id = tweets.id where word = :wordSearch and tw2.tweet_id in :arr limit 10",
+            nativeQuery = true)
+    List<Tweet> getTweetByWordAndArrayId1(@Param("wordSearch") String s, @Param("arr") Long[] arrId);
+
+
 }

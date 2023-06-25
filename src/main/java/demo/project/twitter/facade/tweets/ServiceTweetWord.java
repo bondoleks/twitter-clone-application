@@ -49,4 +49,9 @@ public class ServiceTweetWord implements FunctionTweetWord {
     public boolean existWord(String word){
         return repo.existsTweetWordByWord(word);
     }
+
+
+    public TweetWord getTweetWordByWord(String word){
+        return repo.findTweetWordByWord(word);
+    }
 }

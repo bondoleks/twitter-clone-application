@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Log4j2
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "https://twitter-clone-application.vercel.app")
+@CrossOrigin("http://localhost:5173")
 @RequestMapping(value = "/api/v1/auth/")
 public class RegistrationController {
 
@@ -21,8 +22,7 @@ public class RegistrationController {
                                    @RequestParam String password, @RequestParam String repeatedPassword) {
         if(repeatedPassword.equals(password)) {
             User newUser = new User(username, email, password);
-            userService.register(newUser);
-            return ResponseEntity.ok(username + " created");
+            return userService.register(newUser);
         }
         return ResponseEntity.ok("Wrong password");
     }

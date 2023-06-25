@@ -1,13 +1,10 @@
-package demo.project.twitter.facade.masseges;
+package demo.project.twitter.facade.messages;
 
 import demo.project.twitter.facade.chats.ServiceChat;
 import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

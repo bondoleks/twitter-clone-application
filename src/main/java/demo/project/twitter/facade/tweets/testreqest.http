@@ -29,7 +29,9 @@ GET http://localhost:5050/tweets/alluser
 GET http://localhost:5050/tweets/searchusers?search_requеst=п
 
 ###
-GET http://localhost:5050/tweets/ts?search_requеst=шла собака по роялю и жевала сушку
+GET http://localhost:5050/api/v1/tweets/tweetsearch?search_requеst=шла собака по
+
+
 
 
 ###
@@ -46,7 +48,7 @@ GET http://localhost:5050/tweets/tweet/all/profile?sizePage=10&numberPage=0
 GET http://localhost:5050/tweets/tweet/all?sizePage=10&numberPage=0
 
 ###
-GET http://localhost:5050/tweets/tweet/all/notauth
+GET http://localhost:5050/api/v1/tweets/tweet/all/notauth
 
 ###
 GET http://localhost:5050/tweets/bookmark?sizePage=10&numberPage=0
@@ -72,15 +74,15 @@ GET http://localhost:5050/tweets/tweet/128
 
 ###
 
-POST http://localhost:5050/tweets/bookmark/25
+POST http://localhost:5050/api/v1/tweets/bookmark/47
 
 ###
 
-POST http://localhost:5050/tweets/like/2
+POST http://localhost:5050/api/v1/tweets/like/6
 
 ###
 
-POST http://localhost:5050/tweets/retweet/15
+POST http://localhost:5050/api/v1/tweets/retweet/26
 
 
 
