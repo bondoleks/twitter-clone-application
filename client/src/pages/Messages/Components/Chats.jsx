@@ -128,24 +128,30 @@ const Chats = () => {
       sx={{
         width: '100%',
         bgcolor: 'background.paper',
-        padding: "10px 0",
-        '&:hover': {
-          backgroundColor: '#e8e8e8',
-        },
+        padding: "10px 0"
+
       }}
     >
       {
         usersForChats.length ? usersForChats.map(({user, message, chatId}) => {
           const {av_imagerUrl, firstName, username} = user;
           return (
+            <>
             <ListItem onClick={() => handleOpenActiveChat(chatId)}>
-              <Box>
+              <Box sx={{
+                boxSizing: "border-box",
+                '&:hover': {
+                  backgroundColor: '#e8e8e8',
+                },
+              }}>
                 <Box
                   sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     gap: '5px',
+                    boxSizing: "border-box"
+
                   }}
                 >
                   <Avatar src={av_imagerUrl || ""} />
@@ -156,6 +162,30 @@ const Chats = () => {
                 <Typography>{message}</Typography>
               </Box>
             </ListItem>
+          <ListItem onClick={() => handleOpenActiveChat(chatId)}>
+            <Box sx={{
+              boxSizing: "border-box",
+              '&:hover': {
+                backgroundColor: '#e8e8e8',
+              },
+            }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '5px',
+                }}
+              >
+                <Avatar src={av_imagerUrl || ""} />
+                <ListItemText>{firstName}</ListItemText>
+                <ListItemText>@{username}</ListItemText>
+                <ListItemText>{'16.06.2023'}</ListItemText>
+              </Box>
+              <Typography>{message}</Typography>
+            </Box>
+          </ListItem>
+            </>
           )
         }) : <Typography>No chats found</Typography>
       }
