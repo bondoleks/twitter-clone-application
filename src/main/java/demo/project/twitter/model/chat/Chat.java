@@ -33,6 +33,10 @@ public class Chat extends BaseEntity {
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 
+    @ManyToMany(mappedBy = "listChat")
+    @JsonIgnore
+    private List<ListChat> listListChat = new ArrayList<>();
+
 
     public Chat(User initiator1) {
         this.initiator = initiator1;

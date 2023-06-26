@@ -21,6 +21,7 @@ import static java.lang.Long.parseLong;
 public class ControllerChatNew {
 
     private final FacadeChatNew facade;
+    private final FacadeListChat facadeListChat;
     private final Mapper mapper;
     private final UserFacade facadeUser;
 
@@ -49,6 +50,15 @@ public class ControllerChatNew {
         return facade.getChatAllMessages(chat_id, profileId, sizePage, numberPage);
 
     }
+
+    @PostMapping("add/{chatId}")
+    public String addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
+        Long profileID = userId;
+        facadeListChat.addChatToChatList(chat_id, profileID);
+        return "ok";
+    }
+
+
 
 
 }

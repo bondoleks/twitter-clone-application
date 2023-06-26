@@ -1,5 +1,5 @@
 ####
-GET http://localhost:5050/api/v1/chats/chat?user_init=12&user_reciv=11
+GET http://localhost:5050/api/v1/chats/chat?user_init=12&user_reciv=19
 
 ###
 POST http://localhost:5050/api/v1/chats/chat/message/save
@@ -18,3 +18,6 @@ GET http://localhost:5050/api/v1/chats/chat/messages/21?profileId=12&sizePage=15
 
 ###
 GET http://localhost:5050/api/v1/chats/usersearch?search_request=деву&profileId=11
+
+###
+POST http://localhost:5050/api/v1/chats/add/28?profileId=12
