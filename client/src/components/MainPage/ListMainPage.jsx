@@ -1,7 +1,7 @@
-import Tweet from '../../components/Tweet/Tweet';
+import Tweet from '../Tweet/Tweet';
 import { tweetsMainPageSelector } from '../../redux/selectors';
 import { useSelector } from 'react-redux';
-import { Box} from '@mui/system';
+import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getMainPageTweetsThunk } from '../../redux/mainPage/getMainPageTweetsThunk';
