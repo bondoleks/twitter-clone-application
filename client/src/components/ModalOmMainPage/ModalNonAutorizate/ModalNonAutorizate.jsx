@@ -1,61 +1,25 @@
-import { Modal ,Button, Typography, Box, Paper } from "@mui/material";
+import { Button, Typography, Box} from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useSelector } from "react-redux";
-import { dataModalMainPage } from "../../redux/selectors";
-import { VisibleNoAutorizateModalSelector } from "../../redux/selectors";
+import { dataModalMainPage } from "../../../redux/selectors";
+import { VisibleNoAutorizateModalSelector } from "../../../redux/selectors";
 import { useDispatch } from "react-redux";
-import { CloseNoAutorizateModalThunk } from "../../redux/mainPage/CloseNoAutorizateModalThunk";
+import { CloseNoAutorizateModalThunk } from "../../../redux/mainPage/CloseNoAutorizateModalThunk";
 import RepeatIcon from '@mui/icons-material/Repeat';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import { ModalOnMainPageWrapper } from "../ModalOnMainPageWrapper";
 
 export function ModalNonAutorizate(){
     const {title,text,icon} = useSelector(dataModalMainPage);
     const isOpen = useSelector(VisibleNoAutorizateModalSelector);
     const dispatch = useDispatch();
 
-    const modalStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 483,
-        height: 400,
-        bgcolor: '#fff',
-        color: '#000',
-        borderRadius: 5,
-        boxShadow: 24,
-        p: 4,
-        zIndex: 1,
-    };
-
+    function onClose(){
+        dispatch(CloseNoAutorizateModalThunk());
+    }
 
     return(
-        <Modal open={isOpen} 
-        onClose={() => {
-            dispatch(CloseNoAutorizateModalThunk());
-          }} 
-        aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-            <Paper sx={modalStyle}>
-                    <Typography
-                                onClick={() => {
-                                    dispatch(CloseNoAutorizateModalThunk());
-                                }} 
-                                sx={{
-                                    position: 'absolute',
-                                    lineHeight: '18px',
-                                    left: 20,
-                                    top: 12,
-                                    fontSize: 14,
-                                    borderRadius: '50%',
-                                    cursor: 'pointer',
-                                    padding: '6px',
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                    },
-                                }}
-                            >
-                                X
-                    </Typography>
+        <ModalOnMainPageWrapper isOpen={isOpen} onClose={onClose} size={{ width: 483, height: 400 }}>
                 <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
                 <Box sx={{textAlign:'center'}}>
                 {icon === 'like' && <FavoriteIcon fontSize="large" sx={{m:"20px 0",color: "rgb(249, 24, 128)"}}/>}
@@ -107,10 +71,7 @@ export function ModalNonAutorizate(){
 
 
                 </Box>
- 
-
-            </Paper>
-        </Modal>
+        </ModalOnMainPageWrapper>
     )
 
 }

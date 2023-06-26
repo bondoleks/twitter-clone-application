@@ -1,8 +1,9 @@
-import React from 'react';
 import { Box ,Typography} from '@mui/material';
 import Footerlogin from '../components/Footerlogin/Footerlogin';
-import { ListMainPage } from '../components/MainGage/ListMainPage';
-import { ModalNonAutorizate } from '../components/ModalNonAutorizate/ModalNonAutorizate';
+import { ListMainPage } from '../components/MainPage/ListMainPage';
+import { ModalNonAutorizate } from '../components/ModalOmMainPage/ModalNonAutorizate/ModalNonAutorizate';
+import { LogingModal } from '../components/ModalOmMainPage/Login/LogingModal';
+import { RegistrationModal } from '../components/ModalOmMainPage/Registration/RegistrationModal';
 
 export const MainPage = () => {
 
@@ -15,6 +16,8 @@ export const MainPage = () => {
       </Box>  
             <ListMainPage/>
             <ModalNonAutorizate/>
+            <LogingModal/>
+            <RegistrationModal/>
             <Footerlogin />
         </Box>
     )

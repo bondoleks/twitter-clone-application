@@ -1,7 +1,7 @@
 import { REGISTER_USER_REQUEST,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR } from "../actions"
 import { api } from "../service/api";
 
-export const registerUser = (user) => {
+export const registrationUserThunks = (user) => {
     return (dispatch) => {
         dispatch({ type: REGISTER_USER_REQUEST });
 
