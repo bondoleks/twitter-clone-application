@@ -53,12 +53,14 @@ export default function TweetForm({ open, onClose }) {
         const formData = new FormData();
         formData.append('tweetBody', tweetText);
         formData.append('parentTweetId', 0);
-        formData.append('user_id', '1');
+        formData.append('user_id', '12');
 
         for (const f of file) {
             formData.append('file', f);
             console.log("file", f)
         }
+
+        console.log(formData)
 
         api.post("https://twitter-clone-application.herokuapp.com/api/v1/tweets/tweet/save", formData)
             .then(response => {
