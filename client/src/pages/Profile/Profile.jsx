@@ -73,9 +73,7 @@ export const Profile = ({ withId }) => {
             width: '110%',
             marginLeft: '-5%',
             height: '200px',
-          }}></Box>
-
-          
+          }}></Box>       
 
 
           <StyledAvatar
