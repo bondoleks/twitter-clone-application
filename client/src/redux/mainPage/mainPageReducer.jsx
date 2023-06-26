@@ -3,10 +3,13 @@ import {
     GET_TWEETS_MAIN_SUCCESS,
     GET_MAIN_ERROR,
     OPEN_NOAUTORIZATE_MODAL,
-    CLOSE_NOAUTORIZATE_MODAL
-  } from "../actions"
+    CLOSE_NOAUTORIZATE_MODAL,
+    OPEN_LOGIN_MODAL,
+    CLOSE_LOGIN_MODAL,
+    OPEN_REGISTRATION_MODAL,
+    CLOSE_REGISTRATION_MODAL  } from "../actions"
   
-  export function mainPageReducer(state = { tweets: [],VisibleNoAutorizateModal:false,modalData:{}, isLoading: false }, action) {
+  export function mainPageReducer(state = { tweets: [],VisibleNoAutorizateModal:false,modalData:{},VisibleLoginModal:false,VisibleRegistrationModal:false, isLoading: false }, action) {
     switch (action.type) {
       case GET_TWEETS_MAIN_REQUEST:
         return { ...state, isLoading: true }
@@ -18,6 +21,14 @@ import {
         return { ...state, VisibleNoAutorizateModal: true ,modalData:action.payload.modalData} 
       case CLOSE_NOAUTORIZATE_MODAL:
         return { ...state, VisibleNoAutorizateModal: false , modalData:{}}    
+      case OPEN_LOGIN_MODAL:
+        return { ...state, VisibleLoginModal: true } 
+      case CLOSE_LOGIN_MODAL:
+        return { ...state, VisibleLoginModal: false} 
+      case OPEN_REGISTRATION_MODAL:
+        return { ...state, VisibleRegistrationModal: true} 
+      case CLOSE_REGISTRATION_MODAL:
+          return { ...state, VisibleRegistrationModal: false} 
       default:
         return state
     }

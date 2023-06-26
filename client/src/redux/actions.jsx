@@ -2,8 +2,21 @@
 export const GET_USER_REQUEST = 'user/get/request';
 export const GET_USER_SUCCSES = 'user/get/succses';
 export const GET_USER_ERROR = 'user/get/error';
-export const LOG_OUT_USER = 'user/log_out'
+export const LOG_OUT_USER = 'user/log_out';
 
+export const  OPEN_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/open';
+export const  CLOSE_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/close';
+
+export const OPEN_LOGIN_MODAL = 'main/modal/login/open';
+export const CLOSE_LOGIN_MODAL ='main/modal/login/close';
+
+export const OPEN_REGISTRATION_MODAL = 'main/modal/registration/open';
+export const CLOSE_REGISTRATION_MODAL ='main/modal/registration/close';
+
+//MainPage
+export const  GET_TWEETS_MAIN_REQUEST = 'main/tweets/get/request';
+export const  GET_TWEETS_MAIN_SUCCESS  = 'main/tweets/get/success';
+export const  GET_MAIN_ERROR = 'main/tweets/get/error';
 
 //Home
 export const GET_TWEETS_REQUEST = 'home/tweets/get/request';
@@ -86,9 +99,5 @@ export function registerUserRequest(user) {
 }
 
 
-//MainPage
-export const  GET_TWEETS_MAIN_REQUEST = 'main/tweets/get/request';
-export const  GET_TWEETS_MAIN_SUCCESS  = 'main/tweets/get/success';
-export const  GET_MAIN_ERROR = 'main/tweets/get/error';
-export const  OPEN_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/open';
-export const  CLOSE_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/close';
+
+

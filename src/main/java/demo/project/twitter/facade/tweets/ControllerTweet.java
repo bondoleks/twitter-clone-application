@@ -142,20 +142,35 @@ public class ControllerTweet {
     }
 
     @PostMapping("tweet/save")
-    public void saveTweet(@RequestParam("tweetBody") String tweetBody,
+    public String saveTweet(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("user_id") String userId,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto, Principal principal) {
-//        String userName = principal.getName();
-        String userName = "ssa333";
+       String userName = principal.getName();
+//        String userName = "ssa333";
+
+
         User user = facadeUser.getUserByName(userName);
         Long userIdNew = user.getId();
+        StringBuilder sb = new StringBuilder();
+        sb.append("userName = ").
+                append(userName).
+                append(" userId = ").
+                append(userId).
+                append(" arraySize = ").
+                append(listPhoto.size()).
+                append("***");
+
+        listPhoto.stream().forEach(x ->sb.append(x.getContentType()).append(" "));
+
+
 
 
 
        /* List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         /*facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);*/
-        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), parseLong(userId), listPhoto);
+        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId),userIdNew, listPhoto);
+        return sb.toString();
     }
 
     @PostMapping("quote/save")
