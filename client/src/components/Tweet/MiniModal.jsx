@@ -10,7 +10,7 @@ export function MiniModal({ visibleModal, setVisibleModal,data,activeBookmark })
 
 function handleClose(e){
   e.stopPropagation();
-  setVisibleModal()
+  setVisibleModal();
 }
 
 
@@ -19,6 +19,10 @@ console.log(heightItem);
   return (
     <>
       <Hidden smDown>
+          <Box sx={{position:'fixed',width:'100%',height:'100%',top:0,left:0}}
+          onClick={(e)=>{
+            handleClose(e);
+          }}>
           <Paper
             sx={{
               zIndex: 2,
