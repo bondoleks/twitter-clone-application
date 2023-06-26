@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { api } from "../redux/service/api";
+import {api} from "../redux/service/api";
 
 export const useFetch = ({
     instant = true,
@@ -23,22 +23,7 @@ export const useFetch = ({
 
             setLoading(true);
 
-            const formData = new FormData(); // Create a FormData object
-
-            // Add the request data to the FormData object
-            for (const key in fetchOptions.data) {
-                formData.append(key, fetchOptions.data[key]);
-            }
-
-            fetchOptions.headers = {
-                ...fetchOptions.headers,
-                'Content-Type': 'multipart/form-data' // Set the Content-Type header
-            };
-
-            return api({
-                ...fetchOptions,
-                data: formData // Use the FormData object as the request data
-            })
+            return api(fetchOptions)
                 .then(dataTransformer)
                 .then((res) => {
                     setData(res);
@@ -50,6 +35,7 @@ export const useFetch = ({
                     setLoading(false);
                 });
         },
+        // eslint-disable-next-line
         [onCompleted, dataTransformer]
     );
 
@@ -57,6 +43,7 @@ export const useFetch = ({
         if (instant) {
             fetcher(axios);
         }
+        // eslint-disable-next-line
     }, []);
 
     return [

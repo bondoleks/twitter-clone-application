@@ -29,6 +29,10 @@ export function formatDateTime(dateTimeString) {
   const diffMonths = Math.floor(diffDays / 30);
   const diffYears = Math.floor(diffMonths / 12);
 
+  if(diffSeconds <= 0){
+    return 'Now'
+  }
+
   if (diffSeconds < 60) {
     return `${diffSeconds}sec`;
   } else if (diffMinutes < 60) {
@@ -96,18 +100,11 @@ function headlerBookmark(id){
 
 function handleCopyLink(id){
   navigator.clipboard.writeText(`http://localhost:5173/tweet/${id}`)
-  .then(() => {
-    console.log("Лінк скопійовано до буферу обміну!");
-  })
-  .catch((error) => {
-    console.error("Помилка при копіюванні лінку:", error);
-  });
   setVisibleShareModal(false);
 }
 
 
 const autorizate = localStorage.getItem('authToken');
-console.log(tweet);
 
 return (
   <Box

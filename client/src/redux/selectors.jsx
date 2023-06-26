@@ -10,3 +10,11 @@ export const filteredUsersSelector = state => state.chat.filteredUsers;
 export const getUserChats = state => state.chat.userChats;
 export const getUser = state => state.user.user;
 export const getActiveChat = state => state.chat.activeChat;
+
+//login
+export const VisibleLoginModalSelector = state => state.main.VisibleLoginModal;
+//registration
+export const VisibleRegistrationModalSelector = state => state.main.VisibleRegistrationModal;
+//error
+export const loginErrorSelector = state => state.user.loginError;
+export const registrationErrorSelector = state => state.registration.registrationError;

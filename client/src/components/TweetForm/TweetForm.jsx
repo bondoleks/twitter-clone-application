@@ -53,21 +53,16 @@ export default function TweetForm({ open, onClose }) {
         const formData = new FormData();
         formData.append('tweetBody', tweetText);
         formData.append('parentTweetId', 0);
-        formData.append('user_id', '1');
-
+        formData.append('user_id', '12');
 
         for (const f of file) {
             formData.append('file', f);
             console.log("file", f)
         }
 
-        // if (file) {
-        //     formData.append('file', file);
-        // } 
-        // formData.append('file', file);
+        console.log(formData)
 
-
-        api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", formData)
+        api.post("https://twitter-clone-application.herokuapp.com/api/v1/tweets/tweet/save", formData)
             .then(response => {
                 console.log(response);
                 alert("Success!");
@@ -80,11 +75,6 @@ export default function TweetForm({ open, onClose }) {
                     console.log("Server Response:", error.response.data);
                 }
             });
-            // .catch(error => {
-            //     console.error(error);
-            //     // Actions on error
-            //     alert("Error!: " + error.message);
-            // });
     };
 
     return (
@@ -117,7 +107,8 @@ export default function TweetForm({ open, onClose }) {
                         textTransform: 'none',
                         borderRadius: '20px',
                         height: '30px',
-                        background: buttonColor
+                        background: buttonColor,
+                        marginLeft: '8px'
                     }}>
                         Tweet
                     </Button>
@@ -384,3 +375,4 @@ export default function TweetForm({ open, onClose }) {
 // }
 
 
+// }

@@ -75,6 +75,8 @@ public class FacadeChatNew {
         dtoMessage.setTypeMessage(i);
         return dtoMessage;
     }
+
+
 }
 
 
