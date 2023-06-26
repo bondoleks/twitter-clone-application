@@ -10,6 +10,8 @@ import { TextField } from 'formik-mui';
 import { registrationErrorSelector } from '../../../redux/selectors';
 import { ModalOnMainPageWrapper } from '../ModalOnMainPageWrapper';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import { useState } from 'react';
+import {СontinuationModal} from "./СontinuationModal"
 
 
 const validationSchema = object().shape({
@@ -31,6 +33,7 @@ export const RegistrationModal = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector(VisibleRegistrationModalSelector);
     const registrationError = useSelector(registrationErrorSelector);
+    const [VisibleNextModal, setVisibleNextModal] =useState(false);
 
     function handleClose(){
         dispatch({type:CLOSE_REGISTRATION_MODAL})
@@ -46,7 +49,13 @@ export const RegistrationModal = () => {
       const handleSubmit = (values, { setSubmitting }) => {
         dispatch(registrationUserThunks(values));
         setSubmitting(false);
+        setVisibleNextModal(true);
       };
+
+      function closerNextModal(){
+        setVisibleNextModal(false);
+        dispatch({ type: CLOSE_REGISTRATION_MODAL })
+      }
 
 
     const initialValues = {
@@ -254,6 +263,7 @@ export const RegistrationModal = () => {
                         </Typography>
                     </Form>
                     </Formik>
+                    <СontinuationModal email={initialValues.email} openModal={VisibleNextModal} closeModal={closerNextModal} />
                 </Box>
         </ModalOnMainPageWrapper>
     )

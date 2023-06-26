@@ -1,4 +1,4 @@
-import { REGISTER_USER_REQUEST,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR,CLOSE_REGISTRATION_MODAL } from "../actions"
+import { REGISTER_USER_REQUEST,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR } from "../actions"
 import axios from "axios";
 
 export const registrationUserThunks = (user) => {
@@ -10,7 +10,6 @@ export const registrationUserThunks = (user) => {
             .then((data) => {
                 if(data.data.split(" ")[1] === 'created'){
                     dispatch({ type: REGISTER_USER_SUCCESS });
-                    dispatch({ type: CLOSE_REGISTRATION_MODAL });
                 } else{
                     dispatch({ type: REGISTER_USER_ERROR, payload:{registrationError: data.data} });
                 }
