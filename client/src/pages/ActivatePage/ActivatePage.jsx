@@ -41,8 +41,13 @@ export function ActivatePage() {
         <TwitterIcon sx={{ margin: '16px' }} fontSize="large" color='primary' />
     </IconButton>
       {visibleLoading && <Typography variant='h5'>Loading...</Typography>}
-      {!visibleLoading && isActivation && <Typography variant='h5'>Activation successful!</Typography>}
-      {!visibleLoading && !isActivation && <Typography variant='h5'>Activation failed.</Typography>}
+      {!visibleLoading && isActivation ? (
+          <Typography variant='h5'>Activation successful!</Typography>
+        ) : null}
+
+      {!visibleLoading && !isActivation ? (
+          <Typography variant='h5'>Activation failed.</Typography>
+        ) : null}
       <Button
       onClick={()=>{
         navigate('/');

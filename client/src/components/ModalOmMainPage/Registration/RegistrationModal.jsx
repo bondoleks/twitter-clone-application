@@ -4,17 +4,17 @@ import { useDispatch } from 'react-redux';
 import { OPEN_LOGIN_MODAL,CLOSE_REGISTRATION_MODAL } from '../../../redux/actions';
 import { useSelector } from 'react-redux';
 import { VisibleRegistrationModalSelector } from '../../../redux/selectors';
-import { Formik, Form, Field,ErrorMessage  } from 'formik';
-import { object, string,ref } from 'yup';
+import { Formik, Form, Field  } from 'formik';
+import { object, string } from 'yup';
 import { TextField } from 'formik-mui';
 import { registrationErrorSelector } from '../../../redux/selectors';
 import { ModalOnMainPageWrapper } from '../ModalOnMainPageWrapper';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { useState } from 'react';
+
 
 const validationSchema = object().shape({
-    name: string()
-      .required('Name is required'),
+    username: string()
+      .required('Username is required'),
     email: string()
       .email('Invalid email')
       .required('Email is required'),
@@ -28,12 +28,10 @@ const validationSchema = object().shape({
   });
 
 export const RegistrationModal = () => {
-    const [passwords,setPasswords] =useState({password:null,repeatedPassword:null})
     const dispatch = useDispatch();
     const isOpen = useSelector(VisibleRegistrationModalSelector);
     const registrationError = useSelector(registrationErrorSelector);
 
-console.log(passwords);
     function handleClose(){
         dispatch({type:CLOSE_REGISTRATION_MODAL})
     }
@@ -73,11 +71,11 @@ console.log(passwords);
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} onReset={() => {}}>
             <Form>
             <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center', m:'20px 0 4px',gap:'12px'}}>
-                <Box sx={{width:'300px',height:'74px'}}>
+                <Box sx={{width:'340px',height:'74px'}}>
                   <Field
                     component={TextField}
-                    name="name"
-                    label="Userame"
+                    name="username"
+                    label="Username"
                     inputProps={{
                         style: {
                           outline: 'none',
@@ -110,6 +108,7 @@ console.log(passwords);
                     component={TextField}
                     name="email"
                     label="Email"
+                    type='email'
                     inputProps={{
                         style: {
                           outline: 'none',
@@ -202,7 +201,10 @@ console.log(passwords);
                         },
                       }}
                   />
-                </Box>  
+                </Box>
+                <Box sx={{width:'100%',textAlign:'center', color:'red',height:'20px'}}>
+                  {registrationError && <Typography variant='body1'>{registrationError}</Typography>}
+              </Box> 
             </Box>
 
                     <Button
@@ -216,9 +218,11 @@ console.log(passwords);
                       color: 'white',
                       backgroundColor: '#1DA1F2',
                       width: '100%',
+                      m:'8px 0',
                       border: '1px solid rgba(255, 255, 255, 0.35)',
                       '&:hover': {
                         backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        color:'#1DA1F2'
                       },
                     }}
                   >
