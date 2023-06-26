@@ -20,6 +20,7 @@ import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
+
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
@@ -28,7 +29,6 @@ import { ActivatePage } from './pages/ActivatePage/ActivatePage';
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
     console.log(isAuthenticated)
-
 
     return isAuthenticated ? (
         <Element />
@@ -50,7 +50,6 @@ const routes = [
     },
     {
         path: "/home",
-
         // element: <Home />,
         element: <PrivateRoute element={Home} />,
 
@@ -98,14 +97,11 @@ const routes = [
 
         // element: <ProfileUser />,
         element: <PrivateRoute element={ProfileUser} />,
-
     },
     {
         path: "/profile/:id",
         element: <ProfileId />,
         // element: <PrivateRoute element={ProfileId} />,
-
-
     },
     {
         path: "/profile/following",

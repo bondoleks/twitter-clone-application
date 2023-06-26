@@ -39,13 +39,13 @@ GET http://localhost:5050/tweets/tweet/branch/10
 
 
 ###
-GET http://localhost:5050/tweets/tweet/all/10?sizePage=10&numberPage=0
+GET http://localhost:5050/api/v1/tweets/tweet/all/10?sizePage=10&numberPage=0
 
 ###
-GET http://localhost:5050/tweets/tweet/all/profile?sizePage=10&numberPage=0
+GET http://localhost:5050/api/v1/tweets/tweet/all/profile?sizePage=10&numberPage=0
 
 ###
-GET http://localhost:5050/tweets/tweet/all?sizePage=10&numberPage=0
+GET http://localhost:5050/api/v1/tweets/tweet/all?sizePage=10&numberPage=0
 
 ###
 GET http://localhost:5050/api/v1/tweets/tweet/all/notauth

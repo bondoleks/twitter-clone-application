@@ -142,7 +142,9 @@ public class UserFacade {
         return service.findByUserName(userName);
     }
 
-    public User getUserById(Long userReciv) {
+
+
+    public User getUserById1(Long userReciv) {
         return service.findById(userReciv);
     }
 }

@@ -14,6 +14,7 @@ import { useState } from 'react';
 import {СontinuationModal} from "./СontinuationModal"
 
 
+
 const validationSchema = object().shape({
     username: string()
       .required('Username is required'),
@@ -35,6 +36,7 @@ export const RegistrationModal = () => {
     const registrationError = useSelector(registrationErrorSelector);
     const [VisibleNextModal, setVisibleNextModal] =useState(false);
 
+
     function handleClose(){
         dispatch({type:CLOSE_REGISTRATION_MODAL})
     }
@@ -55,8 +57,7 @@ export const RegistrationModal = () => {
       function closerNextModal(){
         setVisibleNextModal(false);
         dispatch({ type: CLOSE_REGISTRATION_MODAL })
-      }
-
+      };
 
     const initialValues = {
         username: '',

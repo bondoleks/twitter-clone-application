@@ -21,6 +21,7 @@ import static java.lang.Long.parseLong;
 public class ControllerChatNew {
 
     private final FacadeChatNew facade;
+    private final FacadeListChat facadeListChat;
     private final Mapper mapper;
     private final UserFacade facadeUser;
 
@@ -29,7 +30,7 @@ public class ControllerChatNew {
     public UserDto getChatByUser(@RequestParam("user_init") Long user_init, @RequestParam("user_reciv") Long user_reciv) {
         Long profileId = user_init;
         Chat chat= facade.getChatByUser(profileId, user_reciv);
-        return mapper.map().map(facadeUser.getUserById(user_reciv), UserDto.class);
+        return mapper.map().map(facadeUser.getUserById1(user_reciv), UserDto.class);
 
     }
 
@@ -49,6 +50,15 @@ public class ControllerChatNew {
         return facade.getChatAllMessages(chat_id, profileId, sizePage, numberPage);
 
     }
+
+    @PostMapping("add/{chatId}")
+    public String addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
+        Long profileID = userId;
+        facadeListChat.addChatToChatList(chat_id, profileID);
+        return "ok";
+    }
+
+
 
 
 }

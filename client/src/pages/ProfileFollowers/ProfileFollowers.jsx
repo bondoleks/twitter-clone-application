@@ -78,9 +78,9 @@ const ProfileFollowers = ({ withId }) => {
             </RouterLink>
             <Box ml={2}>
 
-              <Typography variant='h6'>{username}</Typography>
+              <Typography variant='h6'>{firstName} {lastName}</Typography>
 
-              <Typography>@nikname</Typography>
+              <Typography>@{username}</Typography>
             </Box>
           </Toolbar>
         </Box>
