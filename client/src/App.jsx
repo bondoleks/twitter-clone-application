@@ -26,7 +26,6 @@ import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
 
-
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
     console.log(isAuthenticated)

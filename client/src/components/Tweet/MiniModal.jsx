@@ -15,15 +15,19 @@ function handleClose(e){
 
 
 const heightItem = 100/data.length;
-console.log(heightItem);
   return (
     <>
       <Hidden smDown>
           <Box sx={{position:'fixed',width:'100%',height:'100%',top:0,left:0}}
           onClick={(e)=>{
-            handleClose(e);
-          }}>
+            handleClose(e);}}
+          ></Box>
           <Paper
+            onClick={(e)=>{
+              e.stopPropagation();
+              console.log(e.currentTarget);
+            }
+            }
             sx={{
               zIndex: 2,
               position: 'absolute',
