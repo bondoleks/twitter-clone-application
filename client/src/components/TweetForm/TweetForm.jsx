@@ -12,8 +12,11 @@ import ToolbarTweetForm from "./ToolbarTweetForm";
 import { useTheme } from '@mui/material/styles';
 import { api } from "../../redux/service/api";
 import Alert from "@mui/material/Alert";
+import { useFetch } from "../../hooks/UseFetch";
+import { useParams } from 'react-router-dom';
 
-export default function TweetForm({ open, onClose }) {
+export default function TweetForm({ open, onClose, withId  }) {
+    const { id } = useParams()
 
     const theme = useTheme();
 
@@ -53,7 +56,7 @@ export default function TweetForm({ open, onClose }) {
         const formData = new FormData();
         formData.append('tweetBody', tweetText);
         formData.append('parentTweetId', 0);
-        formData.append('user_id', '12');
+        formData.append('user_id', id);
 
         for (const f of file) {
             formData.append('file', f);

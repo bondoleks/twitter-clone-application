@@ -64,52 +64,6 @@ export default function ModalEditUser({ open, onClose, withId }) {
         }
     };
 
-    const [fileAv, setFileAv] = useState(null);
-    const [fileHead, setFileHead] = useState(null);
-    const [bioText, setBioText] = useState("");
-    const fileAvRef = useRef(null);
-    const fileHeadRef = useRef(null);
-  
-
-    const handleFileAvChange = (e) => {
-        const fileAv = e.target.files[0];
-        setFileAv(fileAv);
-        setAvatarUrl(URL.createObjectURL(fileAv));
-    };
-
-    const handleFileHeadChange = (e) => {
-        const fileHead = e.target.files[0];
-        setFileHead(fileHead);
-        setAvatarUrl(URL.createObjectURL(fileHead));
-    };
-
-    const handleSave = () => {
-        console.log('save info')
-        const formData = new FormData();
-        formData.append('firstName', firstName);
-        formData.append('lastName', lastName);
-        formData.append('bio', bioText);
-        formData.append('user_id', '11');
-        formData.append('head_imagerUrl', fileHead);
-        formData.append('av_imagerUrl', fileAv);
-
-
-        api.put("user/update", formData)
-            .then(response => {
-                console.log(response);
-                alert("Success!");
-            })
-            .catch(error => {
-                console.error(error);
-                // Actions on error
-                alert("Error!: " + error.message);
-                if (error.response) {
-                    console.log("Server Response:", error.response.data);
-                }
-            });
-    };
-
-
     const [{ data, loading }, getData] = useFetch({
         initData: {},
         url: withId
@@ -126,6 +80,63 @@ export default function ModalEditUser({ open, onClose, withId }) {
     if (!loading) <p>loading...</p>
 
     const { username, firstName, head_imagerUrl, lastName, email, location, birthdate, av_imagerUrl, bio } = data
+
+    const [fileAv, setFileAv] = useState(null);
+    const [fileHead, setFileHead] = useState(null);
+    const [bioText, setBioText] = useState("");
+    const fileAvRef = useRef(null);
+    const fileHeadRef = useRef(null);
+    const [filePath, setFilePath] = useState(head_imagerUrl);
+    const [filePathAv, setFilePathAv] = useState(av_imagerUrl);
+
+    useEffect(() => {
+        if (fileAv) setFilePathAv(URL.createObjectURL(fileAv));
+    }, [fileAv]);
+
+    const handleFileAvChange = (e) => {
+        const fileAv = e.target.files[0];
+        setFileAv(fileAv);
+        setAvatarUrl(URL.createObjectURL(fileAv));
+    };
+
+    useEffect(() => {
+        if (fileHead) setFilePath(URL.createObjectURL(fileHead));
+    }, [fileHead]);
+
+    const handleFileHeadChange = (e) => {
+        const fileHead = e.target.files[0];
+        setFileHead(fileHead);
+        setAvatarUrl(URL.createObjectURL(fileHead));
+    };
+
+    const handleSave = () => {
+        console.log('save info')
+        const formData = new FormData();
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+        formData.append('bio', bioText);
+        formData.append('user_id', id);
+        formData.append('head_imagerUrl', fileHead);
+        formData.append('av_imagerUrl', fileAv);
+
+
+        api.post("api/v1/user/update", formData)
+            .then(response => {
+                console.log(response);
+                alert("Success!");
+            })
+            .catch(error => {
+                console.error(error);
+                // Actions on error
+                alert("Error!: " + error.message);
+                if (error.response) {
+                    console.log("Server Response:", error.response.data);
+                }
+            });
+    };
+
+
+
 
 
     return (
@@ -157,17 +168,16 @@ export default function ModalEditUser({ open, onClose, withId }) {
             <DialogContent sx={{ maxWidth: 'md' }} style={ModalEditUserStyles}>
                 <Container>
                     <div style={{ position: 'relative' }}>
-                        <Box sx={{
-                            backgroundImage: { head_imagerUrl },
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            width: '100%',
-                            height: '150px'
-                            // bgcolor: 'grey.300',
-                            // width: '100%',
-                            // height: '150px'
-                        }}></Box>
-
+                        <Box
+                            sx={{
+                                backgroundImage: filePath ? `url(${filePath})` : 'none',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                width: '100%',
+                                height: '150px',
+                                bgcolor: !filePath && 'grey.300',
+                            }}
+                        ></Box>
 
                         <input
                             ref={fileHeadRef}
@@ -184,6 +194,7 @@ export default function ModalEditUser({ open, onClose, withId }) {
                             left: "50%",
                             transform: "translateX(-50%)",
                             color: "black ",
+                            zIndex: 99999
                         }}
                             onClick={() => fileHeadRef.current.click()}>
                             <PhotoCameraOutlinedIcon />
@@ -194,7 +205,7 @@ export default function ModalEditUser({ open, onClose, withId }) {
                         <StyledAvatar
                             alt="User Avatar"
                             // src='../../img/avatar.png'
-                            src={av_imagerUrl}
+                            src={filePathAv ? `url(${filePathAv})` : av_imagerUrl }
                             sx={{
                                 width: '70px',
                                 height: '70px',
@@ -244,7 +255,7 @@ export default function ModalEditUser({ open, onClose, withId }) {
                         color: theme.palette.text.primary,
                     },
                 }}
-                    // value={`${firstName} ${lastName}`}
+                // value={`${firstName} ${lastName}`}
                 />
 
 
