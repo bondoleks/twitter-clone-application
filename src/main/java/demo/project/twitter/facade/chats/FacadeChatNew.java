@@ -1,5 +1,6 @@
 package demo.project.twitter.facade.chats;
 
+import demo.project.twitter.config.Mapper;
 import demo.project.twitter.facade.messages.DtoMessage;
 import demo.project.twitter.facade.messages.ServiceMessage;
 import demo.project.twitter.model.User;
@@ -23,6 +24,7 @@ public class FacadeChatNew {
     private final ServiceChatNew service;
     private final UserService serviceUser;
     private final ServiceMessage serviceMessage;
+    private final Mapper mapper;
 
 
     public Chat getChatByUser(Long userInit, Long userReciv) {
@@ -52,7 +54,7 @@ public class FacadeChatNew {
 
     }
 
-    public  DtoChatMessage getChatAllMessages(Long chatId, Long profileId, Integer sizePage, Integer namberPage) {
+    public DtoChatMessage getChatAllMessages(Long chatId, Long profileId, Integer sizePage, Integer namberPage) {
         Page<Message> page = serviceMessage.getChatAllMessages(chatId, sizePage, namberPage);
         DtoChatMessage dtoChatMessage = new DtoChatMessage();
         dtoChatMessage.setTotalElements(page.getTotalElements());
@@ -76,7 +78,29 @@ public class FacadeChatNew {
         return dtoMessage;
     }
 
+    public DtoChat transChatToDtoChat(Chat chat, int keyMessage) {
+        DtoChat dtoChat = new DtoChat();
+        User user = serviceUser.getUserFromChat(chat.getId()).get(0);
+        mapper.map().map(user,dtoChat);
+        dtoChat.setUserResivId(user.getId());
+        dtoChat.setInitiatorId(chat.getInitiator().getId());
+        dtoChat.setChatId(chat.getId());
+        if (keyMessage == 1) {
+            List<String> lastMessage = serviceMessage.getLastMessage(chat.getId());
+            if (lastMessage.size() > 0)
+                dtoChat.setLastMessage(lastMessage.get(0));
+        }
 
+
+
+
+        return dtoChat;
+    }
+
+
+    public Chat getChatById(Long chatId) {
+        return service.getById(chatId).get();
+    }
 }
 
 

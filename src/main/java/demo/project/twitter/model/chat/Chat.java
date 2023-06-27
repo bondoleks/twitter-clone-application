@@ -35,7 +35,7 @@ public class Chat extends BaseEntity {
 
     @ManyToMany(mappedBy = "listChat")
     @JsonIgnore
-    private List<ListChat> listListChat = new ArrayList<>();
+    private List<GeneralChat> listGeneralChat = new ArrayList<>();
 
 
     public Chat(User initiator1) {
