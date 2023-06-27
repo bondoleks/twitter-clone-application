@@ -156,7 +156,7 @@ public class ControllerTweet {
         sb.append("userName = ").
                 append(userName).
                 append(" userId = ").
-                append(userId).
+                append(userIdNew).
                 append(" arraySize = ").
                 append(listPhoto.size()).
                 append("***");
