@@ -3,7 +3,7 @@ package demo.project.twitter.controller;
 
 import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.facade.UserFacade;
-import demo.project.twitter.service.PhotoService;
+import demo.project.twitter.service.GeneralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("api/v1/user")
 public class UserController {
     private final UserFacade facade;
-    private final PhotoService photo;
+    private final GeneralService photo;
 
 
 
