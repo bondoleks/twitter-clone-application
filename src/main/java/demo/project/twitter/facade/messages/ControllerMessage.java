@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 
-//@CrossOrigin("https://twitter-clone-application.vercel.app")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app", "http://localhost:5173"})
 
 public class ControllerMessage {
     private final FacadeMessage facade;
