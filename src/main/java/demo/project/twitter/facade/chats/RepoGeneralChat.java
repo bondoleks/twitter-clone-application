@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface RepoListChat extends JpaRepository<GeneralChat, Long> {
+public interface RepoGeneralChat extends JpaRepository<GeneralChat, Long> {
 
 
     boolean existsByUserId(Long profile);

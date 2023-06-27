@@ -3,12 +3,16 @@ package demo.project.twitter.facade.chats;
 
 import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
+import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.UserFacade;
 import demo.project.twitter.facade.messages.DtoMessage;
 import demo.project.twitter.model.chat.Chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.Long.parseLong;
 
@@ -21,17 +25,21 @@ import static java.lang.Long.parseLong;
 public class ControllerChatNew {
 
     private final FacadeChatNew facade;
-    private final FacadeListChat facadeListChat;
+    private final FacadeGeneralChat facadeGeneralChat;
     private final Mapper mapper;
     private final UserFacade facadeUser;
+    private final ServiceChatNew serviceChatNew;
 
 
-    @GetMapping("chat")
-    public UserDto getChatByUser(@RequestParam("user_init") Long user_init, @RequestParam("user_reciv") Long user_reciv) {
-        Long profileId = user_init;
-        Chat chat= facade.getChatByUser(profileId, user_reciv);
-        return mapper.map().map(facadeUser.getUserById1(user_reciv), UserDto.class);
+    @GetMapping("chat/{chatId}")
+    public DtoChat getChatByUser(@PathVariable("chatId") Long chatId, @RequestParam("profileId") Long profileId) {
 
+        Chat chat= facade.getChatById(chatId);
+        return facade.transChatToDtoChat(chat, 0);
+    }
+    @GetMapping("usersearch")
+    public List<UserSearchDto> searchUserForChat(@RequestParam("search_request") String searchRequest, @RequestParam("profileId") Long profileId){
+        return facadeUser.userSearch(searchRequest);
     }
 
     @PostMapping("chat/message/save")
@@ -54,9 +62,31 @@ public class ControllerChatNew {
     @PostMapping("add/{chatId}")
     public String addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
         Long profileID = userId;
-        facadeListChat.addChatToChatList(chat_id, profileID);
+        facadeGeneralChat.addChatToChatList(chat_id, profileID);
+        /*Chat chat = serviceChatNew.getById(21L).get();
+        if (chat.getListListChat() == null) log.info(":::::: ok");
+        else {
+            log.info("::::::: not null");
+            log.info("        = " + chat.getListListChat().size());
+        }
+        List<ListChat> list = new ArrayList<>();
+        chat.setListListChat(list);
+        serviceChatNew.saveOne(chat);*/
+
         return "ok";
     }
+
+    @GetMapping("chat/list")
+    public List<DtoChat> getListChat(@RequestParam("profileId") Long userId) {
+        Long profileId = userId;
+
+        return facadeGeneralChat.getListChat(profileId).stream().
+                map(c -> facade.transChatToDtoChat(c, 1)).
+                collect(Collectors.toList());
+
+    }
+
+
 
 
 
