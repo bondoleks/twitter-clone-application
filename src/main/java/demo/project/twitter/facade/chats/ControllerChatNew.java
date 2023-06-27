@@ -7,6 +7,7 @@ import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.UserFacade;
 import demo.project.twitter.facade.messages.DtoMessage;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.GeneralChat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +31,11 @@ public class ControllerChatNew {
     private final ServiceChatNew serviceChatNew;
 
 
-    @GetMapping("chat/{chatId}")
-    public DtoChat getChatByUser(@PathVariable("chatId") Long chatId, @RequestParam("profileId") Long profileId) {
+    @GetMapping("chat/{userReceiver}")
+    public DtoChat getChatByUser(@PathVariable("userReceiver") Long userRec, @RequestParam("profileId") Long userId) {
+        Long profileId = userId;
 
-        Chat chat= facade.getChatById(chatId);
+        Chat chat= facade.getChatByUser(profileId, userRec);
         return facade.transChatToDtoChat(chat, 0);
     }
     @GetMapping("usersearch")
@@ -59,20 +61,16 @@ public class ControllerChatNew {
     }
 
     @PostMapping("add/{chatId}")
-    public String addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
+    public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
         Long profileID = userId;
-        facadeGeneralChat.addChatToChatList(chat_id, profileID);
-        /*Chat chat = serviceChatNew.getById(21L).get();
-        if (chat.getListListChat() == null) log.info(":::::: ok");
-        else {
-            log.info("::::::: not null");
-            log.info("        = " + chat.getListListChat().size());
-        }
-        List<ListChat> list = new ArrayList<>();
-        chat.setListListChat(list);
-        serviceChatNew.saveOne(chat);*/
+        GeneralChat generalChat = facadeGeneralChat.addChatToChatList(chat_id, profileID);
+        log.info("::::::::: generalChat = " + generalChat.getId());
+        return facadeGeneralChat.getListChat(profileID).stream().
+                map(c -> facade.transChatToDtoChat(c, 1)).
+                collect(Collectors.toList());
 
-        return "ok";
+
+
     }
 
     @GetMapping("chat/list")

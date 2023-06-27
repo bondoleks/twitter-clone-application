@@ -37,7 +37,7 @@ public class ServiceGeneralChat implements FunctionListChat {
         return repo.existsByUserId(profileID);
     }
 
-    public GeneralChat getListChatByUserId(Long profileID) {
+    public List<GeneralChat> getListChatByUserId(Long profileID) {
         return repo.findByUserId(profileID);
     }
 
@@ -51,5 +51,10 @@ public class ServiceGeneralChat implements FunctionListChat {
 
 //        return null;
 
+    }
+
+    public boolean existsChatInGeneralChat(Long chatId, Long generalChatId) {
+        if (repo.existsChatInGeneralChat(chatId, generalChatId).size() > 0) return true;
+        else return false;
     }
 }
