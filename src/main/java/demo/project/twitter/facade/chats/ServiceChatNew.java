@@ -84,4 +84,11 @@ public class ServiceChatNew implements FunctionChat {
     }
 
 
+    public List<Chat> getListChat(Long generalChatId) {
+        return repo.getListChat(generalChatId);
+    }
+
+    public List<Chat> getListChatByGeneralId(Long generalChatId) {
+        return repo.getListChatByGeneralId(generalChatId);
+    }
 }
