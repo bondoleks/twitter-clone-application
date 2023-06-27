@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -27,4 +28,9 @@ public interface RepoMessage extends JpaRepository<Message, Long>, PagingAndSort
     )
     Page<Message> getChatAllMessages(Long chatId, Pageable pageable);
 
+    @Query(
+            value = "select * from messages where chat_id = ? and id = (select MAX(id) from messages)",
+            nativeQuery = true
+    )
+    List<String> getLastMessage(Long chatId);
 }
