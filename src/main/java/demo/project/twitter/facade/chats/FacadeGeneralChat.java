@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,15 +20,31 @@ public class FacadeGeneralChat {
     private final ServiceChatNew serviceChatNew;
     private final UserService serviceUser;
 
+    private boolean existsChatInGeneralChat(Long chatId, Long generalChatId) {
+        return service.existsChatInGeneralChat(chatId, generalChatId);
+    }
 
     public GeneralChat addChatToChatList(Long chatId, Long profileID) {
         GeneralChat listChat;
         if (service.existsByUserId(profileID)) {
-            log.info(":::::: start1");
-            listChat = service.getListChatByUserId(profileID);
-            Chat chat = serviceChatNew.getById(chatId).get();
+
+            listChat = service.getListChatByUserId(profileID).get(0);
+
+            boolean b = existsChatInGeneralChat(chatId, listChat.getId());
+
+            if (!existsChatInGeneralChat(chatId, listChat.getId())) {
+
+                Chat chat = serviceChatNew.getById(chatId).get();
+
+                listChat.getListChat().add(chat);
+
+                service.saveOne(listChat);
+
+            }
+            /*Chat chat = serviceChatNew.getById(chatId).get();
             listChat.getListChat().add(chat);
-            service.saveOne(listChat);
+            service.saveOne(listChat);*/
+            log.info("::::::: end");
 
         } else {
             log.info(":::::: start2");
@@ -54,14 +71,14 @@ public class FacadeGeneralChat {
     }
 
 
-
     public List<Chat> getListChat(Long profileId) {
-        Long generalChatId = service.getListChatByUserId(profileId).getId();
-
-        return serviceChatNew.getListChatByGeneralId(generalChatId);
-
-
-
+        List<Chat> listChat = new ArrayList<>();
+        List<GeneralChat> listGeneraCaht = service.getListChatByUserId(profileId);
+        if (listGeneraCaht.size() > 0) {
+            Long generalChatId = listGeneraCaht.get(0).getId();
+            listChat = serviceChatNew.getListChatByGeneralId(generalChatId);
+        }
+        return listChat;
     }
 }
 

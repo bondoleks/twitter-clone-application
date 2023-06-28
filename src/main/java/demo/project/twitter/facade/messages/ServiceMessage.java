@@ -48,4 +48,8 @@ public class ServiceMessage implements FunctionMessage {
     public List<String> getLastMessage(Long chatId) {
         return repo.getLastMessage(chatId);
     }
+
+    public void delMessageByChatId(Long chatId) {
+        repo.deleteByChat_Id(chatId);
+    }
 }
