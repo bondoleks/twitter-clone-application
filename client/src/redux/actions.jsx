@@ -13,6 +13,9 @@ export const CLOSE_LOGIN_MODAL ='main/modal/login/close';
 export const OPEN_REGISTRATION_MODAL = 'main/modal/registration/open';
 export const CLOSE_REGISTRATION_MODAL ='main/modal/registration/close';
 
+export const OPEN_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/open';
+export const CLOSE_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/close';
+
 //MainPage
 export const  GET_TWEETS_MAIN_REQUEST = 'main/tweets/get/request';
 export const  GET_TWEETS_MAIN_SUCCESS  = 'main/tweets/get/success';

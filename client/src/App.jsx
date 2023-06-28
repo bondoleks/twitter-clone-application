@@ -25,10 +25,10 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
+import Footerlogin from './components/Footerlogin/Footerlogin';
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
-    console.log(isAuthenticated)
 
     return isAuthenticated ? (
         <Element />
@@ -123,6 +123,7 @@ function App() {
     const [color, setColor] = useState("#00ff00");
     const [themeMode, setThemeMode] = useState("light");
     const isAuthenticated = useSelector(state => state.user.authorized);
+    console.log(Boolean(isAuthenticated));
 
     const dispatch = useDispatch();
 
@@ -275,7 +276,7 @@ console.log(Boolean(useMatch("/activate/:key")));
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" ,paddingBottom: !isAuthenticated ? "65px" : 0, paddingTop:0 }}>
                         {Boolean(!useMatch("/activate/:key")) &&
                         <Grid item md={3}>
                             <Sidebar />
@@ -293,6 +294,7 @@ console.log(Boolean(useMatch("/activate/:key")));
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
+                    {!isAuthenticated && <Footerlogin />}
             </ThemeProvider>
         </CustomThemeContext.Provider>
 

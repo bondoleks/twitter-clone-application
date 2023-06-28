@@ -15,6 +15,7 @@ export const getActiveChat = state => state.chat.activeChat;
 export const VisibleLoginModalSelector = state => state.main.VisibleLoginModal;
 //registration
 export const VisibleRegistrationModalSelector = state => state.main.VisibleRegistrationModal;
+export const VisibleNextRegistrationModalSelector = state => state.main.VisibleNextRegistrationModal;
 //error
 export const loginErrorSelector = state => state.user.loginError;
 export const registrationErrorSelector = state => state.registration.registrationError;

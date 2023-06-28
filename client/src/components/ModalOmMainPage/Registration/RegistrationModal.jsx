@@ -1,16 +1,15 @@
 import {  Box, Typography, Button } from '@mui/material';
 import {registrationUserThunks} from '../../../redux/registration/registrationUserThunks';
 import { useDispatch } from 'react-redux';
-import { OPEN_LOGIN_MODAL,CLOSE_REGISTRATION_MODAL } from '../../../redux/actions';
+import { OPEN_LOGIN_MODAL,CLOSE_REGISTRATION_MODAL,OPEN_NEXT_REGISTRATION_MODAL } from '../../../redux/actions';
 import { useSelector } from 'react-redux';
 import { VisibleRegistrationModalSelector } from '../../../redux/selectors';
 import { Formik, Form, Field  } from 'formik';
 import { object, string } from 'yup';
 import { TextField } from 'formik-mui';
-import { registrationErrorSelector } from '../../../redux/selectors';
+import { registrationErrorSelector,VisibleNextRegistrationModalSelector } from '../../../redux/selectors';
 import { ModalOnMainPageWrapper } from '../ModalOnMainPageWrapper';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { useState } from 'react';
 import {СontinuationModal} from "./СontinuationModal"
 
 
@@ -34,7 +33,7 @@ export const RegistrationModal = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector(VisibleRegistrationModalSelector);
     const registrationError = useSelector(registrationErrorSelector);
-    const [VisibleNextModal, setVisibleNextModal] =useState(false);
+    const visibleNextModal = useSelector(VisibleNextRegistrationModalSelector);
 
 
     function handleClose(){
@@ -51,13 +50,12 @@ export const RegistrationModal = () => {
       const handleSubmit = (values, { setSubmitting }) => {
         dispatch(registrationUserThunks(values));
         setSubmitting(false);
-        setVisibleNextModal(true);
       };
 
       function closerNextModal(){
-        setVisibleNextModal(false);
-        dispatch({ type: CLOSE_REGISTRATION_MODAL })
-      };
+        dispatch({ type: CLOSE_REGISTRATION_MODAL });
+        dispatch({ type: OPEN_NEXT_REGISTRATION_MODAL });
+      }
 
     const initialValues = {
         username: '',
@@ -264,7 +262,7 @@ export const RegistrationModal = () => {
                         </Typography>
                     </Form>
                     </Formik>
-                    <СontinuationModal email={initialValues.email} openModal={VisibleNextModal} closeModal={closerNextModal} />
+                    <СontinuationModal email={initialValues.email} openModal={visibleNextModal} closeModal={closerNextModal} />
                 </Box>
         </ModalOnMainPageWrapper>
     )
