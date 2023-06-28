@@ -20,6 +20,7 @@ import ContainerBirthday from "./ContainerBirthday";
 import { useTheme } from '@mui/material/styles';
 import { useFetch } from "../../hooks/UseFetch";
 import { useParams } from 'react-router-dom';
+import { api } from "../../redux/service/api";
 
 
 export default function ModalEditUser({ open, onClose, withId }) {
@@ -88,6 +89,15 @@ export default function ModalEditUser({ open, onClose, withId }) {
     const fileHeadRef = useRef(null);
     const [filePath, setFilePath] = useState(head_imagerUrl);
     const [filePathAv, setFilePathAv] = useState(av_imagerUrl);
+    // const [value, setValue] = useState(`${firstName} ${lastName}` || '');
+
+    const [value, setValue] = useState("");
+
+    useEffect(() => {
+        if (!loading) {
+            setValue(`${firstName || ""} ${lastName || ""}`);
+        }
+    }, [loading, firstName, lastName]);
 
     useEffect(() => {
         if (fileAv) setFilePathAv(URL.createObjectURL(fileAv));
@@ -96,7 +106,6 @@ export default function ModalEditUser({ open, onClose, withId }) {
     const handleFileAvChange = (e) => {
         const fileAv = e.target.files[0];
         setFileAv(fileAv);
-        setAvatarUrl(URL.createObjectURL(fileAv));
     };
 
     useEffect(() => {
@@ -106,7 +115,6 @@ export default function ModalEditUser({ open, onClose, withId }) {
     const handleFileHeadChange = (e) => {
         const fileHead = e.target.files[0];
         setFileHead(fileHead);
-        setAvatarUrl(URL.createObjectURL(fileHead));
     };
 
     const handleSave = () => {
@@ -119,8 +127,7 @@ export default function ModalEditUser({ open, onClose, withId }) {
         formData.append('head_imagerUrl', fileHead);
         formData.append('av_imagerUrl', fileAv);
 
-
-        api.post("api/v1/user/update", formData)
+        api.post("user/update", formData)
             .then(response => {
                 console.log(response);
                 alert("Success!");
@@ -134,10 +141,6 @@ export default function ModalEditUser({ open, onClose, withId }) {
                 }
             });
     };
-
-
-
-
 
     return (
 
@@ -205,7 +208,7 @@ export default function ModalEditUser({ open, onClose, withId }) {
                         <StyledAvatar
                             alt="User Avatar"
                             // src='../../img/avatar.png'
-                            src={filePathAv ? `url(${filePathAv})` : av_imagerUrl }
+                            src={filePathAv ? `url(${filePathAv})` : av_imagerUrl}
                             sx={{
                                 width: '70px',
                                 height: '70px',
@@ -239,23 +242,25 @@ export default function ModalEditUser({ open, onClose, withId }) {
                     </div>
                 </Container>
 
-                <TextField id="outlined-basic" label="Name" variant="outlined" sx={{
-                    width: '100%',
-                    marginBottom: '10px',
-                    '& .MuiInputBase-input': {
-                        color: theme.palette.text.primary,
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        borderColor: theme.palette.text.primary,
-                    },
-                    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                        borderColor: theme.palette.text.primary,
-                    },
-                    '& .MuiInputLabel-root': {
-                        color: theme.palette.text.primary,
-                    },
-                }}
-                // value={`${firstName} ${lastName}`}
+                <TextField id="outlined-basic" label="Name" variant="outlined"
+                   value={value}
+                   onChange={(e) => setValue(e.target.value)}
+                    sx={{
+                        width: '100%',
+                        marginBottom: '10px',
+                        '& .MuiInputBase-input': {
+                            color: theme.palette.text.primary,
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            borderColor: theme.palette.text.primary,
+                        },
+                        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                            borderColor: theme.palette.text.primary,
+                        },
+                        '& .MuiInputLabel-root': {
+                            color: theme.palette.text.primary,
+                        },
+                    }}
                 />
 
 
