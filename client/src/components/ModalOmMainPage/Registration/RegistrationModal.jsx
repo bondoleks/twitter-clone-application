@@ -1,13 +1,13 @@
 import {  Box, Typography, Button } from '@mui/material';
 import {registrationUserThunks} from '../../../redux/registration/registrationUserThunks';
 import { useDispatch } from 'react-redux';
-import { OPEN_LOGIN_MODAL,CLOSE_REGISTRATION_MODAL,OPEN_NEXT_REGISTRATION_MODAL } from '../../../redux/actions';
+import { OPEN_LOGIN_MODAL,CLOSE_REGISTRATION_MODAL,CLOSE_NEXT_REGISTRATION_MODAL } from '../../../redux/actions';
 import { useSelector } from 'react-redux';
 import { VisibleRegistrationModalSelector } from '../../../redux/selectors';
 import { Formik, Form, Field  } from 'formik';
 import { object, string } from 'yup';
 import { TextField } from 'formik-mui';
-import { registrationErrorSelector,VisibleNextRegistrationModalSelector } from '../../../redux/selectors';
+import { registrationErrorSelector} from '../../../redux/selectors';
 import { ModalOnMainPageWrapper } from '../ModalOnMainPageWrapper';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import {СontinuationModal} from "./СontinuationModal"
@@ -33,7 +33,7 @@ export const RegistrationModal = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector(VisibleRegistrationModalSelector);
     const registrationError = useSelector(registrationErrorSelector);
-    const visibleNextModal = useSelector(VisibleNextRegistrationModalSelector);
+
 
 
     function handleClose(){
@@ -54,7 +54,7 @@ export const RegistrationModal = () => {
 
       function closerNextModal(){
         dispatch({ type: CLOSE_REGISTRATION_MODAL });
-        dispatch({ type: OPEN_NEXT_REGISTRATION_MODAL });
+        dispatch({ type: CLOSE_NEXT_REGISTRATION_MODAL });
       }
 
     const initialValues = {
@@ -78,8 +78,8 @@ export const RegistrationModal = () => {
                     </Typography>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} onReset={() => {}}>
             <Form>
-            <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center', m:'20px 0 4px',gap:'12px'}}>
-                <Box sx={{width:'340px',height:'74px'}}>
+            <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center', m:'20px 0 4px',gap:'12px',width:'340px'}}>
+                <Box sx={{width:'100%',height:'74px'}}>
                   <Field
                     component={TextField}
                     name="username"
@@ -262,7 +262,7 @@ export const RegistrationModal = () => {
                         </Typography>
                     </Form>
                     </Formik>
-                    <СontinuationModal email={initialValues.email} openModal={visibleNextModal} closeModal={closerNextModal} />
+                    <СontinuationModal email={initialValues.email} closeModal={closerNextModal} />
                 </Box>
         </ModalOnMainPageWrapper>
     )
