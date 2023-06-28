@@ -32,16 +32,23 @@ export const handleGetUserChats = (userId = 11) => {
     return async dispatch => {
         try {
             dispatch({ type: GET_CHATS_LOADING });
-            const userChats = await api.get(`/chat/getAll/${userId}`, {
+            // const userChats = await api.get(`/chat/getAll/${userId}`, {
+            //     headers: {
+            //         'Access-Control-Allow-Origin': 'http://localhost:5173',
+            //         'credentials': 'include',
+            //     }
+                const userChats = await api.get(`/chats/chat/list?profileId=11`, {
                 headers: {
                     'Access-Control-Allow-Origin': 'http://localhost:5173',
                     'credentials': 'include',
                 }
             });
+            console.log(userChats)
             return dispatch({ type: GET_CHATS_SUCCESS, payload: userChats });
         } catch (error) {
             return dispatch({ type: GET_CHATS_ERROR, payload: error.message });
         }
+
     };
 };
 

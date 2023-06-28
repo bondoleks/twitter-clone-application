@@ -48,6 +48,7 @@ const NewMessageModal = ({ open, closeModal }) => {
   const navigate = useNavigate();
 
 
+
   const handleFindUser = async (value) => {
     setFilter(value)
     const allUsers = await api.get('/tweets/usersearch', {
@@ -64,7 +65,11 @@ const NewMessageModal = ({ open, closeModal }) => {
     return filteredUsers;
   }
 
-  const handleResetFilteredUsers = () => setFilteredUsers([]);
+  const handleResetFilteredUsers = () => {
+    if (filter === '') {
+      setFilteredUsers([]);
+    }
+  };
 
   const handleDeleteSelectedUser = (deletedUserName) => {
     const filtered = selectedUsers.filter(({username}) => username !== deletedUserName)
@@ -88,6 +93,10 @@ const NewMessageModal = ({ open, closeModal }) => {
   const handleSearchUsers = (e) => {
     return handleFindUser(e.target.value);
   };
+
+  const handleInputInActive = () => {
+    return selectedUsers.length >= 1;
+  }
 
   const openNewChat = async () => {
 
@@ -170,6 +179,7 @@ const NewMessageModal = ({ open, closeModal }) => {
               sx={{
                 width: "100%",
               }}
+              disabled={handleInputInActive()}
             />
           )}
           renderOption={(props, option) => {
@@ -179,9 +189,7 @@ const NewMessageModal = ({ open, closeModal }) => {
             return (
               <ListItem {...props} key={option.id}>
                 <ListItemAvatar>
-                  <Avatar>
-                    <ImageIcon/>
-                  </Avatar>
+                  <Avatar src={option.av_imagerUrl}/>
                 </ListItemAvatar>
                 <ListItemText primary={`${name} ${surname}`} secondary={`@${option.username}`}/>
               </ListItem>
@@ -194,7 +202,7 @@ const NewMessageModal = ({ open, closeModal }) => {
             {selectedUsers.map((user, index) => (
             <Chip
               key={index}
-              avatar={<Avatar><ImageIcon /></Avatar>}
+              avatar={<Avatar src={user.av_imagerUrl}/>}
               label={user.username}
               onDelete={() => {
                 handleDeleteSelectedUser(user.username);
