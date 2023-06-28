@@ -3,7 +3,9 @@ package demo.project.twitter.controller;
 
 import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.facade.UserFacade;
+import demo.project.twitter.model.User;
 import demo.project.twitter.service.GeneralService;
+import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,10 +24,10 @@ import java.util.List;
 @CrossOrigin(origins = {"https://twitter-clone-application.vercel.app", "http://localhost:5173"})
 @RequestMapping("api/v1/user")
 public class UserController {
+
     private final UserFacade facade;
     private final GeneralService photo;
-
-
+    private final UserServiceImpl userService;
 
    @GetMapping("suggestions")
    public ResponseEntity<List<UserDto>> getSuggestions(Principal principal){
@@ -56,6 +58,17 @@ public class UserController {
             Date birthDate = format.parse(bDate);
 
         return facade.updateUser(username, firstName, email, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+    }
+
+    @PostMapping("update/password")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity updateUserPassword(Principal principal, @RequestParam String oldPassword,
+                                             @RequestParam String newPassword, @RequestParam String repeatedNewPassword) {
+        if(repeatedNewPassword.equals(newPassword)) {
+            User user = userService.findByUsername(principal.getName());
+            return userService.changePassword(user, oldPassword, newPassword);
+        }
+        return ResponseEntity.status(400).body("Wrong repeated password");
     }
 
 
