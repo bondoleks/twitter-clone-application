@@ -38,4 +38,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             nativeQuery = true
     )
     List<User> getUserFromChat(Long chatId);
+
+
 }

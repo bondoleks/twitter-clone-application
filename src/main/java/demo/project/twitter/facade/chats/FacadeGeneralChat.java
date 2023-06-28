@@ -27,19 +27,19 @@ public class FacadeGeneralChat {
     public GeneralChat addChatToChatList(Long chatId, Long profileID) {
         GeneralChat listChat;
         if (service.existsByUserId(profileID)) {
-            log.info(":::::: start1");
+
             listChat = service.getListChatByUserId(profileID).get(0);
-            log.info("::::::: start 1.1");
+
             boolean b = existsChatInGeneralChat(chatId, listChat.getId());
-            log.info(":::::: boolean = " + b);
+
             if (!existsChatInGeneralChat(chatId, listChat.getId())) {
-                log.info(":::::::: start 1.2");
+
                 Chat chat = serviceChatNew.getById(chatId).get();
-                log.info(":::::::: start 1.3");
+
                 listChat.getListChat().add(chat);
-                log.info(":::::::: start 1.4");
+
                 service.saveOne(listChat);
-                log.info(":::::::: start 1.5");
+
             }
             /*Chat chat = serviceChatNew.getById(chatId).get();
             listChat.getListChat().add(chat);

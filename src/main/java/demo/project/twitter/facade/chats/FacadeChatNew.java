@@ -5,6 +5,7 @@ import demo.project.twitter.facade.messages.DtoMessage;
 import demo.project.twitter.facade.messages.ServiceMessage;
 import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.GeneralChat;
 import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class FacadeChatNew {
     private final UserService serviceUser;
     private final ServiceMessage serviceMessage;
     private final Mapper mapper;
+    private final ServiceGeneralChat serviceGeneralChat;
 
 
     public Chat getChatByUser(Long userInit, Long userReciv) {
@@ -91,15 +93,39 @@ public class FacadeChatNew {
                 dtoChat.setLastMessage(lastMessage.get(0));
         }
 
-
-
-
         return dtoChat;
     }
 
 
     public Chat getChatById(Long chatId) {
         return service.getById(chatId).get();
+    }
+
+    public void delChat(Long chatId, Long profileId) {
+        Chat chat = getChatById(chatId);
+        if (chat.getInitiator().getId() == profileId){
+//            serviceMessage.delMessageByChatId(chatId);
+log.info("::::: star1");
+log.info(":::::::: chatId = " + chat.getId());
+           User userReceiver = serviceUser.getUserFromChat(chatId).get(0);
+           log.info("::::::::: userID = " + userReceiver.getId());
+            log.info("::::: star2");
+
+            Set<Chat> setChat = userReceiver.getUserChats();
+            if (setChat == null) log.info(":::::: null");
+            log.info("::::::::: setChat size = " + setChat.size());
+            log.info("::::: star3");
+//            serviceUser.saveUser(userReceiver);
+            log.info("::::: star4");
+
+        }
+        else {
+
+
+        }
+        /*GeneralChat generalChat = serviceGeneralChat.getListChatByUserId(profileId).get(0);
+        generalChat.getListChat().remove(chat);
+        serviceGeneralChat.saveOne(generalChat);*/
     }
 }
 

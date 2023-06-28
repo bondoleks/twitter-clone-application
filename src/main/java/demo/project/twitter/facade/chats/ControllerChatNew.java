@@ -31,6 +31,15 @@ public class ControllerChatNew {
     private final ServiceChatNew serviceChatNew;
 
 
+    @DeleteMapping("del/{chat_id}")
+    public void delChatFromGeneralChat(@PathVariable("chat_id") Long chatId,
+                                       @RequestParam("profileId") Long userId){
+        Long profileId = userId;
+        facade.delChat(chatId, profileId);
+
+    }
+
+
     @GetMapping("chat/{userReceiver}")
     public DtoChat getChatByUser(@PathVariable("userReceiver") Long userRec, @RequestParam("profileId") Long userId) {
         Long profileId = userId;
