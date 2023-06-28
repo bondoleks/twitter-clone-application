@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TwitterIcon from '@mui/icons-material/Twitter';
+import {CircularProgress} from "@mui/material";
 
 
 export function ActivatePage() {
@@ -40,15 +41,17 @@ export function ActivatePage() {
     <IconButton>
         <TwitterIcon sx={{ margin: '16px' }} fontSize="large" color='primary' />
     </IconButton>
-      {visibleLoading && <Typography variant='h5'>Loading...</Typography>}
-      {!visibleLoading && isActivation ? (
-          <Typography variant='h5'>Activation successful!</Typography>
-        ) : null}
+    <Box sx={{height:'70px',display:"flex",justifyContent:'center', alignItems:'center'}}>
+      {visibleLoading && <CircularProgress/>}
+        {!visibleLoading && isActivation ? (
+            <Typography variant='h5'>Activation successful!</Typography>
+          ) : null}
 
-      {!visibleLoading && !isActivation ? (
-          <Typography variant='h5'>Activation failed.</Typography>
-        ) : null}
-      <Button
+        {!visibleLoading && !isActivation ? (
+            <Typography variant='h5'>Activation failed.</Typography>
+          ) : null}
+    </Box>
+    <Button
       onClick={()=>{
         navigate('/');
       }}

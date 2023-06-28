@@ -7,9 +7,12 @@ import {
     OPEN_LOGIN_MODAL,
     CLOSE_LOGIN_MODAL,
     OPEN_REGISTRATION_MODAL,
-    CLOSE_REGISTRATION_MODAL  } from "../actions"
+    CLOSE_REGISTRATION_MODAL,
+    OPEN_NEXT_REGISTRATION_MODAL,
+    CLOSE_NEXT_REGISTRATION_MODAL
+    } from "../actions"
   
-  export function mainPageReducer(state = { tweets: [],VisibleNoAutorizateModal:false,modalData:{},VisibleLoginModal:false,VisibleRegistrationModal:false, isLoading: false }, action) {
+  export function mainPageReducer(state = { tweets: [],VisibleNoAutorizateModal:false,modalData:{},VisibleLoginModal:false,VisibleRegistrationModal:false,VisibleNextRegistrationModal:false, isLoading: false }, action) {
     switch (action.type) {
       case GET_TWEETS_MAIN_REQUEST:
         return { ...state, isLoading: true }
@@ -29,7 +32,11 @@ import {
         return { ...state, VisibleRegistrationModal: true} 
       case CLOSE_REGISTRATION_MODAL:
           return { ...state, VisibleRegistrationModal: false} 
-      default:
+      case OPEN_NEXT_REGISTRATION_MODAL:
+          return { ...state, VisibleNextRegistrationModal: true} 
+      case CLOSE_NEXT_REGISTRATION_MODAL:
+          return { ...state, VisibleNextRegistrationModal: false} 
+          default:
         return state
     }
   }

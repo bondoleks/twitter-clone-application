@@ -25,10 +25,11 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
+import Footerlogin from './components/Footerlogin/Footerlogin';
+
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
-    console.log(isAuthenticated)
 
     return isAuthenticated ? (
         <Element />
@@ -123,6 +124,7 @@ function App() {
     const [color, setColor] = useState("#00ff00");
     const [themeMode, setThemeMode] = useState("light");
     const isAuthenticated = useSelector(state => state.user.authorized);
+    console.log(Boolean(isAuthenticated));
 
     const dispatch = useDispatch();
 
@@ -263,7 +265,7 @@ function App() {
         }
 
         return (
-            <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
+            <Grid item sx={{paddingTop:'0!important',paddingLeft:'0!important'}} md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3 }>
                 {rightColumn}
             </Grid>
         )
@@ -275,13 +277,13 @@ console.log(Boolean(useMatch("/activate/:key")));
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" ,paddingBottom: !isAuthenticated ? "65px" : 0,width:'100%!important' }}>
                         {Boolean(!useMatch("/activate/:key")) &&
-                        <Grid item md={3}>
+                        <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Sidebar />
                         </Grid>
                         }
-                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8}>
+                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Routes>
                                 {/* {...routes.map(r => <Route {...r} />)} */}
                                 {routes.map((route, index) => (
@@ -293,6 +295,7 @@ console.log(Boolean(useMatch("/activate/:key")));
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
+                    {!isAuthenticated && <Footerlogin />}
             </ThemeProvider>
         </CustomThemeContext.Provider>
 
