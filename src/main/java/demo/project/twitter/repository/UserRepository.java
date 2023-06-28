@@ -24,5 +24,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
     )
     List<User> searchByName(String s1, String s2);
 
+     @Query(
+            value = "select us. * from listchat_chat as lc\n" +
+                    "    inner join chats_to_users as cu on lc.chat_id = cu.chat_id\n" +
+                    "    inner join users as us on cu.user_id = us.id where lc.listchat_id = ?",
+            nativeQuery = true
+    )
+    List<User> getListChat(Long listChatId);
+
+    @Query(
+            value = "select users. * from chats_to_users as cu\n" +
+                    "inner join users on cu.user_id = users.id where cu.chat_id = ?",
+            nativeQuery = true
+    )
+    List<User> getUserFromChat(Long chatId);
+
 
 }

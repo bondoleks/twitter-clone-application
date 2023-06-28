@@ -58,6 +58,7 @@ export default function TweetForm({ open, onClose, withId  }) {
         formData.append('parentTweetId', 0);
         formData.append('user_id', id);
 
+
         for (const f of file) {
             formData.append('file', f);
             console.log("file", f)

@@ -44,4 +44,12 @@ public class ServiceMessage implements FunctionMessage {
         Pageable pageable = PageRequest.of(numberPage, sizePage);
         return repo.getChatAllMessages(chatId, pageable);
     }
+
+    public List<String> getLastMessage(Long chatId) {
+        return repo.getLastMessage(chatId);
+    }
+
+    public void delMessageByChatId(Long chatId) {
+        repo.deleteByChat_Id(chatId);
+    }
 }

@@ -1,11 +1,10 @@
-import axios from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   GET_USER_REQUEST,
   GET_USER_SUCCSES,
-  GET_MAIN_ERROR,
-  GET_USER_ERROR
+  GET_USER_ERROR,
+  CLOSE_LOGIN_MODAL
 } from '../actions';
 import {setAuthToken} from "../tokens/tokens";
 import {api} from "../service/api";
@@ -18,11 +17,13 @@ export function logingThunk({ email, password }) {
       if (token) {
         setAuthToken(token);
         dispatch({ type: LOGIN_SUCCESS, token });
+        dispatch({ type: CLOSE_LOGIN_MODAL });
+        dispatch(getUser());
       } else {
-        dispatch({ type: LOGIN_FAILURE });
+        dispatch({ type: LOGIN_FAILURE,payload:{loginError: 'Sorry. Try Again'} });
       }
     } catch (error) {
-      dispatch({ type: LOGIN_FAILURE });
+      dispatch({ type: LOGIN_FAILURE,payload:{loginError: error.response.data.message} });
     }
   };
 }

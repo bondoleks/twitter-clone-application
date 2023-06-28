@@ -3,12 +3,17 @@ package demo.project.twitter.facade.chats;
 
 import demo.project.twitter.config.Mapper;
 import demo.project.twitter.dto.UserDto;
+import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.UserFacade;
 import demo.project.twitter.facade.messages.DtoMessage;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.GeneralChat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.Long.parseLong;
 
@@ -16,22 +21,35 @@ import static java.lang.Long.parseLong;
 @RestController
 @Log4j2
 @RequestMapping("api/v1/chats")
-//@CrossOrigin("https://twitter-clone-application.vercel.app")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app", "http://localhost:5173"})
 public class ControllerChatNew {
 
     private final FacadeChatNew facade;
-    private final FacadeListChat facadeListChat;
+    private final FacadeGeneralChat facadeGeneralChat;
     private final Mapper mapper;
     private final UserFacade facadeUser;
+    private final ServiceChatNew serviceChatNew;
 
 
-    @GetMapping("chat")
-    public UserDto getChatByUser(@RequestParam("user_init") Long user_init, @RequestParam("user_reciv") Long user_reciv) {
-        Long profileId = user_init;
-        Chat chat= facade.getChatByUser(profileId, user_reciv);
-        return mapper.map().map(facadeUser.getUserById1(user_reciv), UserDto.class);
+    @DeleteMapping("del/{chat_id}")
+    public void delChatFromGeneralChat(@PathVariable("chat_id") Long chatId,
+                                       @RequestParam("profileId") Long userId){
+        Long profileId = userId;
+        facade.delChat(chatId, profileId);
 
+    }
+
+
+    @GetMapping("chat/{userReceiver}")
+    public DtoChat getChatByUser(@PathVariable("userReceiver") Long userRec, @RequestParam("profileId") Long userId) {
+        Long profileId = userId;
+
+        Chat chat= facade.getChatByUser(profileId, userRec);
+        return facade.transChatToDtoChat(chat, 0);
+    }
+    @GetMapping("usersearch")
+    public List<UserSearchDto> searchUserForChat(@RequestParam("search_request") String searchRequest, @RequestParam("profileId") Long profileId){
+        return facadeUser.userSearch(searchRequest);
     }
 
     @PostMapping("chat/message/save")
@@ -52,11 +70,29 @@ public class ControllerChatNew {
     }
 
     @PostMapping("add/{chatId}")
-    public String addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
+    public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
         Long profileID = userId;
-        facadeListChat.addChatToChatList(chat_id, profileID);
-        return "ok";
+        GeneralChat generalChat = facadeGeneralChat.addChatToChatList(chat_id, profileID);
+        log.info("::::::::: generalChat = " + generalChat.getId());
+        return facadeGeneralChat.getListChat(profileID).stream().
+                map(c -> facade.transChatToDtoChat(c, 1)).
+                collect(Collectors.toList());
+
+
+
     }
+
+    @GetMapping("chat/list")
+    public List<DtoChat> getListChat(@RequestParam("profileId") Long userId) {
+        Long profileId = userId;
+
+        return facadeGeneralChat.getListChat(profileId).stream().
+                map(c -> facade.transChatToDtoChat(c, 1)).
+                collect(Collectors.toList());
+
+    }
+
+
 
 
 
