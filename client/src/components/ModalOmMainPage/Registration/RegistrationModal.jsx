@@ -36,6 +36,8 @@ export const RegistrationModal = () => {
 
 
 
+
+
     function handleClose(){
         dispatch({type:CLOSE_REGISTRATION_MODAL})
     }
@@ -50,12 +52,15 @@ export const RegistrationModal = () => {
       const handleSubmit = (values, { setSubmitting }) => {
         dispatch(registrationUserThunks(values));
         setSubmitting(false);
+        setVisibleNextModal(true);
       };
 
       function closerNextModal(){
         dispatch({ type: CLOSE_REGISTRATION_MODAL });
         dispatch({ type: CLOSE_NEXT_REGISTRATION_MODAL });
       }
+
+
 
     const initialValues = {
         username: '',
@@ -263,6 +268,7 @@ export const RegistrationModal = () => {
                     </Form>
                     </Formik>
                     <СontinuationModal email={initialValues.email} closeModal={closerNextModal} />
+
                 </Box>
         </ModalOnMainPageWrapper>
     )

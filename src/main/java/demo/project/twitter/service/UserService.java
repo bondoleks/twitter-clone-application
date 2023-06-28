@@ -132,7 +132,13 @@ public class UserService implements FunctionUser {
     public User saveUser1(User userRe) {
         return repo.save(userRe);
     }
-    
+
+    public List<User> getUserReceiverFromChat(Long chatId) {
+        return repo.getUserReceiverFromChat(chatId);
+
+    }
+
+
 }
 
 

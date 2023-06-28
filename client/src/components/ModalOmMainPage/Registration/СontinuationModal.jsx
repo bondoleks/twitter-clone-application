@@ -7,7 +7,7 @@ import { VisibleNextRegistrationModalSelector } from "../../../redux/selectors";
 export function СontinuationModal({email,closeModal}){
     const visibleNextModal = useSelector(VisibleNextRegistrationModalSelector);
 return(
-    <Modal open={visibleNextModal} onClose={closeModal}         
+    <Modal open={visibleNextModal} onClose={closeModal}                 
     aria-labelledby="child-modal-title"
     aria-describedby="child-modal-description">
         <Paper sx={{

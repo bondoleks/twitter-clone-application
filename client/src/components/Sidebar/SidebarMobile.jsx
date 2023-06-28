@@ -454,7 +454,6 @@ const SidebarMobile = () => {
                     position: 'fixed',
                     bottom: '0',
                     width: '100%',
-                    zIndex: '99'
                 }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">

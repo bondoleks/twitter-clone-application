@@ -1,7 +1,6 @@
 package demo.project.twitter.model.chat;
 
 import demo.project.twitter.model.BaseEntity;
-import demo.project.twitter.model.tweet.Tweet;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListChat extends BaseEntity {
+public class GeneralChat extends BaseEntity {
 
     @Column(unique = true)
     @org.hibernate.annotations.Index(name = "index_userId")
@@ -28,7 +27,7 @@ public class ListChat extends BaseEntity {
 
     private List<Chat> listChat = new ArrayList<>();
 
-    public ListChat(Long userId) {
+    public GeneralChat(Long userId) {
         this.userId = userId;
     }
 }

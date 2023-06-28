@@ -1,9 +1,11 @@
 package demo.project.twitter.facade.chats;
 
+import demo.project.twitter.config.Mapper;
 import demo.project.twitter.facade.messages.DtoMessage;
 import demo.project.twitter.facade.messages.ServiceMessage;
 import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.GeneralChat;
 import demo.project.twitter.model.chat.Message;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class FacadeChatNew {
     private final ServiceChatNew service;
     private final UserService serviceUser;
     private final ServiceMessage serviceMessage;
+    private final Mapper mapper;
+    private final ServiceGeneralChat serviceGeneralChat;
 
 
     public Chat getChatByUser(Long userInit, Long userReciv) {
@@ -52,7 +56,7 @@ public class FacadeChatNew {
 
     }
 
-    public  DtoChatMessage getChatAllMessages(Long chatId, Long profileId, Integer sizePage, Integer namberPage) {
+    public DtoChatMessage getChatAllMessages(Long chatId, Long profileId, Integer sizePage, Integer namberPage) {
         Page<Message> page = serviceMessage.getChatAllMessages(chatId, sizePage, namberPage);
         DtoChatMessage dtoChatMessage = new DtoChatMessage();
         dtoChatMessage.setTotalElements(page.getTotalElements());
@@ -76,7 +80,53 @@ public class FacadeChatNew {
         return dtoMessage;
     }
 
+    public DtoChat transChatToDtoChat(Chat chat, int keyMessage) {
+        DtoChat dtoChat = new DtoChat();
+        User user = serviceUser.getUserReceiverFromChat(chat.getId()).get(0);
+        mapper.map().map(user,dtoChat);
+        dtoChat.setUserResivId(user.getId());
+        dtoChat.setInitiatorId(chat.getInitiator().getId());
+        dtoChat.setChatId(chat.getId());
+        if (keyMessage == 1) {
+            List<String> lastMessage = serviceMessage.getLastMessage(chat.getId());
+            if (lastMessage.size() > 0)
+                dtoChat.setLastMessage(lastMessage.get(0));
+        }
 
+        return dtoChat;
+    }
+
+
+    public Chat getChatById(Long chatId) {
+        return service.getById(chatId).get();
+    }
+
+    public void delChat(Long chatId, Long profileId) {
+        Chat chat = getChatById(chatId);
+        if (chat.getInitiator().getId() == profileId){
+//            serviceMessage.delMessageByChatId(chatId);
+log.info("::::: star1");
+log.info(":::::::: chatId = " + chat.getId());
+           User userReceiver = serviceUser.getUserReceiverFromChat(chatId).get(0);
+           log.info("::::::::: userID = " + userReceiver.getId());
+            log.info("::::: star2");
+
+            Set<Chat> setChat = userReceiver.getUserChats();
+            if (setChat == null) log.info(":::::: null");
+            log.info("::::::::: setChat size = " + setChat.size());
+            log.info("::::: star3");
+//            serviceUser.saveUser(userReceiver);
+            log.info("::::: star4");
+
+        }
+        else {
+
+
+        }
+        /*GeneralChat generalChat = serviceGeneralChat.getListChatByUserId(profileId).get(0);
+        generalChat.getListChat().remove(chat);
+        serviceGeneralChat.saveOne(generalChat);*/
+    }
 }
 
 

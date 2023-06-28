@@ -1,8 +1,6 @@
 package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.config.Mapper;
-import demo.project.twitter.dto.UserDto;
-import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.model.Notification;
 import demo.project.twitter.model.TweetAction;
@@ -18,7 +16,7 @@ import demo.project.twitter.model.tweet.TweetWord;
 
 import demo.project.twitter.service.NotificationService;
 
-import demo.project.twitter.service.PhotoService;
+import demo.project.twitter.service.GeneralService;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +41,7 @@ public class FacadeTweet {
     private final ServicAttachmentImage serviceImage;
     private final ServiceTweetAction serviceAction;
     private final Mapper mapper;
-    private final PhotoService photo;
+    private final GeneralService photo;
     private final NotificationService notificationService;
 
     private final ServiceTweetWord serviceTweetWord;

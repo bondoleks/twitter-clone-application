@@ -27,6 +27,7 @@ import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
 import Footerlogin from './components/Footerlogin/Footerlogin';
 
+
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
 
