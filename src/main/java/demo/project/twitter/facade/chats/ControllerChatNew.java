@@ -51,7 +51,7 @@ public class ControllerChatNew {
     @GetMapping("chat/{userReceiver}")
     public DtoChat getChatByUser(@PathVariable("userReceiver") Long userRec,
                                  Principal principal) {
-      /*  Long profileId = userId;*/
+//        Long profileId = userId;
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         Chat chat= facade.getChatByUser(profileId, userRec);
@@ -109,8 +109,8 @@ public class ControllerChatNew {
                                            Principal principal){
 //        Long profileId = userId;
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-        GeneralChat generalChat = facadeGeneralChat.addChatToChatList(chat_id, profileId);
-        log.info("::::::::: generalChat = " + generalChat.getId());
+        facadeGeneralChat.newGenegarChat(chat_id, profileId);
+
         return facadeGeneralChat.getListChat(profileId).stream().
                 map(c -> facade.transChatToDtoChat(c, 1)).
                 collect(Collectors.toList());
@@ -123,7 +123,7 @@ public class ControllerChatNew {
     /*@PostMapping("add/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
         Long profileID = userId;
-        GeneralChat generalChat = facadeGeneralChat.addChatToChatList(chat_id, profileID);
+        GeneralChat generalChat = facadeGeneralChat.newGenegarChat(chat_id, profileID);
         log.info("::::::::: generalChat = " + generalChat.getId());
         return facadeGeneralChat.getListChat(profileID).stream().
                 map(c -> facade.transChatToDtoChat(c, 1)).
