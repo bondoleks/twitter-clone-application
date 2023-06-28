@@ -49,13 +49,14 @@ public class ControllerChatNew {
     }*/
 
     @GetMapping("chat/{userReceiver}")
-    public DtoChat getChatByUser(@PathVariable("userReceiver") Long userRec,
+    public String getChatByUser(@PathVariable("userReceiver") Long userRec,
                                  Principal principal) {
 //        Long profileId = userId;
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-        Chat chat= facade.getChatByUser(profileId, userRec);
-        return facade.transChatToDtoChat(chat, 0);
+        return profileId.toString();
+       /* Chat chat= facade.getChatByUser(profileId, userRec);
+        return facade.transChatToDtoChat(chat, 0);*/
 
     }
 
