@@ -82,7 +82,7 @@ public class FacadeChatNew {
 
     public DtoChat transChatToDtoChat(Chat chat, int keyMessage) {
         DtoChat dtoChat = new DtoChat();
-        User user = serviceUser.getUserFromChat(chat.getId()).get(0);
+        User user = serviceUser.getUserReceiverFromChat(chat.getId()).get(0);
         mapper.map().map(user,dtoChat);
         dtoChat.setUserResivId(user.getId());
         dtoChat.setInitiatorId(chat.getInitiator().getId());
@@ -107,7 +107,7 @@ public class FacadeChatNew {
 //            serviceMessage.delMessageByChatId(chatId);
 log.info("::::: star1");
 log.info(":::::::: chatId = " + chat.getId());
-           User userReceiver = serviceUser.getUserFromChat(chatId).get(0);
+           User userReceiver = serviceUser.getUserReceiverFromChat(chatId).get(0);
            log.info("::::::::: userID = " + userReceiver.getId());
             log.info("::::: star2");
 

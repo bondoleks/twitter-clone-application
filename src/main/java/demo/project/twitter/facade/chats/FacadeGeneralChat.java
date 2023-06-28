@@ -1,5 +1,6 @@
 package demo.project.twitter.facade.chats;
 
+import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
 import demo.project.twitter.model.chat.GeneralChat;
 import demo.project.twitter.service.UserService;
@@ -23,7 +24,11 @@ public class FacadeGeneralChat {
     private boolean existsChatInGeneralChat(Long chatId, Long generalChatId) {
         return service.existsChatInGeneralChat(chatId, generalChatId);
     }
-
+public GeneralChat newGenegarChat(Long chatId, Long profileId){
+//        Long userReceiver = serviceUser.getUserReceiverFromChat(chatId).get(0).getId();
+        addChatToChatList(chatId, serviceUser.getUserReceiverFromChat(chatId).get(0).getId());
+        return addChatToChatList(chatId, profileId);
+}
     public GeneralChat addChatToChatList(Long chatId, Long profileID) {
         GeneralChat listChat;
         if (service.existsByUserId(profileID)) {

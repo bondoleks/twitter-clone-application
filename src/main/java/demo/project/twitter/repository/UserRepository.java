@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     "inner join users on cu.user_id = users.id where cu.chat_id = ?",
             nativeQuery = true
     )
-    List<User> getUserFromChat(Long chatId);
+    List<User> getUserReceiverFromChat(Long chatId);
 
 
 }
