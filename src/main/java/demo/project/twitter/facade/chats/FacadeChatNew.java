@@ -30,19 +30,28 @@ public class FacadeChatNew {
 
 
     public Chat getChatByUser(Long userInit, Long userReciv) {
-
+log.info("::::::::::: start1");
         List<Chat> listChat = service.getChatByUser(userInit, userReciv);
+        log.info("::::::::::: start2");
         Chat newChat;
         if (listChat.size() == 0) {
 
             User userIn = serviceUser.findById(userInit);
             User userRe = serviceUser.findById(userReciv);
+            log.info("::::::::::: start3");
             Chat chat = new Chat(userIn);
             newChat = service.saveOne(chat);
+            log.info("::::::::::: start4");
             userRe.getUserChats().add(newChat);
+            log.info("::::::::::: start5");
             serviceUser.saveUser1(userRe);
+            log.info("::::::::::: start6");
+        } else {
+            log.info("::::::::::: start7");
+            newChat = listChat.get(0);
+            log.info("::::::::::: start8");
+        }
 
-        } else newChat = listChat.get(0);
 
         return newChat;
     }
@@ -112,8 +121,8 @@ log.info(":::::::: chatId = " + chat.getId());
             log.info("::::: star2");
 
             Set<Chat> setChat = userReceiver.getUserChats();
-            if (setChat == null) log.info(":::::: null");
-            log.info("::::::::: setChat size = " + setChat.size());
+            setChat.remove(chat);
+
             log.info("::::: star3");
 //            serviceUser.saveUser(userReceiver);
             log.info("::::: star4");

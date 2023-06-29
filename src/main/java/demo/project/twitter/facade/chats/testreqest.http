@@ -1,5 +1,5 @@
 ####
-GET http://localhost:5050/api/v1/chats/chat/28?profileId=12
+GET http://localhost:5050/api/v1/chats/chat/26?profileId=84
 
 ####
 GET http://localhost:5050/api/v1/chats/chat/25
@@ -41,4 +41,4 @@ GET http://localhost:5050/api/v1/chats/chat/list?profileId=12
 GET http://localhost:5050/api/v1/chats/chat/list
 
 ###
-DELETE http://localhost:5050/api/v1/chats/del/63?profileId=12
+DELETE http://localhost:5050/api/v1/chats/del/86?profileId=12
