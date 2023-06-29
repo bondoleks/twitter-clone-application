@@ -27,6 +27,12 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {filteredUsersSelector, getUser} from '../../../redux/selectors.jsx';
 import {api} from '../../../redux/service/api.jsx';
+import {
+  handleAddNewChat,
+  handleGetMessagesForChat,
+  handleSetActiveChat
+} from '../../../redux/Messages/Thunks/MessagesThunk.js';
+import {GET_CHATS_SUCCESS} from '../../../redux/actions.jsx';
 
 
 const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
@@ -37,6 +43,7 @@ const NewMessageModal = ({ open, closeModal }) => {
   const [filter, setFilter] = useState('')
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [newChatLoading, setNewChatLoading] = useState(false);
   const user = useSelector(getUser);
 
   const filteredStateUsers = useSelector(filteredUsersSelector)
@@ -50,6 +57,7 @@ const NewMessageModal = ({ open, closeModal }) => {
 
 
   const handleFindUser = async (value) => {
+    if (selectedUsers.length === 1) return;
     setFilter(value)
     const allUsers = await api.get('/tweets/usersearch', {
       params: {
@@ -82,7 +90,10 @@ const NewMessageModal = ({ open, closeModal }) => {
     closeModal();
   }
 
+  console.log("selectedUsers.lengthselectedUsers.length", selectedUsers.length);
+
   const handleInputFocus = () => {
+    if (selectedUsers.length === 1) return;
     setInputFocus(true);
   };
 
@@ -91,29 +102,24 @@ const NewMessageModal = ({ open, closeModal }) => {
   };
 
   const handleSearchUsers = (e) => {
+    if (selectedUsers.length === 1) return false;
     return handleFindUser(e.target.value);
   };
 
-  const handleInputInActive = () => {
-    return selectedUsers.length >= 1;
-  }
-
   const openNewChat = async () => {
-
-    const newChatPayload = {
-      "user_initiatorId": user.id
-    }
-
+    setNewChatLoading(true);
     // Create new chat, BE does not return chat ID so we should get the last one from the list
-    await api.post('/chat/save', newChatPayload);
-    const allChats = await api.get(`/chat/getAll/${user.id}`);
-    const newChatId = allChats[allChats.length - 1]?.chatId;
-    await api.post(`/chat/addUser/${newChatId}/${user.id}`);
-    await api.post(`/chat/addUser/${newChatId}/${selectedUsers[0].id}`);
+    const newChat = await api.get(`chats/chat/${selectedUsers[0].id}?profileId=${user.id}`) ?? {};
+    const allChats = await api.post(`/chats/add/${newChat?.chatId}?profileId=${user.id}`) || [];
+    const createdChat = allChats.find(chat => chat.chatId === newChat?.chatId);
 
+    dispatch(handleAddNewChat(createdChat));
+    dispatch(handleGetMessagesForChat(createdChat.chatId, user.id));
+    dispatch(handleSetActiveChat(createdChat))
 
     handleClearModal();
-    navigate(`/messages/${newChatId}`, {state: {chatId: newChatId, users: selectedUsers}})
+    setNewChatLoading(false);
+    navigate(`/messages/${createdChat.id}`, {state: {chatId: createdChat.id, users: selectedUsers}})
   }
 
   const theme = useTheme();
@@ -155,6 +161,7 @@ const NewMessageModal = ({ open, closeModal }) => {
           value={selectedUsers}
           popupIcon={null}
           clearIcon={null}
+          disabled={selectedUsers.length === 1}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -179,7 +186,7 @@ const NewMessageModal = ({ open, closeModal }) => {
               sx={{
                 width: "100%",
               }}
-              disabled={handleInputInActive()}
+              disabled={selectedUsers.length === 1}
             />
           )}
           renderOption={(props, option) => {
@@ -199,7 +206,9 @@ const NewMessageModal = ({ open, closeModal }) => {
         />
         {
           <div style={{marginTop: '20px'}}>
-            {selectedUsers.map((user, index) => (
+            {newChatLoading ? (
+              <div>Loading...</div>
+            ) : (selectedUsers.map((user, index) => (
             <Chip
               key={index}
               avatar={<Avatar src={user.av_imagerUrl}/>}
@@ -208,7 +217,7 @@ const NewMessageModal = ({ open, closeModal }) => {
                 handleDeleteSelectedUser(user.username);
               }}
             />
-            ))}
+            )))}
             {!!selectedUsers.length && <hr/>}
           </div>
         }

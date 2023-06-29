@@ -60,67 +60,44 @@ import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import { Box, Typography } from '@mui/material';
-import {filteredUsersSelector, getActiveChat, getUser, getUserChats} from '../../../redux/selectors.jsx';
+import {
+  filteredUsersSelector,
+  getActiveChat,
+  getMessagesForChat,
+  getUser,
+  getUserChats
+} from '../../../redux/selectors.jsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {useFetch} from '../../../hooks/UseFetch.js';
 import {api} from '../../../redux/service/api.jsx';
-import {handleGetActiveChat} from '../../../redux/Messages/Thunks/MessagesThunk.js';
+import {
+  handleGetMessagesForChat,
+  handleGetUserChats,
+  handleSetActiveChat
+} from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {useNavigate} from 'react-router-dom';
 
 const Chats = () => {
   const userChats = useSelector(getUserChats);
-  const [usersForChats, setUsersForChats] = useState([])
-  const user = useSelector(getUser);
   const activeChat = useSelector(getActiveChat);
+  const user = useSelector(getUser);
+  const chatMessages = useSelector(getMessagesForChat);
+
+  console.log("chatMessageschatMessageschatMessages", chatMessages);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleGetUsersById = (userIds) => {
-    const promises =  userIds.map(async (userId) =>
-      await api.get(`/user/getuser/${userId}`));
-
-    return Promise.all(promises);
-  }
-
-  const handleLastChatMessage = async () => {
-    // Get last chat message
-    const lastChatMessages = userChats.map((chat) => {
-      const messagesLength = chat.messages.length;
-      return chat.messages[messagesLength - 1];
-    }).filter(Boolean)
-
-    // Get unique user ids to send API
-    const uniqueUserIds = [...new Set(lastChatMessages.map((message) => message.user_from))];
-    // Send API to get the unique users from last messages of the chats
-    const usersFromLastMessage = await handleGetUsersById(uniqueUserIds);
-
-    // Find the user from the last message by id and return his last message.
-    return lastChatMessages.map((message) => {
-      const relatedUser = usersFromLastMessage.find(user =>
-        user.id === message.user_from)
-
-      return {
-        chatId: message.chat_id,
-        user: relatedUser,
-        message: message.textMessage,
-      }
-
-    })
+  const handleOpenActiveChat = async (chat) => {
+    if (activeChat?.chatId === chat?.chatId) return;
+    dispatch(handleGetMessagesForChat(chat.chatId, user.id));
+    dispatch(handleSetActiveChat(chat));
+    navigate(`/messages/${chat.chatId}`);
   }
 
   useEffect(() => {
-     handleLastChatMessage().then((chatsData) => {
-       setUsersForChats(chatsData);
-     })
-
-  }, [userChats]);
-
-  const handleOpenActiveChat = async (chatId) => {
-    if (activeChat.chatId === chatId) return;
-    dispatch(handleGetActiveChat(chatId, user.id));
-    navigate(`/messages/${chatId}`)
-  }
+    dispatch(handleGetUserChats());
+  }, [chatMessages?.length])
 
 
   return (
@@ -133,15 +110,24 @@ const Chats = () => {
       }}
     >
       {
-        usersForChats.length ? usersForChats.map(({user, message, chatId}) => {
-          const {av_imagerUrl, firstName, username} = user;
+        userChats.length ? userChats.map(chat => {
+          const {
+            av_imagerUrl,
+            chatId,
+            firstName,
+            initiatorId,
+            lastMessage,
+            lastName,
+            userResivId,
+            username} = chat;
           return (
             <>
-            <ListItem onClick={() => handleOpenActiveChat(chatId)}>
-              <Box sx={{
+            <ListItem onClick={() => handleOpenActiveChat(chat)}>
+              <Box style={activeChat?.chatId === chatId ? {backgroundColor: '#e8e8e8'} : {}} sx={{
                 boxSizing: "border-box",
                 '&:hover': {
                   backgroundColor: '#e8e8e8',
+                  cursor: 'pointer'
                 },
               }}>
                 <Box
@@ -159,32 +145,9 @@ const Chats = () => {
                   <ListItemText>@{username}</ListItemText>
                   <ListItemText>{'16.06.2023'}</ListItemText>
                 </Box>
-                <Typography>{message}</Typography>
+                <Typography>{lastMessage}</Typography>
               </Box>
             </ListItem>
-          <ListItem onClick={() => handleOpenActiveChat(chatId)}>
-            <Box sx={{
-              boxSizing: "border-box",
-              '&:hover': {
-                backgroundColor: '#e8e8e8',
-              },
-            }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '5px',
-                }}
-              >
-                <Avatar src={av_imagerUrl || ""} />
-                <ListItemText>{firstName}</ListItemText>
-                <ListItemText>@{username}</ListItemText>
-                <ListItemText>{'16.06.2023'}</ListItemText>
-              </Box>
-              <Typography>{message}</Typography>
-            </Box>
-          </ListItem>
             </>
           )
         }) : <Typography>No chats found</Typography>
