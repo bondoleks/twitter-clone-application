@@ -8,6 +8,7 @@ import { CloseNoAutorizateModalThunk } from "../../../redux/mainPage/CloseNoAuto
 import RepeatIcon from '@mui/icons-material/Repeat';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import { ModalOnMainPageWrapper } from "../ModalOnMainPageWrapper";
+import { OPEN_LOGIN_MODAL,OPEN_REGISTRATION_MODAL } from "../../../redux/actions";
 
 export function ModalNonAutorizate(){
     const {title,text,icon} = useSelector(dataModalMainPage);
@@ -45,6 +46,10 @@ export function ModalNonAutorizate(){
                                     backgroundColor: 'rgb(26, 140, 216)',
                                 },
                             }}
+                            onClick={()=>{
+                                dispatch(CloseNoAutorizateModalThunk());
+                                dispatch({type:OPEN_LOGIN_MODAL})
+                            }}
                         >
                             Log In
                         </Button>
@@ -62,6 +67,10 @@ export function ModalNonAutorizate(){
                                 '&:hover': {
                                     backgroundColor: 'rgba(29, 155, 240, 0.1)',
                                 },
+                            }}
+                            onClick={()=>{
+                                dispatch(CloseNoAutorizateModalThunk());
+                                dispatch({type:OPEN_REGISTRATION_MODAL})
                             }}
                         >
                             Sing In

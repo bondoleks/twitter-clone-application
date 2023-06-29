@@ -42,11 +42,11 @@ public class UserServiceImpl implements UserServiceImplInterface {
         User userFromDbEmail = userRepository.findByEmail(user.getEmail());
         if (userFromDbUsername != null) {
             log.info(userFromDbUsername.getUsername() + " already register with this username");
-            return ResponseEntity.ok(userFromDbUsername.getUsername() + " already register with this username");
+            return ResponseEntity.status(400).body(userFromDbUsername.getUsername() + " already register with this username");
         }
         if (userFromDbEmail != null) {
             log.info(userFromDbEmail.getEmail() + " already register with this email");
-            return ResponseEntity.ok(userFromDbEmail.getEmail() + " already register with this email");
+            return ResponseEntity.status(400).body(userFromDbEmail.getEmail() + " already register with this email");
         }
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
@@ -63,7 +63,8 @@ public class UserServiceImpl implements UserServiceImplInterface {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to Twitter. Please, visit next link: https://twitter-clone-application.vercel.app/activate/%s",
+                            "Welcome to Twitter. Please, visit next link: " +
+                            "https://twitter-clone-application.vercel.app/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
@@ -76,6 +77,7 @@ public class UserServiceImpl implements UserServiceImplInterface {
         return ResponseEntity.ok(user.getUsername() + " created");
     }
 
+    @Override
     public boolean activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
         if (user == null) {
@@ -117,6 +119,80 @@ public class UserServiceImpl implements UserServiceImplInterface {
     }
 
     @Override
+    public ResponseEntity forgotPasswordSendEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+        user.setActivationCodeForgotPassword(UUID.randomUUID().toString());
+        userRepository.save(user);
+
+        if (!StringUtils.isEmpty(email)) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Please, visit next link if you need to change password: " +
+                            "https://twitter-clone-application.vercel.app/forgotPassword/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCodeForgotPassword()
+            );
+
+            mailSender.send(user.getEmail(), "Forgot Password From Twitter", message);
+        }
+            return ResponseEntity.ok(user.getUsername() + " send mail");
+        }
+        log.info(email + " defunct email");
+        return ResponseEntity.status(400).body(email + " defunct email");
+    }
+
+    @Override
+    public boolean activateForgotPassword(String code) {
+        User user = userRepository.findByActivationCodeForgotPassword(code);
+        if (user == null) {
+            log.info("User = null");
+            return false;
+        }
+        user.setActivationCode(null);
+        userRepository.save(user);
+        log.info("Activated user " + user.getUsername());
+        return true;
+    }
+
+    @Override
+    public ResponseEntity ifForgotChangePassword(User user, String newPassword) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            log.info(user.getUsername() + " new password update");
+            if (!StringUtils.isEmpty(user.getEmail())) {
+                String message = String.format(
+                        "Hello, %s! \n" +
+                                "Your password on twitter is changed. Have a good day.",
+                        user.getUsername()
+                );
+
+                mailSender.send(user.getEmail(), "Change Password", message);
+            }
+            return ResponseEntity.ok(user.getUsername() + " new password update");
+        }
+
+    @Override
+    public ResponseEntity changePassword(User user, String oldPassword, String newPassword) {
+        if(passwordEncoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            log.info(user.getUsername() + " new password update");
+            if (!StringUtils.isEmpty(user.getEmail())) {
+                String message = String.format(
+                        "Hello, %s! \n" +
+                                "Your password on twitter is changed. Have a good day.",
+                        user.getUsername()
+                );
+
+                mailSender.send(user.getEmail(), "Change Password", message);
+            }
+            return ResponseEntity.ok(user.getUsername() + " new password update");
+        }
+        return ResponseEntity.status(400).body(user.getUsername() + " wrong password");
+    }
+
+    @Override
     public List<User> getAll() {
         List<User> result = userRepository.findAll();
         log.info("IN getAll - {} users found", result.size());
@@ -147,6 +223,17 @@ public class UserServiceImpl implements UserServiceImplInterface {
         }
 
         log.info("IN findById - user: {} found by id: {}", result);
+        return result;
+    }
+
+    @Override
+    public User findByForgotPasswordCode(String code) {
+        User result = userRepository.findByActivationCodeForgotPassword(code);
+        if (result == null) {
+            log.warn("IN findByForgotPasswordCode - no user found by code: {}", code);
+            return null;
+        }
+        log.info("IN findByForgotPasswordCode - user: {} found by Code: {}", result.getEmail(), code);
         return result;
     }
 

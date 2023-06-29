@@ -18,7 +18,6 @@ export const MainPage = () => {
             <ModalNonAutorizate/>
             <LogingModal/>
             <RegistrationModal/>
-            <Footerlogin />
         </Box>
     )
 }

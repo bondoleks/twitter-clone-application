@@ -38,10 +38,11 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import CloseIcon from '@mui/icons-material/Close';
 import WestIcon from '@mui/icons-material/West';
 import ModalTheme from '../ModalTheme/ModalTheme';
+import { useSelector } from 'react-redux';
 
 
 const SidebarMobile = () => {
-
+    const isAutorizate= useSelector(state => state.user.authorized);
     const theme = useTheme();
 
     const bottomNavigationStyles = {
@@ -129,7 +130,7 @@ const SidebarMobile = () => {
                 </IconButton>
             </Tooltip>
             <Box sx={{ marginLeft: '30%' }}>
-                <Link to={`/`}>
+            <Link to={isAutorizate ? '/home' : '/'}>
                     <IconButton>
                         <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
                     </IconButton>
@@ -453,7 +454,6 @@ const SidebarMobile = () => {
                     position: 'fixed',
                     bottom: '0',
                     width: '100%',
-                    zIndex: '99'
                 }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">

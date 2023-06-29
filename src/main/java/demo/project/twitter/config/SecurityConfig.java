@@ -30,6 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
     private static final String REGISTRATION_ENDPOINT = "/api/v1/auth/registration";
     private static final String ACTIVATE_ENDPOINT = "/api/v1/auth/activate/*";
+    private static final String FORGOT_PASSWORD = "/api/v1/auth/forgotPassword/sendCode";
+    private static final String ACTIVATE_ENDPOINT_FORGOT_PASSWORD = "/api/v1/auth/forgotPassword/activate/*";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider, UserServiceImpl userService) {
@@ -53,10 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/api/v1/auth/login", "/api/v1/auth/registration", "/api/v1/tweets/tweet/all/notauth", "/ws-message/**", "logout").permitAll()
+                .antMatchers("/", "/api/v1/tweets/tweet/all/notauth", "/ws-message/**", "logout").permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(REGISTRATION_ENDPOINT).permitAll()
                 .antMatchers(ACTIVATE_ENDPOINT).permitAll()
+                .antMatchers(FORGOT_PASSWORD).permitAll()
+                .antMatchers(ACTIVATE_ENDPOINT_FORGOT_PASSWORD).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated().and()
                 .apply(new JwtConfigurer(jwtTokenProvider))
