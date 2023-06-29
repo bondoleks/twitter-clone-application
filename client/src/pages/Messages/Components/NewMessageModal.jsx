@@ -33,6 +33,7 @@ import {
   handleSetActiveChat
 } from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {GET_CHATS_SUCCESS} from '../../../redux/actions.jsx';
+import MessagesLoader from "./MessagesLoader";
 
 
 const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
@@ -207,7 +208,22 @@ const NewMessageModal = ({ open, closeModal }) => {
         {
           <div style={{marginTop: '20px'}}>
             {newChatLoading ? (
-              <div>Loading...</div>
+              <div
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background: 'rgba(0, 0, 0, 0.1)',
+                  zIndex: 9999,
+                }}
+              >
+                <MessagesLoader />
+              </div>
             ) : (selectedUsers.map((user, index) => (
             <Chip
               key={index}

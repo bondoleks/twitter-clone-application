@@ -68,7 +68,6 @@ import {
   getUserChats
 } from '../../../redux/selectors.jsx';
 import {useDispatch, useSelector} from 'react-redux';
-import {useFetch} from '../../../hooks/UseFetch.js';
 import {api} from '../../../redux/service/api.jsx';
 import {
   handleGetMessagesForChat,
@@ -76,6 +75,7 @@ import {
   handleSetActiveChat
 } from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {useNavigate} from 'react-router-dom';
+import MessagesLoader from "./MessagesLoader.jsx";
 
 const Chats = () => {
   const userChats = useSelector(getUserChats);
@@ -151,8 +151,10 @@ const Chats = () => {
             </>
           )
         }) : <Typography>No chats found</Typography>
+
       }
     </List>
+
   );
 };
 
