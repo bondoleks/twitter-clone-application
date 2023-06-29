@@ -27,9 +27,10 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 import { useTheme } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
 
 export const SidebarDesktop = ({ }) => {
-
+    const isAutorizate= useSelector(state => state.user.authorized);
     const [buttonColor, setButtonColor] = useState();
 
     useEffect(() => {
@@ -121,7 +122,7 @@ export const SidebarDesktop = ({ }) => {
     return (
 
         <Stack position='fixed'>
-            <Link to={`/`}>
+            <Link to={isAutorizate ? '/home' : '/'}>
                 <IconButton>
                     <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
                 </IconButton>

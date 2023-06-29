@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByActivationCode(String code);
 
+    User findByActivationCodeForgotPassword(String code);
+
     User findByEmail(String email);
 
     @Query(value = "SELECT * FROM users u WHERE NOT EXISTS (SELECT * FROM followers f WHERE (f.follower_id = u.id) LIMIT 4", nativeQuery = true)
@@ -37,7 +39,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     "inner join users on cu.user_id = users.id where cu.chat_id = ?",
             nativeQuery = true
     )
-    List<User> getUserFromChat(Long chatId);
+    List<User> getUserReceiverFromChat(Long chatId);
 
 
 }

@@ -20,10 +20,14 @@ import ProfileId from './pages/Profile/ProfileId';
 import ProfileUser from './pages/Profile/ProfileUser';
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
+
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
+import Footerlogin from './components/Footerlogin/Footerlogin';
+
+
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
     console.log(isAuthenticated)
@@ -33,6 +37,7 @@ const PrivateRoute = ({ element: Element, ...rest }) => {
       <Navigate to="/" {...rest} />
     );
 };
+
 const routes = [
     {
         path: "/",
@@ -48,6 +53,7 @@ const routes = [
         path: "/home",
         // element: <Home />,
         element: <PrivateRoute element={Home} />,
+
         children: <>
             <Route path={''} element={<ForYou />} />
             <Route path={'following'} element={<Following />} />
@@ -59,6 +65,7 @@ const routes = [
     },
     {
         path: "/explore",
+
         // element: <Explore />,
         element: <PrivateRoute element={Explore} />,
     },
@@ -76,14 +83,19 @@ const routes = [
         path: "/messages/:id",
         // element: <MessageMiddleColumn />,
         element: <PrivateRoute element={MessageMiddleColumn} />,
+
+
+
     },
     {
         path: "/bookmarks",
+
         // element: <Bookmarks />,
         element: <PrivateRoute element={Bookmarks} />,
     },
     {
         path: "/profile",
+
         // element: <ProfileUser />,
         element: <PrivateRoute element={ProfileUser} />,
     },
@@ -106,17 +118,23 @@ const routes = [
         element: <PrivateRoute element={TweetPage} />,
     },
 ];
+
+
 function App() {
     const [color, setColor] = useState("#00FF00");
     const [themeMode, setThemeMode] = useState("light");
     const isAuthenticated = useSelector(state => state.user.authorized);
     const isActiveMessage = useMatch("/messages/:id");
     const isActivateKey = useMatch("/activate/:key");
+    console.log(Boolean(isAuthenticated));
+
     const dispatch = useDispatch();
+
     useEffect(() => {
         // Создаем WebSocket-соединение
         const socket = new SockJS('https://twitter-clone-application.herokuapp.com/ws-message');
         const stompClient = Stomp.over(socket);
+
         // Устанавливаем колбэк-функцию при успешном соединении
         stompClient.connect({}, () => {
             // Подписываемся на каналы
@@ -124,22 +142,26 @@ function App() {
                 console.log('Received message from /chat:', message.body);
                 // Действия с полученным сообщением
             });
+
             stompClient.subscribe('/notification', (message) => {
                 console.log('Received message from /notification:', message.body);
                 // Действия с полученным сообщением
             });
         });
+
         // Возвращаем функцию для закрытия соединения при размонтировании компонента
         return () => {
             stompClient.disconnect();
         };
     }, []);
+
     // Get initial user data
     useEffect(() => {
         if (isAuthenticated){
             dispatch(getUser());
         }
     }, [])
+
     const lightTheme = createTheme({
         palette: {
             type: "light",
@@ -159,6 +181,7 @@ function App() {
             colorBox: '#F9F9F9'
         }
     });
+
     const darkTheme = createTheme({
         palette: {
             type: "dark",
@@ -184,6 +207,8 @@ function App() {
             colorBox: '#252525'
         }
     });
+
+
     const blackTheme = createTheme({
         palette: {
             type: "black",
@@ -191,6 +216,7 @@ function App() {
                 default: "#000000",
             },
             backgroundModal: "#222222",
+
             text: {
                 primary: "#FFFFFF",
             },
@@ -209,6 +235,8 @@ function App() {
             colorBox: '#252525'
         }
     });
+
+
     const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
@@ -223,7 +251,10 @@ function App() {
     const location = useLocation();
 
     const handleRenderRightColumn = (path) => {
+
+        let isActiveMessage = useMatch("/messages/:id")
         let rightColumn = null;
+
         if (path === '/messages') {
             rightColumn = <MessagesRightColumn />
         } else if (isActiveMessage) {
@@ -231,6 +262,7 @@ function App() {
         } else if(!isActivateKey){
             rightColumn = <Search />
         }
+
         return (
           <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
               {rightColumn}
@@ -238,29 +270,34 @@ function App() {
         )
     }
     return (
-      <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-          <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
-                  {Boolean(!useMatch("/activate/:key")) &&
-                    <Grid item md={3}>
-                        <Sidebar />
+
+        <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" ,paddingBottom: !isAuthenticated ? "65px" : 0,width:'100%!important' }}>
+                        {Boolean(!useMatch("/activate/:key")) &&
+                        <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
+                            <Sidebar />
+                        </Grid>
+                        }
+                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
+                            <Routes>
+                                {/* {...routes.map(r => <Route {...r} />)} */}
+                                {routes.map((route, index) => (
+                                    <Route key={index} {...route} />
+                                ))}
+                            </Routes>
+                        </Grid>
+                        <Hidden mdDown>
+                            {handleRenderRightColumn(location.pathname)}
+                        </Hidden>
                     </Grid>
-                  }
-                  <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8}>
-                      <Routes>
-                          {/* {...routes.map(r => <Route {...r} />)} */}
-                          {routes.map((route, index) => (
-                            <Route key={index} {...route} />
-                          ))}
-                      </Routes>
-                  </Grid>
-                  <Hidden mdDown>
-                      {handleRenderRightColumn(location.pathname)}
-                  </Hidden>
-              </Grid>
-          </ThemeProvider>
-      </CustomThemeContext.Provider>
+                    {!isAuthenticated && <Footerlogin />}
+            </ThemeProvider>
+        </CustomThemeContext.Provider>
+
     )
 }
+
 export default App
+
