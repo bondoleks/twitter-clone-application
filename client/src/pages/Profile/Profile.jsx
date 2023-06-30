@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Grid,
   IconButton,
@@ -19,6 +19,7 @@ import { useParams } from 'react-router-dom';
 
 export const Profile = ({ withId }) => {
   const { id } = useParams()
+  console.log("11111111", withId,"BNNBNBNBNB", id)
 
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
@@ -50,6 +51,10 @@ export const Profile = ({ withId }) => {
       return data;
     },
   });
+
+  useEffect(() => {
+    getData()
+  }, [id])
 
 
   if (!loading) <p>loading...</p>

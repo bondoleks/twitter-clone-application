@@ -3,9 +3,23 @@ import BrokenImageOutlinedIcon from "@mui/icons-material/BrokenImageOutlined.js"
 import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined.js";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined.js";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow.js";
+import {handleSendNewMessage} from '../../../redux/Messages/Thunks/MessagesThunk.js';
+import {useDispatch} from 'react-redux';
+import {useState} from 'react';
 
 
-const ChatInput = () =>{
+const ChatInput = ({activeChat}) => {
+
+  const [message, setMessage] = useState(null);
+  const dispatch = useDispatch();
+  const handleGetMessage = async (e) => setMessage(e.target.value);
+
+  const handleSendChatMessage = async () => {
+    await dispatch(handleSendNewMessage(activeChat.chatId, message));
+    setMessage("");
+  }
+
+
   return (
 
 
@@ -24,6 +38,8 @@ const ChatInput = () =>{
       multiline
       maxRows={4}
       variant="filled"
+      value={message}
+      onChange={handleGetMessage}
       placeholder="Start a new message"
       InputProps={{
         classes: {
@@ -46,7 +62,7 @@ const ChatInput = () =>{
         ),
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton>
+            <IconButton onClick={handleSendChatMessage}>
               <DoubleArrowIcon sx={{ color: "rgb(29, 155, 240)" }} />
             </IconButton>
           </InputAdornment>
