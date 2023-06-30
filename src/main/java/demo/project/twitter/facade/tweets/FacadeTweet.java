@@ -174,7 +174,7 @@ public class FacadeTweet {
         service.saveOne(transDtoToEntity(Dto, tt));
     }
 
-    public void saveTweetNew(String tweetBody, TweetType tt, Long parentTweetId, Long userId, List<MultipartFile> listPhoto) {
+    public Long saveTweetNew(String tweetBody, TweetType tt, Long parentTweetId, Long userId, List<MultipartFile> listPhoto) {
         User user = serviceUser.findById(userId);
         Tweet entity = new Tweet(tt, tweetBody, user);
 
@@ -192,12 +192,14 @@ public class FacadeTweet {
         }
 
 
-        if (tt != TweetType.REPLY) {
+      /*  if (tt != TweetType.REPLY) {
             Arrays.stream(newTweet.getTweetBody().split(" ")).
                     map(s -> newString(s).toLowerCase()).
                     filter(s -> !s.equals("")).
                     forEach(s -> saveWord(s, newTweet));
-        }
+        }*/
+
+        return newTweet.getId();
 
     }
 

@@ -7,36 +7,24 @@ import BrokenImageOutlinedIcon from "@mui/icons-material/BrokenImageOutlined.js"
 import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined.js";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined.js";
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import ChatInput from "./ChatInput.jsx";
 import ChatMessages from "./ChatMessages.jsx";
 import {useSelector} from 'react-redux';
-import {getActiveChat, getUser} from '../../../redux/selectors.jsx';
+import {getActiveChat, getMessagesForChat, getUser} from '../../../redux/selectors.jsx';
 import {api} from '../../../redux/service/api.jsx';
 
 const ActiveChat = () => {
 
-  const activeChat = useSelector(getActiveChat);
+  const chatMessages = useSelector(getMessagesForChat);
   const user = useSelector(getUser);
+  const activeChat = useSelector(getActiveChat);
 
-  const [chatUsers, setChatUsers] = useState([]);
+  const navigate = useNavigate();
 
-  const handleGetUsersById = (userIds) => {
-    const promises =  userIds.map(async (userId) =>
-      await api.get(`/user/getuser/${userId}`));
-
-    return Promise.all(promises);
+  if (!activeChat) {
+    return navigate('/messages');
   }
-
-  const chatUsersIds = [...new Set(activeChat?.messages?.map(message => message.user_from))];
-
-
-  useEffect(() => {
-    handleGetUsersById(chatUsersIds).then((users) => {
-      setChatUsers(users);
-    });
-  }, [JSON.stringify(chatUsersIds)])
-
 
   return (
     <Box sx={{
@@ -57,7 +45,7 @@ const ActiveChat = () => {
         <Box>
           <Avatar
             alt="User Avatar"
-            src={ user.av_imagerUrl}/>
+            src={activeChat?.av_imagerUrl || ""}/>
         </Box>
         <Box sx={{
           display: "flex",
@@ -68,14 +56,14 @@ const ActiveChat = () => {
           <Typography sx={{
             fontSize: '24px',
             fontWeight: '900'
-          }}>{user.firstName}</Typography>
-          <Typography>@{user.username}</Typography>
+          }}>{activeChat?.firstName || 'N/A'}</Typography>
+          <Typography>@{activeChat?.username?.toLowerCase() || 'N/A'}</Typography>
           <Box display={'flex'}
                marginTop={'10px'}>
             <IconButton edge='start' color='gray'>
               <CalendarMonthIcon />
             </IconButton>
-            <Typography mt={1}>Joined now</Typography>
+            <Typography mt={1}>Joined recently</Typography>
           </Box>
           <Box display={'flex'}>
             <Link href="#" underline="hover" sx={{ '&:hover': { color: 'gray' } }}>
@@ -102,10 +90,10 @@ const ActiveChat = () => {
 
 
       }}>
-        <ChatMessages chatUsers={chatUsers} activeChat={activeChat} user={user} />
+        <ChatMessages chatMessages={chatMessages} user={user} />
 
       </Box>
-      <ChatInput/>
+      <ChatInput activeChat={activeChat}/>
     </Box>
   )
 }

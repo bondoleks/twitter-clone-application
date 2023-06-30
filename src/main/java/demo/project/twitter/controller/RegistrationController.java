@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private final UserServiceImpl userService;
+
     @PostMapping("registration")
     public ResponseEntity saveUser(@RequestParam String username, @RequestParam String email,
                                    @RequestParam String password, @RequestParam String repeatedPassword) {
@@ -23,7 +24,7 @@ public class RegistrationController {
             User newUser = new User(username, email, password);
             return userService.register(newUser);
         }
-        return ResponseEntity.ok("Wrong password");
+        return ResponseEntity.status(400).body("Wrong password");
     }
 
     @PostMapping("activate/{code}")
@@ -33,7 +34,6 @@ public class RegistrationController {
             return true;
         }
         return false;
-
     }
 
 }
