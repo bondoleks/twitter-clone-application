@@ -25,7 +25,7 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
-import Footerlogin from './components/Footerlogin/Footerlogin';
+
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -295,7 +295,6 @@ console.log(Boolean(useMatch("/activate/:key")));
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
-                    {!isAuthenticated && <Footerlogin />}
             </ThemeProvider>
         </CustomThemeContext.Provider>
 
