@@ -105,7 +105,7 @@ public class ControllerChatNew {
 
     }
 
-    @PostMapping("add/{chatId}")
+   /* @PostMapping("add/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
                                            Principal principal){
 //        Long profileId = userId;
@@ -119,7 +119,7 @@ public class ControllerChatNew {
 
 
 
-    }
+    }*/
 
     /*@PostMapping("add/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
@@ -156,8 +156,31 @@ public class ControllerChatNew {
 
 
     }
+ /*@PostMapping("add_i/{chatId}")
+    public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
+                                           @RequestParam("profileId") Long userId){
+        Long profileId = userId;
+        facadeGeneralChat.addChatToChatList(chat_id, profileId);
+        return facadeGeneralChat.getListChat(profileId).stream().
+                map(c -> facade.transChatToDtoChat(c, 1)).
+                collect(Collectors.toList());
+    }*/
 
+    @PostMapping("add_i/{chatId}")
+    public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
+                                           Principal principal){
+        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+        facadeGeneralChat.addChatToChatList(chat_id, profileId);
+        return facadeGeneralChat.getListChat(profileId).stream().
+                map(c -> facade.transChatToDtoChat(c, 1)).
+                collect(Collectors.toList());
+    }
 
+    @PostMapping("add_r/{chatId}")
+    public void addChatToChatList(@PathVariable("chatId") Long chat_id){
+
+        facadeGeneralChat.addChatToChatList(chat_id, facadeUser.getUserReceiverFromChat(chat_id));
+    }
 
 
 
