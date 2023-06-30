@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5050/api/v1/chats/chat/messages/19?profileId=12&sizePage=15&numberPage=0
+GET http://localhost:5050/api/v1/chats/chat/messages/134?profileId=85&sizePage=15&numberPage=0
 
 ###
 GET http://localhost:5050/api/v1/chats/chat/messages/19?sizePage=15&numberPage=0
@@ -35,7 +35,7 @@ POST http://localhost:5050/api/v1/chats/add/86?profileId=12
 POST http://localhost:5050/api/v1/chats/add/63
 
 ###
-GET http://localhost:5050/api/v1/chats/chat/list?profileId=12
+GET http://localhost:5050/api/v1/chats/chat/list?profileId=85
 
 ###
 GET http://localhost:5050/api/v1/chats/chat/list

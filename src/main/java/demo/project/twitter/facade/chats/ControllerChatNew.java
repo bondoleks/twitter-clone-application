@@ -84,7 +84,7 @@ public class ControllerChatNew {
         return "ok";
     }
 
-  /*  @GetMapping("chat/messages/{chatId}")
+   /* @GetMapping("chat/messages/{chatId}")
     public DtoChatMessage getChatAllMessages(@PathVariable("chatId") Long chat_id,
                                      @RequestParam("sizePage") Integer sizePage,
                                      @RequestParam("numberPage") Integer numberPage,
@@ -99,7 +99,7 @@ public class ControllerChatNew {
                                              @RequestParam("sizePage") Integer sizePage,
                                              @RequestParam("numberPage") Integer numberPage,
                                              Principal principal) {
-     /*   Long profileId = userId;*/
+
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         return facade.getChatAllMessages(chat_id, profileId, sizePage, numberPage);
 
@@ -134,7 +134,7 @@ public class ControllerChatNew {
 
     }*/
 
-    /*@GetMapping("chat/list")
+   /* @GetMapping("chat/list")
     public List<DtoChat> getListChat(@RequestParam("profileId") Long userId) {
         Long profileId = userId;
 
@@ -146,7 +146,7 @@ public class ControllerChatNew {
 
     @GetMapping("chat/list")
     public List<DtoChat> getListChat(Principal principal) {
-     /*   Long profileId = userId;*/
+
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
 
         return facadeGeneralChat.getListChat(profileId).stream().
