@@ -9,7 +9,7 @@ import java.util.Date;
 @Service
 @Data
 public class DtoMessage {
-    private Long user_from;
+    private Long user_author;
     private Long chat_id;
     private String textMessage;
 
