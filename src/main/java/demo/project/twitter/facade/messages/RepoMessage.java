@@ -30,10 +30,10 @@ public interface RepoMessage extends JpaRepository<Message, Long>, PagingAndSort
     Page<Message> getChatAllMessages(Long chatId, Pageable pageable);
 
     @Query(
-            value = "select * from messages where chat_id = ? and id = (select MAX(id) from messages)",
+            value = "select text_message from messages where chat_id = ? and id = (select MAX(id) from messages where chat_id = ?)",
             nativeQuery = true
     )
-    List<String> getLastMessage(Long chatId);
+    List<String> getLastMessage(Long chatId1, Long chatId2);
     @Transactional
     void deleteByChat_Id(Long chatId);
 }

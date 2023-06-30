@@ -84,6 +84,9 @@ log.info("::::::::::: start1");
         DtoMessage dtoMessage = new DtoMessage();
         dtoMessage.setDateMessage(m.getCreatedDate());
         dtoMessage.setTextMessage(m.getTextMessage());
+        dtoMessage.setChat_id(m.getChat().getId());
+        dtoMessage.setUser_author(m.getUser().getId());
+
         int i = (profileId == m.getUser().getId()) ? 1 : -1;
         dtoMessage.setTypeMessage(i);
         return dtoMessage;
