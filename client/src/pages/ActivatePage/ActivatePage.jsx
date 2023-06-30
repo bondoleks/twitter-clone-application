@@ -42,14 +42,17 @@ export function ActivatePage() {
         <TwitterIcon sx={{ margin: '16px' }} fontSize="large" color='primary' />
     </IconButton>
     <Box sx={{height:'70px',display:"flex",justifyContent:'center', alignItems:'center'}}>
-      {visibleLoading && <CircularProgress/>}
-        {!visibleLoading && isActivation ? (
+      {visibleLoading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          {isActivation ? (
             <Typography variant='h5'>Activation successful!</Typography>
-          ) : null}
-
-        {!visibleLoading && !isActivation ? (
+          ) : (
             <Typography variant='h5'>Activation failed.</Typography>
-          ) : null}
+          )}
+        </>
+      )}
     </Box>
     <Button
       onClick={()=>{
