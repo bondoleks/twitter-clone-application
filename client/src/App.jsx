@@ -32,9 +32,9 @@ const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
 
     return isAuthenticated ? (
-        <Element />
+      <Element />
     ) : (
-        <Navigate to="/" {...rest} />
+      <Navigate to="/" {...rest} />
     );
 };
 
@@ -121,9 +121,12 @@ const routes = [
 
 
 function App() {
-    const [color, setColor] = useState("#00ff00");
+    const [color, setColor] = useState("#00FF00");
     const [themeMode, setThemeMode] = useState("light");
     const isAuthenticated = useSelector(state => state.user.authorized);
+    const isActiveMessage = useMatch("/messages/:id");
+    const isActivateKey = useMatch("/activate/:key");
+
     console.log(Boolean(isAuthenticated));
 
     const dispatch = useDispatch();
@@ -164,20 +167,19 @@ function App() {
         palette: {
             type: "light",
             background: {
-                default: "#ffffff", // белый фон
+                default: "#FFFFFF", // белый фон
             },
-
-            backgroundModal: "#ffffff",
+            backgroundModal: "#FFFFFF",
             text: {
                 primary: "#232323", // черный шрифт
             },
             paper: {
-                main: "#ffffff"
+                main: "#FFFFFF"
             },
             gray: {
                 main: '#000000'
             },
-            colorBox: '#f9f9f9'
+            colorBox: '#F9F9F9'
         }
     });
 
@@ -185,25 +187,23 @@ function App() {
         palette: {
             type: "dark",
             background: {
-                default: "#15202b", // темно-серый фон (как в твиттере)
+                default: "#15202B", // темно-серый фон (как в твиттере)
             },
-
-            backgroundModal: "#15202b",
-
+            backgroundModal: "#15202B",
             text: {
-                primary: "#9a9a9a", // белый шрифт
+                primary: "#9A9A9A", // белый шрифт
             },
             paper: {
-                main: "#15202b"
+                main: "#15202B"
             },
             primary: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             gray: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             typography: {
-                color: '#ffffff'
+                color: '#FFFFFF'
             },
             colorBox: '#252525'
         }
@@ -219,19 +219,19 @@ function App() {
             backgroundModal: "#222222",
 
             text: {
-                primary: "#ffffff",
+                primary: "#FFFFFF",
             },
             paper: {
                 main: "#000000"
             },
             primary: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             gray: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             typography: {
-                color: '#ffffff'
+                color: '#FFFFFF'
             },
             colorBox: '#252525'
         }
@@ -260,18 +260,16 @@ function App() {
             rightColumn = <MessagesRightColumn />
         } else if (isActiveMessage) {
             rightColumn = <ActiveChat />
-        } else if(!useMatch("/activate/:key")){
+        } else if(!isActivateKey){
             rightColumn = <Search />
         }
 
         return (
-            <Grid item sx={{paddingTop:'0!important',paddingLeft:'0!important'}} md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3 }>
-                {rightColumn}
-            </Grid>
+          <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
+              {rightColumn}
+          </Grid>
         )
     }
-console.log(Boolean(useMatch("/activate/:key")));
-
     return (
 
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>

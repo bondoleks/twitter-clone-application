@@ -147,7 +147,12 @@ public class UserFacade {
     public User getUserById1(Long userReciv) {
         return service.findById(userReciv);
     }
+
+    public Long getUserReceiverFromChat(Long chatId) {
+        return service.getUserReceiverFromChat(chatId).get(0).getId();
+    }
 }
+
 
 
 
