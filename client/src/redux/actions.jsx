@@ -13,6 +13,9 @@ export const CLOSE_LOGIN_MODAL ='main/modal/login/close';
 export const OPEN_REGISTRATION_MODAL = 'main/modal/registration/open';
 export const CLOSE_REGISTRATION_MODAL ='main/modal/registration/close';
 
+export const OPEN_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/open';
+export const CLOSE_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/close';
+
 //MainPage
 export const  GET_TWEETS_MAIN_REQUEST = 'main/tweets/get/request';
 export const  GET_TWEETS_MAIN_SUCCESS  = 'main/tweets/get/success';
@@ -63,13 +66,20 @@ export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
 
 // chats and messages
 
+export const ADD_NEW_CHAT_SUCCESS = "ADD_NEW_CHAT_SUCCESS";
 export const GET_CHATS_SUCCESS = "GET_CHATS_SUCCESS";
 export const GET_CHATS_LOADING = "GET_CHATS_LOADING";
 export const GET_CHATS_ERROR = "GET_CHATS_ERROR";
 
-export const GET_ACTIVE_CHAT_SUCCESS = "GET_ACTIVE_CHAT_SUCCESS";
-export const GET_ACTIVE_CHAT_LOADING = "GET_ACTIVE_CHAT_LOADING";
-export const GET_ACTIVE_CHAT_ERROR = "GET_ACTIVE_CHAT_ERROR";
+export const GET_MESSAGES_FOR_CHAT_SUCCESS = "GET_MESSAGES_FOR_CHAT_SUCCESS";
+export const GET_MESSAGES_FOR_CHAT_LOADING = "GET_MESSAGES_FOR_CHAT_LOADING";
+export const GET_MESSAGES_FOR_CHAT_ERROR = "GET_MESSAGES_FOR_CHAT_ERROR";
+
+export const SEND_NEW_MESSAGE_LOADING = "SEND_NEW_MESSAGE_LOADING";
+export const SEND_NEW_MESSAGE_SUCCESS = "SEND_NEW_MESSAGE_SUCCESS";
+export const SEND_NEW_MESSAGE_ERROR = "SEND_NEW_MESSAGE_ERROR";
+
+export const GET_ACTIVE_CHAT = "GET_ACTIVE_CHAT";
 
 export const NEW_CHAT_SUCCESS = "GET_USERS_SUCCESS";
 export const NEW_CHAT_LOADING = "NEW_CHAT_LOADING";
@@ -83,10 +93,6 @@ export const GET_SEARCHED_USERS_ERROR = "GET_SEARCHED_USERS_ERROR";
 export const GET_MESSAGES_SUCCESS = "GET_USERS_SUCCESS";
 export const GET_MESSAGES_LOADING = "GET_USERS_LOADING";
 export const GET_MESSAGES_ERROR = "GET_USERS_ERROR";
-
-export const NEW_MESSAGE_SUCCESS = "NEW_MESSAGE_SUCCESS";
-export const NEW_MESSAGE_LOADING = "NEW_MESSAGE_LOADING";
-export const NEW_MESSAGE_ERROR = "NEW_MESSAGE_ERROR";
 
 
 export function registerUserRequest(user) {

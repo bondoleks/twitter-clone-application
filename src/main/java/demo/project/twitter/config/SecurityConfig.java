@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .usernameParameter("email")
 //                    .passwordParameter("pass")
 //                    .defaultSuccessUrl("/list")
+
                 .and()
                 .oauth2Login()
                     .loginPage("/login")

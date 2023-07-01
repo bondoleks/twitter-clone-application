@@ -145,8 +145,18 @@ public class ControllerTweet {
         Long tweetid = facade.determParentTweetId(id);
         return facade.getAllTweetById(tweetid, sizePage, numberPage, ALL_REPLY_TWEETID, profileId);
     }
-
     @PostMapping("tweet/save")
+    public DtoTweet saveTweet(@RequestParam("tweetBody") String tweetBody,
+                              @RequestParam("parentTweetId") String parentTweetId,
+                              @RequestParam("file") List<MultipartFile> listPhoto,
+                              Principal principal) {
+
+        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+        Long tweetId = facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId),profileId, listPhoto);
+
+        return facade.transListTweetInDto(facade.getSingleTweetById(tweetId), profileId);
+    }
+   /* @PostMapping("tweet/save")
     public void saveTweet(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto,
@@ -157,47 +167,73 @@ public class ControllerTweet {
 
 //        User user = facadeUser.getUserByName(userName);
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-       /* StringBuilder sb = new StringBuilder();
+       *//* StringBuilder sb = new StringBuilder();
         sb.append("userName = ").
                 append(userName).
                 append(" userId = ").
                 append(userIdNew).
                 append(" arraySize = ").
                 append(listPhoto.size()).
-                append("***");*/
+                append("***");*//*
 
-/*        listPhoto.stream().forEach(x ->sb.append(x.getContentType()).append(" "));*/
-
-
+*//*        listPhoto.stream().forEach(x ->sb.append(x.getContentType()).append(" "));*//*
 
 
 
-       /* List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
-        /*facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);*/
+
+
+       *//* List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*//*
+        *//*facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);*//*
         facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId),profileId, listPhoto);
-      /*  return sb.toString();*/
-    }
+      *//*  return sb.toString();*//*
+    }*/
 
-    @PostMapping("quote/save")
+    /*@PostMapping("quote/save")
     public void saveQuote(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto,
                           Principal principal) {
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
+        *//*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*//*
         Long tweetid = facade.determParentTweetId(parseLong(parentTweetId));
         facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, tweetid, profileId, listPhoto);
+    }*/
+
+    @PostMapping("quote/save")
+    public DtoTweet saveQuote(@RequestParam("tweetBody") String tweetBody,
+                              @RequestParam("parentTweetId") String parentTweetId,
+                              @RequestParam("file") List<MultipartFile> listPhoto,
+                              Principal principal) {
+
+        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
+        Long tweetId = facade.determParentTweetId(parseLong(parentTweetId));
+        tweetId = facade.saveTweetNew(tweetBody, TweetType.QUOTE_TWEET, tweetId, profileId, listPhoto);
+        return facade.transListTweetInDto(facade.getSingleTweetById(tweetId), profileId);
     }
 
-    @PostMapping("reply/save")
+   /* @PostMapping("reply/save")
     public void saveReply(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("parentTweetId") String parentTweetId,
                           @RequestParam("file") List<MultipartFile> listPhoto,
                           Principal principal) {
-        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
+        *//*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*//*
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         Long parentTweet_id = facade.determParentTweetId(parseLong(parentTweetId));
         facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, profileId, listPhoto);
+    }*/
+
+    @PostMapping("reply/save")
+    public DtoTweet saveReply(@RequestParam("tweetBody") String tweetBody,
+                              @RequestParam("parentTweetId") String parentTweetId,
+                              @RequestParam("file") List<MultipartFile> listPhoto,
+                              Principal principal) {
+        /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
+        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+
+        Long parentTweet_id = facade.determParentTweetId(parseLong(parentTweetId));
+        Long tweetId = facade.saveTweetNew(tweetBody, TweetType.REPLY, parentTweet_id, profileId, listPhoto);
+        return facade.transListTweetInDto(facade.getSingleTweetById(tweetId), profileId);
     }
 
 
