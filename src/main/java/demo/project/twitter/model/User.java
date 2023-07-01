@@ -53,6 +53,9 @@ public class User extends BaseEntity {
     @Column(name = "location")
     private String location;
 
+    @Column(name = "auth_provider")
+    private String provider;
+
     @Column(name = "avatar_image_url")
     private String av_imagerUrl;
 
