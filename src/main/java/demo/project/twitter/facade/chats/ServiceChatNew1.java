@@ -15,16 +15,18 @@ import java.util.stream.StreamSupport;
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
 @Log4j2
-public class ServiceChatNew implements FunctionChat {
-    private final RepoChat repo;
+public class ServiceChatNew1 implements FunctionChatNew {
+    private final RepoChatNew repo;
 
     @Override
-    public Chat saveOne(Chat chat) {
+    public ChatNew saveOne(ChatNew chat) {
         return repo.save(chat);
     }
 
+
+
     @Override
-    public Optional<Chat> getById(Long id) {
+    public Optional<ChatNew> getById(Long id) {
         return repo.findById(id);
     }
 
@@ -33,8 +35,8 @@ public class ServiceChatNew implements FunctionChat {
         return repo.existsById(id);
     }
 
-    public List<Chat> getAll() {
-        List<Chat> chats = new ArrayList<>();
+    public List<ChatNew> getAll() {
+        List<ChatNew> chats = new ArrayList<>();
         return StreamSupport.stream(repo.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -69,23 +71,23 @@ public class ServiceChatNew implements FunctionChat {
     }
 
 
-    public List<Chat> getAllByUserId(Long userId) {
+    public List<ChatNew> getAllByUserId(Long userId) {
         return repo.getAllByUserId(userId);
     }
 
-    public List<Chat> getChatByUser(Long userInit, Long userReciv) {
+    public List<ChatNew> getChatByUser(Long userInit, Long userReciv) {
 
         log.info("::::::::: user init = " + userInit);
         log.info("::::::::: user reciv = " + userReciv);
 
-        List<Chat> listChat = repo.getChatByUser(userInit, userReciv);
+        List<ChatNew> listChat = repo.getChatByUser(userInit, userReciv);
         log.info(":::::: service = " + listChat.size());
 
         return listChat;
     }
 
 
-    public List<Chat> getListChat(Long generalChatId) {
+    public List<ChatNew> getListChat(Long generalChatId) {
         return repo.getListChat(generalChatId);
     }
 

@@ -2,6 +2,7 @@ package demo.project.twitter.facade.chats;
 
 import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.chat.GeneralChat;
 import demo.project.twitter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -76,8 +77,8 @@ public GeneralChat newGenegarChat(Long chatId, Long profileId){
     }
 
 
-    public List<Chat> getListChat(Long profileId) {
-        List<Chat> listChat = new ArrayList<>();
+    public List<ChatNew> getListChat(Long profileId) {
+        List<ChatNew> listChat = new ArrayList<>();
         List<GeneralChat> listGeneraCaht = service.getListChatByUserId(profileId);
         if (listGeneraCaht.size() > 0) {
             Long generalChatId = listGeneraCaht.get(0).getId();

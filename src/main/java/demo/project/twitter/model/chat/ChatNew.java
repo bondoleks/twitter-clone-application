@@ -5,7 +5,10 @@ import demo.project.twitter.model.BaseEntity;
 import demo.project.twitter.model.User;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,12 +16,12 @@ import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "chats")
+@Table(name = "chatsnew")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chat extends BaseEntity {
+public class ChatNew extends BaseEntity {
 
    /* @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "initiator_id", referencedColumnName = "id")*/
@@ -30,16 +33,16 @@ public class Chat extends BaseEntity {
     private List<Message> messages = new ArrayList<>();
 
 
-    @ManyToMany(mappedBy = "userChats")
+    @ManyToMany(mappedBy = "userChatsNew")
     @JsonIgnore
-    private Set<User> users = new HashSet<>();
+    private List<User> users = new ArrayList<>();
 
     @ManyToMany(mappedBy = "listChat")
     @JsonIgnore
     private List<GeneralChat> listGeneralChat = new ArrayList<>();
 
 
-    public Chat(Long initiator1, User user) {
+    public ChatNew(Long initiator1, User user) {
         this.initiatorId = initiator1;
         users.add(user );
 

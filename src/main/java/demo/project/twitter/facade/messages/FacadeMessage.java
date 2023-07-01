@@ -35,7 +35,7 @@ public class FacadeMessage {
     public DtoMessage transEntityToDto(Message entity) {
         DtoMessage dto = new DtoMessage();
         dto.setTextMessage(entity.getTextMessage());
-        dto.setUser_author(entity.getChat().getInitiator().getId());
+        dto.setUser_author(entity.getChat().getInitiatorId());
         dto.setChat_id(entity.getChat().getId());
         return dto;
     }

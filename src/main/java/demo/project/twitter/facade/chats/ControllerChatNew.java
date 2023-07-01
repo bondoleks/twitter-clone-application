@@ -6,7 +6,9 @@ import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.dto.UserSearchDto;
 import demo.project.twitter.facade.UserFacade;
 import demo.project.twitter.facade.messages.DtoMessage;
+import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.chat.GeneralChat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,37 +36,34 @@ public class ControllerChatNew {
 
     @DeleteMapping("del/{chat_id}")
     public void delChatFromGeneralChat(@PathVariable("chat_id") Long chatId,
-                                       @RequestParam("profileId") Long userId){
+                                       @RequestParam("profileId") Long userId) {
         Long profileId = userId;
         facade.delChat(chatId, profileId);
     }
 
 
-   /* @GetMapping("chat/{userReceiver}")
+    /*@GetMapping("chat/{userReceiver}")
     public DtoChat getChatByUser(@PathVariable("userReceiver") Long userRec, @RequestParam("profileId") Long userId) {
         Long profileId = userId;
-
-        Chat chat= facade.getChatByUser(profileId, userRec);
+        ChatNew chat = facade.getChatByUser(profileId, userRec);
         return facade.transChatToDtoChat(chat, 0);
     }*/
 
     @GetMapping("chat/{userReceiver}")
     public DtoChat getChatByUser(@PathVariable("userReceiver") Long userRec,
                                  Principal principal) {
-//        Long profileId = userId;
+
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
 
-        Chat chat= facade.getChatByUser(profileId, userRec);
+        ChatNew chat= facade.getChatByUser(profileId, userRec);
         return facade.transChatToDtoChat(chat, 0);
 
     }
 
 
-
-
     @GetMapping("usersearch")
-    public List<UserSearchDto> searchUserForChat(@RequestParam("search_request") String searchRequest, @RequestParam("profileId") Long profileId){
+    public List<UserSearchDto> searchUserForChat(@RequestParam("search_request") String searchRequest, @RequestParam("profileId") Long profileId) {
         return facadeUser.userSearch(searchRequest);
     }
 
@@ -76,8 +75,8 @@ public class ControllerChatNew {
     }*/
 
     @PostMapping("chat/message/save")
-    public String saveMessage(@RequestBody DtoMessage dtoM, Principal principal){
-       /* Long profileId = dtoM.getUser_from();*/
+    public String saveMessage(@RequestBody DtoMessage dtoM, Principal principal) {
+        /* Long profileId = dtoM.getUser_from();*/
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         facade.saveMessage(profileId, dtoM);
@@ -154,7 +153,6 @@ public class ControllerChatNew {
                 collect(Collectors.toList());
 
 
-
     }
  /*@PostMapping("add_i/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
@@ -168,7 +166,7 @@ public class ControllerChatNew {
 
     @PostMapping("add_i/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
-                                           Principal principal){
+                                           Principal principal) {
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         facadeGeneralChat.addChatToChatList(chat_id, profileId);
         return facadeGeneralChat.getListChat(profileId).stream().
@@ -177,12 +175,10 @@ public class ControllerChatNew {
     }
 
     @PostMapping("add_r/{chatId}")
-    public void addChatToChatList(@PathVariable("chatId") Long chat_id){
+    public void addChatToChatList(@PathVariable("chatId") Long chat_id) {
 
         facadeGeneralChat.addChatToChatList(chat_id, facadeUser.getUserReceiverFromChat(chat_id));
     }
-
-
 
 
 }
