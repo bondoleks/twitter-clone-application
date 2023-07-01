@@ -4,8 +4,10 @@ import { ListMainPage } from '../components/MainPage/ListMainPage';
 import { ModalNonAutorizate } from '../components/ModalOmMainPage/ModalNonAutorizate/ModalNonAutorizate';
 import { LogingModal } from '../components/ModalOmMainPage/Login/LogingModal';
 import { RegistrationModal } from '../components/ModalOmMainPage/Registration/RegistrationModal';
+import { useSelector } from 'react-redux';
 
 export const MainPage = () => {
+    const isAuthenticated = useSelector(state => state.user.authorized);
 
     return (
             <Box sx={{ width: '100%', borderRight: '1px rgb(239, 243, 244) solid', borderLeft: '1px rgb(239, 243, 244) solid' }}>
@@ -18,6 +20,7 @@ export const MainPage = () => {
             <ModalNonAutorizate/>
             <LogingModal/>
             <RegistrationModal/>
+            {!isAuthenticated && <Footerlogin />}
         </Box>
     )
 }
