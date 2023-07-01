@@ -19,7 +19,7 @@ import { useParams } from 'react-router-dom';
 
 export const Profile = ({ withId }) => {
   const { id } = useParams()
-  console.log("11111111", withId,"BNNBNBNBNB", id)
+  // console.log("11111111", withId,"BNNBNBNBNB", id)
 
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({

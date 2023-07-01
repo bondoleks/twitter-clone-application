@@ -6,16 +6,17 @@ import {
     Button,
     IconButton,
     Box,
-    useMediaQuery,
     useTheme,
 } from "@mui/material";
 import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
 import WestIcon from '@mui/icons-material/West';
-import { height } from "@mui/system";
+import { useParams } from 'react-router-dom';
+import ButSendTweet from "./ButSendTweet";
 
 
 export default function TweetFormMobile({ open, onClose }) {
+    const { id } = useParams()
 
     const theme = useTheme();
 
@@ -23,49 +24,14 @@ export default function TweetFormMobile({ open, onClose }) {
         backgroundColor: theme.palette.background.default,
         // Add other styles as needed
     };
-    // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const [buttonColor, setButtonColor] = useState();
-
-    useEffect(() => {
-        const savedColor = localStorage.getItem('buttonColor');
-        if (savedColor) {
-            setButtonColor(savedColor);
-        }
-    }, []);
-
-    const handleTweetSubmit = () => {
-        // Здесь вы можете отправить пост-запрос с tweetText и file
-        // Используйте переменные tweetText и file для доступа к данным
-        console.log("Tweet Text:", tweetText);
-        console.log("File:", file);
-
-
-
-        // Здесь можно отправить пост-запрос
-        api.post("https://twitter-clone-application.herokuapp.com/tweets/tweet/save", {
-            tweetBody: tweetText,
-            parentTweetId: 0,
-            user_id: 1
-            // file: file,
-
-        }
-            )
-            .then(response => {
-                console.log(response);
-                alert("Success!");
-            })
-            .catch(error => {
-                console.error(error);
-                // Действия при ошибке
-                alert("Error!: " + error.message);
-            });
-    };
+    const [file, setFile] = useState([]);
+    const [tweetText, setTweetText] = useState("");
 
     return (
 
         <Dialog open={open} onClose={onClose} fullScreen={true} fullWidth >
-            <Box style={TweetFormStyles} sx={{height: '100vh'}}>
+            <Box style={TweetFormStyles} sx={{ height: '100vh' }}>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -76,11 +42,11 @@ export default function TweetFormMobile({ open, onClose }) {
                 }}>
                     <Link to={`/home`}>
                         <IconButton >
-                            <WestIcon onClick={onClose} color='gray'/>
+                            <WestIcon onClick={onClose} color='gray' />
                         </IconButton>
                     </Link>
 
-                    <Button  variant="contained" color="primary" size="small" sx={{
+                    {/* <Button  variant="contained" color="primary" size="small" sx={{
                         textTransform: 'none',
                         borderRadius: '20px',
                         height: '30px',
@@ -88,7 +54,10 @@ export default function TweetFormMobile({ open, onClose }) {
                         paddingRight: '20px'
                     }}>
                         Tweet
-                    </Button>
+                    </Button> */}
+
+                    <ButSendTweet tweetText={tweetText} id={id} file={file} />
+
                 </Box>
 
                 <DialogContent sx={{ maxWidth: 'md' }}>
@@ -101,7 +70,7 @@ export default function TweetFormMobile({ open, onClose }) {
                         my: 2
                     }}></Box>
 
-                    {/*<ToolbarTweetForm/>*/}
+                    <ToolbarTweetForm file={file} setFile={setFile} setTweetText={setTweetText} />
 
                 </DialogContent>
 
