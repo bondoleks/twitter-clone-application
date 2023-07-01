@@ -1,5 +1,5 @@
 ####
-GET http://localhost:5050/api/v1/chats/chat/26?profileId=84
+GET http://localhost:5050/api/v1/chats/chat/99?profileId=98
 
 ####
 GET http://localhost:5050/api/v1/chats/chat/25

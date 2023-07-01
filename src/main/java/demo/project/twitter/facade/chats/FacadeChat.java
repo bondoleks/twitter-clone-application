@@ -32,7 +32,7 @@ public class FacadeChat {
     private Chat transDtoToEntity(DtoChatReq dto) {
         Chat entity = new Chat();
         System.out.println(dto.getUser_initiatorId());
-        entity.setInitiator(userService.findById(dto.getUser_initiatorId()));
+        entity.setInitiatorId(dto.getUser_initiatorId());
         List<Message> messageList = new ArrayList<>();
         entity.setMessages(messageList);
         return entity;
