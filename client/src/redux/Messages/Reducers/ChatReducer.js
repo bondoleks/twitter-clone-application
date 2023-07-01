@@ -8,7 +8,11 @@ import {
   GET_SEARCHED_USERS_SUCCESS,
   GET_SEARCHED_USERS_ERROR,
   GET_SEARCHED_USERS_LOADING,
-  GET_ACTIVE_CHAT_SUCCESS, GET_ACTIVE_CHAT_LOADING, GET_ACTIVE_CHAT_ERROR
+  GET_MESSAGES_FOR_CHAT_SUCCESS,
+  GET_MESSAGES_FOR_CHAT_LOADING,
+  GET_MESSAGES_FOR_CHAT_ERROR,
+  GET_ACTIVE_CHAT,
+  SEND_NEW_MESSAGE_SUCCESS, SEND_NEW_MESSAGE_ERROR, SEND_NEW_MESSAGE_LOADING, ADD_NEW_CHAT_SUCCESS
 
 } from '../../actions.jsx';
 
@@ -16,9 +20,12 @@ import {
 const initialState = {
   filteredUsers: [],
   userChats: [],
-  activeChat: {},
+  activeChat: null,
+  chatMessages: {},
   loading: false,
-  activeChatError: false,
+  chatMessagesError: false,
+  chatMessagesLoading: false,
+  chatMessagesLoadingError: false,
   error: false,
   filters: {},
 }
@@ -28,6 +35,12 @@ export const ChatReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case ADD_NEW_CHAT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        userChats: [...state.userChats, payload],
+      };
     case GET_CHATS_SUCCESS:
       return {
         ...state,
@@ -45,23 +58,47 @@ export const ChatReducer = (state = initialState, action) => {
         loading: false,
         error: true,
       };
-    case GET_ACTIVE_CHAT_SUCCESS:
+    case GET_MESSAGES_FOR_CHAT_SUCCESS:
       return {
         ...state,
         loading: false,
-        activeChatError: false,
-        activeChat: payload,
+        chatMessagesError: false,
+        chatMessages: payload,
       };
-    case GET_ACTIVE_CHAT_LOADING:
+    case GET_MESSAGES_FOR_CHAT_LOADING:
       return {
         ...state,
         loading: true,
       };
-    case GET_ACTIVE_CHAT_ERROR:
+    case GET_MESSAGES_FOR_CHAT_ERROR:
       return {
         ...state,
         loading: false,
-        activeChatError: true,
+        chatMessagesError: true,
+      };
+    case SEND_NEW_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        chatMessagesLoading: false,
+        chatMessagesLoadingError: false,
+        // TODO: TEST UNTIL BE IS NOT READY FOR SENDING MESSAGES BACK
+        chatMessages: [...state.chatMessages, payload]
+      };
+    case SEND_NEW_MESSAGE_LOADING:
+      return {
+        ...state,
+        chatMessagesLoading: true,
+      };
+    case SEND_NEW_MESSAGE_ERROR:
+      return {
+        ...state,
+        chatMessagesLoading: false,
+        chatMessagesLoadingError: true,
+      };
+    case GET_ACTIVE_CHAT:
+      return {
+        ...state,
+        activeChat: payload,
       };
     case GET_SEARCHED_USERS_SUCCESS:
       return {

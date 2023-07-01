@@ -1,10 +1,13 @@
 import { Paper, Typography,Modal, Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { VisibleNextRegistrationModalSelector } from "../../../redux/selectors";
 
 
 
-export function СontinuationModal({email,openModal,closeModal}){
+export function СontinuationModal({email,closeModal}){
+    const visibleNextModal = useSelector(VisibleNextRegistrationModalSelector);
 return(
-    <Modal open={openModal} onClose={closeModal}         
+    <Modal open={visibleNextModal} onClose={closeModal}                 
     aria-labelledby="child-modal-title"
     aria-describedby="child-modal-description">
         <Paper sx={{
@@ -25,7 +28,7 @@ return(
             borderRadius: 5,
             boxShadow: 24,}}>
             <Typography>Congratulations!</Typography>
-            <Typography>Registration is almost complete, go to your mail {email}</Typography>
+            <Typography sx={{textAlign:'center'}}>Registration is almost complete, go to your mail {email}</Typography>
             <Button
                 variant="contained"
                 color="primary"

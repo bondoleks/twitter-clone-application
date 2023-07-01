@@ -2,17 +2,16 @@ import {Box, Typography} from "@mui/material";
 import ChatMessage from "./ChatMessage.jsx";
 
 
-const ChatMessages = ({chatUsers, activeChat, user}) => {
+const ChatMessages = ({chatMessages, user}) => {
 
   const handleShowChatMessages = () => {
-    if (activeChat?.messages) {
-      return activeChat.messages.map(message => {
+    if (chatMessages?.length) {
+      return chatMessages.map(({dateMessage, textMessage, typeMessage}) => {
 
-        const date = new Date();
-        const isSentByCurrentUser = user.id === message.user_from;
+        const isSentByCurrentUser = typeMessage === 1;
 
         return (
-          <ChatMessage key={date} date={date} isSentByCurrentUser={isSentByCurrentUser} message={message.textMessage}/>
+          <ChatMessage key={dateMessage} date={new Date(dateMessage)} isSentByCurrentUser={isSentByCurrentUser} message={textMessage}/>
         )
       })
     }

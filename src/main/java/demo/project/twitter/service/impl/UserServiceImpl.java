@@ -190,6 +190,80 @@ public class UserServiceImpl implements UserServiceImplInterface {
     }
 
     @Override
+    public ResponseEntity forgotPasswordSendEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+        user.setActivationCodeForgotPassword(UUID.randomUUID().toString());
+        userRepository.save(user);
+
+        if (!StringUtils.isEmpty(email)) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Please, visit next link if you need to change password: " +
+                            "https://twitter-clone-application.vercel.app/forgotPassword/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCodeForgotPassword()
+            );
+
+            mailSender.send(user.getEmail(), "Forgot Password From Twitter", message);
+        }
+            return ResponseEntity.ok(user.getUsername() + " send mail");
+        }
+        log.info(email + " defunct email");
+        return ResponseEntity.status(400).body(email + " defunct email");
+    }
+
+    @Override
+    public boolean activateForgotPassword(String code) {
+        User user = userRepository.findByActivationCodeForgotPassword(code);
+        if (user == null) {
+            log.info("User = null");
+            return false;
+        }
+        user.setActivationCode(null);
+        userRepository.save(user);
+        log.info("Activated user " + user.getUsername());
+        return true;
+    }
+
+    @Override
+    public ResponseEntity ifForgotChangePassword(User user, String newPassword) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            log.info(user.getUsername() + " new password update");
+            if (!StringUtils.isEmpty(user.getEmail())) {
+                String message = String.format(
+                        "Hello, %s! \n" +
+                                "Your password on twitter is changed. Have a good day.",
+                        user.getUsername()
+                );
+
+                mailSender.send(user.getEmail(), "Change Password", message);
+            }
+            return ResponseEntity.ok(user.getUsername() + " new password update");
+        }
+
+    @Override
+    public ResponseEntity changePassword(User user, String oldPassword, String newPassword) {
+        if(passwordEncoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            log.info(user.getUsername() + " new password update");
+            if (!StringUtils.isEmpty(user.getEmail())) {
+                String message = String.format(
+                        "Hello, %s! \n" +
+                                "Your password on twitter is changed. Have a good day.",
+                        user.getUsername()
+                );
+
+                mailSender.send(user.getEmail(), "Change Password", message);
+            }
+            return ResponseEntity.ok(user.getUsername() + " new password update");
+        }
+        return ResponseEntity.status(400).body(user.getUsername() + " wrong password");
+    }
+
+    @Override
     public List<User> getAll() {
         List<User> result = userRepository.findAll();
         log.info("IN getAll - {} users found", result.size());

@@ -138,6 +138,7 @@ export const LogingModal = () => {
                     border: '1px solid rgba(255, 255, 255, 0.35)',
                     '&:hover': {
                       backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      color:'rgb(29, 155, 240)'
                     },
                   }}
                 >
@@ -158,6 +159,7 @@ export const LogingModal = () => {
                     border: '1px solid rgba(255, 255, 255, 0.35)',
                     '&:hover': {
                       backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      color:'rgb(29, 155, 240)'
                     },
                   }}
                 >

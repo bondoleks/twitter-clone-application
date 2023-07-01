@@ -6,7 +6,7 @@ export function registrationReducer(state = { user: [], registrationError:false,
         case REGISTER_USER_REQUEST:
             return { ...state, user: action.payload, isLoading: true };
         case REGISTER_USER_SUCCESS:
-            return { ...state, token: action.payload.token, isLoading: false,registrationError:false };
+            return { ...state, isLoading: false,registrationError:null };
         case REGISTER_USER_ERROR:
             return { ...state, isLoading: false,registrationError: action.payload.registrationError };
         default:

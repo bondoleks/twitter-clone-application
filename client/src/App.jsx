@@ -25,15 +25,16 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
+import Footerlogin from './components/Footerlogin/Footerlogin';
+
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
     console.log(isAuthenticated)
-
     return isAuthenticated ? (
-        <Element />
+      <Element />
     ) : (
-        <Navigate to="/" {...rest} />
+      <Navigate to="/" {...rest} />
     );
 };
 
@@ -120,9 +121,12 @@ const routes = [
 
 
 function App() {
-    const [color, setColor] = useState("#00ff00");
+    const [color, setColor] = useState("#00FF00");
     const [themeMode, setThemeMode] = useState("light");
     const isAuthenticated = useSelector(state => state.user.authorized);
+    const isActiveMessage = useMatch("/messages/:id");
+    const isActivateKey = useMatch("/activate/:key");
+    console.log(Boolean(isAuthenticated));
 
     const dispatch = useDispatch();
 
@@ -162,20 +166,19 @@ function App() {
         palette: {
             type: "light",
             background: {
-                default: "#ffffff", // белый фон
+                default: "#FFFFFF", // белый фон
             },
-
-            backgroundModal: "#ffffff",
+            backgroundModal: "#FFFFFF",
             text: {
                 primary: "#232323", // черный шрифт
             },
             paper: {
-                main: "#ffffff"
+                main: "#FFFFFF"
             },
             gray: {
                 main: '#000000'
             },
-            colorBox: '#f9f9f9'
+            colorBox: '#F9F9F9'
         }
     });
 
@@ -183,25 +186,23 @@ function App() {
         palette: {
             type: "dark",
             background: {
-                default: "#15202b", // темно-серый фон (как в твиттере)
+                default: "#15202B", // темно-серый фон (как в твиттере)
             },
-
-            backgroundModal: "#15202b",
-
+            backgroundModal: "#15202B",
             text: {
-                primary: "#9a9a9a", // белый шрифт
+                primary: "#9A9A9A", // белый шрифт
             },
             paper: {
-                main: "#15202b"
+                main: "#15202B"
             },
             primary: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             gray: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             typography: {
-                color: '#ffffff'
+                color: '#FFFFFF'
             },
             colorBox: '#252525'
         }
@@ -217,19 +218,19 @@ function App() {
             backgroundModal: "#222222",
 
             text: {
-                primary: "#ffffff",
+                primary: "#FFFFFF",
             },
             paper: {
                 main: "#000000"
             },
             primary: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             gray: {
-                main: '#ffffff'
+                main: '#FFFFFF'
             },
             typography: {
-                color: '#ffffff'
+                color: '#FFFFFF'
             },
             colorBox: '#252525'
         }
@@ -258,30 +259,28 @@ function App() {
             rightColumn = <MessagesRightColumn />
         } else if (isActiveMessage) {
             rightColumn = <ActiveChat />
-        } else if(!useMatch("/activate/:key")){
+        } else if(!isActivateKey){
             rightColumn = <Search />
         }
 
         return (
-            <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
-                {rightColumn}
-            </Grid>
+          <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
+              {rightColumn}
+          </Grid>
         )
     }
-console.log(Boolean(useMatch("/activate/:key")));
-
     return (
 
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" }}>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" ,paddingBottom: !isAuthenticated ? "65px" : 0,width:'100%!important' }}>
                         {Boolean(!useMatch("/activate/:key")) &&
-                        <Grid item md={3}>
+                        <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Sidebar />
                         </Grid>
                         }
-                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8}>
+                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Routes>
                                 {/* {...routes.map(r => <Route {...r} />)} */}
                                 {routes.map((route, index) => (
@@ -293,6 +292,7 @@ console.log(Boolean(useMatch("/activate/:key")));
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
+                    {!isAuthenticated && <Footerlogin />}
             </ThemeProvider>
         </CustomThemeContext.Provider>
 
