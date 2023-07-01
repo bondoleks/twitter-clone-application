@@ -11,7 +11,9 @@ import java.util.List;
 @RestController
 
 @RequestMapping("/api/v1/chat")
-@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app", "http://localhost:5173"})
+@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app",
+        "http://localhost:5173",
+        "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app"})
 public class ControllerChat {
     private final FacadeChat facade;
 
