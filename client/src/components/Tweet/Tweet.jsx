@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { OpenNoAutorizateModalThunk } from '../../redux/mainPage/OpenNoAutorizateModalThunk';
 import { MiniModal } from './MiniModal';
 import {api} from '../../redux/service/api';
+import { ImageInTweetLayout } from './ImageInTweetLayout';
 
 
 
@@ -30,7 +31,7 @@ export function formatDateTime(dateTimeString) {
   const diffYears = Math.floor(diffMonths / 12);
 
   if(diffSeconds <= 0){
-    return 'Now'
+    return 'Now';
   }
 
   if (diffSeconds < 60) {
@@ -120,7 +121,7 @@ return (
     onClick={() => navigate(`/tweet/${id}`)}
   >
     <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px' }} />
-    <Box>
+    <Box sx={{width:'100%'}}>
       <Box sx={{ display: 'flex', gap: '12px' }}>
         <Typography
           component="span"
@@ -140,7 +141,9 @@ return (
       </Box>
       <Box sx={{ padding: '8px' }}>
         {tweetBody && <p>{tweetBody}</p>}
-        {tweet_imageUrl && <CardMedia component="img" src={tweet_imageUrl} sx={{ borderRadius: '16px' }} />}
+        <Box>
+            {tweet_imageUrl && <ImageInTweetLayout images={tweet_imageUrl} size='300'/>}
+        </Box>
         {parentDto && <Retweet key={parentDto.id} tweet={parentDto} />}
       </Box>
       <Box sx={{display:'flex', justifyContent:'space-around'}}>
