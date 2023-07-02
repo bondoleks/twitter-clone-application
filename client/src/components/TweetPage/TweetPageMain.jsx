@@ -1,6 +1,5 @@
 import { Typography,Box,Avatar,CardMedia,IconButton} from "@mui/material";
 import { useSelector } from "react-redux";
-import { teweetSelector } from "../../redux/selectors";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
@@ -37,8 +36,8 @@ function formatDateTimeTweet(dateTimeString) {
 
 
 
-export function TweetPageMain(){
-    const tweet = useSelector(teweetSelector);
+export function TweetPageMain({tweet}){
+
     const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countRetweet, countLike, view = 154,markerLike,markerRetweet,markerBookmark, parentDto, countBookmark} = tweet;
     const fullName = `${firstName} ${lastName}`;
     const dispatch =useDispatch();

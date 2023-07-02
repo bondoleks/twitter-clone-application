@@ -25,9 +25,6 @@ export const Retweet = ({ tweet }) => {
           <Box>
             {tweet_imageUrl && <ImageInTweetLayout images={tweet_imageUrl} size='280'/>}
         </Box>
-          {/* {tweetChildren && tweetChildren.map(childTweet => (
-            <Tweet key={childTweet.id} tweet={childTweet} />
-          ))} */}
           </Box>
         </Box>
       </Box>

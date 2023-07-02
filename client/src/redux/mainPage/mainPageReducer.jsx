@@ -17,7 +17,7 @@ import {
       case GET_TWEETS_MAIN_REQUEST:
         return { ...state, isLoading: true }
       case GET_TWEETS_MAIN_SUCCESS:
-        return { ...state, tweets: [...state.tweets, ...action.payload.tweets], isLoading: false }
+        return { ...state, tweets: action.payload.tweets, isLoading: false }
       case GET_MAIN_ERROR:
         return { ...state, isLoading: false }
       case OPEN_NOAUTORIZATE_MODAL:

@@ -13,6 +13,9 @@ import { OpenNoAutorizateModalThunk } from '../../redux/mainPage/OpenNoAutorizat
 import { MiniModal } from './MiniModal';
 import {api} from '../../redux/service/api';
 import { ImageInTweetLayout } from './ImageInTweetLayout';
+import { openQuoteRetweetModalThunk } from '../../redux/quoteRetweet/openQuoteRetweetModalThunk';
+import { ADD_USER_VISIBLE_TWEETS, OPEN_QUOTE_RETWEET_MODAL } from '../../redux/actions';
+import VisibilitySensor from 'react-visibility-sensor';
 
 
 
@@ -68,6 +71,8 @@ const Tweet = ({ tweet }) => {
 //Visible
   const [visibleRetweetModal,setVisibleRetweetModal] = useState(false);
   const [visibleShareModal,setVisibleShareModal] = useState(false);
+
+  const[isVisible,setIsVisible] = useState(false)
 //Count
 const [retweetRealyCount,setRetweetRealyCount] = useState(countRetweet);
 const [likeRealyCount,setLikeRealyCount] = useState(countLike);   
@@ -89,6 +94,7 @@ function headlerMarkRetweet(id){
 
 function handleQuoteRetweet(id){
     setVisibleRetweetModal(false);
+    dispatch(openQuoteRetweetModalThunk(id));
 }
 
 function headlerBookmark(id){
@@ -108,6 +114,15 @@ function handleCopyLink(id){
 const autorizate = localStorage.getItem('authToken');
 
 return (
+  <VisibilitySensor
+  delayedCall
+  active={!isVisible}
+  onChange={(boolean)=>{
+    if(!boolean || isVisible) return;
+    setIsVisible(true);
+    dispatch({type:ADD_USER_VISIBLE_TWEETS, payload:{tweetId:id}})
+  }}
+  >
   <Box
     data-user_id={user_id}
     data-tweet_id={id}
@@ -246,6 +261,7 @@ return (
       </Box>
     </Box>
   </Box>
+  </VisibilitySensor>
 );
 };
 
