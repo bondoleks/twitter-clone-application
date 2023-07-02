@@ -21,7 +21,9 @@ export const Home = () => {
 
 
   return (
-        <HomeMain/>
+    <Grid sx={{ paddingBottom: '36px' }}>
+      <HomeMain />
+    </Grid>
   )
 }
 
