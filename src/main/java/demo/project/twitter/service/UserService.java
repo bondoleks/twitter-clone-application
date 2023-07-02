@@ -21,10 +21,10 @@ public class UserService implements FunctionUser {
     private final UserRepository repo;
 
 
-    public Boolean user_exists(User usr) {
-        if (repo.findByUsername(usr.getUsername()) != null) return true;
-        else return false;
-    }
+//    public Boolean user_exists(User usr) {
+//        if (repo.findByUsername(usr.getUsername()) != null) return true;
+//        else return false;
+//    }
 
     @Override
     public List<User> findAllUsers() {
@@ -55,7 +55,7 @@ public class UserService implements FunctionUser {
     @Override
     public User updateUser(User usr, UserDto data) {
 
-        if (user_exists(usr)) {
+//        if (user_exists(usr)) {
 
             usr.setUsername(Optional.ofNullable(data.getUsername()).orElse(usr.getUsername()));
             usr.setFirstName(Optional.ofNullable(data.getFirstName()).orElse(usr.getFirstName()));
@@ -68,7 +68,7 @@ public class UserService implements FunctionUser {
             usr.setHead_imagerUrl(Optional.ofNullable(data.getHead_imagerUrl()).orElse(usr.getHead_imagerUrl()));
 
             return usr;
-        } else return null;
+//        } else return null;
     }
 
 
