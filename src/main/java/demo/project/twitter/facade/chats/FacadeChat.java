@@ -21,7 +21,7 @@ import java.util.Optional;
 @Log4j2
 public class FacadeChat {
 
-    private final ServiceChat chatService;
+  /*  private final ServiceChat chatService;
     private final UserServiceImpl userService;
     private final ServiceMessage messageService;
     private final FacadeMessage messageFacade;
@@ -96,7 +96,7 @@ public class FacadeChat {
         chats.forEach(chat -> dtos.add(transEntityToDto(chat)));
         return ResponseEntity.accepted().body(dtos);
     }
-
+*/
 }
 
 
