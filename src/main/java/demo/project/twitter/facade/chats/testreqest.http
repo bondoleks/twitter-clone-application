@@ -10,14 +10,14 @@ Content-Type: application/json
 
 {
 
-
-  "chat_id": 29,
-  "textMessage": "cxvgearg  nbcn"
+  "user_author": 97,
+  "chat_id": 1,
+  "textMessage": "ладно, пішов на каву!! "
 
 }
 
 ###
-GET http://localhost:5050/api/v1/chats/chat/messages/134?profileId=85&sizePage=15&numberPage=0
+GET http://localhost:5050/api/v1/chats/chat/messages/1?profileId=101&sizePage=15&numberPage=0
 
 ###
 GET http://localhost:5050/api/v1/chats/chat/messages/19?sizePage=15&numberPage=0
@@ -29,13 +29,13 @@ GET http://localhost:5050/api/v1/chats/chat/messages/19?sizePage=15&numberPage=0
 GET http://localhost:5050/api/v1/chats/usersearch?search_request=деву&profileId=11
 
 ###
-POST http://localhost:5050/api/v1/chats/add/86?profileId=12
+POST http://localhost:5050/api/v1/chats/add/8?profileId=98
 
 ###
 POST http://localhost:5050/api/v1/chats/add/63
 
 ###
-GET http://localhost:5050/api/v1/chats/chat/list?profileId=85
+GET http://localhost:5050/api/v1/chats/chat/list?profileId=101
 
 ###
 GET http://localhost:5050/api/v1/chats/chat/list

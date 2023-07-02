@@ -71,21 +71,19 @@ public class ControllerChatNew {
 
     /*@PostMapping("chat/message/save")
     public String saveMessage(@RequestBody DtoMessage dtoM){
-        Long profileID = dtoM.getUser_from();
+        Long profileID = dtoM.getUser_author();
         facade.saveMessage(profileID, dtoM);
         return "ok";
     }*/
 
     @PostMapping("chat/message/save")
     public String saveMessage(@RequestBody DtoMessage dtoM, Principal principal) {
-        /* Long profileId = dtoM.getUser_from();*/
-
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         facade.saveMessage(profileId, dtoM);
         return "ok";
     }
 
-   /* @GetMapping("chat/messages/{chatId}")
+    /*@GetMapping("chat/messages/{chatId}")
     public DtoChatMessage getChatAllMessages(@PathVariable("chatId") Long chat_id,
                                      @RequestParam("sizePage") Integer sizePage,
                                      @RequestParam("numberPage") Integer numberPage,
@@ -106,10 +104,10 @@ public class ControllerChatNew {
 
     }
 
-   /* @PostMapping("add/{chatId}")
-    public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
+    @PostMapping("add/{chatId}")
+    public List<DtoChat> addChatToChatList1(@PathVariable("chatId") Long chat_id,
                                            Principal principal){
-//        Long profileId = userId;
+
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         facadeGeneralChat.newGenegarChat(chat_id, profileId);
 
@@ -120,7 +118,7 @@ public class ControllerChatNew {
 
 
 
-    }*/
+    }
 
     /*@PostMapping("add/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id, @RequestParam("profileId") Long userId){
@@ -166,7 +164,7 @@ public class ControllerChatNew {
                 collect(Collectors.toList());
     }*/
 
-    @PostMapping("add_i/{chatId}")
+   /* @PostMapping("add_i/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
                                            Principal principal) {
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
@@ -180,7 +178,7 @@ public class ControllerChatNew {
     public void addChatToChatList(@PathVariable("chatId") Long chat_id) {
 
         facadeGeneralChat.addChatToChatList(chat_id, facadeUser.getUserReceiverFromChat(chat_id));
-    }
+    }*/
 
 
 }

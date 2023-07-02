@@ -101,11 +101,11 @@ log.info("::::::::::: start1*****");
     }
 
     public void saveMessage(Long profileID, DtoMessage dtoM) {
-        /*Chat chat = service.getById(dtoM.getChat_id()).get();
+        ChatNew chat = service.getById(dtoM.getChat_id()).get();
         User user = serviceUser.findById(profileID);
         Message message = new Message(user, chat, dtoM.getTextMessage());
         message.setCreatedDate(new Date());
-        serviceMessage.saveOne(message);*/
+        serviceMessage.saveOne(message);
 
     }
 
