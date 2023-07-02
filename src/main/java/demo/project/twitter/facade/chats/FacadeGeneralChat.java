@@ -19,7 +19,7 @@ import java.util.List;
 public class FacadeGeneralChat {
 
     private final ServiceGeneralChat service;
-    private final ServiceChatNew serviceChatNew;
+    private final ServiceChatNew1 serviceChatNew;
     private final UserService serviceUser;
 
     private boolean existsChatInGeneralChat(Long chatId, Long generalChatId) {
@@ -36,11 +36,11 @@ public GeneralChat newGenegarChat(Long chatId, Long profileId){
 
             listChat = service.getListChatByUserId(profileID).get(0);
 
-            boolean b = existsChatInGeneralChat(chatId, listChat.getId());
+//            boolean b = existsChatInGeneralChat(chatId, listChat.getId());
 
             if (!existsChatInGeneralChat(chatId, listChat.getId())) {
 
-                Chat chat = serviceChatNew.getById(chatId).get();
+                ChatNew chat = serviceChatNew.getById(chatId).get();
 
                 listChat.getListChat().add(chat);
 
@@ -61,7 +61,7 @@ public GeneralChat newGenegarChat(Long chatId, Long profileId){
 
             log.info(":::::: listChat = " + listChat1.toString());
 
-            Chat chat = serviceChatNew.getById(chatId).get();
+            ChatNew chat = serviceChatNew.getById(chatId).get();
             log.info("::::::: chat = " + chat.getId());
             /*List<ListChat> listlistChat = new ArrayList<>();
             chat.setListListChat(listlistChat);*/

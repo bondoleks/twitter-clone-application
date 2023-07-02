@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
         "http://localhost:5173",
         "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app"})
 public class ControllerMessage {
-    private final FacadeMessage facade;
+  /*  private final FacadeMessage facade;
 
 
     @GetMapping("get/{id}")
@@ -33,5 +33,5 @@ public class ControllerMessage {
     public DtoMessage saveMessage(@PathVariable("id") Long id) {
         return facade.deleteById(id);
     }
-
+*/
 }
