@@ -5,7 +5,7 @@ import Search from '../../components/Search/Search';
 import Hidden from '@mui/material/Hidden';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getTweetThunk } from '../../redux/home/getTweetThunk';
+import { getTweetsThunk } from '../../redux/home/getTweetsThunk';
 
 
 
@@ -16,8 +16,8 @@ export const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTweetThunk(0));
-  }, [dispatch]);
+    dispatch(getTweetsThunk(0));
+  }, []);
 
 
   return (

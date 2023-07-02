@@ -11,6 +11,7 @@ export function MiniModal({ visibleModal, setVisibleModal,data,activeBookmark })
 function handleClose(e){
   e.stopPropagation();
   setVisibleModal();
+  localStorage.removeItem('ChangeTweet');
 }
 
 
