@@ -1,5 +1,5 @@
 ####
-GET http://localhost:5050/api/v1/chats/chat/26?profileId=84
+GET http://localhost:5050/api/v1/chats/chat/104?profileId=105
 
 ####
 GET http://localhost:5050/api/v1/chats/chat/25
@@ -10,14 +10,14 @@ Content-Type: application/json
 
 {
 
-
-  "chat_id": 29,
-  "textMessage": "cxvgearg  nbcn"
+  "user_author": 105,
+  "chat_id": 18,
+  "textMessage": "т435й 3е кпыукеф вн53йнй 3й525234к23к42354315 25345 345й2 р!! "
 
 }
 
 ###
-GET http://localhost:5050/api/v1/chats/chat/messages/134?profileId=85&sizePage=15&numberPage=0
+GET http://localhost:5050/api/v1/chats/chat/messages/1?profileId=101&sizePage=15&numberPage=0
 
 ###
 GET http://localhost:5050/api/v1/chats/chat/messages/19?sizePage=15&numberPage=0
@@ -29,16 +29,16 @@ GET http://localhost:5050/api/v1/chats/chat/messages/19?sizePage=15&numberPage=0
 GET http://localhost:5050/api/v1/chats/usersearch?search_request=деву&profileId=11
 
 ###
-POST http://localhost:5050/api/v1/chats/add/86?profileId=12
+POST http://localhost:5050/api/v1/chats/add/20?profileId=105
 
 ###
 POST http://localhost:5050/api/v1/chats/add/63
 
 ###
-GET http://localhost:5050/api/v1/chats/chat/list?profileId=85
+GET http://localhost:5050/api/v1/chats/chat/list?profileId=105
 
 ###
 GET http://localhost:5050/api/v1/chats/chat/list
 
 ###
-DELETE http://localhost:5050/api/v1/chats/del/86?profileId=12
+DELETE http://localhost:5050/api/v1/chats/del/19?profileId=105

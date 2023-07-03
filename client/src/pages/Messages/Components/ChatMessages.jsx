@@ -1,32 +1,78 @@
-import {Box, Typography} from "@mui/material";
+// import {Box, Typography} from "@mui/material";
+// import ChatMessage from "./ChatMessage.jsx";
+//
+//
+// const ChatMessages = ({chatMessages, user}) => {
+//
+//   const handleShowChatMessages = () => {
+//     if (chatMessages?.length) {
+//       return chatMessages.map(({dateMessage, textMessage, typeMessage}) => {
+//
+//         const isSentByCurrentUser = typeMessage === 1;
+//
+//         return (
+//           <ChatMessage key={dateMessage} date={new Date(dateMessage)} isSentByCurrentUser={isSentByCurrentUser} message={textMessage}/>
+//         )
+//       })
+//     }
+//     return [];
+//   }
+//
+//   return (
+//   <Box sx={{
+//     display: "flex",
+//     flexDirection: "column"
+//
+//   }}>
+//     {handleShowChatMessages()}
+//   </Box>
+//   )
+// }
+//
+// export default ChatMessages
+
+
+import React, { useEffect, useRef } from "react";
+import { Box, Typography } from "@mui/material";
 import ChatMessage from "./ChatMessage.jsx";
 
+const ChatMessages = ({ chatMessages, user }) => {
+  const containerRef = useRef(null);
 
-const ChatMessages = ({chatMessages, user}) => {
+  useEffect(() => {
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }, [chatMessages]);
 
   const handleShowChatMessages = () => {
     if (chatMessages?.length) {
-      return chatMessages.map(({dateMessage, textMessage, typeMessage}) => {
-
+      return chatMessages.map(({ dateMessage, textMessage, typeMessage }) => {
         const isSentByCurrentUser = typeMessage === 1;
 
         return (
-          <ChatMessage key={dateMessage} date={new Date(dateMessage)} isSentByCurrentUser={isSentByCurrentUser} message={textMessage}/>
-        )
-      })
+          <ChatMessage
+            key={dateMessage}
+            date={new Date(dateMessage)}
+            isSentByCurrentUser={isSentByCurrentUser}
+            message={textMessage}
+          />
+        );
+      });
     }
     return [];
-  }
+  };
 
   return (
-  <Box sx={{
-    display: "flex",
-    flexDirection: "column"
+    <Box
+      ref={containerRef}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        overflowY: "auto",
+      }}
+    >
+      {handleShowChatMessages()}
+    </Box>
+  );
+};
 
-  }}>
-    {handleShowChatMessages()}
-  </Box>
-  )
-}
-
-export default ChatMessages
+export default ChatMessages;

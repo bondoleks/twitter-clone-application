@@ -70,7 +70,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5050/tweets/tweet/128
+GET http://localhost:5050/api/v1/tweets/tweet/126
 
 ###
 
