@@ -1,7 +1,9 @@
 package demo.project.twitter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.*;
 import javax.validation.constraints.Email;
@@ -53,6 +55,9 @@ public class User extends BaseEntity {
     @Column(name = "location")
     private String location;
 
+    @Column(name = "auth_provider")
+    private String provider;
+
     @Column(name = "avatar_image_url")
     private String av_imagerUrl;
 
@@ -78,7 +83,14 @@ public class User extends BaseEntity {
     @ManyToMany()
     @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
+
     private Set<Chat> userChats = new HashSet<>();
+
+    @ManyToMany()
+    @JoinTable(name = "chatsnew_to_users", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+
+    private List<ChatNew> userChatsNew = new ArrayList<>();
 
     public User(String username, String email, String password, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
 

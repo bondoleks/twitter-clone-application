@@ -35,7 +35,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> getListChat(Long listChatId);
 
     @Query(
-            value = "select users. * from chats_to_users as cu\n" +
+            value = "select users. * from chatsnew_to_users as cu\n" +
                     "inner join users on cu.user_id = users.id where cu.chat_id = ?",
             nativeQuery = true
     )

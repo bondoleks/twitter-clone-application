@@ -1,18 +1,20 @@
 
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { END_SCROLL_HOME } from '../../redux/actions';
+import { tweetSelector } from '../../redux/selectors';
 
-const ScrollTracker = () => {
-    
-    const dispatch =useDispatch();    
-
+export const useScrollTracker = () => {
+    const[isEndScroll,setIsEndScroll]= useState(false);
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
       if (scrollTop + clientHeight === scrollHeight) {
-        dispatch({ type: END_SCROLL_HOME });
+        setIsEndScroll(true)
+
+      }else{
+        setIsEndScroll(false)
       }
     };
 
@@ -22,8 +24,6 @@ const ScrollTracker = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  return null;
+  return isEndScroll;
 };
 
-export default ScrollTracker;

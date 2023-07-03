@@ -20,7 +20,7 @@ public class Message extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "chat_id", referencedColumnName = "id")
-    private Chat chat;
+    private ChatNew chat;
 
     @Column(name = "text_message")
     private String textMessage;

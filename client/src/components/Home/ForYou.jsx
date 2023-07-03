@@ -3,11 +3,12 @@ import { tweetsHomeSelector } from '../../redux/selectors';
 import { useSelector } from 'react-redux';
 import { Box} from '@mui/system';
 import { useEffect } from 'react';
-import { getTweetThunk } from '../../redux/home/getTweetThunk';
-import ScrollTracker from './ScrollTracker';
+import { getTweetsThunk } from '../../redux/home/getTweetsThunk';
+
 import { scrollDataSelector } from '../../redux/selectors';
 import { useDispatch } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
+import { useScrollTracker } from './ScrollTracker';
 
 
 
@@ -17,16 +18,26 @@ export function ForYou() {
   const scrollData = useSelector(scrollDataSelector);
   console.log(tweetsForYouData);
   const {pageTweets,setPageTweets} = useOutletContext();
+  const isEndScroll = useScrollTracker();
+
   
+  // useEffect(() => {
+  //   dispatch(getTweetThunk(1));
+  //   setPageTweets(pageTweets+1);
+
+  //   },[]);
+
 
   useEffect(() => {
-    dispatch(getTweetThunk(pageTweets));
-    setPageTweets(pageTweets+1);
+    if(tweetsForYouData.length >0 && isEndScroll){
+      console.log(pageTweets);
+      dispatch(getTweetsThunk(pageTweets));
+      setPageTweets(pageTweets+1);
+    }
+    },[isEndScroll]);
 
-    },[scrollData]);
-  
-  
-  if(!tweetsForYouData){
+
+  if(tweetsForYouData.length === 0){
     return(
       <div>No tweets</div>
     )
@@ -46,7 +57,7 @@ export function ForYou() {
           tweet={tweet} 
         />
       ))}
-      <ScrollTracker/>
+      {/* <ScrollTracker/> */}
     </Box>
   );
 }

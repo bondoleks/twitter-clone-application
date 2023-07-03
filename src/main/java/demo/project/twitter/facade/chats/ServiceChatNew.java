@@ -2,6 +2,7 @@ package demo.project.twitter.facade.chats;
 
 
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.ChatNew;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -88,7 +89,7 @@ public class ServiceChatNew implements FunctionChat {
         return repo.getListChat(generalChatId);
     }
 
-    public List<Chat> getListChatByGeneralId(Long generalChatId) {
+    public List<ChatNew> getListChatByGeneralId(Long generalChatId) {
         return repo.getListChatByGeneralId(generalChatId);
     }
 }

@@ -1,6 +1,7 @@
 package demo.project.twitter.facade.chats;
 
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.tweet.Tweet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -78,9 +79,9 @@ public interface RepoChat extends JpaRepository<Chat, Long> {
     List<Chat> getListChat(Long profileId);
 
     @Query(
-            value = "select chats. * from listchat_chat as lc\n" +
-                    "     inner join chats on lc.chat_id = chats.id where lc.listchat_id = ?",
+            value = "select chatsnew. * from listchat_chat as lc\n" +
+                    "     inner join chatsnew on lc.chat_id = chatsnew.id where lc.listchat_id = ?",
             nativeQuery = true
     )
-    List<Chat> getListChatByGeneralId(Long generalChatId);
+    List<ChatNew> getListChatByGeneralId(Long generalChatId);
 }

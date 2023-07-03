@@ -56,7 +56,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSo
     )
     List<Tweet> getSingleTweet(Long parentTweetId, Long  userId);
 
-
     @Query(
             value = "select * from tweets  where tweet_type = 'TWEET' or (tweet_type = 'QUOTE_TWEET' and tweet_body is not null)",
             nativeQuery = true
