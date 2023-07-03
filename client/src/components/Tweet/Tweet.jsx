@@ -12,6 +12,10 @@ import { useDispatch } from 'react-redux';
 import { OpenNoAutorizateModalThunk } from '../../redux/mainPage/OpenNoAutorizateModalThunk';
 import { MiniModal } from './MiniModal';
 import {api} from '../../redux/service/api';
+import { ImageInTweetLayout } from './ImageInTweetLayout';
+import { openQuoteRetweetModalThunk } from '../../redux/quoteRetweet/openQuoteRetweetModalThunk';
+import { ADD_USER_VISIBLE_TWEETS, OPEN_QUOTE_RETWEET_MODAL } from '../../redux/actions';
+import VisibilitySensor from 'react-visibility-sensor';
 
 
 
@@ -30,7 +34,7 @@ export function formatDateTime(dateTimeString) {
   const diffYears = Math.floor(diffMonths / 12);
 
   if(diffSeconds <= 0){
-    return 'Now'
+    return 'Now';
   }
 
   if (diffSeconds < 60) {
@@ -67,6 +71,8 @@ const Tweet = ({ tweet }) => {
 //Visible
   const [visibleRetweetModal,setVisibleRetweetModal] = useState(false);
   const [visibleShareModal,setVisibleShareModal] = useState(false);
+
+  const[isVisible,setIsVisible] = useState(false)
 //Count
 const [retweetRealyCount,setRetweetRealyCount] = useState(countRetweet);
 const [likeRealyCount,setLikeRealyCount] = useState(countLike);   
@@ -88,6 +94,7 @@ function headlerMarkRetweet(id){
 
 function handleQuoteRetweet(id){
     setVisibleRetweetModal(false);
+    dispatch(openQuoteRetweetModalThunk(id));
 }
 
 function headlerBookmark(id){
@@ -107,6 +114,15 @@ function handleCopyLink(id){
 const autorizate = localStorage.getItem('authToken');
 
 return (
+  <VisibilitySensor
+  delayedCall
+  active={!isVisible}
+  onChange={(boolean)=>{
+    if(!boolean || isVisible) return;
+    setIsVisible(true);
+    dispatch({type:ADD_USER_VISIBLE_TWEETS, payload:{tweetId:id}})
+  }}
+  >
   <Box
     data-user_id={user_id}
     data-tweet_id={id}
@@ -120,7 +136,7 @@ return (
     onClick={() => navigate(`/tweet/${id}`)}
   >
     <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px' }} />
-    <Box>
+    <Box sx={{width:'100%'}}>
       <Box sx={{ display: 'flex', gap: '12px' }}>
         <Typography
           component="span"
@@ -140,7 +156,9 @@ return (
       </Box>
       <Box sx={{ padding: '8px' }}>
         {tweetBody && <p>{tweetBody}</p>}
-        {tweet_imageUrl && <CardMedia component="img" src={tweet_imageUrl} sx={{ borderRadius: '16px' }} />}
+        <Box>
+            {tweet_imageUrl && <ImageInTweetLayout images={tweet_imageUrl} size='300'/>}
+        </Box>
         {parentDto && <Retweet key={parentDto.id} tweet={parentDto} />}
       </Box>
       <Box sx={{display:'flex', justifyContent:'space-around'}}>
@@ -243,6 +261,7 @@ return (
       </Box>
     </Box>
   </Box>
+  </VisibilitySensor>
 );
 };
 

@@ -22,7 +22,9 @@ import static java.lang.Long.parseLong;
 @RestController
 @Log4j2
 @RequestMapping("api/v1/tweets")
-@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app", "http://localhost:5173"})
+@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app",
+        "http://localhost:5173",
+        "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app"})
 public class ControllerTweet {
     private final FacadeTweet facade;
     private final UserFacade facadeUser;
@@ -102,7 +104,8 @@ public class ControllerTweet {
 
     @GetMapping("tweet/{tweet_id}")
     public DtoTweet getTweetById(@PathVariable("tweet_id") Long id, Principal principal) {
-        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+//        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+        Long profileId = 10L;
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 

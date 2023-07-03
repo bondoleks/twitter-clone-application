@@ -20,9 +20,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class Chat extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "initiator_id", referencedColumnName = "id")
-    private User initiator;
+   /* @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "initiator_id", referencedColumnName = "id")*/
+//    @Column(name = "initiator_id")
+    private Long initiatorId;
 
 
     @OneToMany(mappedBy = "chat")
@@ -38,8 +39,9 @@ public class Chat extends BaseEntity {
     private List<GeneralChat> listGeneralChat = new ArrayList<>();
 
 
-    public Chat(User initiator1) {
-        this.initiator = initiator1;
+    public Chat(Long initiator1, User user) {
+        this.initiatorId = initiator1;
+        users.add(user );
 
 
     }

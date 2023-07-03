@@ -21,7 +21,7 @@ import java.util.Optional;
 @Log4j2
 public class FacadeChat {
 
-    private final ServiceChat chatService;
+  /*  private final ServiceChat chatService;
     private final UserServiceImpl userService;
     private final ServiceMessage messageService;
     private final FacadeMessage messageFacade;
@@ -32,7 +32,7 @@ public class FacadeChat {
     private Chat transDtoToEntity(DtoChatReq dto) {
         Chat entity = new Chat();
         System.out.println(dto.getUser_initiatorId());
-        entity.setInitiator(userService.findById(dto.getUser_initiatorId()));
+        entity.setInitiatorId(dto.getUser_initiatorId());
         List<Message> messageList = new ArrayList<>();
         entity.setMessages(messageList);
         return entity;
@@ -96,7 +96,7 @@ public class FacadeChat {
         chats.forEach(chat -> dtos.add(transEntityToDto(chat)));
         return ResponseEntity.accepted().body(dtos);
     }
-
+*/
 }
 
 
