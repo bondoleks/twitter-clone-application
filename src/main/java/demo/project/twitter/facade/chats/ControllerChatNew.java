@@ -136,17 +136,17 @@ public class ControllerChatNew {
 
     }*/
 
+//     @GetMapping("chat/list")
+//     public List<DtoChat> getListChat(@RequestParam("profileId") Long userId) {
+//         Long profileId = userId;
+//
+//         return facadeGeneralChat.getListChat(profileId).stream().
+//                 map(c -> facade.transChatToDtoChat(c, 1)).
+//                 collect(Collectors.toList());
+//
+//     }
+
     @GetMapping("chat/list")
-    public List<DtoChat> getListChat(@RequestParam("profileId") Long userId) {
-        Long profileId = userId;
-
-        return facadeGeneralChat.getListChat(profileId).stream().
-                map(c -> facade.transChatToDtoChat(c, 1)).
-                collect(Collectors.toList());
-
-    }
-
-   /* @GetMapping("chat/list")
     public List<DtoChat> getListChat(Principal principal) {
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
@@ -156,7 +156,7 @@ public class ControllerChatNew {
                 collect(Collectors.toList());
 
 
-    }*/
+    }
  /*@PostMapping("add_i/{chatId}")
     public List<DtoChat> addChatToChatList(@PathVariable("chatId") Long chat_id,
                                            @RequestParam("profileId") Long userId){
