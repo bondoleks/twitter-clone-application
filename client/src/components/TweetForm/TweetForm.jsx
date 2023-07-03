@@ -2,19 +2,18 @@ import React, { useState } from "react";
 import {
     Dialog,
     DialogContent,
-    Button,
     IconButton,
     Box,
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import ContainerTweetForm from "./ContainerTweetForm";
 import ToolbarTweetForm from "./ToolbarTweetForm";
+import ButSendTweet from "./ButSendTweet";
 import { useTheme } from '@mui/material/styles';
 import { useParams } from 'react-router-dom';
-import ButSendTweet from "./ButSendTweet";
 
-export default function TweetForm({ open, onClose, withId  }) {
-    const { id } = useParams()
+export default function TweetForm({ open, onClose, withId }) {
+    const { id } = useParams();
 
     const theme = useTheme();
 
@@ -24,16 +23,19 @@ export default function TweetForm({ open, onClose, withId  }) {
 
     const [file, setFile] = useState([]);
     const [tweetText, setTweetText] = useState("");
-
-    const [openModal, setOpenModal] = useState(false);
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
     const handleOpenModal = () => {
-        setOpenModal(true);
         handleCloseMenu();
     };
 
     const handleCloseModal = () => {
-        setOpenModal(false);
+        onClose();
+    };
+
+    const closeModal = () => {
+        setIsFormSubmitted(true);
+        onClose();
     };
 
     const handleColorChange = (color) => {
@@ -42,8 +44,7 @@ export default function TweetForm({ open, onClose, withId  }) {
     };
 
     return (
-
-        <Dialog open={open} onClose={onClose} >
+        <Dialog open={open} onClose={onClose}>
 
             <IconButton sx={{ position: 'absolute', top: '0', left: '0' }}>
                 <CloseIcon onClick={onClose} color='gray' />
@@ -66,9 +67,8 @@ export default function TweetForm({ open, onClose, withId  }) {
                 }}>
 
                     <ToolbarTweetForm file={file} setFile={setFile} setTweetText={setTweetText} />
-                    
 
-                    <ButSendTweet tweetText={tweetText} id={id}  file={file} />
+                    <ButSendTweet tweetText={tweetText} id={id} file={file} closeModal={closeModal} setFile={setFile} setTweetText={setTweetText}  />
 
                 </Box>
 
@@ -77,3 +77,5 @@ export default function TweetForm({ open, onClose, withId  }) {
         </Dialog>
     );
 }
+
+

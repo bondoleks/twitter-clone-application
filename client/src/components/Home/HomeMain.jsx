@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import ContainerTweetForm from '../TweetForm/ContainerTweetForm';
 import ToolbarTweetForm from '../TweetForm/ToolbarTweetForm';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import ButSendTweet from '../TweetForm/ButSendTweet';
 
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
@@ -27,13 +29,17 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 }));
 
 
-
-
 export function HomeMain() {
+  const { id } = useParams()
+
   const location = useLocation();
   const [pageTweets, setPageTweets] = useState(1);
 
   const [buttonColor, setButtonColor] = useState(null);
+  const [file, setFile] = useState([]); // Добавление состояния file
+  const [tweetText, setTweetText] = useState(""); // Добавление состояния tweetText
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
 
   useEffect(() => {
     const savedColor = localStorage.getItem('buttonColor');
@@ -41,6 +47,10 @@ export function HomeMain() {
       setButtonColor(savedColor);
     }
   }, []);
+
+  const closeModal = () => {
+    setIsFormSubmitted(true);
+  };
 
   return (
     <Box sx={{ width: '100%', borderRight: '1px rgb(239, 243, 244) solid', borderLeft: '1px rgb(239, 243, 244) solid' }}>
@@ -55,23 +65,16 @@ export function HomeMain() {
         </StyledTabs>
       </Box>
       <Hidden smDown>
-      <ContainerTweetForm />
+        <ContainerTweetForm tweetText={tweetText} setTweetText={setTweetText} />
 
-      <Box sx={{ borderTop: '1px solid #e1e8ed', width: '100%', my: 2 }}></Box>
+        <Box sx={{ borderTop: '1px solid #e1e8ed', width: '100%', my: 2 }}></Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <ToolbarTweetForm />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <ToolbarTweetForm file={file} setFile={setFile} setTweetText={setTweetText} />
 
-        <Button variant="contained" size="small" sx={{
-          textTransform: 'none',
-          borderRadius: '20px',
-          height: '30px',
-          marginRight: '30px',
-          background: buttonColor
-        }}>
-          Tweet
-        </Button>
-      </Box>
+          <ButSendTweet tweetText={tweetText} id={id} file={file} closeModal={closeModal} setFile={setFile} setTweetText={setTweetText} />
+
+        </Box>
       </Hidden>
 
 
@@ -80,4 +83,3 @@ export function HomeMain() {
     </Box>
   );
 }
-
