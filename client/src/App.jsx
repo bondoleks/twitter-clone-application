@@ -27,6 +27,8 @@ import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
 import { QuoteRetweetModal } from './components/Tweet/ModalsTweetReaction/QuoteRetweetModal';
 import { watchUserTweetsThunk } from './redux/user/watchUserTweetsThunk';
+import { ForgotPage } from './pages/ForgotPage/ForgotPage';
+import { ReplyModal } from './components/Tweet/ModalsTweetReaction/ReplyModal';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -48,6 +50,11 @@ const routes = [
     {
         path: "/activate/:key",
         element: <ActivatePage />,
+        errorElement: <div>Not found</div>
+    },
+    {
+        path: "/forgot_password/:key",
+        element: <ForgotPage />,
         errorElement: <div>Not found</div>
     },
     {
@@ -305,6 +312,7 @@ return () =>{
                         </Hidden>
                     </Grid>
                     <QuoteRetweetModal/>
+                    <ReplyModal/>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 

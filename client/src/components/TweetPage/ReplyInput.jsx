@@ -90,7 +90,9 @@ export function ReplyInput({userParentName,tweetId}){
                   />
                   <BrokenImageOutlinedIcon sx={{ color: buttonColor }} />
                 </label>
-              </IconButton>}
+              </IconButton>
+              }
+              {isTextareaFocused &&<Typography>{replyText.length}/260</Typography>}
               <Button
                 variant="contained" size="medium" sx={{
                   textTransform: 'none',

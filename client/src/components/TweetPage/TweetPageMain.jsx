@@ -16,6 +16,7 @@ import { useState } from "react";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { openQuoteRetweetModalThunk } from "../../redux/quoteRetweet/openQuoteRetweetModalThunk";
+import { openReplyModalThunk } from "../../redux/reply/openReplyModalThunk";
 
 
 function formatDateTimeTweet(dateTimeString) {
@@ -145,6 +146,7 @@ export function TweetPageMain({tweet}){
             <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
             onClick={(event) => {
                 event.stopPropagation();
+                dispatch(openReplyModalThunk(id))
             }}
             >
             <ChatBubbleIcon />

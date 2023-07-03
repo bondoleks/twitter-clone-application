@@ -5,7 +5,7 @@ import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import { useDispatch } from "react-redux";
 import { ADD_IMG_IN_QUOTE_RETWEET } from "../../../redux/actions";
 
-export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, functionButton, width }) {
+export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, functionButton, width,handleImageUpload,parentId ,textLenght}) {
   const [buttonColor, setButtonColor] = useState(null);
   const dispatch = useDispatch();
 
@@ -15,10 +15,6 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
       setButtonColor(savedColor);
     }
   }, []);
-
-  const handleImageUpload = (e) => {
-    dispatch({ type: ADD_IMG_IN_QUOTE_RETWEET, payload: { img: e.target.files } });
-  };
 
   return (
     <>
@@ -86,6 +82,7 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
                   <BrokenImageOutlinedIcon sx={{ color: buttonColor }} />
                 </label>
               </IconButton>
+              <Typography>{textLenght}/260</Typography>
               <Button
                 variant="contained" size="medium" sx={{
                   textTransform: 'none',
@@ -94,7 +91,7 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
                   marginLeft: '30px',
                   background: buttonColor
                 }}
-                onClick={functionButton}
+                onClick={()=>functionButton(parentId)}
               >
                 {buttonName}
               </Button>
@@ -115,7 +112,7 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
             height: '100%',
             bgcolor: '#fff',
             color: '#000',
-            p: 4,
+            p: '0 16px',
             zIndex: 1,
             display: 'flex',
             justifyContent: 'start',
@@ -125,7 +122,8 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
               sx={{
                 width: '100%',
                 display: "flex",
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                p:"8px 12px 0"
               }}>
               <ArrowBackIcon
                 onClick={onClose} />
@@ -137,14 +135,14 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
                   marginLeft: '30px',
                   background: buttonColor
                 }}
-                onClick={functionButton}
+                onClick={()=>functionButton(parentId)}
               >
                 {buttonName}
               </Button>
             </Box>
             {children}
             <Box sx={{height:"0.5px",width:'100%',backgroundColor:'black',margin:'8px 0'}}></Box>
-            <Box sx={{width:'100%'}}>
+            <Box sx={{width:'100%',display:'flex',justifyContent:'space-around',alignItems:'center'}}>
             <IconButton sx={{ marginTop: '6px' }}>
                 <label htmlFor="file-input-quote-retweet-modal">
                   <input
@@ -158,6 +156,7 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
                   <BrokenImageOutlinedIcon sx={{ color: buttonColor }} />
                 </label>
               </IconButton>
+              <Typography>{textLenght}/260</Typography>
             </Box>
           </Box>
         </Modal>
