@@ -14,6 +14,77 @@ import axios from "axios";
 import Alert from '@mui/material/Alert';
 import { api } from "../../redux/service/api";
 
+
+
+// export default function ToolbarTweetForm({ setTweetText, setFile, file }) {
+//   const [buttonColor, setButtonColor] = useState();
+//   const [filePaths, setFilePaths] = useState([]);
+
+//   useEffect(() => {
+//     const savedColor = localStorage.getItem('buttonColor');
+//     if (savedColor) {
+//       setButtonColor(savedColor);
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     if (file) {
+//       const readerPromises = Array.from(file).map((file) => {
+//         return new Promise((resolve) => {
+//           const reader = new FileReader();
+//           reader.onload = (event) => {
+//             resolve(event.target.result);
+//           };
+//           reader.readAsDataURL(file);
+//         });
+//       });
+
+//       Promise.all(readerPromises).then((results) => {
+//         setFilePaths((prevFilePaths) => [...prevFilePaths, ...results]);
+//       });
+//     }
+//   }, [file]);
+
+//   const handleTweetTextChange = (e) => {
+//     setTweetText(e.target.value);
+//   };
+
+//   return (
+//     <Box>
+//       <div
+//         style={{
+//           display: 'flex',
+//           flexWrap: 'wrap',
+//           gap: '10px',
+//         }}
+//       >
+//         {filePaths.map((filePath, index) => (
+//           <img
+//             key={index}
+//             alt="file"
+//             src={filePath}
+//             style={{ width: '200px', height: 'auto', objectFit: 'cover' }}
+//           />
+//         ))}
+//       </div>
+//       <Toolbar>
+//         <IconButton sx={{ marginTop: '6px' }}>
+//           <label htmlFor="file-input">
+//             <input
+//               id="file-input"
+//               onChange={(e) => {
+//                 setFile(e.target.files);
+//               }}
+//               accept="image/png, image/gif, image/jpeg"
+//               type="file"
+//               multiple
+//               style={{ display: "none" }}
+//             />
+//             <BrokenImageOutlinedIcon sx={{ color: buttonColor }} />
+//           </label>
+//         </IconButton>
+
+
 export default function ToolbarTweetForm({ setTweetText, setFile, file }) {
   const [buttonColor, setButtonColor] = useState();
   const [filePaths, setFilePaths] = useState([]);
@@ -36,12 +107,45 @@ export default function ToolbarTweetForm({ setTweetText, setFile, file }) {
           reader.readAsDataURL(file);
         });
       });
-
+  
       Promise.all(readerPromises).then((results) => {
-        setFilePaths((prevFilePaths) => [...prevFilePaths, ...results]);
+        setFilePaths(results);
       });
+    } else {
+      setFilePaths([]);
     }
   }, [file]);
+  
+
+  // useEffect(() => {
+  //   if (file) {
+  //     const readerPromises = Array.from(file).map((file) => {
+  //       return new Promise((resolve) => {
+  //         const reader = new FileReader();
+  //         reader.onload = (event) => {
+  //           resolve(event.target.result);
+  //         };
+  //         reader.readAsDataURL(file);
+  //       });
+  //     });
+
+  //     Promise.all(readerPromises).then((results) => {
+  //       setFilePaths((prevFilePaths) => [...prevFilePaths, ...results]);
+  //     });
+  //   }
+  // }, [file]);
+
+  // const handleFileChange = (e) => {
+  //   const selectedFiles = e.target.files;
+  //   const filesArray = Array.from(selectedFiles);
+  //   setFile(filesArray);
+  // };
+  
+  const handleFileChange = (e) => {
+    const selectedFiles = e.target.files;
+    const filesArray = Array.from(selectedFiles);
+    setFile((prevFiles) => [...prevFiles, ...filesArray]);
+  };
 
   const handleTweetTextChange = (e) => {
     setTweetText(e.target.value);
@@ -61,6 +165,7 @@ export default function ToolbarTweetForm({ setTweetText, setFile, file }) {
             key={index}
             alt="file"
             src={filePath}
+            // src={URL.createObjectURL(f)}
             style={{ width: '200px', height: 'auto', objectFit: 'cover' }}
           />
         ))}
@@ -70,9 +175,7 @@ export default function ToolbarTweetForm({ setTweetText, setFile, file }) {
           <label htmlFor="file-input">
             <input
               id="file-input"
-              onChange={(e) => {
-                setFile(e.target.files);
-              }}
+              onChange={handleFileChange}
               accept="image/png, image/gif, image/jpeg"
               type="file"
               multiple

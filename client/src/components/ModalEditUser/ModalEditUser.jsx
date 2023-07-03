@@ -59,8 +59,7 @@ export default function ModalEditUser({ open, onClose, withId }) {
             backgroundColor: theme.palette.background.default,
             fontSize: '16px',
             padding: '12px',
-            fontFamily: 'Roboto, sans-serif',
-            color: theme.palette.text.primary
+            fontFamily: 'Roboto, sans-serif'
         }
     };
 

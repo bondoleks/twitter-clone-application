@@ -141,13 +141,22 @@ function App() {
 
     useEffect(() => {
         // Создаем WebSocket-соединение
+        // const socket = new SockJS('https://twitter-clone-application.herokuapp.com/chat/message');
         const socket = new SockJS('https://twitter-clone-application.herokuapp.com/ws-message');
+        // const socket = new SockJS('https://twitter-clone-application.herokuapp.com');
+        // const socket = new SockJS('http://localhost:5173');
+        // const socket = new SockJS('https://twitter-clone-application.vercel.app');
         const stompClient = Stomp.over(socket);
 
         // Устанавливаем колбэк-функцию при успешном соединении
         stompClient.connect({}, () => {
             // Подписываемся на каналы
-            stompClient.subscribe('/chat', (message) => {
+            stompClient.subscribe('/app/chat/message', (message) => {
+                console.log('Received message from /chat:', message.body);
+                // Действия с полученным сообщением
+            });
+
+            stompClient.subscribe('/app/send', (message) => {
                 console.log('Received message from /chat:', message.body);
                 // Действия с полученным сообщением
             });

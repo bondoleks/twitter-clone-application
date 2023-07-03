@@ -20,9 +20,11 @@ import PeopleIcon from "@mui/icons-material/People";
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
 import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
+import { useFetch } from "../../hooks/UseFetch";
+import { useParams } from 'react-router-dom';
 
 
-export default function ContainerTweetForm({ open, onClose, setTweetText, tweetText }) {
+export default function ContainerTweetForm({ open, onClose, setTweetText, tweetText, withId }) {
 
     const theme = useTheme();
 
@@ -34,6 +36,8 @@ export default function ContainerTweetForm({ open, onClose, setTweetText, tweetT
             setButtonColor(savedColor);
         }
     }, []);
+
+    const { id } = useParams()
 
     const StyledAvatar = styled(Avatar)(({ theme }) => ({
         position: 'relative',
@@ -49,6 +53,27 @@ export default function ContainerTweetForm({ open, onClose, setTweetText, tweetT
             transition: 'opacity 0.3s ease',
         }
     }));
+
+    const [{ data, loading }, getData] = useFetch({
+        initData: {},
+        url: withId
+          ? `user/getuser/${id}`
+          : 'user/profile',
+        method: 'GET',
+        dataTransformer: (data) => {
+          console.log(data)
+          return data;
+        },
+      });
+    
+      useEffect(() => {
+        getData()
+      }, [id])
+    
+    
+      if (!loading) <p>loading...</p>
+    
+      const { username, av_imagerUrl } = data
 
     const [selectedValue, setSelectedValue] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
@@ -153,7 +178,9 @@ export default function ContainerTweetForm({ open, onClose, setTweetText, tweetT
             <Container sx={{ display: 'flex', marginTop: '20px' }}>
 
                 <StyledAvatar alt="User Avatar"
-                    src='../../img/avatar.png' />
+                    // src='../../img/avatar.png'
+                    src={av_imagerUrl}
+                    />
 
                 <Button onClick={handleButtonClick} endIcon={<ArrowDropDownIcon />}
                     sx={{

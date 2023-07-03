@@ -15,7 +15,7 @@ import java.util.List;
         "http://localhost:5173",
         "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app"})
 public class ControllerChat {
-    private final FacadeChat facade;
+   /* private final FacadeChat facade;
 
     @GetMapping("getChat/{id}")
     public ResponseEntity<?> getChatBetweenUsers(@RequestBody() DtoChatReq dtoReq,
@@ -49,5 +49,5 @@ public class ControllerChat {
     @GetMapping("getAll/{userId}")
     public ResponseEntity<List<DtoChatResp>> getAll(@PathVariable("userId") Long userId){
         return facade.getAll(userId);
-    }
+    }*/
 }
