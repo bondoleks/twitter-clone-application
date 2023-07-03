@@ -13,9 +13,9 @@ export const Retweet = ({ tweet }) => {
         e.stopPropagation();
         navigate(`/tweet/${id}`)}}
       >
-        <Avatar src={av_imagerUrl} alt={username} sx={{m: '14px'}} />
-        <Box>
-          <Box sx={{ display: 'flex', gap: '12px' }}>
+        <Box sx={{width:'100%'}}>
+          <Box sx={{ display: 'flex', gap: '12px',alignItems:'center' }}>
+            <Avatar src={av_imagerUrl} alt={username} sx={{m: '4px',width: 24, height: 24}} />
             <span style={{ fontWeight: 'bold',whiteSpace: 'nowrap' }}>{firstName} {lastName}</span>
             <span >{username}</span>
             <span>{formatDateTime(createdDate)}</span>

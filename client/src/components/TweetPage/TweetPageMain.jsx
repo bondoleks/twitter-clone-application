@@ -13,6 +13,9 @@ import { api } from "../../redux/service/api";
 import { useDispatch } from "react-redux";
 import { MiniModal } from "../Tweet/MiniModal";
 import { useState } from "react";
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { openQuoteRetweetModalThunk } from "../../redux/quoteRetweet/openQuoteRetweetModalThunk";
 
 
 function formatDateTimeTweet(dateTimeString) {
@@ -47,7 +50,8 @@ export function TweetPageMain({tweet}){
     const [visibleShareModal,setVisibleShareModal] = useState(false);
     //Count
     const [retweetRealyCount,setRetweetRealyCount] = useState(countRetweet);
-    const [likeRealyCount,setLikeRealyCount] = useState(countLike);   
+    const [likeRealyCount,setLikeRealyCount] = useState(countLike);
+    const [bookmarkRealyCount,setBoolmarkRealyCount] = useState(countBookmark);    
     //Marker
     const [activeRetweet,setActiveRetweet] = useState(markerRetweet);  
     const [activeHeart,setActiveHeart] = useState(markerLike);
@@ -68,12 +72,14 @@ export function TweetPageMain({tweet}){
       
       function handleQuoteRetweet(id){
           setVisibleRetweetModal(false);
+          dispatch(openQuoteRetweetModalThunk(id));
       }
       
       function headlerBookmark(id){
         api.post(`/tweets/bookmark/${id}`)
         .then(() => {
           setActiveBookmark(!activeBookmark);
+          setBoolmarkRealyCount(activeBookmark ? bookmarkRealyCount - 1 : bookmarkRealyCount + 1);
         });
         setVisibleShareModal(false);
       }
@@ -131,7 +137,7 @@ export function TweetPageMain({tweet}){
                 <Typography>{likeRealyCount} Likes</Typography>                
                 
                 
-                <Typography>{countBookmark}<span> Bookmarks</span></Typography>                
+                <Typography>{bookmarkRealyCount}<span> Bookmarks</span></Typography>                
 
             </Box>        
             {/* Icon */}
@@ -197,6 +203,11 @@ export function TweetPageMain({tweet}){
             
             >
             <BarChartTwoToneIcon />
+            </IconButton>
+            <IconButton
+            onClick={()=>headlerBookmark(id)}
+            >
+            {activeBookmark ? <BookmarkIcon sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" />}
             </IconButton>
             <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
             onClick={(event) => {  

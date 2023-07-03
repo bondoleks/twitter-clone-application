@@ -76,7 +76,7 @@ export function ReplyInput({userParentName,tweetId}){
               sx={{
                 width: '100%',
                 display: "flex",
-                justifyContent: 'space-around'
+                justifyContent: isTextareaFocused ? 'space-between' : 'right'
               }}>
             {isTextareaFocused && <IconButton >
                 <label htmlFor="file-input-reply">
