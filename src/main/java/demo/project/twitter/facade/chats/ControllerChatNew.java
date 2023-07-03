@@ -10,9 +10,12 @@ import demo.project.twitter.model.User;
 import demo.project.twitter.model.chat.Chat;
 import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.chat.GeneralChat;
+import demo.project.twitter.model.chat.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.scanner.ScannerImpl;
 
 import java.security.Principal;
 import java.util.List;
@@ -34,6 +37,7 @@ public class ControllerChatNew {
     private final Mapper mapper;
     private final UserFacade facadeUser;
     private final ServiceChatNew serviceChatNew;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
 
     /*@DeleteMapping("del/{chat_id}")
@@ -82,7 +86,11 @@ public class ControllerChatNew {
     @PostMapping("chat/message/save")
     public String saveMessage(@RequestBody DtoMessage dtoM, Principal principal) {
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-        facade.saveMessage(profileId, dtoM);
+        Message savedMessage = facade.saveMessage(profileId, dtoM);
+        List<User> userReceivers = savedMessage.getChat().getUsers();
+        for(User userReceiver : userReceivers) {
+            simpMessagingTemplate.convertAndSendToUser(userReceiver.getEmail(), "/chat/message", savedMessage);
+        }
         return "ok";
     }
 
