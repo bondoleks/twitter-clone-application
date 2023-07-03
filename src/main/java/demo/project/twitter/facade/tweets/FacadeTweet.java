@@ -142,8 +142,11 @@ public class FacadeTweet {
         dto.setMarkerBookmark(serviceAction.marker(entity.getId(), profileId, "BOOKMARK"));
 
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
-        dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
-        dto.setCountLike(serviceAction.countLike(entity.getId(), "LIKE"));
+        dto.setCountLike(serviceAction.countAction(entity.getId(), "LIKE"));
+        dto.setCountBookmark(serviceAction.countAction(entity.getId(), "BOOKMARK"));
+        dto.setCountRetweet(serviceAction.countAction(entity.getId(), "RETWEET"));
+        dto.setCountQuote(service.countTweets(entity.getId(), "QUOTE_TWEET") - dto.getCountRetweet());
+
 
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
 

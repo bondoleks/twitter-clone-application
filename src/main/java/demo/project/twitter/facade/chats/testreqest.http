@@ -1,5 +1,5 @@
 ####
-GET http://localhost:5050/api/v1/chats/chat/99?profileId=98
+GET http://localhost:5050/api/v1/chats/chat/104?profileId=105
 
 ####
 GET http://localhost:5050/api/v1/chats/chat/25
@@ -10,9 +10,9 @@ Content-Type: application/json
 
 {
 
-  "user_author": 97,
-  "chat_id": 1,
-  "textMessage": "ладно, пішов на каву!! "
+  "user_author": 105,
+  "chat_id": 18,
+  "textMessage": "т435й 3е кпыукеф вн53йнй 3й525234к23к42354315 25345 345й2 р!! "
 
 }
 
@@ -29,16 +29,16 @@ GET http://localhost:5050/api/v1/chats/chat/messages/19?sizePage=15&numberPage=0
 GET http://localhost:5050/api/v1/chats/usersearch?search_request=деву&profileId=11
 
 ###
-POST http://localhost:5050/api/v1/chats/add/8?profileId=98
+POST http://localhost:5050/api/v1/chats/add/20?profileId=105
 
 ###
 POST http://localhost:5050/api/v1/chats/add/63
 
 ###
-GET http://localhost:5050/api/v1/chats/chat/list?profileId=101
+GET http://localhost:5050/api/v1/chats/chat/list?profileId=105
 
 ###
 GET http://localhost:5050/api/v1/chats/chat/list
 
 ###
-DELETE http://localhost:5050/api/v1/chats/del/86?profileId=12
+DELETE http://localhost:5050/api/v1/chats/del/19?profileId=105
