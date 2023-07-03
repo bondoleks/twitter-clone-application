@@ -189,7 +189,7 @@ public class FacadeTweet {
         entity.setCreatedDate(new Date());
         Tweet newTweet = service.saveOne(entity);
 
-        if (listPhoto.size() > 0) {
+        if (listPhoto != null) {
             transListPhotoToListUrl(listPhoto, newTweet).
                     stream().forEach(s -> serviceImage.saveOne(new AttachmentImage(s, newTweet)));
         }
