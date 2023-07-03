@@ -103,7 +103,10 @@ const heightItem = 100/data.length;
                 gap: '14px',
                 '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.03)' },
               }}
-              onClick={handleClose}
+              onClick={(e) => {
+                e.stopPropagation();
+                item.function(item.id);
+              }}
             >
               {item.text === 'Retweet' &&<RepeatIcon />}
               {item.text === 'Undo Retweet' &&<RepeatIcon />}

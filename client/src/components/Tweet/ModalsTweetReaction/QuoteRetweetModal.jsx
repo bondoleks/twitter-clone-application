@@ -25,17 +25,20 @@ export function QuoteRetweetModal() {
     dispatch({ type: CLOSE_QUOTE_RETWEET_MODAL });
   }
 
-  function postQuoteRetweet() {
+  function postQuoteRetweet(parentId) {
+    dispatch(postQuoteRetweetThunk(parentId));
     dispatch({ type: CLOSE_QUOTE_RETWEET_MODAL });
-    dispatch(postQuoteRetweetThunk());
+
   }
 
-//   const handleImageUpload = (e) => {
-//     dispatch({ type: ADD_IMG_IN_QUOTE_RETWEET, payload: { img: e.target.files } });
-//   };
+  function handleImageUpload (e) {
+    if(retweetImages.length < 4){
+      dispatch({ type: ADD_IMG_IN_QUOTE_RETWEET, payload: { img: e.target.files } });
+    }
+  };
 
   return (
-    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseRetweetModal} buttonName="Tweet" functionButton={postQuoteRetweet} width={600}>
+    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseRetweetModal} buttonName="Tweet" functionButton={postQuoteRetweet} width={600} handleImageUpload={handleImageUpload} parentId={parentTweet.id} textLenght={retweetText.length}>
       <Grid container spacing={0}>
         <Grid item xs={2}>
           <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px', cursor: 'pointer' }} />
