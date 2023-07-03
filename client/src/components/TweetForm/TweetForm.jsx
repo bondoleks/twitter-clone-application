@@ -66,6 +66,7 @@ export default function TweetForm({ open, onClose, withId  }) {
                 }}>
 
                     <ToolbarTweetForm file={file} setFile={setFile} setTweetText={setTweetText} />
+                    
 
                     <ButSendTweet tweetText={tweetText} id={id}  file={file} />
 
