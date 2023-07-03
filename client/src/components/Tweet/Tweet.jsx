@@ -8,7 +8,7 @@ import { Box, Typography , CardMedia, Avatar, IconButton } from '@mui/material';
 import { Retweet } from './Retweet';
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { OpenNoAutorizateModalThunk } from '../../redux/mainPage/OpenNoAutorizateModalThunk';
 import { MiniModal } from './MiniModal';
 import {api} from '../../redux/service/api';
@@ -81,6 +81,7 @@ const [likeRealyCount,setLikeRealyCount] = useState(countLike);
 const [activeRetweet,setActiveRetweet] = useState(markerRetweet);  
 const [activeHeart,setActiveHeart] = useState(markerLike);
 const [activeBookmark,setActiveBookmark] = useState(markerBookmark);
+const currentUserId = useSelector(state=>state.user.user.id);
 
 
 function headlerMarkRetweet(id){
@@ -136,7 +137,16 @@ return (
     }}
     onClick={() => navigate(`/tweet/${id}`)}
   >
-    <Avatar src={av_imagerUrl} alt={username} sx={{ m: '8px' }} />
+    <Avatar src={av_imagerUrl} alt={username} sx={{ m: '8px' }} 
+    onClick={(e)=>{
+      e.stopPropagation();
+      if(currentUserId === user_id ){
+          navigate(`/profile/`)
+      }else{
+              navigate(`/profile/${user_id}`)}}
+      }
+
+    />
     <Box sx={{width:'100%'}}>
       <Box sx={{ display: 'flex', gap: '12px' }}>
         <Typography

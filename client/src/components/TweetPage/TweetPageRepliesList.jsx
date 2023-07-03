@@ -4,12 +4,14 @@ import { repliesSelector } from "../../redux/selectors";
 import { useEffect } from "react";
 import { useScrollTracker } from "../Home/ScrollTracker";
 import { getCommetsThunk } from "../../redux/tweet/getCommetsThunk";
+import { ReplyItem } from "./ReplyItem";
 
 
 export function TweetPageRepliesList({page,setPage}){
 const replies = useSelector(repliesSelector);
 const dispatch =useDispatch();
 console.log(page,setPage);
+console.log(replies);
 
 const isEndScroll = useScrollTracker();
 
@@ -26,7 +28,14 @@ useEffect(() => {
 
     return(
         <Box>
-            {replies.map}
+            {replies.map((reply) => {
+                console.log(reply);
+                return(
+        <ReplyItem
+          key={reply.id}
+          reply={reply} 
+        />
+      )})}
 
         </Box>
     )

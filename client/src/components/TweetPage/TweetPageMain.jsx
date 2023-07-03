@@ -17,6 +17,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { openQuoteRetweetModalThunk } from "../../redux/quoteRetweet/openQuoteRetweetModalThunk";
 import { openReplyModalThunk } from "../../redux/reply/openReplyModalThunk";
+import { useNavigate } from "react-router-dom";
 
 
 function formatDateTimeTweet(dateTimeString) {
@@ -45,7 +46,9 @@ export function TweetPageMain({tweet}){
     const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countRetweet, countLike, view = 154,markerLike,markerRetweet,markerBookmark, parentDto, countBookmark} = tweet;
     const fullName = `${firstName} ${lastName}`;
     const dispatch =useDispatch();
+    const navigate =useNavigate();
     const autorizate = useSelector(state => state.user.authorized);
+    const currentUserId = useSelector(state=>state.user.user.id);
     //Visible
     const [visibleRetweetModal,setVisibleRetweetModal] = useState(false);
     const [visibleShareModal,setVisibleShareModal] = useState(false);
@@ -99,7 +102,15 @@ export function TweetPageMain({tweet}){
     return(
         <Box key={id} data-user-id={user_id} >
             <Box sx={{display:'flex', gap:'12px', }}>
-                <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px' , cursor:'pointer'}}/>
+                <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px' , cursor:'pointer'}}
+                    onClick={(e)=>{
+                      e.stopPropagation();
+                      if(currentUserId === user_id ){
+                          navigate(`/profile/`)
+                      }else{
+                              navigate(`/profile/${user_id}`)}}
+                      }
+                />
                 <Box sx={{display:'flex',flexDirection:'column', gap:'8px'}}>
                     <Typography
                     component="span"
