@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 
 
 
-export function TweetPageComments(){
+export function TweetPageRepliesList(){
 // const comments = useSelector
 
     return(

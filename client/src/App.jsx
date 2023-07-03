@@ -21,11 +21,12 @@ import ProfileUser from './pages/Profile/ProfileUser';
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 
-import Stomp from 'stompjs';
+import Stomp, { clearInterval } from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
-
+import { QuoteRetweetModal } from './components/Tweet/ModalsTweetReaction/QuoteRetweetModal';
+import { watchUserTweetsThunk } from './redux/user/watchUserTweetsThunk';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -158,10 +159,20 @@ function App() {
 
     // Get initial user data
     useEffect(() => {
+        let timer = null;
         if (isAuthenticated){
             dispatch(getUser());
+            timer = setInterval(()=>{
+                dispatch(watchUserTweetsThunk())
+            },10000)
         }
+return () =>{
+    clearInterval(timer);
+}
     }, [])
+
+
+
 
     const lightTheme = createTheme({
         palette: {
@@ -293,6 +304,7 @@ function App() {
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
+                    <QuoteRetweetModal/>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 

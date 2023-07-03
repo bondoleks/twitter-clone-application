@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Log4j2
 public class FacadeMessage {
 
-    private final ServiceMessage messageService;
+   /* private final ServiceMessage messageService;
     private final UserServiceImpl userService;
     private final ServiceChat chatService;
     private Message entity = new Message();
@@ -62,7 +62,7 @@ public class FacadeMessage {
         DtoMessage dto = transEntityToDto(entity);
         messageService.deleteById(id);
         return dto;
-    }
+    }*/
 }
 
 
