@@ -7,8 +7,10 @@ import MessagesSearch from "./MessagesSeach";
 import NewMessageModal from "./NewMessageModal.jsx";
 import ModalList from "./ModalList.jsx";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack.js";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {handleGetSearchUsers, handleGetUserChats} from '../../../redux/Messages/Thunks/MessagesThunk.js';
+import {getActiveChat} from "../../../redux/selectors.jsx";
+
 
 
 const MessageMiddleColumn = ({mockedUsers}) => {
@@ -16,6 +18,8 @@ const MessageMiddleColumn = ({mockedUsers}) => {
   const [clicked, setClicked] = useState(false);
 
   const dispatch = useDispatch();
+
+  const activeChat = useSelector(getActiveChat);
 
   const handleInputClick = () => {
     setClicked(true);
@@ -35,10 +39,14 @@ const MessageMiddleColumn = ({mockedUsers}) => {
 
   useEffect(() => {
     dispatch(handleGetUserChats());
+
   }, [])
 
+
   return (
+
     <>
+
       <Box sx={{borderRight: '1px solid rgba(128, 128, 128, 0.1)', borderLeft: '1px solid rgba(128, 128, 128, 0.1)', height: "100vh" }}>
         <Box
           sx={{
@@ -89,7 +97,11 @@ const MessageMiddleColumn = ({mockedUsers}) => {
           ) : (
             <Box>
             <MessagesSearch handleInputClick={handleInputClick} />
-              <ModalList />
+              <ModalList sx={{
+                display: "flex",
+                flexDirection: "column",
+                overflowY: "auto",
+              }} />
             </Box>
           )}
         </Box>
