@@ -35,7 +35,7 @@ export function QuoteRetweetModal() {
 //   };
 
   return (
-    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseRetweetModal} buttonName="Tweet" functionButton={postQuoteRetweet}>
+    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseRetweetModal} buttonName="Tweet" functionButton={postQuoteRetweet} width={600}>
       <Grid container spacing={0}>
         <Grid item xs={2}>
           <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px', cursor: 'pointer' }} />
@@ -43,8 +43,7 @@ export function QuoteRetweetModal() {
         <Grid item xs={10}>
           <Box>
             <TextareaAutosize onChange={e => dispatch({ type: ADD_TEXT_IN_QUOTE_RETWEET, payload: { text: e.target.value } })} value={retweetText} placeholder="Add a comment!" style={{
-              width: '300px',
-              height: '100px',
+              width: '100%',
               marginBottom: '10px',
               border: '1px solid transparent',
               outline: 'none',

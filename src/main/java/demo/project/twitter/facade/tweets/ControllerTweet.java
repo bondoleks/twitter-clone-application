@@ -104,7 +104,8 @@ public class ControllerTweet {
 
     @GetMapping("tweet/{tweet_id}")
     public DtoTweet getTweetById(@PathVariable("tweet_id") Long id, Principal principal) {
-        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+//        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+        Long profileId = 10L;
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 

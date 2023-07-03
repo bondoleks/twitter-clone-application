@@ -107,12 +107,23 @@ const NewMessageModal = ({ open, closeModal }) => {
     return handleFindUser(e.target.value);
   };
 
+  // const openNewChat = async () => {
+  //   setNewChatLoading(true);
+  //   // Create new chat, BE does not return chat ID so we should get the last one from the list
+  //   const newChat = await api.get(`chats/chat/${selectedUsers[0].id}?profileId=${user.id}`) ?? {};
+  //   const allChats = await api.post(`/chats/add/${newChat?.chatId}?profileId=${user.id}`) || [];
+  //   const createdChat = allChats.find(chat => chat.chatId === newChat?.chatId);
+
   const openNewChat = async () => {
     setNewChatLoading(true);
     // Create new chat, BE does not return chat ID so we should get the last one from the list
-    const newChat = await api.get(`chats/chat/${selectedUsers[0].id}?profileId=${user.id}`) ?? {};
-    const allChats = await api.post(`/chats/add/${newChat?.chatId}?profileId=${user.id}`) || [];
+    const newChat = await api.get(`chats/chat/${selectedUsers[0].id}`) ?? {};
+    // await api.post(`chats/add_r/${selectedUsers[0].id}`) ?? {};
+    // await api.post(`chats/add/${user.id}`) ?? {};
+    const allChats = await api.post(`/chats/add/${newChat?.chatId}`) || [];
     const createdChat = allChats.find(chat => chat.chatId === newChat?.chatId);
+
+
 
     dispatch(handleAddNewChat(createdChat));
     dispatch(handleGetMessagesForChat(createdChat.chatId, user.id));
