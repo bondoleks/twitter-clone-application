@@ -27,6 +27,7 @@ if(tweet.lenght === 0){
 }
 
       useEffect(() => {
+        dispatch({type:REMOVE_OLD_REPLY})
         dispatch(getTweetThunk(tweet_id));
         dispatch({type:REMOVE_OLD_REPLY})
         dispatch(getCommetsThunk(tweet_id,pageComments));

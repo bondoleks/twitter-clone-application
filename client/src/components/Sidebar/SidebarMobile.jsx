@@ -27,7 +27,6 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import MailIcon from '@mui/icons-material/Mail';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -39,11 +38,52 @@ import CloseIcon from '@mui/icons-material/Close';
 import WestIcon from '@mui/icons-material/West';
 import ModalTheme from '../ModalTheme/ModalTheme';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useFetch } from "../../hooks/UseFetch";
 
 
-const SidebarMobile = () => {
+const SidebarMobile = ({ withId }) => {
+    const { id } = useParams();
     const isAutorizate = useSelector(state => state.user.authorized);
     const theme = useTheme();
+
+    const StyledAvatar = styled(Avatar)(({ theme }) => ({
+        position: 'relative',
+        '&:before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            opacity: 0,
+            transition: 'opacity 0.3s ease',
+        },
+        '&:hover:before': {
+            opacity: 1,
+        },
+    }));
+
+    const [{ data, loading }, getData] = useFetch({
+        initData: {},
+        url: withId
+            ? `user/getuser/${id}`
+            : 'user/profile',
+        method: 'GET',
+        dataTransformer: (data) => {
+            console.log(data)
+            return data;
+        },
+    });
+
+    useEffect(() => {
+        getData()
+    }, [id])
+
+    if (!loading) <p>loading...</p>
+
+    const { username, firstName, lastName, av_imagerUrl } = data
 
     const bottomNavigationStyles = {
         backgroundColor: theme.palette.background.default,
@@ -126,7 +166,17 @@ const SidebarMobile = () => {
         headerBox = <>
             <Tooltip title="User">
                 <IconButton edge="start" onClick={handleDrawerOpen}>
-                    <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                    <StyledAvatar
+                        alt="User Avatar"
+                        src={av_imagerUrl}
+                        sx={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            margin: '20px'
+                        }}
+                    />
                 </IconButton>
             </Tooltip>
             <Box sx={{ marginLeft: '30%' }}>
@@ -141,7 +191,17 @@ const SidebarMobile = () => {
         headerBox = <>
             <Tooltip title="User">
                 <IconButton edge="start" onClick={handleDrawerOpen}>
-                    <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                    <StyledAvatar
+                        alt="User Avatar"
+                        src={av_imagerUrl}
+                        sx={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            margin: '20px'
+                        }}
+                    />
                 </IconButton>
             </Tooltip>
             <Toolbar sx={{
@@ -170,7 +230,17 @@ const SidebarMobile = () => {
         headerBox = <>
             <Tooltip title="User">
                 <IconButton edge="start" onClick={handleDrawerOpen}>
-                    <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                    <StyledAvatar
+                        alt="User Avatar"
+                        src={av_imagerUrl}
+                        sx={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            margin: '20px'
+                        }}
+                    />
                 </IconButton>
             </Tooltip>
             <Toolbar sx={{
@@ -199,7 +269,17 @@ const SidebarMobile = () => {
         headerBox = <>
             <Tooltip title="User">
                 <IconButton edge="start" onClick={handleDrawerOpen}>
-                    <AccountCircleIcon sx={{ margin: '10px' }} fontSize="large" color="success" />
+                    <StyledAvatar
+                        alt="User Avatar"
+                        src={av_imagerUrl}
+                        sx={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            margin: '20px'
+                        }}
+                    />
                 </IconButton>
             </Tooltip>
             <Toolbar sx={{
@@ -242,7 +322,7 @@ const SidebarMobile = () => {
                 </Link>
                 <Box ml={5}>
                     <Typography variant='h6' sx={{ color: 'gray' }}>
-                        User
+                        {firstName} {lastName}
                     </Typography>
                     <Typography sx={{ color: 'gray' }}>
                         N Tweets
@@ -273,25 +353,14 @@ const SidebarMobile = () => {
                         Bookmarks
                     </Typography>
                     <Typography sx={{ color: 'gray' }}>
-                        @nikname
+                        @{username}
                     </Typography>
                 </Box>
             </Box>
         </Toolbar>
     }
 
-    const StyledAvatar = styled(Avatar)(({ theme }) => ({
-        position: 'relative',
-        '&:before': {
-            content: '""',
-            backgroundColor: 'rgba(0, 0, 0, 0.3)',
-            opacity: 0,
-            transition: 'opacity 0.3s ease',
-        }
-    }));
-
     return (
-
         <>
             <AppBar position='fixed' color='paper'>
                 <Container fixed>
@@ -314,21 +383,16 @@ const SidebarMobile = () => {
                                     </IconButton>
                                 </Toolbar>
 
-                                <Link to={`/profile`} style={{
-                                    textDecoration: 'none',
-                                    color: 'black'
-                                }}>
+                                <Link to={`/profile`}>
                                     <StyledAvatar
                                         alt="User Avatar"
-                                        src='../../img/avatar.png'
-
+                                        src={av_imagerUrl}
                                         sx={{
-                                            width: '50px',
-                                            height: '50px',
+                                            width: '60px',
+                                            height: '60px',
                                             borderRadius: '50%',
-                                            marginLeft: '10px',
-                                            marginBottom: '20px',
-                                            cursor: 'pointer'
+                                            cursor: 'pointer',
+                                            margin: '20px'
                                         }}
                                     />
                                 </Link>
@@ -340,8 +404,8 @@ const SidebarMobile = () => {
                                     <Typography sx={{
                                         fontSize: '18px',
                                         fontWeight: '700',
-                                    }}>User</Typography>
-                                    <Typography>@nikname</Typography>
+                                    }}>{firstName} {lastName}</Typography>
+                                    <Typography>@{username}</Typography>
                                     <Box display={'flex'}>
                                         <Button sx={{
                                             textTransform: 'none',
@@ -442,48 +506,52 @@ const SidebarMobile = () => {
                 <AddCircleIcon sx={{
                     position: 'fixed',
                     top: '500px',
-                    left: '60%',
+                    left: '70%',
                     zIndex: '999',
-                    color: buttonColor
-                }} fontSize='large' />
+                    color: buttonColor ? buttonColor : '#0080ff',
+                    fontSize: '64px'
+                }} />
             </IconButton>
             <TweetFormMobile open={open} onClose={handleClose} />
 
-            <Box edge="start">
-                <BottomNavigation style={bottomNavigationStyles} sx={{
-                    position: 'fixed',
-                    bottom: '0',
-                    width: '100%'
-                }}>
-                    <Link to={`/home`}>
-                        <Tooltip title="Home">
-                            <IconButton >
-                                {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
-                            </IconButton>
-                        </Tooltip>
-                    </Link>
+            {isAutorizate && <>
+                <Box edge="start">
+                    <BottomNavigation style={bottomNavigationStyles} sx={{
+                        position: 'fixed',
+                        bottom: '0',
+                        width: '100%',
+                        zIndex: '99'
+                    }}>
+                        <Link to={`/home`}>
+                            <Tooltip title="Home">
+                                <IconButton >
+                                    {clicked.home ? <HomeIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' /> : <HomeOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />}
+                                </IconButton>
+                            </Tooltip>
+                        </Link>
 
-                    <Link to={`/explore`}>
-                        <Tooltip title="Explore">
+                        <Link to={`/explore`}>
+                            <Tooltip title="Explore">
+                                <IconButton color='gray'>
+                                    {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                </IconButton>
+                            </Tooltip>
+                        </Link>
+
+                        <Link to={`/notifications`}>
                             <IconButton color='gray'>
-                                {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
                             </IconButton>
-                        </Tooltip>
-                    </Link>
+                        </Link>
 
-                    <Link to={`/notifications`}>
-                        <IconButton color='gray'>
-                            {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                        </IconButton>
-                    </Link>
-
-                    <Link to={`/messages`}>
-                        <IconButton color='gray'>
-                            {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                        </IconButton>
-                    </Link>
-                </BottomNavigation>
-            </Box>
+                        <Link to={`/messages`}>
+                            <IconButton color='gray'>
+                                {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                            </IconButton>
+                        </Link>
+                    </BottomNavigation>
+                </Box>
+            </>}
         </>
     )
 }

@@ -35,7 +35,7 @@ GET http://localhost:5050/api/v1/tweets/tweetsearch?search_requеst=шла со�
 
 
 ###
-GET http://localhost:5050/tweets/tweet/branch/10
+GET http://localhost:5050/api/v1/tweets/tweet/branch/10
 
 
 ###
@@ -80,7 +80,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5050/api/v1/tweets/tweet/126
+GET http://localhost:5050/api/v1/tweets/tweet/16
 
 ###
 
