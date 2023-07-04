@@ -14,7 +14,7 @@ import { MiniModal } from './MiniModal';
 import {api} from '../../redux/service/api';
 import { ImageInTweetLayout } from './ImageInTweetLayout';
 import { openQuoteRetweetModalThunk} from '../../redux/quoteRetweet/openQuoteRetweetModalThunk';
-import { ADD_USER_VISIBLE_TWEETS, OPEN_QUOTE_RETWEET_MODAL, OPEN_REPLY_MODAL } from '../../redux/actions';
+import { ADD_USER_VISIBLE_TWEETS,REMOVE_PREVIOUS_TWEET } from '../../redux/actions';
 import VisibilitySensor from 'react-visibility-sensor';
 import { openReplyModalThunk } from '../../redux/reply/openReplyModalThunk';
 
@@ -135,7 +135,9 @@ return (
       borderBottom: '1px rgb(239, 243, 244) solid',
       ':hover': { backgroundColor: 'rgba(0,0,0, 0.03)' }
     }}
-    onClick={() => navigate(`/tweet/${id}`)}
+    onClick={() => {
+      dispatch({type:REMOVE_PREVIOUS_TWEET});
+      navigate(`/tweet/${id}`)}}
   >
     <Avatar src={av_imagerUrl} alt={username} sx={{ m: '8px' }} 
     onClick={(e)=>{

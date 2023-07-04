@@ -8,6 +8,9 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { TextField } from 'formik-mui';
 import { ModalOnMainPageWrapper } from "../ModalOnMainPageWrapper";
+import axios from 'axios';
+
+
 
 
 
@@ -29,6 +32,10 @@ export const LogingModal = () => {
     dispatch(logingThunk(values));
     setSubmitting(false);
   };
+   
+  function forgotPassword(){
+
+  }
 
   const initialValues = {
     email: '',
@@ -166,7 +173,7 @@ export const LogingModal = () => {
                     },
                   }}
                 onClick={()=>{
-                  window.location.href = '@{/oauth2/authorization/google}';
+                  axios.post( 'https://twitter-clone-application.herokuapp.com/api/v1/oauth2/authorization/google');
                 }}
                 
                 > 

@@ -34,15 +34,18 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useFetch } from "../../hooks/UseFetch";
 import { styled } from '@mui/material/styles';
+
 
 
 export const SidebarMedium = ({ withId }) => {
     const { id } = useParams()
     const isAutorizate = useSelector(state => state.user.authorized);
     const [buttonColor, setButtonColor] = useState();
+    const navigate = useNavigate();
 
     const StyledAvatar = styled(Avatar)(({ theme }) => ({
         position: 'relative',
@@ -81,6 +84,7 @@ export const SidebarMedium = ({ withId }) => {
     if (!loading) <p>loading...</p>
 
     const { av_imagerUrl } = data
+
 
     const theme = useTheme();
 
@@ -249,7 +253,6 @@ export const SidebarMedium = ({ withId }) => {
                                         <MoreHorizIcon sx={{ margin: '16px' }} fontSize="medium" />
                                     </IconButton>
                                 </Tooltip>
-
                                 <Menu
                                     anchorEl={anchorEl}
                                     open={Boolean(anchorEl)}
@@ -261,10 +264,15 @@ export const SidebarMedium = ({ withId }) => {
                                 >
                                     <MenuItem onClick={handleOpenModal} style={DropStyles}>
                                         <Typography sx={{ marginInline: '8px' }} >
-                                            Settings
+                                            Display
                                         </Typography>
-                                        <KeyboardArrowDownIcon />
+                                      
                                     </MenuItem>
+                                    <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
+                                      <Typography>
+                                          Change Password
+                                      </Typography>
+                                  </MenuItem>
                                 </Menu>
                                 <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                             </Grid>
