@@ -32,15 +32,12 @@ public class AuthenticationRestControllerV1 {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final UserService userService;
-
     private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService, UserServiceImpl userServiceImpl) {
+    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserServiceImpl userServiceImpl) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
         this.userServiceImpl = userServiceImpl;
     }
 
@@ -48,9 +45,9 @@ public class AuthenticationRestControllerV1 {
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String email = requestDto.getEmail();
-            String username = userService.findByEmail(email).getUsername();
+            String username = userServiceImpl.findByEmail(email).getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            User user = userService.findByEmail(email);
+            User user = userServiceImpl.findByEmail(email);
 
             if (user == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
