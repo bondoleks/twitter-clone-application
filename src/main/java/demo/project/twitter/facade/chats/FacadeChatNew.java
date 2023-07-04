@@ -100,13 +100,13 @@ log.info("::::::::::: start1*****");
         return newChat;
     }
 
-    public void saveMessage(Long profileID, DtoMessage dtoM) {
+    public Message saveMessage(Long profileID, DtoMessage dtoM) {
         ChatNew chat = service.getById(dtoM.getChat_id()).get();
         User user = serviceUser.findById(profileID);
         Message message = new Message(user, chat, dtoM.getTextMessage());
         message.setCreatedDate(new Date());
         serviceMessage.saveOne(message);
-
+        return message;
     }
 
     public DtoChatMessage getChatAllMessages(Long chatId, Long profileId, Integer sizePage, Integer namberPage) {

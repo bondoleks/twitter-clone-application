@@ -12,6 +12,7 @@ export function watchUserTweetsThunk(){
                 arrTweetId: userVisibleTweets,
               };
             api.post('tweets/tweet/view',requestData)
+
             .then(response => {
                 console.log(response);
                 alert("Success!");

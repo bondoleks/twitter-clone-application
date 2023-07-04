@@ -7,11 +7,12 @@ import { getCommetsThunk } from "../../redux/tweet/getCommetsThunk";
 import Tweet from "../Tweet/Tweet";
 
 
+
 export function TweetPageRepliesList({page,setPage}){
 const replies = useSelector(repliesSelector);
 const dispatch =useDispatch();
 console.log(page,setPage);
-console.log(replies);
+
 
 const isEndScroll = useScrollTracker();
 
@@ -36,6 +37,7 @@ useEffect(() => {
           tweet={reply} 
         />
       )})}
+
 
         </Box>
     )

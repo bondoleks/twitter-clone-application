@@ -25,6 +25,12 @@ export default function TweetFormMobile({ open, onClose }) {
 
     const [file, setFile] = useState([]);
     const [tweetText, setTweetText] = useState("");
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+    const closeModal = () => {
+        setIsFormSubmitted(true);
+        onClose();
+    };
 
     return (
 
@@ -44,7 +50,7 @@ export default function TweetFormMobile({ open, onClose }) {
                         </IconButton>
                     </Link>
 
-                    <ButSendTweet tweetText={tweetText} id={id} file={file} />
+                    <ButSendTweet tweetText={tweetText} id={id} file={file} closeModal={closeModal} setFile={setFile} setTweetText={setTweetText}  />
 
                 </Box>
 
