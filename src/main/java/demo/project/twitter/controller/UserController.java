@@ -21,7 +21,9 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app", "http://localhost:5173"})
+@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app",
+        "http://localhost:5173",
+        "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app"})
 @RequestMapping("api/v1/user")
 public class UserController {
 
@@ -46,18 +48,18 @@ public class UserController {
     }
 
     @PostMapping("update")
-    public UserDto updateEntity(@RequestParam ("userName") String username,
-                                @RequestParam ("firstName") String firstName,
-                                @RequestParam ("email") String email,
-                                @RequestParam ("location") String location,
-                                @RequestParam ("birthDate") String bDate,
-                                @RequestParam ("bio") String bio,
-                                @RequestParam ("avatar") MultipartFile avFile,
-                                @RequestParam ("headimg") MultipartFile headFile) throws Exception {
+    public UserDto updateEntity(@RequestParam (value = "userName", required = false) String username,
+                                @RequestParam (value = "firstName", required = false) String firstName,
+                                @RequestParam (value = "lastName", required = false) String lastName,
+                                @RequestParam (value = "location", required = false) String location,
+                                @RequestParam (value = "birthDate", required = false) String bDate,
+                                @RequestParam (value = "bio", required = false) String bio,
+                                @RequestParam (value = "avatar", required = false) MultipartFile avFile,
+                                @RequestParam (value = "headimg", required = false) MultipartFile headFile) throws Exception {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Date birthDate = format.parse(bDate);
 
-        return facade.updateUser(username, firstName, email, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+        return facade.updateUser(username, firstName, lastName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
     }
 
     @PostMapping("update/password")

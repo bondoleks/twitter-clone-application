@@ -16,6 +16,10 @@ export const CLOSE_REGISTRATION_MODAL ='main/modal/registration/close';
 export const OPEN_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/open';
 export const CLOSE_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/close';
 
+
+export const ADD_USER_VISIBLE_TWEETS ='user/visibleTweets/add';
+export const DELETE_USER_VISIBLE_TWEETS='user/visibleTweets/delete';
+
 //MainPage
 export const  GET_TWEETS_MAIN_REQUEST = 'main/tweets/get/request';
 export const  GET_TWEETS_MAIN_SUCCESS  = 'main/tweets/get/success';
@@ -63,6 +67,7 @@ export const  GET_COMMENTS_SUCCESS = 'tweet/comments/get/succses';
 export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
 export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
 export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
+export const REMOVE_OLD_REPLY = 'tweet/comments/remove';
 
 // chats and messages
 
@@ -105,5 +110,21 @@ export function registerUserRequest(user) {
 }
 
 
+// QuoteRetweet
+export const OPEN_QUOTE_RETWEET_MODAL = 'quoteRetweet/modal/open';
+export const CLOSE_QUOTE_RETWEET_MODAL = 'quoteRetweet/modal/close';
+export const ADD_TEXT_IN_QUOTE_RETWEET = 'quoteRetweet/data/text/change';
+export const ADD_IMG_IN_QUOTE_RETWEET  = 'quoteRetweet/data/img/add';
+export const DELETE_IMG_IN_QUOTE_RETWEET  = 'quoteRetweet/data/img/delete';
+export const ADD_HASH_IN_QUOTE_RETWEET  = 'quoteRetweet/data/hash/change';
 
+
+//Reply
+export const OPEN_REPLY_MODAL = 'reply/modal/open';
+export const CLOSE_REPLY_MODAL = 'reply/modal/close';
+export const ADD_TEXT_IN_REPLY = 'reply/data/text/change';
+export const ADD_IMG_IN_REPLY = 'reply/data/img/change';
+export const DELETE_IMG_IN_REPLY  = 'reply/data/img/delete';
+export const ADD_HASH_IN_REPLY = 'reply/data/hash/change';
+export const REPLY_SUCCSES = 'reply/post/succses';
 

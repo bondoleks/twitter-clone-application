@@ -142,8 +142,11 @@ public class FacadeTweet {
         dto.setMarkerBookmark(serviceAction.marker(entity.getId(), profileId, "BOOKMARK"));
 
         dto.setCountReply(service.countTweets(entity.getId(), "REPLY"));
-        dto.setCountRetweet(service.countTweets(entity.getId(), "QUOTE_TWEET"));
-        dto.setCountLike(serviceAction.countLike(entity.getId(), "LIKE"));
+        dto.setCountLike(serviceAction.countAction(entity.getId(), "LIKE"));
+        dto.setCountBookmark(serviceAction.countAction(entity.getId(), "BOOKMARK"));
+        dto.setCountRetweet(serviceAction.countAction(entity.getId(), "RETWEET"));
+        dto.setCountQuote(service.countTweets(entity.getId(), "QUOTE_TWEET") - dto.getCountRetweet());
+
 
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
 
@@ -186,7 +189,7 @@ public class FacadeTweet {
         entity.setCreatedDate(new Date());
         Tweet newTweet = service.saveOne(entity);
 
-        if (listPhoto.size() > 0) {
+        if (listPhoto != null) {
             transListPhotoToListUrl(listPhoto, newTweet).
                     stream().forEach(s -> serviceImage.saveOne(new AttachmentImage(s, newTweet)));
         }
@@ -452,6 +455,22 @@ public class FacadeTweet {
     }
 
 
+    public void saveViewTweet(Long profileId, Long[] arrTweetId) {
+log.info(":::::::::::: start1");
+        List<Tweet> listTweet = service.getListTweetByListTweetId(arrTweetId);
+        Tweet tweet1 = listTweet.get(0);
+        log.info(":::::::::::: start2");
+        User user = serviceUser.findById(profileId);
+        log.info(":::::::::::: start3");
+log.info(":::::::::: size = " + tweet1.getSetUser().size());
+        listTweet.forEach(t -> t.getSetUser().add(user));
+        log.info(":::::::::: size = " + tweet1.getSetUser().size());
+        log.info(":::::::::::: start4");
+
+        service.saveOne(tweet1);
+        log.info(":::::::::::: start5");
+
+    }
 }
 
 

@@ -25,7 +25,7 @@ public class GeneralChat extends BaseEntity {
             joinColumns = @JoinColumn(name = "listchat_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
 
-    private List<Chat> listChat = new ArrayList<>();
+    private List<ChatNew> listChat = new ArrayList<>();
 
     public GeneralChat(Long userId) {
         this.userId = userId;

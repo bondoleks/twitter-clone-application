@@ -51,7 +51,7 @@ GET http://localhost:5050/api/v1/tweets/tweet/all?sizePage=10&numberPage=0
 GET http://localhost:5050/api/v1/tweets/tweet/all/notauth
 
 ###
-GET http://localhost:5050/tweets/bookmark?sizePage=10&numberPage=0
+GET http://localhost:5050/api/v1/tweets/bookmark?sizePage=10&numberPage=0
 
 ###
 GET http://localhost:5050/tweets/reply/all/1?sizePage=10&numberPage=0
@@ -67,10 +67,20 @@ Content-Type: application/json
   "parent_Tweet": 48
 }
 
+###
+POST http://localhost:5050/api/v1/tweets/tweet/view?profileId=10
+Content-Type: application/json
+
+
+{
+"arrTweetId": [163, 164, 165 , 166, 167, 168, 169, 170]
+
+}
+
 
 ###
 
-GET http://localhost:5050/tweets/tweet/128
+GET http://localhost:5050/api/v1/tweets/tweet/126
 
 ###
 
