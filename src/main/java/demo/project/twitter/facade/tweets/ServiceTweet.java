@@ -115,4 +115,8 @@ public class ServiceTweet implements FunctionTweet {
     public List<Tweet> getTweetByWordAndArrayId(String s, Long[] tweetId) {
         return repo.getTweetByWordAndArrayId(s, tweetId);
     }
+
+    public List<Tweet> getListTweetByListTweetId(Long[] arrTweetId) {
+        return repo.getListTweetByListTweetId(arrTweetId);
+    }
 }
