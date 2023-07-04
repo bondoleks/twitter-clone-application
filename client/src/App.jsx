@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import { createTheme, CssBaseline, Grid, Hidden, ThemeProvider } from '@mui/material';
+import {createTheme, CssBaseline, Grid, Hidden, ThemeProvider, useMediaQuery} from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar';
 import Search from './components/Search/Search.jsx';
 import { Routes, Route, Navigate, useLocation, useMatch } from 'react-router-dom';
@@ -183,16 +183,18 @@ function App() {
     // Get initial user data
     useEffect(() => {
         let timer = null;
-        if (isAuthenticated) {
+        if (isAuthenticated){
             dispatch(getUser());
-            timer = setInterval(() => {
+            timer = setInterval(()=>{
                 dispatch(watchUserTweetsThunk())
-            }, 10000)
+            },10000)
         }
-        return () => {
-            clearInterval(timer);
-        }
+return () =>{
+    clearInterval(timer);
+}
     }, [])
+
+
 
 
     const lightTheme = createTheme({
@@ -273,10 +275,10 @@ function App() {
     const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
-        }
-        if (themeMode === "dark") {
+        } if (themeMode === "dark") {
             return darkTheme;
-        } else {
+        }
+        else {
             return blackTheme;
         }
     }, [themeMode]);
@@ -294,68 +296,62 @@ function App() {
         if (isActiveMessage && isTabletOrPhone) {
             return <ActiveChat/>
         } else {
-            return <MessageMiddleColumn/>;
+            return <MessageMiddleColumn />;
+        }
+    }
+
+
+    const handleRenderRightColumn = (path) => {
+
+        let isActiveMessage = useMatch("/messages/:id")
+        let rightColumn = null;
+
+        if (path === '/messages') {
+            rightColumn = <MessagesRightColumn />
+        } else if (isActiveMessage) {
+            rightColumn = <ActiveChat />
+        } else if(!isActivateKey){
+            rightColumn = <Search />
         }
 
-        const handleRenderRightColumn = (path) => {
-
-            let isActiveMessage = useMatch("/messages/:id")
-            let rightColumn = null;
-
-            if (path === '/messages') {
-                rightColumn = <MessagesRightColumn/>
-            } else if (isActiveMessage) {
-                rightColumn = <ActiveChat/>
-            } else if (!isActivateKey) {
-                rightColumn = <Search/>
-            }
-
-            return (
-              <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
-                  {rightColumn}
-              </Grid>
-            )
-        }
         return (
-
-          <CustomThemeContext.Provider value={{color, themeMode, setThemeMode, setColor}}>
-              <ThemeProvider theme={theme}>
-                  <CssBaseline/>
-                  <Grid container spacing={2} sx={{
-                      margin: "0 auto",
-                      maxWidth: "1082px",
-                      paddingBottom: !isAuthenticated ? "65px" : '32px',
-                      width: '100%!important'
-                  }}>
-                      {Boolean(!useMatch("/activate/:key")) &&
-                        <Grid item md={3} sx={{paddingTop: '0!important', paddingLeft: '0!important'}}>
-                            <Sidebar/>
-                        </Grid>
-                      }
-                      <Grid item xs={12}
-                            md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6}
-                            sm={8} sx={{paddingTop: '0!important', paddingLeft: '0!important'}}>
-                          {handleRenderMiddleColumn(location.pathname)}
-                          <Routes>
-                              {/* {...routes.map(r => <Route {...r} />)} */}
-                              {routes.map((route, index) => (
-                                <Route key={index} {...route} />
-                              ))}
-                          </Routes>
-                      </Grid>
-                      <Hidden mdDown>
-                          {handleRenderRightColumn(location.pathname)}
-                      </Hidden>
-                      <NewMessageModal open={modalOpen} closeModal={handleCloseModal}/>
-                  </Grid>
-                  <QuoteRetweetModal/>
-                  <ReplyModal/>
-              </ThemeProvider>
-          </CustomThemeContext.Provider>
-
+          <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
+              {rightColumn}
+          </Grid>
         )
     }
+    return (
+
+        <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px", paddingBottom: !isAuthenticated ? "65px" : '32px', width: '100%!important' }}>
+                        {Boolean(!useMatch("/activate/:key")) &&
+                        <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
+                            <Sidebar />
+                        </Grid>
+                        }
+                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
+                            {handleRenderMiddleColumn(location.pathname)}
+                            <Routes>
+                                {/* {...routes.map(r => <Route {...r} />)} */}
+                                {routes.map((route, index) => (
+                                    <Route key={index} {...route} />
+                                ))}
+                            </Routes>
+                        </Grid>
+                        <Hidden mdDown>
+                            {handleRenderRightColumn(location.pathname)}
+                        </Hidden>
+                        <NewMessageModal open={modalOpen} closeModal={handleCloseModal} />
+                    </Grid>
+                    <QuoteRetweetModal/>
+                    <ReplyModal/>
+            </ThemeProvider>
+        </CustomThemeContext.Provider>
+
+    )
 }
 
-export default App;
+export default App
 
