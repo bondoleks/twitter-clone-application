@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import { createTheme, CssBaseline, Grid, Hidden, ThemeProvider } from '@mui/material';
+import {createTheme, CssBaseline, Grid, Hidden, ThemeProvider, useMediaQuery} from '@mui/material';
 import Sidebar from './components/Sidebar/Sidebar';
 import Search from './components/Search/Search.jsx';
 import { Routes, Route, Navigate, useLocation, useMatch } from 'react-router-dom';
@@ -25,6 +25,10 @@ import Stomp, { clearInterval } from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
+import Footerlogin from './components/Footerlogin/Footerlogin';
+import NewMessageModal from './pages/Messages/Components/NewMessageModal.jsx';
+import {handleOpenNewMessageModal} from './redux/Messages/Thunks/MessagesThunk.js';
+import {isModalOpened} from './redux/selectors.jsx';
 import { QuoteRetweetModal } from './components/Tweet/ModalsTweetReaction/QuoteRetweetModal';
 import { watchUserTweetsThunk } from './redux/user/watchUserTweetsThunk';
 import { ForgotPage } from './pages/ForgotPage/ForgotPage';
@@ -82,19 +86,19 @@ const routes = [
         // element: <Notifications />,
         element: <PrivateRoute element={Notifications} />,
     },
-    {
-        path: "/messages",
-        // element: <MessageMiddleColumn />,
-        element: <PrivateRoute element={MessageMiddleColumn} />,
-    },
-    {
-        path: "/messages/:id",
-        // element: <MessageMiddleColumn />,
-        element: <PrivateRoute element={MessageMiddleColumn} />,
-
-
-
-    },
+    // {
+    //     path: "/messages",
+    //     // element: <MessageMiddleColumn />,
+    //     element: <PrivateRoute element={MessageMiddleColumn} />,
+    // },
+    // {
+    //     path: "/messages/:id",
+    //     // element: <MessageMiddleColumn />,
+    //     element: <PrivateRoute element={MessageMiddleColumn} />,
+    //
+    //
+    //
+    // },
     {
         path: "/bookmarks",
 
@@ -134,6 +138,9 @@ function App() {
     const isAuthenticated = useSelector(state => state.user.authorized);
     const isActiveMessage = useMatch("/messages/:id");
     const isActivateKey = useMatch("/activate/:key");
+    const modalOpen = useSelector(isModalOpened);
+
+    const handleCloseModal = () => dispatch(handleOpenNewMessageModal('close'));
 
     console.log(Boolean(isAuthenticated));
 
@@ -278,6 +285,22 @@ return () =>{
 
     const location = useLocation();
 
+    const handleRenderMiddleColumn = (path) => {
+        const isActiveMessage = useMatch("/messages/:id");
+        const isMessage = useMatch("/messages");
+        const isTabletOrPhone = useMediaQuery('(max-width: 900px)');
+
+        if (!isActiveMessage && !isMessage) {
+            return null
+        }
+        if (isActiveMessage && isTabletOrPhone) {
+            return <ActiveChat/>
+        } else {
+            return <MessageMiddleColumn />;
+        }
+    }
+
+
     const handleRenderRightColumn = (path) => {
 
         let isActiveMessage = useMatch("/messages/:id")
@@ -309,6 +332,7 @@ return () =>{
                         </Grid>
                         }
                         <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
+                            {handleRenderMiddleColumn(location.pathname)}
                             <Routes>
                                 {/* {...routes.map(r => <Route {...r} />)} */}
                                 {routes.map((route, index) => (
@@ -319,6 +343,7 @@ return () =>{
                         <Hidden mdDown>
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
+                        <NewMessageModal open={modalOpen} closeModal={handleCloseModal} />
                     </Grid>
                     <QuoteRetweetModal/>
                     <ReplyModal/>

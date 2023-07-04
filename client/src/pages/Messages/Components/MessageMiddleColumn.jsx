@@ -8,13 +8,17 @@ import NewMessageModal from "./NewMessageModal.jsx";
 import ModalList from "./ModalList.jsx";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack.js";
 import {useDispatch, useSelector} from 'react-redux';
-import {handleGetSearchUsers, handleGetUserChats} from '../../../redux/Messages/Thunks/MessagesThunk.js';
+import {
+  handleGetSearchUsers,
+  handleGetUserChats,
+  handleOpenNewMessageModal
+} from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {getActiveChat} from "../../../redux/selectors.jsx";
 
 
 
 const MessageMiddleColumn = ({mockedUsers}) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
 
   const dispatch = useDispatch();
@@ -29,13 +33,15 @@ const MessageMiddleColumn = ({mockedUsers}) => {
     setClicked(false);
   };
 
-    const openModal = () => {
-    setModalOpen(true);
-  };
+  const handleModal = (type) => dispatch(handleOpenNewMessageModal(type));
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  //   const openModal = () => {
+  //   setModalOpen(true);
+  // };
+  //
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // };
 
   useEffect(() => {
     dispatch(handleGetUserChats());
@@ -69,7 +75,7 @@ const MessageMiddleColumn = ({mockedUsers}) => {
               <SettingsOutlinedIcon />
             </IconButton>
             <IconButton>
-              <MarkEmailUnreadOutlinedIcon onClick={openModal} />
+              <MarkEmailUnreadOutlinedIcon onClick={() => handleModal('open')} />
             </IconButton>
           </Box>
         </Box>
@@ -106,7 +112,7 @@ const MessageMiddleColumn = ({mockedUsers}) => {
           )}
         </Box>
       </Box>
-      <NewMessageModal open={modalOpen} closeModal={closeModal} />
+      {/*<NewMessageModal open={modalOpen} closeModal={closeModal} />*/}
     </>
   );
 };
