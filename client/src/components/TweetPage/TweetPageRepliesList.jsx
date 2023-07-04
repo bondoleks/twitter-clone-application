@@ -4,7 +4,6 @@ import { repliesSelector } from "../../redux/selectors";
 import { useEffect } from "react";
 import { useScrollTracker } from "../Home/ScrollTracker";
 import { getCommetsThunk } from "../../redux/tweet/getCommetsThunk";
-import { ReplyItem } from "./ReplyItem";
 import Tweet from "../Tweet/Tweet";
 
 
