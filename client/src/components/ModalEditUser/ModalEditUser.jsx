@@ -61,13 +61,19 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
 
   const [{ data, loading }, getData] = useFetch({
     initData: {},
-    url: withId ? `user/getuser/${id}` : "user/profile",
-    method: "GET",
+    url: withId
+      ? `user/getuser/${id}`
+      : 'user/profile',
+    method: 'GET',
     dataTransformer: (data) => {
-      console.log(data);
+      console.log(data)
       return data;
     },
   });
+
+  useEffect(() => {
+    getData()
+  }, [id])
 
   if (!loading) <p>loading...</p>;
 
@@ -171,8 +177,8 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
         <Button
           onClick={handleSave}
           sx={{
-            color: "black",
-            border: "1px solid black",
+            color: theme.palette.text.primary,
+            border: `1px solid ${theme.palette.text.primary}`,
             height: "30px",
             borderRadius: "20px",
             textTransform: "none",
