@@ -81,8 +81,8 @@ public class UserFacade {
 
     }
 
-    public UserDto updateUser (String username, String firstName, String email, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
-        User usr = new User(username, firstName, email, location, birthDate, bio, avUrl, headUrl);
+    public UserDto updateUser (String username, String firstName, String lastName, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
+        User usr = new User(username, firstName, lastName, location, birthDate, bio, avUrl, headUrl);
         UserDto entity = makeDto(usr);
         User entity2 = service.updateUser(usr, entity);
         dto = makeDto(entity2);
