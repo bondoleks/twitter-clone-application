@@ -21,7 +21,7 @@ import ProfileUser from './pages/Profile/ProfileUser';
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 
-import Stomp from 'stompjs';
+import Stomp, { clearInterval } from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
@@ -29,11 +29,15 @@ import Footerlogin from './components/Footerlogin/Footerlogin';
 import NewMessageModal from './pages/Messages/Components/NewMessageModal.jsx';
 import {handleOpenNewMessageModal} from './redux/Messages/Thunks/MessagesThunk.js';
 import {isModalOpened} from './redux/selectors.jsx';
+import { QuoteRetweetModal } from './components/Tweet/ModalsTweetReaction/QuoteRetweetModal';
+import { watchUserTweetsThunk } from './redux/user/watchUserTweetsThunk';
+import { ForgotPage } from './pages/ForgotPage/ForgotPage';
+import { ReplyModal } from './components/Tweet/ModalsTweetReaction/ReplyModal';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
     const isAuthenticated = useSelector(state => state.user.authorized)
-    console.log(isAuthenticated)
+
     return isAuthenticated ? (
       <Element />
     ) : (
@@ -50,6 +54,11 @@ const routes = [
     {
         path: "/activate/:key",
         element: <ActivatePage />,
+        errorElement: <div>Not found</div>
+    },
+    {
+        path: "/forgot_password/:key",
+        element: <ForgotPage />,
         errorElement: <div>Not found</div>
     },
     {
@@ -173,10 +182,20 @@ function App() {
 
     // Get initial user data
     useEffect(() => {
+        let timer = null;
         if (isAuthenticated){
             dispatch(getUser());
+            timer = setInterval(()=>{
+                dispatch(watchUserTweetsThunk())
+            },10000)
         }
+return () =>{
+    clearInterval(timer);
+}
     }, [])
+
+
+
 
     const lightTheme = createTheme({
         palette: {
@@ -290,7 +309,7 @@ function App() {
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" ,paddingBottom: !isAuthenticated ? "65px" : 0,width:'100%!important' }}>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px", paddingBottom: !isAuthenticated ? "65px" : '32px', width: '100%!important' }}>
                         {Boolean(!useMatch("/activate/:key")) &&
                         <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Sidebar />
@@ -309,7 +328,8 @@ function App() {
                         </Hidden>
                         <NewMessageModal open={modalOpen} closeModal={handleCloseModal} />
                     </Grid>
-                    {!isAuthenticated && <Footerlogin />}
+                    <QuoteRetweetModal/>
+                    <ReplyModal/>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 

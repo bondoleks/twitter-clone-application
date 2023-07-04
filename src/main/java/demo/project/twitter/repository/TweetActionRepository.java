@@ -14,7 +14,7 @@ public interface TweetActionRepository extends JpaRepository<TweetAction, Long> 
             value = "select count(*) from tweet_actions  where tweet_id = ? and action_type = ?",
             nativeQuery = true
     )
-    Integer countLike(Long tweetId, String  tweetType);
+    Integer countAction(Long tweetId, String  tweetType);
 
     @Query(
             value = "select count(*) from tweet_actions  where tweet_id = ? and user_id = ? and action_type = ? ",

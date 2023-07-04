@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/admin/")
-@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app", "http://localhost:5173"})
+@CrossOrigin(origins = {"https://twitter-clone-application.vercel.app",
+        "http://localhost:5173",
+        "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app"})
 public class AdminRestControllerV1 {
 
     private final UserServiceImplInterface userService;

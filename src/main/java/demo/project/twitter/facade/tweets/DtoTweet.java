@@ -21,8 +21,11 @@ public class DtoTweet {
 
     private TweetType tweetType;
     private Integer countRetweet;
+    private Integer countQuote;
     private Integer countReply;
     private Integer countLike;
+    private Integer countBookmark;
+    private Integer countView;
     private Integer markerRetweet;
     private Integer markerLike;
     private Integer markerBookmark;

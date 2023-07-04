@@ -1,7 +1,9 @@
 package demo.project.twitter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import demo.project.twitter.model.chat.Chat;
+import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.tweet.Tweet;
 import lombok.*;
 import javax.validation.constraints.Email;
@@ -53,6 +55,9 @@ public class User extends BaseEntity {
     @Column(name = "location")
     private String location;
 
+    @Column(name = "auth_provider")
+    private String provider;
+
     @Column(name = "avatar_image_url")
     private String av_imagerUrl;
 
@@ -78,9 +83,16 @@ public class User extends BaseEntity {
     @ManyToMany()
     @JoinTable(name = "chats_to_users", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
+
     private Set<Chat> userChats = new HashSet<>();
 
-    public User(String username, String email, String password, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
+    @ManyToMany()
+    @JoinTable(name = "chatsnew_to_users", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+
+    private List<ChatNew> userChatsNew = new ArrayList<>();
+
+    public User(String username, String email, String password, String location, Date birthDate, String bio) {
 
         this.username = username;
         this.email = email;
@@ -88,9 +100,8 @@ public class User extends BaseEntity {
         this.location = location;
         this.birthDate = birthDate;
         this.bio = bio;
-        this.av_imagerUrl = String.valueOf(avUrl);
-        this.head_imagerUrl = String.valueOf(headUrl);
     }
+
 
     public User(String username, String email) {
         this.username = username;
@@ -102,6 +113,17 @@ public class User extends BaseEntity {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String username, String firstName, String lastName, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.location = location;
+        this.birthDate = birthDate;
+        this.bio = bio;
+        this.av_imagerUrl = String.valueOf(avUrl);
+        this.head_imagerUrl = String.valueOf(headUrl);
     }
 }
 

@@ -23,8 +23,8 @@ import java.util.Optional;
 public class ServiceTweetAction {
     private final TweetActionRepository repo;
 
-    public Integer countLike(Long tweetId, String actionType) {
-        return repo.countLike(tweetId, "LIKE");
+    public Integer countAction(Long tweetId, String actionType) {
+        return repo.countAction(tweetId, actionType);
     }
 
     public Integer marker(Long tweeId, Long profileId, String actionType){

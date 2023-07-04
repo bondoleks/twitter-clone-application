@@ -42,7 +42,7 @@ import { useSelector } from 'react-redux';
 
 
 const SidebarMobile = () => {
-    const isAutorizate= useSelector(state => state.user.authorized);
+    const isAutorizate = useSelector(state => state.user.authorized);
     const theme = useTheme();
 
     const bottomNavigationStyles = {
@@ -130,7 +130,7 @@ const SidebarMobile = () => {
                 </IconButton>
             </Tooltip>
             <Box sx={{ marginLeft: '30%' }}>
-            <Link to={isAutorizate ? '/home' : '/'}>
+                <Link to={isAutorizate ? '/home' : '/'}>
                     <IconButton>
                         <TwitterIcon sx={{ margin: '16px' }} fontSize="medium" color='primary' />
                     </IconButton>
@@ -301,7 +301,7 @@ const SidebarMobile = () => {
                             open={drawerOpen}
                             onClose={handleDrawerClose}
                         >
-                            <List style={bottomNavigationStyles} sx={{height: '100vh'}}>
+                            <List style={bottomNavigationStyles} sx={{ height: '100vh' }}>
                                 <Toolbar sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between'
@@ -449,11 +449,11 @@ const SidebarMobile = () => {
             </IconButton>
             <TweetFormMobile open={open} onClose={handleClose} />
 
-            <Box edge="start" >
+            <Box edge="start">
                 <BottomNavigation style={bottomNavigationStyles} sx={{
                     position: 'fixed',
                     bottom: '0',
-                    width: '100%',
+                    width: '100%'
                 }}>
                     <Link to={`/home`}>
                         <Tooltip title="Home">
