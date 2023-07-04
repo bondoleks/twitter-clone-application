@@ -49,6 +49,7 @@ const ChatMessages = ({ chatMessages, user }) => {
     if (chatMessages?.length) {
       return chatMessages.map(({ dateMessage, textMessage, typeMessage, user_author }) => {
         const isSentByCurrentUser = typeMessage === 1;
+        console.log(chatMessages)
 
         return (
           <ChatMessage

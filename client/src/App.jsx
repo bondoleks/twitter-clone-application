@@ -158,13 +158,13 @@ function App() {
         // Устанавливаем колбэк-функцию при успешном соединении
         stompClient.connect({}, () => {
             // Подписываемся на каналы
-            stompClient.subscribe('/app/chat/message', (message) => {
-                console.log('Received message from /chat:', message.body);
+            stompClient.subscribe('/chat/message', (message) => {
+                console.log('Received message from /chat:', message.textMessage);
                 // Действия с полученным сообщением
             });
 
-            stompClient.subscribe('/app/send', (message) => {
-                console.log('Received message from /chat:', message.body);
+            stompClient.subscribe('/send', (message) => {
+                console.log('Received message from /chat:', message.textMessage);
                 // Действия с полученным сообщением
             });
 
