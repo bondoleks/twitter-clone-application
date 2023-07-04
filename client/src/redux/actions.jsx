@@ -67,6 +67,7 @@ export const  GET_COMMENTS_SUCCESS = 'tweet/comments/get/succses';
 export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
 export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
 export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
+export const REMOVE_OLD_REPLY = 'tweet/comments/remove';
 
 // chats and messages
 
@@ -82,6 +83,11 @@ export const GET_MESSAGES_FOR_CHAT_ERROR = "GET_MESSAGES_FOR_CHAT_ERROR";
 export const SEND_NEW_MESSAGE_LOADING = "SEND_NEW_MESSAGE_LOADING";
 export const SEND_NEW_MESSAGE_SUCCESS = "SEND_NEW_MESSAGE_SUCCESS";
 export const SEND_NEW_MESSAGE_ERROR = "SEND_NEW_MESSAGE_ERROR";
+
+export const GET_CHAT_OWNERS = "GET_CHAT_OWNERS";
+export const SET_CHAT_USERS = "SET_CHAT_USERS";
+export const OPEN_NEW_MESSAGE_MODAL = "OPEN_NEW_MESSAGE_MODAL";
+export const CLOSE_NEW_MESSAGE_MODAL = "CLOSE_NEW_MESSAGE_MODAL";
 
 export const GET_ACTIVE_CHAT = "GET_ACTIVE_CHAT";
 

@@ -1,8 +1,5 @@
 
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { END_SCROLL_HOME } from '../../redux/actions';
-import { tweetSelector } from '../../redux/selectors';
 
 export const useScrollTracker = () => {
     const[isEndScroll,setIsEndScroll]= useState(false);

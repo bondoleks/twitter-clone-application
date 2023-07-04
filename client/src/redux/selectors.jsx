@@ -13,6 +13,8 @@ export const getUserChats = state => state.chat.userChats;
 export const getActiveChat = state => state.chat.activeChat;
 export const getUser = state => state.user.user;
 export const getMessagesForChat = state => state.chat.chatMessages;
+export const getChatOwners = state => state.chat.chatOwners;
+export const isModalOpened = state => state.chat.newMessageModal;
 
 //login
 export const VisibleLoginModalSelector = state => state.main.VisibleLoginModal;
@@ -32,3 +34,5 @@ export const tweetInReplySelector = state => state.reply.parentTweet;
 export const visibleReplyModalSelector = state => state.reply.visibleReplyModal;
 export const textReplySelector = state => state.reply.replyData.text;
 export const  imageReplySelector = state => state.reply.replyData.img;
+
+export const currentUserIdSelector = state => state.user.user.id;

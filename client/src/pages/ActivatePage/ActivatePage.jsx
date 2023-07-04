@@ -9,14 +9,14 @@ import {CircularProgress} from "@mui/material";
 export function ActivatePage() {
   const { key } = useParams();
   const [visibleLoading, setVisibleLoading] = useState(true);
-  const [isActivation, setIsActivation] = useState(null);
+  const [isActivation, setIsActivation] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .post(`https://twitter-clone-application.herokuapp.com/api/v1/auth/activate/${key}`)
       .then((response) => {
-        setIsActivation(response.data.isActivation);
+        setIsActivation(response.data);
         setVisibleLoading(false);
       })
       .catch((error) => {
@@ -44,12 +44,15 @@ export function ActivatePage() {
     <Box sx={{height:'70px',display:"flex",justifyContent:'center', alignItems:'center'}}>
 
       {visibleLoading && <CircularProgress/>}
-        {!visibleLoading && isActivation ? (
-            <Typography variant='h5'>Activation successful!</Typography>
-          ) : null}
-        {!visibleLoading && !isActivation ? (
-            <Typography variant='h5'>Activation failed.</Typography>
-          ) : null}
+        {!visibleLoading && (
+          <>
+            {isActivation ? (
+              <Typography variant="h5">Activation successful!</Typography>
+            ) : (
+              <Typography variant="h5">Activation failed.</Typography>
+            )}
+          </>
+        )}
     </Box>
     <Button
       onClick={()=>{
