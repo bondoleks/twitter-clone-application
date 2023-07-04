@@ -2,6 +2,7 @@ export const tweetsHomeSelector = state => state.home.tweets;
 export const scrollDataSelector = state => state.home.endScroll;
 //TweetPage
 export const tweetSelector = state=> state.tweet.tweet;
+export const repliesSelector =state => state.tweet.comments;
 
 
 export const tweetsMainPageSelector = state => state.main.tweets;

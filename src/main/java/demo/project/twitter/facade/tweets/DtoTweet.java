@@ -25,6 +25,7 @@ public class DtoTweet {
     private Integer countReply;
     private Integer countLike;
     private Integer countBookmark;
+    private Integer countView;
     private Integer markerRetweet;
     private Integer markerLike;
     private Integer markerBookmark;

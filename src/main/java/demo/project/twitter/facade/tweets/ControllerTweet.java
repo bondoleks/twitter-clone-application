@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Long.parseLong;
@@ -40,6 +41,20 @@ public class ControllerTweet {
     public List<UserSearchDto> userSearch(@RequestParam("search_requеst") String searchRequest) {
         return facadeUser.userSearch(searchRequest);
     }
+
+    @PostMapping("tweet/view")
+    public void countViewTweet(@RequestBody DtoArrayTweet dto ,
+                               @RequestParam("profileId") Long userId,
+                                 Principal principal) {
+
+
+//        Long profileId = userId;
+        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+//        facade.saveViewTweet(profileId, dto.getArrTweetId());
+
+
+    }
+
 
     @GetMapping("alluser")
     public List<User> allUser() {
@@ -148,47 +163,35 @@ public class ControllerTweet {
         Long tweetid = facade.determParentTweetId(id);
         return facade.getAllTweetById(tweetid, sizePage, numberPage, ALL_REPLY_TWEETID, profileId);
     }
+
     @PostMapping("tweet/save")
     public DtoTweet saveTweet(@RequestParam("tweetBody") String tweetBody,
                               @RequestParam("parentTweetId") String parentTweetId,
-                              @RequestParam("file") List<MultipartFile> listPhoto,
+                              @RequestParam(value = "file", required = false) List<MultipartFile> listPhoto,
                               Principal principal) {
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-        Long tweetId = facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId),profileId, listPhoto);
+        Long tweetId = facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), profileId, listPhoto);
 
         return facade.transListTweetInDto(facade.getSingleTweetById(tweetId), profileId);
     }
-   /* @PostMapping("tweet/save")
-    public void saveTweet(@RequestParam("tweetBody") String tweetBody,
+
+    /*@PostMapping("tweet/save")
+    public DtoTweet saveTweet(@RequestParam("tweetBody") String tweetBody,
                           @RequestParam("parentTweetId") String parentTweetId,
-                          @RequestParam("file") List<MultipartFile> listPhoto,
+                          @RequestParam(value = "file", required = false) List<MultipartFile> listPhoto,
                           Principal principal) {
-//       String userName = principal.getName();
-//        String userName = "ssa333";
+
+        if (listPhoto == null) log.info(":::::::::: null!!!!");
+        else log.info(":::::::::: not null");
+
+//        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+        Long profileId = 10L;
+        Long tweetId = facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), profileId, listPhoto);
+
+        return facade.transListTweetInDto(facade.getSingleTweetById(tweetId), profileId);
 
 
-//        User user = facadeUser.getUserByName(userName);
-        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-       *//* StringBuilder sb = new StringBuilder();
-        sb.append("userName = ").
-                append(userName).
-                append(" userId = ").
-                append(userIdNew).
-                append(" arraySize = ").
-                append(listPhoto.size()).
-                append("***");*//*
-
-*//*        listPhoto.stream().forEach(x ->sb.append(x.getContentType()).append(" "));*//*
-
-
-
-
-
-       *//* List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*//*
-        *//*facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId), userIdNew, listUrl);*//*
-        facade.saveTweetNew(tweetBody, TweetType.TWEET, parseLong(parentTweetId),profileId, listPhoto);
-      *//*  return sb.toString();*//*
     }*/
 
     /*@PostMapping("quote/save")
@@ -205,7 +208,7 @@ public class ControllerTweet {
     @PostMapping("quote/save")
     public DtoTweet saveQuote(@RequestParam("tweetBody") String tweetBody,
                               @RequestParam("parentTweetId") String parentTweetId,
-                              @RequestParam("file") List<MultipartFile> listPhoto,
+                              @RequestParam(value = "file", required = false) List<MultipartFile> listPhoto,
                               Principal principal) {
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
@@ -229,7 +232,7 @@ public class ControllerTweet {
     @PostMapping("reply/save")
     public DtoTweet saveReply(@RequestParam("tweetBody") String tweetBody,
                               @RequestParam("parentTweetId") String parentTweetId,
-                              @RequestParam("file") List<MultipartFile> listPhoto,
+                              @RequestParam(value = "file", required = false) List<MultipartFile> listPhoto,
                               Principal principal) {
         /*List<String> listUrl = facade.transListPhotoToListUrl(listPhoto);*/
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
