@@ -26,7 +26,7 @@ export function ReplyModal() {
     dispatch({ type: CLOSE_REPLY_MODAL });
   }
 
-  function postQuoteRetweet(id) {
+  function postReply(id) {
     dispatch({ type: CLOSE_REPLY_MODAL });
     dispatch(postReplyThunk(id));
   }
@@ -37,7 +37,7 @@ export function ReplyModal() {
     }
   };
   return (
-    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseReplyModal} buttonName="Reply" functionButton={postQuoteRetweet} width={600} handleImageUpload={handleImageUpload} parentId={parentTweet.id} textLenght={replyText.length}>
+    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseReplyModal} buttonName="Reply" functionButton={postReply} width={600} handleImageUpload={handleImageUpload} parentId={parentTweet.id} textLenght={replyText.length}>
       <Box sx={{width:'100%',display:'flex',flexDirection:'column'}}>
             <Box>
             <TweetBody tweet={parentTweet} />
