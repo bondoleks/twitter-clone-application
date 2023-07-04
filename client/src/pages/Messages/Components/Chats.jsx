@@ -62,7 +62,7 @@ import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import { Box, Typography } from '@mui/material';
 import {
   filteredUsersSelector,
-  getActiveChat,
+  getActiveChat, getChatOwners,
   getMessagesForChat,
   getUser,
   getUserChats
@@ -72,7 +72,7 @@ import {api} from '../../../redux/service/api.jsx';
 import {
   handleGetMessagesForChat,
   handleGetUserChats,
-  handleSetActiveChat
+  handleSetActiveChat, handleSetChatOwners
 } from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {useNavigate} from 'react-router-dom';
 import MessagesLoader from "./MessagesLoader.jsx";
@@ -82,8 +82,8 @@ const Chats = () => {
   const activeChat = useSelector(getActiveChat);
   const user = useSelector(getUser);
   const chatMessages = useSelector(getMessagesForChat);
-
-  console.log("chatMessageschatMessageschatMessages", chatMessages);
+  const chatOwners = useSelector(getChatOwners);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -96,8 +96,110 @@ const Chats = () => {
   }
 
   useEffect(() => {
-    dispatch(handleGetUserChats());
-  }, [chatMessages?.length])
+    if (userChats.length && !chatOwners.length) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [userChats?.length, chatOwners?.length, isLoading])
+
+  const handleGetChats = async () => {
+
+    const chatsData = await dispatch(handleGetUserChats());
+
+    const chats = chatsData?.payload;
+    chats.map(async (chat) => {
+      const chatOwnerExist = chatOwners.find(chatOwner => chatOwner.id === chat.chatId);
+      if (chatOwnerExist) {
+        return null;
+      }
+      await dispatch(handleSetChatOwners(user.id, chat));
+    })
+  }
+
+  useEffect(() => {
+    handleGetChats();
+  }, [userChats?.length, chatMessages?.length])
+
+  const changedUserChats = JSON.parse(JSON.stringify(userChats)).map((chat) => {
+    const isInitiatorChatOwner = chat?.initiatorId === user?.id;
+
+    if (!isInitiatorChatOwner) {
+      const getChatUserReceiver = chatOwners.find(owner => owner.id === chat.initiatorId);
+      chat.username = getChatUserReceiver?.username?.toLowerCase() || 'N/A'
+    }
+
+    return chat;
+
+  })
+
+
+  const handleRenderChats = () => {
+    if (isLoading) {
+      return <MessagesLoader />;
+    }
+
+    if (!changedUserChats.length) {
+      return <Typography>No chats found</Typography>;
+    }
+
+    return changedUserChats.map(chat => {
+      const {
+        av_imagerUrl,
+        chatId,
+        firstName,
+        initiatorId,
+        lastMessage,
+        lastName,
+        userResivId,
+        username} = chat;
+      return (
+        <>
+          <ListItem sx={{
+            padding: "0"
+          }} onClick={() => handleOpenActiveChat(chat)}>
+            <Box style={activeChat?.chatId === chatId ? {backgroundColor: '#e8e8e8', borderRight: "2px solid rgb(29, 155, 240)"} : {}} sx={{
+              boxSizing: "border-box",
+              width: "100%",
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexDirection: "column",
+              padding: "5px 10px",
+
+              '&:hover': {
+                backgroundColor: '#e8e8e8',
+                cursor: 'pointer'
+              },
+            }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '5px',
+                  padding: "0!important",
+
+
+                }}
+              >
+                <Box sx={{
+                  display: "flex",
+                  alignItems: 'center',
+                  gap: "5px"
+                }}>
+                  <Avatar src={av_imagerUrl || ""} />
+                  <ListItemText>{firstName}</ListItemText>
+                  <ListItemText>@{username}</ListItemText>
+                </Box>
+                <ListItemText sx={{textAlign: "end"}}>{'16.06.2023'}</ListItemText>
+              </Box>
+              <Typography>{lastMessage}</Typography>
+            </Box>
+          </ListItem>
+        </>
+      )
+    })
+  }
 
 
   return (
@@ -105,69 +207,9 @@ const Chats = () => {
       sx={{
         width: '100%',
         bgcolor: 'background.paper',
-
-
       }}
     >
-      {
-        userChats.length ? userChats.map(chat => {
-          const {
-            av_imagerUrl,
-            chatId,
-            firstName,
-            initiatorId,
-            lastMessage,
-            lastName,
-            userResivId,
-            username} = chat;
-          return (
-            <>
-            <ListItem sx={{
-              padding: "0"
-            }} onClick={() => handleOpenActiveChat(chat)}>
-              <Box style={activeChat?.chatId === chatId ? {backgroundColor: '#e8e8e8'} : {}} sx={{
-                boxSizing: "border-box",
-                width: "100%",
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexDirection: "column",
-                padding: "5px 10px",
-
-                '&:hover': {
-                  backgroundColor: '#e8e8e8',
-                  cursor: 'pointer'
-                },
-              }}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: '5px',
-                    padding: "0!important",
-
-
-                  }}
-                >
-                  <Box sx={{
-                    display: "flex",
-                    alignItems: 'center',
-                    gap: "5px"
-                  }}>
-                  <Avatar src={av_imagerUrl || ""} />
-                  <ListItemText>{firstName}</ListItemText>
-                  <ListItemText>@{username}</ListItemText>
-                  </Box>
-                  <ListItemText sx={{textAlign: "end"}}>{'16.06.2023'}</ListItemText>
-                </Box>
-                <Typography>{lastMessage}</Typography>
-              </Box>
-            </ListItem>
-            </>
-          )
-        }) : <Typography>No chats found</Typography>
-
-      }
+      {handleRenderChats()}
     </List>
 
 
