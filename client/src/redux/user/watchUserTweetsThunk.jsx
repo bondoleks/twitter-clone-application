@@ -8,7 +8,11 @@ export function watchUserTweetsThunk(){
         const {userVisibleTweets} = state.user;
         console.log(userVisibleTweets,userVisibleTweets.length );
         if(userVisibleTweets.length > 0){
-            api.post('',userVisibleTweets)
+            const requestData = {
+                arrTweetId: userVisibleTweets,
+              };
+            api.post('tweets/tweet/view',requestData)
+
             .then(response => {
                 console.log(response);
                 alert("Success!");
@@ -16,7 +20,6 @@ export function watchUserTweetsThunk(){
             })
             .catch(error => {
                 console.error(error);
-                dispatch({type:DELETE_USER_VISIBLE_TWEETS})
                 if (error.response) {
                     console.log("Server Response:", error.response.data);
                 }

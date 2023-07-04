@@ -67,6 +67,7 @@ export const  GET_COMMENTS_SUCCESS = 'tweet/comments/get/succses';
 export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
 export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
 export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
+export const REMOVE_OLD_REPLY = 'tweet/comments/remove';
 
 // chats and messages
 

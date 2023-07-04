@@ -4,7 +4,8 @@ import {
     GET_COMMENTS_SUCCESS,
     GET_TWEET_PAGE_ERROR,
     START_SCROLL_COMMENTS,
-    END_SCROLL_COMMENTS
+    END_SCROLL_COMMENTS,
+    REMOVE_OLD_REPLY
   } from "../actions"
   
   export function tweetReducer(state = { tweet: {}, comments: [], authorized: Boolean(localStorage.getItem('authToken')), isLoadingTweet: false,isLoadingComment: false, endScroll: false }, action) {
@@ -17,6 +18,8 @@ import {
         return { ...state, comments: [...state.comments, ...action.payload.comments], isLoadingComment: false }
       case GET_TWEET_PAGE_ERROR:
         return { ...state, isLoadingTweet: false, isLoadingComment: false }
+      case REMOVE_OLD_REPLY:
+          return  { ...state, comments: [] } 
       case START_SCROLL_COMMENTS:
         return { ...state, endScroll: false }
       case END_SCROLL_COMMENTS:

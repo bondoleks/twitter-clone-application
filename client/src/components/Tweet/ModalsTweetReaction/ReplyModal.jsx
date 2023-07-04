@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../../redux/selectors";
 import { tweetInReplySelector, visibleReplyModalSelector, textReplySelector, imageReplySelector } from "../../../redux/selectors";
 import {  ADD_TEXT_IN_REPLY, ADD_IMG_IN_REPLY, CLOSE_REPLY_MODAL } from "../../../redux/actions";
-import { postQuoteRetweetThunk } from "../../../redux/quoteRetweet/postQuoteRetweetThunk";
+import { postReplyThunk } from "../../../redux/reply/postReplyThunk";
 import { TweetBody } from "../TweetBody";
 
 
@@ -26,9 +26,10 @@ export function ReplyModal() {
     dispatch({ type: CLOSE_REPLY_MODAL });
   }
 
-  function postQuoteRetweet() {
+
+  function postReply(id) {
     dispatch({ type: CLOSE_REPLY_MODAL });
-    dispatch(postQuoteRetweetThunk());
+    dispatch(postReplyThunk(id));
   }
 
   function handleImageUpload (e) {
@@ -37,7 +38,9 @@ export function ReplyModal() {
     }
   };
   return (
-    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseReplyModal} buttonName="Reply" functionButton={postQuoteRetweet} width={600} handleImageUpload={handleImageUpload} textLenght={replyText.length}>
+
+    <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseReplyModal} buttonName="Reply" functionButton={postReply} width={600} handleImageUpload={handleImageUpload} parentId={parentTweet.id} textLenght={replyText.length}>
+
       <Box sx={{width:'100%',display:'flex',flexDirection:'column'}}>
             <Box>
             <TweetBody tweet={parentTweet} />

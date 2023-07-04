@@ -92,7 +92,7 @@ public class User extends BaseEntity {
 
     private List<ChatNew> userChatsNew = new ArrayList<>();
 
-    public User(String username, String email, String password, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
+    public User(String username, String email, String password, String location, Date birthDate, String bio) {
 
         this.username = username;
         this.email = email;
@@ -100,9 +100,8 @@ public class User extends BaseEntity {
         this.location = location;
         this.birthDate = birthDate;
         this.bio = bio;
-        this.av_imagerUrl = String.valueOf(avUrl);
-        this.head_imagerUrl = String.valueOf(headUrl);
     }
+
 
     public User(String username, String email) {
         this.username = username;
@@ -114,6 +113,17 @@ public class User extends BaseEntity {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String username, String firstName, String lastName, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.location = location;
+        this.birthDate = birthDate;
+        this.bio = bio;
+        this.av_imagerUrl = String.valueOf(avUrl);
+        this.head_imagerUrl = String.valueOf(headUrl);
     }
 }
 
