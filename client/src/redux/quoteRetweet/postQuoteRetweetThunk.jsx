@@ -13,13 +13,10 @@ export function postQuoteRetweetThunk(parentid){
         formData.append('parentTweetId', parentid);
         formData.append('user_id', id);
         // formData.append('hash', hash);
-        if(img.lenght > 0){
+
             for (const file of img) {
                 formData.append('file', file || '');
               }
-        } else{
-            formData.append('file', '');
-        }
 
           console.log("FormData content:");
           for (const [key, value] of formData) {
