@@ -18,10 +18,10 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PublicIcon from "@mui/icons-material/Public";
 import PeopleIcon from "@mui/icons-material/People";
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 import { useFetch } from "../../hooks/UseFetch";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 
 export default function ContainerTweetForm({ open, onClose, setTweetText, tweetText, withId }) {
@@ -57,23 +57,23 @@ export default function ContainerTweetForm({ open, onClose, setTweetText, tweetT
     const [{ data, loading }, getData] = useFetch({
         initData: {},
         url: withId
-          ? `user/getuser/${id}`
-          : 'user/profile',
+            ? `user/getuser/${id}`
+            : 'user/profile',
         method: 'GET',
         dataTransformer: (data) => {
-          console.log(data)
-          return data;
+            console.log(data)
+            return data;
         },
-      });
-    
-      useEffect(() => {
+    });
+
+    useEffect(() => {
         getData()
-      }, [id])
-    
-    
-      if (!loading) <p>loading...</p>
-    
-      const { username, av_imagerUrl } = data
+    }, [id])
+
+
+    if (!loading) <p>loading...</p>
+
+    const { username, av_imagerUrl } = data
 
     const [selectedValue, setSelectedValue] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
@@ -177,11 +177,12 @@ export default function ContainerTweetForm({ open, onClose, setTweetText, tweetT
         <>
             <Container sx={{ display: 'flex', marginTop: '20px' }}>
 
-                <StyledAvatar alt="User Avatar"
-                    // src='../../img/avatar.png'
-                    src={av_imagerUrl}
+                <Link to={`/profile`} >
+                    <StyledAvatar alt="User Avatar"
+                        // src='../../img/avatar.png'
+                        src={av_imagerUrl}
                     />
-
+                </Link>
                 <Button onClick={handleButtonClick} endIcon={<ArrowDropDownIcon />}
                     sx={{
                         height: '20px',

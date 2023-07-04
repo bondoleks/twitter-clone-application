@@ -14,8 +14,6 @@ export function watchUserTweetsThunk(){
             api.post('tweets/tweet/view',requestData)
 
             .then(response => {
-                console.log(response);
-                alert("Success!");
                 dispatch({type:DELETE_USER_VISIBLE_TWEETS})
             })
             .catch(error => {

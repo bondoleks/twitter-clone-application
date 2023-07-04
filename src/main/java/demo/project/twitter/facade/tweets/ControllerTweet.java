@@ -49,17 +49,25 @@ public class ControllerTweet {
 
 
 //        Long profileId = userId;
+
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
 //        facade.saveViewTweet(profileId, dto.getArrTweetId());
-return dto.getArrTweetId().length + " " + profileId;
+
+
+String s = dto.getArrTweetId().length + " " + profileId;
+        return s;
+
+
 
     }
+
 
 
    /* @GetMapping("alluser")
     public List<User> allUser() {
         return ur.findAll();
     }*/
+
 
     @GetMapping("tweetsearch")
     public List<DtoTweet> tweetSearch(@RequestParam("search_requеst") String searchRequest, Principal principal) {
