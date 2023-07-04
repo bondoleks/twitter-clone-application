@@ -52,12 +52,21 @@ public class ControllerTweet {
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
 //        facade.saveViewTweet(profileId, dto.getArrTweetId());
+
+
 String s = dto.getArrTweetId().length + " " + profileId;
         return s;
 
 
+
     }
 
+
+
+   /* @GetMapping("alluser")
+    public List<User> allUser() {
+        return ur.findAll();
+    }*/
 
 
     @GetMapping("tweetsearch")
@@ -118,14 +127,16 @@ String s = dto.getArrTweetId().length + " " + profileId;
 
     @GetMapping("tweet/{tweet_id}")
     public DtoTweet getTweetById(@PathVariable("tweet_id") Long id, Principal principal) {
-//        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-        Long profileId = 10L;
+        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
+//        Long profileId = 12L;
         return facade.transListTweetInDto(facade.getSingleTweetById(id), profileId);
     }
 
     @GetMapping("tweet/all")
-    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage, @RequestParam("numberPage") Integer numberPage) {
-        Long profileId = 10L;
+    public DtoTweetPage getAllTweetById(@RequestParam("sizePage") Integer sizePage,
+                                        @RequestParam("numberPage") Integer numberPage,
+                                        Principal principal) {
+        Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         return facade.getAllTweetById(0L, sizePage, numberPage, ALL_TWEET, profileId);
     }
 
