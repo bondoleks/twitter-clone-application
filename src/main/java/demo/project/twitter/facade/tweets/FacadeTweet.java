@@ -155,6 +155,9 @@ public class FacadeTweet {
                 (entity.getTweetBody() != null) && (count == 0))
             dto.setParentDto(transEntityToDto(entity.getParentTweet(), profileId, count + 1));
 
+        if (dto.getBranch() == BranchType.BODYBRANCH)
+            dto.setParentBranchDto(transEntityToDto(entity.getParentTweet(), profileId, count +1));
+
 
 
 
