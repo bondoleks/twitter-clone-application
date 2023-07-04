@@ -21,10 +21,7 @@ public class UserService implements FunctionUser {
     private final UserRepository repo;
 
 
-    public Boolean user_exists(User usr) {
-        if (repo.findByUsername(usr.getUsername()) != null) return true;
-        else return false;
-    }
+
 
     @Override
     public List<User> findAllUsers() {
@@ -55,20 +52,16 @@ public class UserService implements FunctionUser {
     @Override
     public User updateUser(User usr, UserDto data) {
 
-        if (user_exists(usr)) {
-
             usr.setUsername(Optional.ofNullable(data.getUsername()).orElse(usr.getUsername()));
             usr.setFirstName(Optional.ofNullable(data.getFirstName()).orElse(usr.getFirstName()));
             usr.setLastName(Optional.ofNullable(data.getLastName()).orElse(usr.getLastName()));
             usr.setLocation(Optional.ofNullable(data.getLocation()).orElse(usr.getLocation()));
             usr.setBirthDate(Optional.ofNullable(data.getBirthdate()).orElse(usr.getBirthDate()));
             usr.setBio(Optional.ofNullable(data.getBio()).orElse(usr.getBio()));
-            usr.setEmail(Optional.ofNullable(data.getEmail()).orElse(usr.getEmail()));
             usr.setAv_imagerUrl(Optional.ofNullable(data.getAv_imagerUrl()).orElse(usr.getAv_imagerUrl()));
             usr.setHead_imagerUrl(Optional.ofNullable(data.getHead_imagerUrl()).orElse(usr.getHead_imagerUrl()));
 
             return usr;
-        } else return null;
     }
 
 
@@ -95,10 +88,6 @@ public class UserService implements FunctionUser {
             return usr.get().getFollowers();
     }
 
-
-
-
-
     @Override
     public List<User> getFollowing(User user) {
         Optional<User> usr = repo.findById(user.getId());
@@ -115,7 +104,6 @@ public class UserService implements FunctionUser {
           followings.add(following);
             repo.save(follower);
         }
-
 
     @Override
     public void unFollow(User follower, User following) {
