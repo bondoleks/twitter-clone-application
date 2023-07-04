@@ -76,4 +76,6 @@ public interface RepoChatNew extends JpaRepository<ChatNew, Long> {
             nativeQuery = true
     )
     List<ChatNew> getListChatByGeneralId(Long generalChatId);
+
+
 }

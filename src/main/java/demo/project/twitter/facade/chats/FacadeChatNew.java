@@ -100,13 +100,13 @@ log.info("::::::::::: start1*****");
         return newChat;
     }
 
-    public void saveMessage(Long profileID, DtoMessage dtoM) {
+    public Message saveMessage(Long profileID, DtoMessage dtoM) {
         ChatNew chat = service.getById(dtoM.getChat_id()).get();
         User user = serviceUser.findById(profileID);
         Message message = new Message(user, chat, dtoM.getTextMessage());
         message.setCreatedDate(new Date());
         serviceMessage.saveOne(message);
-
+        return message;
     }
 
     public DtoChatMessage getChatAllMessages(Long chatId, Long profileId, Integer sizePage, Integer namberPage) {
@@ -158,20 +158,23 @@ log.info("::::::::::: start1*****");
     }
 
     public void delChat(Long chatId, Long profileId) {
-       /* Chat chat = getChatById(chatId);
+        ChatNew chat = getChatById(chatId);
         if (chat.getInitiatorId() == profileId){
-//            serviceMessage.delMessageByChatId(chatId);
+            log.info("::::: star0");
+            serviceMessage.delMessageByChatId(chatId);
 log.info("::::: star1");
 log.info(":::::::: chatId = " + chat.getId());
            User userReceiver = serviceUser.getUserReceiverFromChat(chatId).get(0);
            log.info("::::::::: userID = " + userReceiver.getId());
             log.info("::::: star2");
 
-            Set<Chat> setChat = userReceiver.getUserChats();
-            setChat.remove(chat);
+            userReceiver.getUserChatsNew().remove(chat);
+            log.info("::::: star2.1");
+            GeneralChat generalChat = serviceGeneralChat.getListChatByUserId(userReceiver.getId()).get(0);
+            generalChat.getListChat().remove(chat);
 
             log.info("::::: star3");
-//            serviceUser.saveUser(userReceiver);
+            serviceUser.saveUser(userReceiver);
             log.info("::::: star4");
 
         }
@@ -179,9 +182,12 @@ log.info(":::::::: chatId = " + chat.getId());
 
 
         }
-        *//*GeneralChat generalChat = serviceGeneralChat.getListChatByUserId(profileId).get(0);
+        GeneralChat generalChat = serviceGeneralChat.getListChatByUserId(profileId).get(0);
         generalChat.getListChat().remove(chat);
-        serviceGeneralChat.saveOne(generalChat);*/
+        serviceGeneralChat.saveOne(generalChat);
+        log.info("::::: star5");
+
+        if (chat.getInitiatorId() == profileId) service.deleteById(chatId);
     }
 }
 

@@ -8,7 +8,7 @@ export function ImageInTweetLayout({ images, size }) {
       {imageCount < 2 ? (
         <CardMedia component="img" src={images[0]} sx={{ borderRadius: '16px','&:hover': { filter: 'brightness(0.8)', }, }} />
       ) : (
-        <Grid container spacing={1}>
+        <Grid container spacing={0.5}>
           {imageCount === 2 && (
             <>
               <Grid item xs={6}>

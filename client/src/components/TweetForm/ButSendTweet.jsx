@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { api } from "../../redux/service/api";
 
-
-export default function ButSendTweet({ tweetText, id, file }) {
+export default function ButSendTweet({ tweetText, id, file, closeModal, setFile, setTweetText }) {
+    const maxFiles = 4; // Максимальное количество файлов, которое вы хотите добавить
+    const fileCount = Math.min(file.length, maxFiles); // Определение количества файлов для добавления
 
     const [buttonColor, setButtonColor] = useState(null);
 
@@ -20,21 +21,28 @@ export default function ButSendTweet({ tweetText, id, file }) {
         formData.append('parentTweetId', 0);
         formData.append('user_id', id);
 
-        for (const f of file) {
-            formData.append('file', f);
-            console.log("file", f);
+        if (fileCount > 0) {
+            const fileArray = Array.from(file);
+            for (let i = 0; i < fileCount; i++) {
+                formData.append('file', fileArray[i]);
+                console.log("file", fileArray[i]);
+            }
+        } else {
+            const emptyImage = new File([new Blob()], "empty.png", { type: "image/png" });
+            formData.append('file', emptyImage);
+            console.log("file", emptyImage);
         }
-
-        console.log(formData);
 
         api.post("https://twitter-clone-application.herokuapp.com/api/v1/tweets/tweet/save", formData)
             .then(response => {
                 console.log(response);
                 alert("Success!");
+                closeModal(); // Вызов функции для закрытия окна
+                setFile([]); // Очистить состояние файла
+                setTweetText(""); // Очистить состояние текста твита
             })
             .catch(error => {
                 console.error(error);
-                // Actions on error
                 alert("Error!: " + error.message);
                 if (error.response) {
                     console.log("Server Response:", error.response.data);
@@ -47,10 +55,11 @@ export default function ButSendTweet({ tweetText, id, file }) {
             textTransform: 'none',
             borderRadius: '20px',
             height: '30px',
-            background: buttonColor,
+            background: buttonColor ? buttonColor : '#0080ff',
             marginLeft: '8px'
         }}>
             Tweet
         </Button>
     );
 }
+

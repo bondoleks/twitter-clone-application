@@ -1,6 +1,5 @@
 import { Typography,Box,Avatar,CardMedia,IconButton} from "@mui/material";
 import { useSelector } from "react-redux";
-import { teweetSelector } from "../../redux/selectors";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
@@ -14,6 +13,11 @@ import { api } from "../../redux/service/api";
 import { useDispatch } from "react-redux";
 import { MiniModal } from "../Tweet/MiniModal";
 import { useState } from "react";
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { openQuoteRetweetModalThunk } from "../../redux/quoteRetweet/openQuoteRetweetModalThunk";
+import { openReplyModalThunk } from "../../redux/reply/openReplyModalThunk";
+
 
 
 function formatDateTimeTweet(dateTimeString) {
@@ -37,8 +41,8 @@ function formatDateTimeTweet(dateTimeString) {
 
 
 
-export function TweetPageMain(){
-    const tweet = useSelector(teweetSelector);
+export function TweetPageMain({tweet}){
+
     const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countRetweet, countLike, view = 154,markerLike,markerRetweet,markerBookmark, parentDto, countBookmark} = tweet;
     const fullName = `${firstName} ${lastName}`;
     const dispatch =useDispatch();
@@ -48,7 +52,8 @@ export function TweetPageMain(){
     const [visibleShareModal,setVisibleShareModal] = useState(false);
     //Count
     const [retweetRealyCount,setRetweetRealyCount] = useState(countRetweet);
-    const [likeRealyCount,setLikeRealyCount] = useState(countLike);   
+    const [likeRealyCount,setLikeRealyCount] = useState(countLike);
+    const [bookmarkRealyCount,setBoolmarkRealyCount] = useState(countBookmark);    
     //Marker
     const [activeRetweet,setActiveRetweet] = useState(markerRetweet);  
     const [activeHeart,setActiveHeart] = useState(markerLike);
@@ -69,12 +74,14 @@ export function TweetPageMain(){
       
       function handleQuoteRetweet(id){
           setVisibleRetweetModal(false);
+          dispatch(openQuoteRetweetModalThunk(id));
       }
       
       function headlerBookmark(id){
         api.post(`/tweets/bookmark/${id}`)
         .then(() => {
           setActiveBookmark(!activeBookmark);
+          setBoolmarkRealyCount(activeBookmark ? bookmarkRealyCount - 1 : bookmarkRealyCount + 1);
         });
         setVisibleShareModal(false);
       }
@@ -132,7 +139,7 @@ export function TweetPageMain(){
                 <Typography>{likeRealyCount} Likes</Typography>                
                 
                 
-                <Typography>{countBookmark}<span> Bookmarks</span></Typography>                
+                <Typography>{bookmarkRealyCount}<span> Bookmarks</span></Typography>                
 
             </Box>        
             {/* Icon */}
@@ -140,6 +147,7 @@ export function TweetPageMain(){
             <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
             onClick={(event) => {
                 event.stopPropagation();
+                dispatch(openReplyModalThunk(id))
             }}
             >
             <ChatBubbleIcon />
@@ -198,6 +206,11 @@ export function TweetPageMain(){
             
             >
             <BarChartTwoToneIcon />
+            </IconButton>
+            <IconButton
+            onClick={()=>headlerBookmark(id)}
+            >
+            {activeBookmark ? <BookmarkIcon sx={{ margin: '10px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '10px' }} fontSize="medium" />}
             </IconButton>
             <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
             onClick={(event) => {  

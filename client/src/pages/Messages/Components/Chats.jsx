@@ -105,7 +105,7 @@ const Chats = () => {
       sx={{
         width: '100%',
         bgcolor: 'background.paper',
-        padding: "10px 0"
+
 
       }}
     >
@@ -122,9 +122,17 @@ const Chats = () => {
             username} = chat;
           return (
             <>
-            <ListItem onClick={() => handleOpenActiveChat(chat)}>
+            <ListItem sx={{
+              padding: "0"
+            }} onClick={() => handleOpenActiveChat(chat)}>
               <Box style={activeChat?.chatId === chatId ? {backgroundColor: '#e8e8e8'} : {}} sx={{
                 boxSizing: "border-box",
+                width: "100%",
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: "column",
+                padding: "5px 10px",
+
                 '&:hover': {
                   backgroundColor: '#e8e8e8',
                   cursor: 'pointer'
@@ -136,14 +144,21 @@ const Chats = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     gap: '5px',
-                    boxSizing: "border-box"
+                    padding: "0!important",
+
 
                   }}
                 >
+                  <Box sx={{
+                    display: "flex",
+                    alignItems: 'center',
+                    gap: "5px"
+                  }}>
                   <Avatar src={av_imagerUrl || ""} />
                   <ListItemText>{firstName}</ListItemText>
                   <ListItemText>@{username}</ListItemText>
-                  <ListItemText>{'16.06.2023'}</ListItemText>
+                  </Box>
+                  <ListItemText sx={{textAlign: "end"}}>{'16.06.2023'}</ListItemText>
                 </Box>
                 <Typography>{lastMessage}</Typography>
               </Box>
@@ -154,6 +169,7 @@ const Chats = () => {
 
       }
     </List>
+
 
   );
 };

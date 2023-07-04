@@ -5,8 +5,6 @@ import {api} from "../service/api";
 
 export const getCommetsThunk = (id,page) => {
     return (dispatch) => {
-      dispatch({ type: GET_TWEET_REQUEST });
-  
       api.get(`tweets/reply/all/${id}?sizePage=10&numberPage=${page}`)
         .then((data) => {
             console.log(data);

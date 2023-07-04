@@ -21,11 +21,14 @@ import ProfileUser from './pages/Profile/ProfileUser';
 import ProfileFollowers from './pages/ProfileFollowers/ProfileFollowers';
 import ProfileFollowing from './pages/ProfileFollowing/ProfileFollowing';
 
-import Stomp from 'stompjs';
+import Stomp, { clearInterval } from 'stompjs';
 import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
-
+import { QuoteRetweetModal } from './components/Tweet/ModalsTweetReaction/QuoteRetweetModal';
+import { watchUserTweetsThunk } from './redux/user/watchUserTweetsThunk';
+import { ForgotPage } from './pages/ForgotPage/ForgotPage';
+import { ReplyModal } from './components/Tweet/ModalsTweetReaction/ReplyModal';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -47,6 +50,11 @@ const routes = [
     {
         path: "/activate/:key",
         element: <ActivatePage />,
+        errorElement: <div>Not found</div>
+    },
+    {
+        path: "/forgot_password/:key",
+        element: <ForgotPage />,
         errorElement: <div>Not found</div>
     },
     {
@@ -133,13 +141,22 @@ function App() {
 
     useEffect(() => {
         // Создаем WebSocket-соединение
+        // const socket = new SockJS('https://twitter-clone-application.herokuapp.com/chat/message');
         const socket = new SockJS('https://twitter-clone-application.herokuapp.com/ws-message');
+        // const socket = new SockJS('https://twitter-clone-application.herokuapp.com');
+        // const socket = new SockJS('http://localhost:5173');
+        // const socket = new SockJS('https://twitter-clone-application.vercel.app');
         const stompClient = Stomp.over(socket);
 
         // Устанавливаем колбэк-функцию при успешном соединении
         stompClient.connect({}, () => {
             // Подписываемся на каналы
-            stompClient.subscribe('/chat', (message) => {
+            stompClient.subscribe('/app/chat/message', (message) => {
+                console.log('Received message from /chat:', message.body);
+                // Действия с полученным сообщением
+            });
+
+            stompClient.subscribe('/app/send', (message) => {
                 console.log('Received message from /chat:', message.body);
                 // Действия с полученным сообщением
             });
@@ -158,10 +175,20 @@ function App() {
 
     // Get initial user data
     useEffect(() => {
+        let timer = null;
         if (isAuthenticated){
             dispatch(getUser());
+            timer = setInterval(()=>{
+                dispatch(watchUserTweetsThunk())
+            },10000)
         }
+return () =>{
+    clearInterval(timer);
+}
     }, [])
+
+
+
 
     const lightTheme = createTheme({
         palette: {
@@ -275,7 +302,7 @@ function App() {
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" ,paddingBottom: !isAuthenticated ? "65px" : 0,width:'100%!important' }}>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px", paddingBottom: !isAuthenticated ? "65px" : '32px', width: '100%!important' }}>
                         {Boolean(!useMatch("/activate/:key")) &&
                         <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Sidebar />
@@ -293,6 +320,8 @@ function App() {
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
                     </Grid>
+                    <QuoteRetweetModal/>
+                    <ReplyModal/>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 

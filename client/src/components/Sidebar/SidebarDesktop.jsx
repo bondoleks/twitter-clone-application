@@ -235,7 +235,7 @@ export const SidebarDesktop = ({ }) => {
 
             <Button variant="contained" size="medium" onClick={handleOpen}
                 sx={{
-                    marginBottom: '50px',
+                    marginBottom: '10px',
                     marginInline: '30px',
                     borderRadius: '50px',
                     backgroundColor: buttonColor
