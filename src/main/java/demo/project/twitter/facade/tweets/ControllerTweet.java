@@ -43,23 +43,22 @@ public class ControllerTweet {
     }
 
     @PostMapping("tweet/view")
-    public void countViewTweet(@RequestBody DtoArrayTweet dto ,
-                               @RequestParam("profileId") Long userId,
+    public String countViewTweet(@RequestBody DtoArrayTweet dto ,
+//                               @RequestParam("profileId") Long userId,
                                  Principal principal) {
 
 
 //        Long profileId = userId;
+
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
 //        facade.saveViewTweet(profileId, dto.getArrTweetId());
+String s = dto.getArrTweetId().length + " " + profileId;
+        return s;
 
 
     }
 
 
-    @GetMapping("alluser")
-    public List<User> allUser() {
-        return ur.findAll();
-    }
 
     @GetMapping("tweetsearch")
     public List<DtoTweet> tweetSearch(@RequestParam("search_requеst") String searchRequest, Principal principal) {
