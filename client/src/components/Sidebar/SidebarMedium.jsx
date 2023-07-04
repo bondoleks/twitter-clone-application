@@ -34,12 +34,13 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 export const SidebarMedium = () => {
     const isAutorizate= useSelector(state => state.user.authorized);
     const [buttonColor, setButtonColor] = useState();
-
+    const navigate = useNavigate();
     const theme = useTheme();
 
     const DropStyles = {
@@ -219,10 +220,15 @@ export const SidebarMedium = () => {
                             >
                                 <MenuItem onClick={handleOpenModal} style={DropStyles}>
                                     <Typography sx={{ marginInline: '8px' }} >
-                                        Settings
+                                        Dispplay
                                     </Typography>
                                     <KeyboardArrowDownIcon />
                                 </MenuItem>
+                                <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
+                                <Typography>
+                                    Change Password
+                                </Typography>
+                            </MenuItem>
                             </Menu>
                             <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                         </Grid>

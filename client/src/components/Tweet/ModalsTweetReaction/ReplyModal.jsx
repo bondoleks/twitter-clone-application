@@ -1,11 +1,12 @@
 import { WrapperReactionsModal } from "./WrapperReactionsModal";
-import { Box, Avatar, TextareaAutosize, Grid, Typography } from "@mui/material";
+import { Box, Avatar, TextareaAutosize, Grid, Typography ,IconButton} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../../redux/selectors";
 import { tweetInReplySelector, visibleReplyModalSelector, textReplySelector, imageReplySelector } from "../../../redux/selectors";
-import {  ADD_TEXT_IN_REPLY, ADD_IMG_IN_REPLY, CLOSE_REPLY_MODAL } from "../../../redux/actions";
+import {  ADD_TEXT_IN_REPLY, ADD_IMG_IN_REPLY, CLOSE_REPLY_MODAL,DELETE_IMG_IN_REPLY } from "../../../redux/actions";
 import { postReplyThunk } from "../../../redux/reply/postReplyThunk";
 import { TweetBody } from "../TweetBody";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 export function ReplyModal() {
@@ -37,6 +38,12 @@ export function ReplyModal() {
       dispatch({ type: ADD_IMG_IN_REPLY, payload: { img: e.target.files } });
     }
   };
+
+  function handleRemoveImage(index){
+    dispatch({type:DELETE_IMG_IN_REPLY,payload:{index:index}})
+  }
+
+
   return (
 
     <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseReplyModal} buttonName="Reply" functionButton={postReply} width={600} handleImageUpload={handleImageUpload} parentId={parentTweet.id} textLenght={replyText.length}>
@@ -70,10 +77,31 @@ export function ReplyModal() {
           </Box>
         </Box>
           <Box sx={{display: 'flex',justifyContent:'center'}}>
-            {replyImages && replyImages.length > 0 &&
+          {replyImages && replyImages.length > 0 &&
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {Array.from(replyImages).map((image, index) => (
-                  <img key={index} src={URL.createObjectURL(image)} alt="reply-image" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+            <Box key={index} sx={{ position: "relative" }}>
+            <IconButton
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                zIndex: 1,
+                background: "white",
+                borderRadius: "50%",
+                padding: "2px",
+              }}
+              onClick={() => handleRemoveImage(index)}
+            >
+              <CloseIcon />
+            </IconButton>
+            <img
+              src={URL.createObjectURL(image)}
+              alt="reply-image"
+              style={{ maxWidth: "100px", maxHeight: "100px" }}
+            />
+          </Box>
+
                 ))}
               </Box>
             }

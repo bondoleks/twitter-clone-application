@@ -28,11 +28,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const SidebarDesktop = ({ }) => {
     const isAutorizate= useSelector(state => state.user.authorized);
     const [buttonColor, setButtonColor] = useState();
-
+    const navigate =useNavigate();
     useEffect(() => {
         const savedColor = localStorage.getItem('buttonColor');
         if (savedColor) {
@@ -224,9 +225,13 @@ export const SidebarDesktop = ({ }) => {
             >
                 <MenuItem onClick={handleOpenModal} style={DropStyles}>
                     <Typography>
-                        Settings
+                        Display
                     </Typography>
-                    <KeyboardArrowDownIcon />
+                </MenuItem>
+                <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
+                    <Typography>
+                        Change Password
+                    </Typography>
                 </MenuItem>
             </Menu>
 

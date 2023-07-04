@@ -29,6 +29,8 @@ import { QuoteRetweetModal } from './components/Tweet/ModalsTweetReaction/QuoteR
 import { watchUserTweetsThunk } from './redux/user/watchUserTweetsThunk';
 import { ForgotPage } from './pages/ForgotPage/ForgotPage';
 import { ReplyModal } from './components/Tweet/ModalsTweetReaction/ReplyModal';
+import { ChangePasswordPage } from './pages/ChangePassword/ChangePasswordPage';
+import { ModalImageFullScreen } from './components/Tweet/ModalImageFullScreen';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -125,6 +127,10 @@ const routes = [
         // element: <TweetPage />,
         element: <PrivateRoute element={TweetPage} />,
     },
+    {
+        path: "/change_password",
+        element: <PrivateRoute element={ChangePasswordPage} />,
+    },
 ];
 
 
@@ -134,6 +140,7 @@ function App() {
     const isAuthenticated = useSelector(state => state.user.authorized);
     const isActiveMessage = useMatch("/messages/:id");
     const isActivateKey = useMatch("/activate/:key");
+    const isActivateForgotPassword = useMatch("/forgot_password/:key");
 
     console.log(Boolean(isAuthenticated));
 
@@ -287,7 +294,7 @@ return () =>{
             rightColumn = <MessagesRightColumn />
         } else if (isActiveMessage) {
             rightColumn = <ActiveChat />
-        } else if(!isActivateKey){
+        } else if(!isActivateKey || !isActivateForgotPassword){
             rightColumn = <Search />
         }
 
@@ -322,6 +329,7 @@ return () =>{
                     </Grid>
                     <QuoteRetweetModal/>
                     <ReplyModal/>
+                    <ModalImageFullScreen/>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 
