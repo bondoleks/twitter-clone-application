@@ -26,6 +26,9 @@ import SockJS from 'sockjs-client';
 import {getUser} from './redux/user/logingThunk.jsx';
 import { ActivatePage } from './pages/ActivatePage/ActivatePage';
 import Footerlogin from './components/Footerlogin/Footerlogin';
+import NewMessageModal from './pages/Messages/Components/NewMessageModal.jsx';
+import {handleOpenNewMessageModal} from './redux/Messages/Thunks/MessagesThunk.js';
+import {isModalOpened} from './redux/selectors.jsx';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -126,19 +129,32 @@ function App() {
     const isAuthenticated = useSelector(state => state.user.authorized);
     const isActiveMessage = useMatch("/messages/:id");
     const isActivateKey = useMatch("/activate/:key");
+    const modalOpen = useSelector(isModalOpened);
+
+    const handleCloseModal = () => dispatch(handleOpenNewMessageModal('close'));
+
     console.log(Boolean(isAuthenticated));
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         // Создаем WebSocket-соединение
+        // const socket = new SockJS('https://twitter-clone-application.herokuapp.com/chat/message');
         const socket = new SockJS('https://twitter-clone-application.herokuapp.com/ws-message');
+        // const socket = new SockJS('https://twitter-clone-application.herokuapp.com');
+        // const socket = new SockJS('http://localhost:5173');
+        // const socket = new SockJS('https://twitter-clone-application.vercel.app');
         const stompClient = Stomp.over(socket);
 
         // Устанавливаем колбэк-функцию при успешном соединении
         stompClient.connect({}, () => {
             // Подписываемся на каналы
-            stompClient.subscribe('/chat', (message) => {
+            stompClient.subscribe('/app/chat/message', (message) => {
+                console.log('Received message from /chat:', message.body);
+                // Действия с полученным сообщением
+            });
+
+            stompClient.subscribe('/app/send', (message) => {
                 console.log('Received message from /chat:', message.body);
                 // Действия с полученным сообщением
             });
@@ -291,6 +307,7 @@ function App() {
                         <Hidden mdDown>
                             {handleRenderRightColumn(location.pathname)}
                         </Hidden>
+                        <NewMessageModal open={modalOpen} closeModal={handleCloseModal} />
                     </Grid>
                     {!isAuthenticated && <Footerlogin />}
             </ThemeProvider>

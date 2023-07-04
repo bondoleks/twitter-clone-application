@@ -19,7 +19,6 @@ import { useParams } from 'react-router-dom';
 
 export const Profile = ({ withId }) => {
   const { id } = useParams()
-  console.log("11111111", withId,"BNNBNBNBNB", id)
 
 
   const StyledAvatar = styled(Avatar)(({ theme }) => ({
@@ -78,7 +77,7 @@ export const Profile = ({ withId }) => {
             width: '110%',
             marginLeft: '-5%',
             height: '200px',
-          }}></Box>       
+          }}></Box>
 
 
           <StyledAvatar

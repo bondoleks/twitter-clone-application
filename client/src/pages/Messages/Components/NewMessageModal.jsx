@@ -29,7 +29,7 @@ import {filteredUsersSelector, getUser} from '../../../redux/selectors.jsx';
 import {api} from '../../../redux/service/api.jsx';
 import {
   handleAddNewChat,
-  handleGetMessagesForChat,
+  handleGetMessagesForChat, handleOpenNewMessageModal,
   handleSetActiveChat
 } from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {GET_CHATS_SUCCESS} from '../../../redux/actions.jsx';
@@ -40,12 +40,14 @@ const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
   color: inputFocus ? "rgb(29, 155, 240)" : "grey",
 }));
 
-const NewMessageModal = ({ open, closeModal }) => {
+const NewMessageModal = ({ open, }) => {
   const [filter, setFilter] = useState('')
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [newChatLoading, setNewChatLoading] = useState(false);
   const user = useSelector(getUser);
+  const closeModal = () => dispatch(handleOpenNewMessageModal('close'));
+
 
   const filteredStateUsers = useSelector(filteredUsersSelector)
 
@@ -91,7 +93,6 @@ const NewMessageModal = ({ open, closeModal }) => {
     closeModal();
   }
 
-  console.log("selectedUsers.lengthselectedUsers.length", selectedUsers.length);
 
   const handleInputFocus = () => {
     if (selectedUsers.length === 1) return;
@@ -107,12 +108,23 @@ const NewMessageModal = ({ open, closeModal }) => {
     return handleFindUser(e.target.value);
   };
 
+  // const openNewChat = async () => {
+  //   setNewChatLoading(true);
+  //   // Create new chat, BE does not return chat ID so we should get the last one from the list
+  //   const newChat = await api.get(`chats/chat/${selectedUsers[0].id}?profileId=${user.id}`) ?? {};
+  //   const allChats = await api.post(`/chats/add/${newChat?.chatId}?profileId=${user.id}`) || [];
+  //   const createdChat = allChats.find(chat => chat.chatId === newChat?.chatId);
+
   const openNewChat = async () => {
     setNewChatLoading(true);
     // Create new chat, BE does not return chat ID so we should get the last one from the list
-    const newChat = await api.get(`chats/chat/${selectedUsers[0].id}?profileId=${user.id}`) ?? {};
-    const allChats = await api.post(`/chats/add/${newChat?.chatId}?profileId=${user.id}`) || [];
+    const newChat = await api.get(`chats/chat/${selectedUsers[0].id}`) ?? {};
+    // await api.post(`chats/add_r/${selectedUsers[0].id}`) ?? {};
+    // await api.post(`chats/add/${user.id}`) ?? {};
+    const allChats = await api.post(`/chats/add/${newChat?.chatId}`) || [];
     const createdChat = allChats.find(chat => chat.chatId === newChat?.chatId);
+
+
 
     dispatch(handleAddNewChat(createdChat));
     dispatch(handleGetMessagesForChat(createdChat.chatId, user.id));

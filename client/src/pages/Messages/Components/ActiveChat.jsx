@@ -11,7 +11,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import ChatInput from "./ChatInput.jsx";
 import ChatMessages from "./ChatMessages.jsx";
 import {useSelector} from 'react-redux';
-import {getActiveChat, getMessagesForChat, getUser} from '../../../redux/selectors.jsx';
+import {getActiveChat, getChatOwners, getMessagesForChat, getUser} from '../../../redux/selectors.jsx';
 import {api} from '../../../redux/service/api.jsx';
 
 const ActiveChat = () => {
@@ -19,6 +19,20 @@ const ActiveChat = () => {
   const chatMessages = useSelector(getMessagesForChat);
   const user = useSelector(getUser);
   const activeChat = useSelector(getActiveChat);
+  const chatOwners = useSelector(getChatOwners);
+
+  const isInitiatorChatOwner = activeChat?.initiatorId === user?.id;
+  const getChatUserReceiver = chatOwners.find(owner => owner.id === activeChat.initiatorId);
+
+  const chatOwner = isInitiatorChatOwner ? {
+    username: activeChat?.username?.toLowerCase() || 'N/A',
+    firstName: activeChat?.firstName || 'N/A',
+    av_imagerUrl: activeChat?.av_imagerUrl || ""
+  } : {
+    username: getChatUserReceiver?.username?.toLowerCase() || 'N/A',
+    firstName: getChatUserReceiver?.firstName || 'N/A',
+    av_imagerUrl: getChatUserReceiver?.av_imagerUrl || ""
+  }
 
   const navigate = useNavigate();
 
@@ -45,7 +59,7 @@ const ActiveChat = () => {
         <Box>
           <Avatar
             alt="User Avatar"
-            src={activeChat?.av_imagerUrl || ""}/>
+            src={chatOwner?.av_imagerUrl || ""}/>
         </Box>
         <Box sx={{
           display: "flex",
@@ -56,8 +70,8 @@ const ActiveChat = () => {
           <Typography sx={{
             fontSize: '24px',
             fontWeight: '900'
-          }}>{activeChat?.firstName || 'N/A'}</Typography>
-          <Typography>@{activeChat?.username?.toLowerCase() || 'N/A'}</Typography>
+          }}>{chatOwner?.firstName || 'N/A'}</Typography>
+          <Typography>@{chatOwner?.username?.toLowerCase() || 'N/A'}</Typography>
           <Box display={'flex'}
                marginTop={'10px'}>
             <IconButton edge='start' color='gray'>
