@@ -86,19 +86,19 @@ const routes = [
         // element: <Notifications />,
         element: <PrivateRoute element={Notifications} />,
     },
-    {
-        path: "/messages",
-        // element: <MessageMiddleColumn />,
-        element: <PrivateRoute element={MessageMiddleColumn} />,
-    },
-    {
-        path: "/messages/:id",
-        // element: <MessageMiddleColumn />,
-        element: <PrivateRoute element={MessageMiddleColumn} />,
-
-
-
-    },
+    // {
+    //     path: "/messages",
+    //     // element: <MessageMiddleColumn />,
+    //     element: <PrivateRoute element={MessageMiddleColumn} />,
+    // },
+    // {
+    //     path: "/messages/:id",
+    //     // element: <MessageMiddleColumn />,
+    //     element: <PrivateRoute element={MessageMiddleColumn} />,
+    //
+    //
+    //
+    // },
     {
         path: "/bookmarks",
 
@@ -183,18 +183,16 @@ function App() {
     // Get initial user data
     useEffect(() => {
         let timer = null;
-        if (isAuthenticated){
+        if (isAuthenticated) {
             dispatch(getUser());
-            timer = setInterval(()=>{
+            timer = setInterval(() => {
                 dispatch(watchUserTweetsThunk())
-            },10000)
+            }, 10000)
         }
-return () =>{
-    clearInterval(timer);
-}
+        return () => {
+            clearInterval(timer);
+        }
     }, [])
-
-
 
 
     const lightTheme = createTheme({
@@ -275,66 +273,89 @@ return () =>{
     const theme = useCallback(() => {
         if (themeMode === "light") {
             return lightTheme;
-        } if (themeMode === "dark") {
-            return darkTheme;
         }
-        else {
+        if (themeMode === "dark") {
+            return darkTheme;
+        } else {
             return blackTheme;
         }
     }, [themeMode]);
 
     const location = useLocation();
 
-    const handleRenderRightColumn = (path) => {
+    const handleRenderMiddleColumn = (path) => {
+        const isActiveMessage = useMatch("/messages/:id");
+        const isMessage = useMatch("/messages");
+        const isTabletOrPhone = useMediaQuery('(max-width: 900px)');
 
-        let isActiveMessage = useMatch("/messages/:id")
-        let rightColumn = null;
-
-        if (path === '/messages') {
-            rightColumn = <MessagesRightColumn />
-        } else if (isActiveMessage) {
-            rightColumn = <ActiveChat />
-        } else if(!isActivateKey){
-            rightColumn = <Search />
+        if (!isActiveMessage && !isMessage) {
+            return null
+        }
+        if (isActiveMessage && isTabletOrPhone) {
+            return <ActiveChat/>
+        } else {
+            return <MessageMiddleColumn/>;
         }
 
+        const handleRenderRightColumn = (path) => {
+
+            let isActiveMessage = useMatch("/messages/:id")
+            let rightColumn = null;
+
+            if (path === '/messages') {
+                rightColumn = <MessagesRightColumn/>
+            } else if (isActiveMessage) {
+                rightColumn = <ActiveChat/>
+            } else if (!isActivateKey) {
+                rightColumn = <Search/>
+            }
+
+            return (
+              <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
+                  {rightColumn}
+              </Grid>
+            )
+        }
         return (
-          <Grid item md={location.pathname === '/messages' || location.pathname.startsWith("/messages/") ? 5 : 3}>
-              {rightColumn}
-          </Grid>
+
+          <CustomThemeContext.Provider value={{color, themeMode, setThemeMode, setColor}}>
+              <ThemeProvider theme={theme}>
+                  <CssBaseline/>
+                  <Grid container spacing={2} sx={{
+                      margin: "0 auto",
+                      maxWidth: "1082px",
+                      paddingBottom: !isAuthenticated ? "65px" : '32px',
+                      width: '100%!important'
+                  }}>
+                      {Boolean(!useMatch("/activate/:key")) &&
+                        <Grid item md={3} sx={{paddingTop: '0!important', paddingLeft: '0!important'}}>
+                            <Sidebar/>
+                        </Grid>
+                      }
+                      <Grid item xs={12}
+                            md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6}
+                            sm={8} sx={{paddingTop: '0!important', paddingLeft: '0!important'}}>
+                          {handleRenderMiddleColumn(location.pathname)}
+                          <Routes>
+                              {/* {...routes.map(r => <Route {...r} />)} */}
+                              {routes.map((route, index) => (
+                                <Route key={index} {...route} />
+                              ))}
+                          </Routes>
+                      </Grid>
+                      <Hidden mdDown>
+                          {handleRenderRightColumn(location.pathname)}
+                      </Hidden>
+                      <NewMessageModal open={modalOpen} closeModal={handleCloseModal}/>
+                  </Grid>
+                  <QuoteRetweetModal/>
+                  <ReplyModal/>
+              </ThemeProvider>
+          </CustomThemeContext.Provider>
+
         )
     }
-    return (
-
-        <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px", paddingBottom: !isAuthenticated ? "65px" : '32px', width: '100%!important' }}>
-                        {Boolean(!useMatch("/activate/:key")) &&
-                        <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
-                            <Sidebar />
-                        </Grid>
-                        }
-                        <Grid item xs={12} md={location.pathname === "/messages" || location.pathname.startsWith("/messages/") ? 4 : 6} sm={8} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
-                            <Routes>
-                                {/* {...routes.map(r => <Route {...r} />)} */}
-                                {routes.map((route, index) => (
-                                    <Route key={index} {...route} />
-                                ))}
-                            </Routes>
-                        </Grid>
-                        <Hidden mdDown>
-                            {handleRenderRightColumn(location.pathname)}
-                        </Hidden>
-                        <NewMessageModal open={modalOpen} closeModal={handleCloseModal} />
-                    </Grid>
-                    <QuoteRetweetModal/>
-                    <ReplyModal/>
-            </ThemeProvider>
-        </CustomThemeContext.Provider>
-
-    )
 }
 
-export default App
+export default App;
 

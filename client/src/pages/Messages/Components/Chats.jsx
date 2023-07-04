@@ -158,7 +158,7 @@ const Chats = () => {
           <ListItem sx={{
             padding: "0"
           }} onClick={() => handleOpenActiveChat(chat)}>
-            <Box style={activeChat?.chatId === chatId ? {backgroundColor: '#e8e8e8'} : {}} sx={{
+            <Box style={activeChat?.chatId === chatId ? {backgroundColor: '#e8e8e8', borderRight: "2px solid rgb(29, 155, 240)"} : {}} sx={{
               boxSizing: "border-box",
               width: "100%",
               display: 'flex',
