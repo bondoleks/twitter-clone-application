@@ -40,7 +40,7 @@ export function ReplyInput({userParentName,tweetId}){
       }
 
     return(
-        <Grid container spacing={0}>
+        <Grid container spacing={0} sx={{borderBottom: '1px rgb(239, 243, 244) solid'}}>
             <Grid item xs={2}>
                 <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px', cursor: 'pointer' }} />
             </Grid>
@@ -102,6 +102,7 @@ export function ReplyInput({userParentName,tweetId}){
                   background: buttonColor
                 }}
                 onClick={()=>postReply(tweetId)}
+                disabled={replyText.length === 0}
               >
                 Reply
               </Button>
