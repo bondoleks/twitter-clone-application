@@ -4,10 +4,10 @@ import {api} from "../service/api";
 
 
 export const getCommetsThunk = (id,page) => {
-    return (dispatch, getState) => {
-      
+    return (dispatch, getState) => { 
       const state = getState();
       const {comments} = state.tweet;
+
       api.get(`tweets/reply/all/${id}?sizePage=10&numberPage=${page}`)
         .then((data) => {
           const uniqueReplies = [];

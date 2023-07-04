@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 
+
 export const Retweet = ({ tweet }) => {
     const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, parentDto } = tweet;
     const navigate = useNavigate();
     const currentUserId = useSelector(state=>state.user.user.id);
     return (
       <Box data-user_id={user_id} data-tweet_id={id} sx={{ display: 'flex', cursor: 'pointer',border: '1px solid grey',borderRadius: '16px', overflow:'hidden',mt:'14px',':hover': { backgroundColor: 'rgba(0,0,0, 0.1)' } }}
+
       onClick={(e) => {
         e.stopPropagation();
         navigate(`/tweet/${id}`)}}

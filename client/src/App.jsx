@@ -302,7 +302,7 @@ return () =>{
         <CustomThemeContext.Provider value={{ color, themeMode, setThemeMode, setColor }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px" ,paddingBottom: !isAuthenticated ? "65px" : 0,width:'100%!important' }}>
+                    <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px", paddingBottom: !isAuthenticated ? "65px" : '32px', width: '100%!important' }}>
                         {Boolean(!useMatch("/activate/:key")) &&
                         <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Sidebar />
