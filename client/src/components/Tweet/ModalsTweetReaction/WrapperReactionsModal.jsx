@@ -94,6 +94,7 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
                   background: buttonColor
                 }}
                 onClick={()=>functionButton(parentId)}
+                disabled={textLenght === 0}
               >
                 {buttonName}
               </Button>
@@ -138,6 +139,7 @@ export function WrapperReactionsModal({ children, isOpen, onClose, buttonName, f
                   background: buttonColor
                 }}
                 onClick={()=>functionButton(parentId)}
+                disabled={textLenght === 0}
               >
                 {buttonName}
               </Button>

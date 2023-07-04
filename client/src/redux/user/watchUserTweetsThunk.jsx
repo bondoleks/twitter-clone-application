@@ -19,7 +19,6 @@ export function watchUserTweetsThunk(){
             })
             .catch(error => {
                 console.error(error);
-                dispatch({type:DELETE_USER_VISIBLE_TWEETS})
                 if (error.response) {
                     console.log("Server Response:", error.response.data);
                 }

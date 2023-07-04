@@ -65,7 +65,7 @@ export function formatDateTime(dateTimeString) {
 
 const Tweet = ({ tweet }) => {
 
-  const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, countLike, view = 154, parentDto,markerLike,markerRetweet,markerBookmark} = tweet;
+  const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countReply, countRetweet, countLike, countView , parentDto,markerLike,markerRetweet,markerBookmark} = tweet;
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -263,7 +263,7 @@ return (
         
         >
           <BarChartTwoToneIcon />
-          <Typography>{view}</Typography>
+          <Typography>{countView || 0}</Typography>
         </IconButton>
         <IconButton sx={{ "&:hover": { color: "rgb(29, 155, 240)" } }}
             onClick={(event) => {  

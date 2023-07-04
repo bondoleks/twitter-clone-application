@@ -10,6 +10,7 @@ import {getTweetThunk} from '../../redux/tweet/getTweetThunk.jsx';
 import { ReplyInput } from "../../components/TweetPage/ReplyInput";
 import { useSelector } from "react-redux";
 import { tweetSelector } from "../../redux/selectors";
+import { REMOVE_OLD_REPLY } from "../../redux/actions";
 
 
 
@@ -23,6 +24,7 @@ export function TweetPage(){
 
 
       useEffect(() => {
+        dispatch({type:REMOVE_OLD_REPLY})
         dispatch(getTweetThunk(tweet_id));
         dispatch(getCommetsThunk(tweet_id,pageComments));
       }, []);

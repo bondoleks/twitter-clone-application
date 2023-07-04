@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useScrollTracker } from "../Home/ScrollTracker";
 import { getCommetsThunk } from "../../redux/tweet/getCommetsThunk";
 import { ReplyItem } from "./ReplyItem";
+import Tweet from "../Tweet/Tweet";
 
 
 export function TweetPageRepliesList({page,setPage}){
@@ -31,9 +32,9 @@ useEffect(() => {
             {replies.map((reply) => {
                 console.log(reply);
                 return(
-        <ReplyItem
+        <Tweet
           key={reply.id}
-          reply={reply} 
+          tweet={reply} 
         />
       )})}
 
