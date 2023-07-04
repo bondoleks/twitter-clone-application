@@ -91,4 +91,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>, PagingAndSo
                     "    inner join tweets on tw2.tweet_id = tweets.id where word = :wordSearch and tw2.tweet_id in :arr limit 10",
             nativeQuery = true)
     List<Tweet> getTweetByWordAndArrayId(@Param("wordSearch") String s, @Param("arr") Long[] arrId);
+
+    @Query(
+            value = "select * from tweets  where tweets.id in :arr",
+            nativeQuery = true)
+    List<Tweet> getListTweetByListTweetId(@Param("arr") Long[] arrTweetId);
 }

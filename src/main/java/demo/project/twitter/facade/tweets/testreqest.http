@@ -73,7 +73,7 @@ Content-Type: application/json
 
 
 {
-"listTweetId": [10, 20, 30 , 40]
+"arrTweetId": [163, 164, 165 , 166, 167, 168, 169, 170]
 
 }
 

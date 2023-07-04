@@ -6,6 +6,8 @@ import demo.project.twitter.model.User;
 import demo.project.twitter.model.enums.TweetType;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +35,14 @@ public class Tweet extends BaseEntity {
 
     @ManyToMany(mappedBy = "listTweet")
     private List<TweetWord> listTweetWord;
+
+    @OneToMany
+    @JoinTable(
+            name = "viewtweet",
+            joinColumns = @JoinColumn(name = "tweet_id"),
+            inverseJoinColumns = @JoinColumn(name = "userr_id")
+    )
+    private Set<User> setUser = new HashSet<>();
 
     public Tweet(TweetType tweetType, String tweetBody, User user) {
         this.tweetType = tweetType;
