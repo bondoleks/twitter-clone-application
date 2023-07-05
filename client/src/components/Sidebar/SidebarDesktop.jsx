@@ -34,12 +34,12 @@ import { useParams } from 'react-router-dom';
 import { useFetch } from "../../hooks/UseFetch";
 import { styled } from '@mui/material/styles';
 
-
 export const SidebarDesktop = ({ withId }) => {
     const { id } = useParams()
     const isAutorizate = useSelector(state => state.user.authorized);
     const [buttonColor, setButtonColor] = useState();
     const navigate =useNavigate();
+
 
 
     const StyledAvatar = styled(Avatar)(({ theme }) => ({
@@ -273,13 +273,17 @@ export const SidebarDesktop = ({ withId }) => {
                 >
                     <MenuItem onClick={handleOpenModal} style={DropStyles}>
                         <Typography>
-                            Display
+                        Display
                         </Typography>
+                        <KeyboardArrowDownIcon />
                     </MenuItem>
+
                     <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
                         <Typography>
                             Change Password
                         </Typography>
+
+
                     </MenuItem>
                 </Menu>
 
