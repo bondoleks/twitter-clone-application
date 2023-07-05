@@ -366,9 +366,7 @@ const SidebarMobile = ({ withId }) => {
     return (
         <>
             <AppBar position='fixed' color='paper'>
-                <Container fixed sx={{
-
-                }}>
+                <Container fixed>
                     <Toolbar >
                         <Drawer
                             anchor="left"
@@ -507,24 +505,24 @@ const SidebarMobile = ({ withId }) => {
                 </Container>
             </AppBar >
 
-            {
-              (!isActiveMessage && !isMessagesPage) &&  (
-                <IconButton onClick={handleOpen}>
-                    <AddCircleIcon sx={{
-                        position: 'fixed',
-                        top: '500px',
-                        left: '70%',
-                        zIndex: '999',
-                        color: buttonColor ? buttonColor : '#0080ff',
-                        fontSize: '64px'
-                    }} />
-                </IconButton>
-              )
-            }
-
-            <TweetFormMobile open={open} onClose={handleClose} />
-
             {isAutorizate && <>
+                {
+                  (!isActiveMessage && !isMessagesPage) &&  (
+                    <IconButton onClick={handleOpen}>
+                        <AddCircleIcon sx={{
+                            position: 'fixed',
+                            top: '500px',
+                            left: '70%',
+                            zIndex: '999',
+                            color: buttonColor ? buttonColor : '#0080ff',
+                            fontSize: '64px'
+                        }} />
+                    </IconButton>
+                  )
+                }
+                <TweetFormMobile open={open} onClose={handleClose} />
+
+
                 <Box edge="start">
                     <BottomNavigation style={bottomNavigationStyles} sx={{
                         position: 'fixed',
