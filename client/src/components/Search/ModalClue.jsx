@@ -33,9 +33,12 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useMediaQuery } from "@mui/material";
+import {useTheme} from "@mui/material/styles";
 
 const ModalClue = () => {
   const isMobile = useMediaQuery('(max-width:900px)');
+
+  const theme = useTheme()
 
   return (
     <>
@@ -52,6 +55,8 @@ const ModalClue = () => {
           left: isMobile ? "0" : "auto",
           zIndex: isMobile ? "9990" : "auto",
           padding: isMobile ? "10px" : "10px",
+          backgroundColor: theme.palette.background.default,
+          color: theme.palette.text.primary
         }}
       >
         <Typography sx={{ color: "e9e9e9", textAlign: isMobile ? "center" : "left" }}>

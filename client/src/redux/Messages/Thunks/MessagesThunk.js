@@ -19,7 +19,12 @@ import {
     SEND_NEW_MESSAGE_LOADING,
     SEND_NEW_MESSAGE_SUCCESS,
     SEND_NEW_MESSAGE_ERROR,
-    ADD_NEW_CHAT_SUCCESS, GET_CHAT_OWNERS, OPEN_NEW_MESSAGE_MODAL, CLOSE_NEW_MESSAGE_MODAL,
+    ADD_NEW_CHAT_SUCCESS,
+    GET_CHAT_OWNERS,
+    OPEN_NEW_MESSAGE_MODAL,
+    CLOSE_NEW_MESSAGE_MODAL,
+    GET_ALL_MESSAGES_LOADING,
+    GET_ALL_MESSAGES_SUCCESS, GET_ALL_MESSAGES_ERROR,
 } from '../../actions.jsx';
 
 export const handleGetSearchUsers = (value) => {
@@ -97,6 +102,27 @@ export const handleGetMessagesForChat = (chatId, userId) => {
             return dispatch({ type: GET_MESSAGES_FOR_CHAT_SUCCESS, payload: chatMessages?.listDto });
         } catch (error) {
             return dispatch({ type: GET_MESSAGES_FOR_CHAT_ERROR, payload: error.message });
+        }
+    };
+};
+
+export const handleGetAllMessagesForAllChats = (chatsIds, userId) => {
+    return async dispatch => {
+        try {
+            dispatch({ type: GET_ALL_MESSAGES_LOADING });
+            // [12.15.9]
+            const allChatsMessages = []
+
+            for (const chatId of chatsIds) {
+                const result = await api.get(
+                  `/chats/chat/messages/${chatId}?profileId=${userId}&sizePage=15&numberPage=0`);
+                    allChatsMessages.push(result?.listDto)
+            }
+
+            // Think on what to do with this data;
+            return dispatch({ type: GET_ALL_MESSAGES_SUCCESS, payload: allChatsMessages });
+        } catch (error) {
+            return dispatch({ type: GET_ALL_MESSAGES_ERROR, payload: error.message });
         }
     };
 };

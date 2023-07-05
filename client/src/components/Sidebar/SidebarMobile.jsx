@@ -294,7 +294,9 @@ const SidebarMobile = () => {
 
         <>
             <AppBar position='fixed' color='paper'>
-                <Container fixed>
+                <Container fixed sx={{
+
+                }}>
                     <Toolbar >
                         <Drawer
                             anchor="left"

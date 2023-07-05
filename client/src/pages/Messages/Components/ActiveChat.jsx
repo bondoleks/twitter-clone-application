@@ -1,5 +1,5 @@
 import react, {useEffect, useState} from 'react';
-import {Box, Container, IconButton, InputAdornment, TextField, Toolbar, Typography} from "@mui/material";
+import {Box, Container, IconButton, InputAdornment, TextField, Toolbar, Typography, useMediaQuery} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth.js";
 import Link from "@mui/material/Link";
@@ -35,17 +35,19 @@ const ActiveChat = () => {
   }
 
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('(max-width:900px)');
+
 
   if (!activeChat) {
     return navigate('/messages');
   }
-
   return (
     <Box sx={{
       height: "100vh",
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      paddingTop: isMobile ? "30px" : "0"
     }}>
       <Box sx={{
         display: "flex",

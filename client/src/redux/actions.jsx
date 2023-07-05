@@ -104,6 +104,10 @@ export const GET_MESSAGES_SUCCESS = "GET_USERS_SUCCESS";
 export const GET_MESSAGES_LOADING = "GET_USERS_LOADING";
 export const GET_MESSAGES_ERROR = "GET_USERS_ERROR";
 
+export const GET_ALL_MESSAGES_SUCCESS = "GET_ALL_MESSAGES_SUCCESS";
+export const GET_ALL_MESSAGES_LOADING = "GET_ALL_MESSAGES_LOADING";
+export const GET_ALL_MESSAGES_ERROR = "GET_ALL_MESSAGES_ERROR";
+
 
 export function registerUserRequest(user) {
     return {
