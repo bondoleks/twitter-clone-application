@@ -1,8 +1,7 @@
-package demo.project.twitter.facade.images;
+package demo.project.twitter.garbage;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -11,12 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("images")
 public class ControllerAttachmentImage {
     private final FacadeAttachmentImage facade;
+/*
 
 
+*/
 /* Дальнейший код приведен для примера.
         В данном классе создаются endpoint для обработки запросов фронта.
         Весь основной процесс обработки происходит в классе Facade
-        */
+        *//*
+
 
 // ************************************** EXAMPLE START **************************************
 
@@ -31,4 +33,6 @@ public class ControllerAttachmentImage {
     }
 
     //    ************************************** EXAMPLE END **************************************
+*/
+
 }

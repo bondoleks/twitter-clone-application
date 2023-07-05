@@ -31,6 +31,7 @@ export function ChangePasswordPage () {
   const handleSubmit = (values, { setSubmitting }) => {
     const {newPassword,oldPassword,repeatedNewPassword} =values;
     api.post(`user/update/password?oldPassword=${oldPassword}&newPassword=${newPassword}&repeatedNewPassword=${repeatedNewPassword}`)
+
     .then((response)=>{
         console.log(response);
         setMessagePassword('Your password has been successfully changed');

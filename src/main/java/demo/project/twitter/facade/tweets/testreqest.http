@@ -68,19 +68,19 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5050/api/v1/tweets/tweet/view?profileId=10
+POST http://localhost:5050/api/v1/tweets/tweet/view?profileId=11
 Content-Type: application/json
 
 
 {
-"arrTweetId": [163, 164, 165 , 166, 167, 168, 169, 170]
+"arrTweetId": [163, 164, 165, 166, 167, 168, 169]
 
 }
 
 
 ###
 
-GET http://localhost:5050/api/v1/tweets/tweet/16
+GET http://localhost:5050/api/v1/tweets/tweet/169
 
 ###
 

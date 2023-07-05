@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.images;
+package demo.project.twitter.garbage;
 
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class DtoAttachmentImage {
   */
 
 /*******************Данные поля созданы для примера**************************/
-    private Long id;
+//    private Long id;
 
 
 

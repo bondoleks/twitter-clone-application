@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.images;
+package demo.project.twitter.service;
 
 import demo.project.twitter.model.tweet.AttachmentImage;
 import org.springframework.stereotype.Service;

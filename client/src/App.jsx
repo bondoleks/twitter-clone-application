@@ -146,6 +146,7 @@ function App() {
     const isActivateKey = useMatch("/activate/:key");
     const isActivateForgotPassword = useMatch("forgotPassword/activate/:key");
 
+
     const modalOpen = useSelector(isModalOpened);
 
     const handleCloseModal = () => dispatch(handleOpenNewMessageModal('close'));
