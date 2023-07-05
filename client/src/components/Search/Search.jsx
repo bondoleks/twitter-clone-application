@@ -617,8 +617,302 @@
 
 
 //V6
+// import React, { useState, useRef } from 'react';
+// import {
+//   FormControl,
+//   InputAdornment,
+//   TextField,
+//   Paper,
+//   ListItem,
+//   ListItemText,
+//   Avatar,
+//   useMediaQuery
+// } from '@mui/material';
+// import { styled } from '@mui/system';
+// import SearchIcon from '@mui/icons-material/Search';
+// import CancelIcon from '@mui/icons-material/Cancel';
+// import ModalClue from './ModalClue.jsx';
+// import { api } from '../../redux/service/api.jsx';
+// import { useNavigate } from 'react-router-dom';
+//
+// const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
+//   color: inputFocus ? 'rgb(29, 155, 240)' : 'grey',
+// }));
+//
+// const StyledCancelIcon = styled(CancelIcon)(({}) => ({
+//   color: 'rgb(29, 155, 240)',
+//   '&:hover': {
+//     cursor: 'pointer',
+//     color: 'red',
+//   },
+// }));
+//
+// const Search = () => {
+//   const [inputValue, setInputValue] = useState('');
+//   const [inputFocused, setInputFocused] = useState(false);
+//   const [users, setUsers] = useState([]);
+//   const inputRef = useRef(null);
+//
+//   const navigate = useNavigate();
+//
+//   const handleInputChange = (event) => {
+//     const value = event.target.value;
+//     setInputValue(value);
+//     handleFindUser(value);
+//   };
+//
+//   const handleCancelClick = () => {
+//     setInputValue('');
+//     inputRef.current.focus();
+//   };
+//
+//   const handleInputFocus = () => {
+//     setInputFocused(true);
+//   };
+//
+//   const handleInputBlur = () => {
+//     setInputFocused(false);
+//   };
+//
+//   const handleFindUser = async (value) => {
+//     if (value.trim() === '') {
+//       setUsers([]);
+//       return;
+//     }
+//
+//     const allUsers = await api.get('/tweets/usersearch', {
+//       params: {
+//         search_requеst: value,
+//       },
+//     });
+//     setUsers(allUsers);
+//   };
+//
+//   const handleUserClick = (user) => {
+//     navigate(`/profile/${user.id}`);
+//     console.log('Clicked user:', user);
+//     setUsers([]);
+//     setInputValue("");
+//   };
+//
+//   const isMobile = useMediaQuery('(max-width:900px)');
+//
+//   return (
+//     <>
+//       <FormControl>
+//         <TextField
+//           variant="outlined"
+//           placeholder="Search Twitter"
+//           value={inputValue}
+//           inputRef={inputRef}
+//           onChange={handleInputChange}
+//           onFocus={handleInputFocus}
+//           onBlur={handleInputBlur}
+//           InputProps={{
+//             startAdornment: (
+//               <InputAdornment position="start">
+//                 <StyledSearchIcon inputFocus={inputFocused} />
+//               </InputAdornment>
+//             ),
+//             endAdornment: inputValue ? (
+//               <InputAdornment position="end">
+//                 <StyledCancelIcon onClick={handleCancelClick} inputFocus={inputFocused} />
+//               </InputAdornment>
+//             ) : null,
+//             sx: {
+//               marginRight: '50px',
+//               maxHeight: '40px',
+//               maxWidth: '100%',
+//               borderRadius: '50px',
+//               backgroundColor: '#F5F5F5',
+//               '&:focus-within': {
+//                 backgroundColor: 'white',
+//                 '& .MuiSvgIcon-root': {
+//                   color: 'rgb(29, 155, 240)',
+//                 },
+//               },
+//             },
+//           }}
+//         />
+//       </FormControl>
+//       {inputFocused && !inputValue && <ModalClue  sx={{
+//         position: "fixed",
+//         top: "0",
+//         left: "0",
+//         zIndex: "9990",
+//         padding: "10px",
+//         backgroundColor: "#fff"
+//
+//       }}/>}
+//       {users.length ? inputValue && (
+//         <Paper elevation={3} sx={{ height: "auto", overflowY: "auto", maxHeight: "300px" }}>
+//           {users.map((user) => (
+//             <ListItem key={user.id} onClick={() => handleUserClick(user)} button>
+//               <Avatar src={user.av_imagerUrl} alt={user.firstName} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
+//               <ListItemText primary={user.firstName} secondary={user.lastName} />
+//             </ListItem>
+//           ))}
+//         </Paper>
+//       ) : null}
+//     </>
+//   );
+// };
+//
+// export default Search;
+
+// import React, { useState, useRef } from 'react';
+// import {
+//   FormControl,
+//   InputAdornment,
+//   TextField,
+//   Paper,
+//   ListItem,
+//   ListItemText,
+//   Avatar,
+//   useMediaQuery
+// } from '@mui/material';
+// import { styled } from '@mui/system';
+// import SearchIcon from '@mui/icons-material/Search';
+// import CancelIcon from '@mui/icons-material/Cancel';
+// import ModalClue from './ModalClue.jsx';
+// import { api } from '../../redux/service/api.jsx';
+// import { useNavigate } from 'react-router-dom';
+//
+// const StyledSearchIcon = styled(SearchIcon)(({ inputFocus }) => ({
+//   color: inputFocus ? 'rgb(29, 155, 240)' : 'grey',
+// }));
+//
+// const StyledCancelIcon = styled(CancelIcon)(({}) => ({
+//   color: 'rgb(29, 155, 240)',
+//   '&:hover': {
+//     cursor: 'pointer',
+//     color: 'red',
+//   },
+// }));
+//
+// const Search = () => {
+//   const [inputValue, setInputValue] = useState('');
+//   const [inputFocused, setInputFocused] = useState(false);
+//   const [users, setUsers] = useState([]);
+//   const inputRef = useRef(null);
+//
+//   const navigate = useNavigate();
+//
+//   const handleInputChange = (event) => {
+//     const value = event.target.value;
+//     setInputValue(value);
+//     handleFindUser(value);
+//   };
+//
+//   const handleCancelClick = () => {
+//     setInputValue('');
+//     inputRef.current.focus();
+//   };
+//
+//   const handleInputFocus = () => {
+//     setInputFocused(true);
+//   };
+//
+//   const handleInputBlur = () => {
+//     setInputFocused(false);
+//   };
+//
+//   const handleFindUser = async (value) => {
+//     if (value.trim() === '') {
+//       setUsers([]);
+//       return;
+//     }
+//
+//     const allUsers = await api.get('/tweets/usersearch', {
+//       params: {
+//         search_requеst: value,
+//       },
+//     });
+//     setUsers(allUsers);
+//   };
+//
+//   const handleUserClick = (user) => {
+//     navigate(`/profile/${user.id}`);
+//     console.log('Clicked user:', user);
+//     setUsers([]);
+//     setInputValue("");
+//   };
+//
+//   const isMobile = useMediaQuery('(max-width:900px)');
+//   const showResults = inputFocused && inputValue && users.length > 0;
+//
+//   return (
+//     <>
+//       <FormControl>
+//         <TextField
+//           variant="outlined"
+//           placeholder="Search Twitter"
+//           value={inputValue}
+//           inputRef={inputRef}
+//           onChange={handleInputChange}
+//           onFocus={handleInputFocus}
+//           onBlur={handleInputBlur}
+//           InputProps={{
+//             startAdornment: (
+//               <InputAdornment position="start">
+//                 <StyledSearchIcon inputFocus={inputFocused} />
+//               </InputAdornment>
+//             ),
+//             endAdornment: inputValue ? (
+//               <InputAdornment position="end">
+//                 <StyledCancelIcon onClick={handleCancelClick} inputFocus={inputFocused} />
+//               </InputAdornment>
+//             ) : null,
+//             sx: {
+//               marginRight: '50px',
+//               maxHeight: '40px',
+//               maxWidth: '100%',
+//               borderRadius: '50px',
+//               backgroundColor: '#F5F5F5',
+//               '&:focus-within': {
+//                 backgroundColor: 'white',
+//                 '& .MuiSvgIcon-root': {
+//                   color: 'rgb(29, 155, 240)',
+//                 },
+//               },
+//             },
+//           }}
+//         />
+//       </FormControl>
+//       {showResults ? (
+//         <Paper elevation={3} sx={{ height: 'auto', overflowY: 'auto', maxHeight: '300px' }}>
+//           {users.map((user) => (
+//             <ListItem key={user.id} onClick={() => handleUserClick(user)} button>
+//               <Avatar
+//                 src={user.av_imagerUrl}
+//                 alt={user.firstName}
+//                 style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+//               />
+//               <ListItemText primary={user.firstName} secondary={user.lastName} />
+//             </ListItem>
+//           ))}
+//         </Paper>
+//       ) : (
+//         inputFocused && !inputValue && <ModalClue />
+//       )}
+//     </>
+//   );
+// };
+//
+// export default Search;
+
+
 import React, { useState, useRef } from 'react';
-import { FormControl, InputAdornment, TextField, Paper, ListItem, ListItemText, Avatar } from '@mui/material';
+import {
+  FormControl,
+  InputAdornment,
+  TextField,
+  Paper,
+  ListItem,
+  ListItemText,
+  Avatar,
+  useMediaQuery
+} from '@mui/material';
 import { styled } from '@mui/system';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -686,6 +980,9 @@ const Search = () => {
     setInputValue("");
   };
 
+  const isMobile = useMediaQuery('(max-width:900px)');
+  const showResults = inputFocused && inputValue && users.length > 0;
+
   return (
     <>
       <FormControl>
@@ -710,6 +1007,7 @@ const Search = () => {
             ) : null,
             sx: {
               marginRight: '50px',
+              fontSize: isMobile ? "14px" : "18px",
               maxHeight: '40px',
               maxWidth: '100%',
               borderRadius: '50px',
@@ -724,9 +1022,44 @@ const Search = () => {
           }}
         />
       </FormControl>
-      {inputFocused && !inputValue && <ModalClue />}
+      {inputFocused && !inputValue && <ModalClue/>}
+
+          {/*<Paper elevation={3}*/}
+          {/*       sx={{*/}
+          {/*         height: isMobile ? "calc(100vh - 120px)" : "300px",*/}
+          {/*         width: isMobile ? "100vw" : "250px",*/}
+          {/*         position: isMobile ? "fixed" : "static",*/}
+          {/*         top: isMobile ? "70px" : "auto",*/}
+          {/*         left: isMobile ? "0" : "auto",*/}
+          {/*         zIndex: isMobile ? "9990" : "auto",*/}
+          {/*         padding: isMobile ? "10px" : "0",*/}
+          {/*         overflowY: "auto",*/}
+
+          {/*       }}*/}
+          {/*>*/}
+          {/*  {users.map((user) => (*/}
+          {/*    <ListItem key={user.id} onClick={() => handleUserClick(user)} button>*/}
+          {/*      <Avatar*/}
+          {/*        src={user.av_imagerUrl}*/}
+          {/*        alt={user.firstName}*/}
+          {/*        // style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}*/}
+          {/*      />*/}
+          {/*      <ListItemText primary={user.firstName} secondary={user.lastName} />*/}
+          {/*    </ListItem>*/}
+          {/*  ))}*/}
+          {/*</Paper>*/}
+
       {users.length ? inputValue && (
-        <Paper elevation={3} sx={{ height: "auto", overflowY: "auto", maxHeight: "300px" }}>
+        <Paper elevation={3}  sx={{
+          height: isMobile ? "calc(100vh - 120px)" : "300px",
+          width: isMobile ? "100vw" : "250px",
+          position: isMobile ? "fixed" : "static",
+          top: isMobile ? "70px" : "auto",
+          left: isMobile ? "0" : "auto",
+          zIndex: isMobile ? "9990" : "auto",
+          padding: isMobile ? "10px" : "0",
+          overflowY: "auto",
+        }}>
           {users.map((user) => (
             <ListItem key={user.id} onClick={() => handleUserClick(user)} button>
               <Avatar src={user.av_imagerUrl} alt={user.firstName} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />

@@ -15,6 +15,9 @@ const ChatInput = ({activeChat}) => {
   const handleGetMessage = async (e) => setMessage(e.target.value);
 
   const handleSendChatMessage = async () => {
+    if (!message) {
+      return;
+    }
     await dispatch(handleSendNewMessage(activeChat.chatId, message));
     setMessage("");
   }
