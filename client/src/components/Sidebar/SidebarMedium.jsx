@@ -263,10 +263,15 @@ export const SidebarMedium = ({ withId }) => {
                                 >
                                     <MenuItem onClick={handleOpenModal} style={DropStyles}>
                                         <Typography sx={{ marginInline: '8px' }} >
-                                            Settings
+                                            Display
                                         </Typography>
                                         <KeyboardArrowDownIcon />
                                     </MenuItem>
+                                    <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
+                                      <Typography>
+                                          Change Password
+                                      </Typography>
+                                  </MenuItem>
 
                                 </Menu>
                                 <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
