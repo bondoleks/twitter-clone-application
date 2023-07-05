@@ -1,16 +1,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import NewMessageModal from "./NewMessageModal.jsx";
+import {useDispatch} from 'react-redux';
+import {handleOpenNewMessageModal} from '../../../redux/Messages/Thunks/MessagesThunk.js';
 
 const MessagesRightColumn = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
+  const dispatch = useDispatch();
+  const handleModal = (type) => {
+    return dispatch(handleOpenNewMessageModal(type));
   };
 
   return (
@@ -38,7 +35,7 @@ const MessagesRightColumn = () => {
 
       <Button
         variant="contained"
-        onClick={openModal}
+        onClick={() => handleModal('open')}
         sx={{
           borderRadius: "20px",
           marginTop: "20px",
@@ -48,8 +45,6 @@ const MessagesRightColumn = () => {
       >
         New Message
       </Button>
-
-      <NewMessageModal open={modalOpen} closeModal={closeModal} />
     </Box>
   );
 };

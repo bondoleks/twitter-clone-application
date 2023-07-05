@@ -16,7 +16,10 @@ import {
     NEW_CHAT_LOADING,
     NEW_CHAT_SUCCESS,
     GET_ACTIVE_CHAT,
-    SEND_NEW_MESSAGE_LOADING, SEND_NEW_MESSAGE_SUCCESS, SEND_NEW_MESSAGE_ERROR, ADD_NEW_CHAT_SUCCESS,
+    SEND_NEW_MESSAGE_LOADING,
+    SEND_NEW_MESSAGE_SUCCESS,
+    SEND_NEW_MESSAGE_ERROR,
+    ADD_NEW_CHAT_SUCCESS, GET_CHAT_OWNERS, OPEN_NEW_MESSAGE_MODAL, CLOSE_NEW_MESSAGE_MODAL,
 } from '../../actions.jsx';
 
 export const handleGetSearchUsers = (value) => {
@@ -90,8 +93,6 @@ export const handleGetMessagesForChat = (chatId, userId) => {
             const chatMessages = await api.get(
               `/chats/chat/messages/${chatId}?profileId=${userId}&sizePage=15&numberPage=0`);
 
-            console.log("!!!chatMessages", chatMessages);
-
             // Think on what to do with this data;
             return dispatch({ type: GET_MESSAGES_FOR_CHAT_SUCCESS, payload: chatMessages?.listDto });
         } catch (error) {
@@ -140,3 +141,40 @@ export const handleSendNewMessage = (chatId, message) => {
         }
     };
 };
+
+
+export const handleSetChatOwners = (userId, chat) => {
+    return async dispatch => {
+        if (!chat || !userId) {
+            return null;
+        }
+        try {
+
+            const {initiatorId, userResivId} = chat;
+
+            const isChatOwnerMyUser = initiatorId === userId;
+            let chatOwner = null;
+
+            if (isChatOwnerMyUser) {
+                chatOwner = await api.get(`user/getuser/${userResivId}`);
+            } else {
+                chatOwner = await api.get(`user/getuser/${initiatorId}`);
+            }
+
+            return dispatch({ type: GET_CHAT_OWNERS, payload: chatOwner });
+
+        } catch (error) {
+            console.error(error)
+        }
+
+    }
+}
+
+export const handleOpenNewMessageModal = (type) => {
+    return dispatch => {
+        const modalType = type === 'open' ? OPEN_NEW_MESSAGE_MODAL : CLOSE_NEW_MESSAGE_MODAL;
+        return dispatch({ type: modalType });
+    }
+}
+
+

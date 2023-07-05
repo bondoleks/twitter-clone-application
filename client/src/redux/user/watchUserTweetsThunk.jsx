@@ -12,7 +12,6 @@ export function watchUserTweetsThunk(){
                 arrTweetId: userVisibleTweets,
               };
             api.post('tweets/tweet/view',requestData)
-
             .then(() => {
                 dispatch({type:DELETE_USER_VISIBLE_TWEETS})
             })

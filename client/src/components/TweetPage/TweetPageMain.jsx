@@ -105,6 +105,7 @@ export function TweetPageMain({tweet}){
         <Box key={id} data-user-id={user_id} >
             <Box sx={{display:'flex', gap:'12px', }}>
                 <Avatar src={av_imagerUrl} alt={username} sx={{ m: '8px' , cursor:'pointer'}}
+
                     onClick={(e)=>{
                       e.stopPropagation();
                       if(currentUserId === user_id ){

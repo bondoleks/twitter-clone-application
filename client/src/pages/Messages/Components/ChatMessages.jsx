@@ -35,6 +35,8 @@
 import React, { useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import ChatMessage from "./ChatMessage.jsx";
+import {getChatOwners} from '../../../redux/selectors.jsx';
+import {useSelector} from 'react-redux';
 
 const ChatMessages = ({ chatMessages, user }) => {
   const containerRef = useRef(null);
@@ -45,8 +47,9 @@ const ChatMessages = ({ chatMessages, user }) => {
 
   const handleShowChatMessages = () => {
     if (chatMessages?.length) {
-      return chatMessages.map(({ dateMessage, textMessage, typeMessage }) => {
+      return chatMessages.map(({ dateMessage, textMessage, typeMessage, user_author }) => {
         const isSentByCurrentUser = typeMessage === 1;
+        console.log(chatMessages)
 
         return (
           <ChatMessage
