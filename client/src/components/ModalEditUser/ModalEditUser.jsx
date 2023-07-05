@@ -149,7 +149,6 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
   formData.append("location", locationText);
 
   // console.log("birthdate:", initialBirthdate);
-
   formData.append("birthdate", birthdate);
 
     api

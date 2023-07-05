@@ -283,7 +283,6 @@ export const SidebarDesktop = ({ withId }) => {
                             Change Password
                         </Typography>
 
-
                     </MenuItem>
                 </Menu>
 
