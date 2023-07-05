@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import { TextField } from 'formik-mui';
 import { ModalOnMainPageWrapper } from "../ModalOnMainPageWrapper";
 import axios from 'axios';
+import { OPEN_FORGOT_PASSWORD_MODAL } from '../../../redux/actions';
 
 
 
@@ -34,7 +35,7 @@ export const LogingModal = () => {
   };
    
   function forgotPassword(){
-
+    dispatch({type:OPEN_FORGOT_PASSWORD_MODAL})
   }
 
   const initialValues = {
@@ -183,6 +184,7 @@ export const LogingModal = () => {
                 Sign in with Google
                 </Button>
                 <Button
+                  onClick={forgotPassword}
                   variant="contained"
                   color="secondary"
                   size="small"

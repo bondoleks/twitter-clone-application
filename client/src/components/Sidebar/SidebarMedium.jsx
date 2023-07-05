@@ -268,6 +268,13 @@ export const SidebarMedium = ({ withId }) => {
                                         <KeyboardArrowDownIcon />
                                     </MenuItem>
 
+                                    <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
+                                      <Typography>
+                                          Change Password
+                                      </Typography>
+                                  </MenuItem>
+
+
                                 </Menu>
                                 <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                             </Grid>

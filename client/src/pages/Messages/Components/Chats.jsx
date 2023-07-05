@@ -76,6 +76,7 @@ import {
 } from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {useNavigate} from 'react-router-dom';
 import MessagesLoader from "./MessagesLoader.jsx";
+import { useTheme } from '@mui/material/styles'
 
 const Chats = () => {
   const userChats = useSelector(getUserChats);
@@ -85,8 +86,11 @@ const Chats = () => {
   const chatOwners = useSelector(getChatOwners);
   const [isLoading, setIsLoading] = useState(false);
 
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const theme = useTheme()
 
   const handleOpenActiveChat = async (chat) => {
     if (activeChat?.chatId === chat?.chatId) return;
@@ -102,6 +106,7 @@ const Chats = () => {
       setIsLoading(false);
     }
   }, [userChats?.length, chatOwners?.length, isLoading])
+
 
   const handleGetChats = async () => {
 
@@ -156,7 +161,9 @@ const Chats = () => {
       return (
         <>
           <ListItem sx={{
-            padding: "0"
+            padding: "0",
+            backgroundColor: theme.palette.background.default,
+            color: theme.palette.text.primary
           }} onClick={() => handleOpenActiveChat(chat)}>
             <Box style={activeChat?.chatId === chatId ? {backgroundColor: '#e8e8e8', borderRight: "2px solid rgb(29, 155, 240)"} : {}} sx={{
               boxSizing: "border-box",

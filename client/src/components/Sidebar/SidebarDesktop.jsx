@@ -273,9 +273,15 @@ export const SidebarDesktop = ({ withId }) => {
                 >
                     <MenuItem onClick={handleOpenModal} style={DropStyles}>
                         <Typography>
-                            Settings
+                        Display
                         </Typography>
                         <KeyboardArrowDownIcon />
+                    </MenuItem>
+
+                    <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
+                        <Typography>
+                            Change Password
+                        </Typography>
 
                     </MenuItem>
                 </Menu>

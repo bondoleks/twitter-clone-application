@@ -97,7 +97,19 @@ export const Profile = ({ withId }) => {
         <ToolbarProfile />
 
         <Container sx={{ marginTop: '70px' }}>
-          <Box
+        <StyledAvatar
+            alt="User Head"
+            src={head_imagerUrl}
+
+            sx={{
+              width: '100%',
+              height: '200px',
+              cursor: 'pointer',
+              marginTop: '50px',
+              borderRadius: '0', // Добавьте эту строку
+            }}
+          />
+          {/* <Box
             sx={{
               backgroundImage: filePath ? `url(${filePath})` : "none",
               backgroundSize: "cover",
@@ -106,7 +118,7 @@ export const Profile = ({ withId }) => {
               height: "200px",
               bgcolor: !filePath && "grey.300",
             }}
-          ></Box>
+          ></Box> */}
 
 
           <StyledAvatar

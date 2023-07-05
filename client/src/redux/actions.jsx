@@ -19,6 +19,8 @@ export const CLOSE_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/close
 export const OPEN_IMAGE_MODAL = 'main/modal/image/open';
 export const CLOSE_IMAGE_MODAL = 'main/modal/image/close';
 
+export const OPEN_FORGOT_PASSWORD_MODAL = 'main/modal/forgotPassword/open';
+export const CLOSE_FORGOT_PASSWORD_MODAL = 'main/modal/forgotPassword/close';
 
 export const ADD_USER_VISIBLE_TWEETS ='user/visibleTweets/add';
 export const DELETE_USER_VISIBLE_TWEETS='user/visibleTweets/delete';
@@ -108,6 +110,10 @@ export const GET_MESSAGES_SUCCESS = "GET_USERS_SUCCESS";
 export const GET_MESSAGES_LOADING = "GET_USERS_LOADING";
 export const GET_MESSAGES_ERROR = "GET_USERS_ERROR";
 
+export const GET_ALL_MESSAGES_SUCCESS = "GET_ALL_MESSAGES_SUCCESS";
+export const GET_ALL_MESSAGES_LOADING = "GET_ALL_MESSAGES_LOADING";
+export const GET_ALL_MESSAGES_ERROR = "GET_ALL_MESSAGES_ERROR";
+
 
 export function registerUserRequest(user) {
     return {
@@ -137,3 +143,8 @@ export const DELETE_IMG_IN_REPLY  = 'reply/data/img/delete';
 export const ADD_HASH_IN_REPLY = 'reply/data/hash/change';
 export const REPLY_SUCCSES = 'reply/post/succses';
 
+//Bookmark
+export const GET_BOOKMARK_REQUEST= 'bookmark/get/request';
+export const GET_BOOKMARK_SUCCESS= 'bookmark/get/success';
+export const GET_BOOKMARK_ERROR = 'bookmark/get/error';
+export const DELETE_BOOKMARK = 'bookmark/delete';
