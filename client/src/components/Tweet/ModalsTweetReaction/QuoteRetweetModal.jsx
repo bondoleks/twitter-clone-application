@@ -1,11 +1,12 @@
 import { WrapperReactionsModal } from "./WrapperReactionsModal";
-import { Box, Avatar, TextareaAutosize, Grid, Typography } from "@mui/material";
+import { Box, Avatar, TextareaAutosize, Grid, IconButton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../../redux/selectors";
 import { Retweet } from "../Retweet";
 import { tweetInQuoteModalSelector, visibleQuoteModalSelector, textQuoteModalSelector, imageQuoteModalSelector } from "../../../redux/selectors";
-import { CLOSE_QUOTE_RETWEET_MODAL, ADD_TEXT_IN_QUOTE_RETWEET, ADD_IMG_IN_QUOTE_RETWEET } from "../../../redux/actions";
+import { CLOSE_QUOTE_RETWEET_MODAL, ADD_TEXT_IN_QUOTE_RETWEET, ADD_IMG_IN_QUOTE_RETWEET,DELETE_IMG_IN_QUOTE_RETWEET } from "../../../redux/actions";
 import { postQuoteRetweetThunk } from "../../../redux/quoteRetweet/postQuoteRetweetThunk";
+import CloseIcon from '@mui/icons-material/Close';
 
 export function QuoteRetweetModal() {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ export function QuoteRetweetModal() {
     }
   };
 
+  function handleRemoveImage(index){
+    dispatch({type:DELETE_IMG_IN_QUOTE_RETWEET,payload:{index:index}})
+  }
+
   return (
     <WrapperReactionsModal isOpen={visibleQuoteRetweetModal} onClose={onCloseRetweetModal} buttonName="Tweet" functionButton={postQuoteRetweet} width={600} handleImageUpload={handleImageUpload} parentId={parentTweet.id} textLenght={retweetText.length}>
       <Grid container spacing={0}>
@@ -61,11 +66,32 @@ export function QuoteRetweetModal() {
           <Box>
             {retweetImages && retweetImages.length > 0 &&
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {Array.from(retweetImages).map((image, index) => (
-                  <img key={index} src={URL.createObjectURL(image)} alt="retweet-image" style={{ maxWidth: '100px', maxHeight: '100px' }} />
-                ))}
-              </Box>
-            }
+              {Array.from(retweetImages).map((image, index) => (
+          <Box key={index} sx={{ position: "relative" }}>
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              zIndex: 1,
+              background: "white",
+              borderRadius: "50%",
+              padding: "2px",
+            }}
+            onClick={() => handleRemoveImage(index)}
+          >
+            <CloseIcon />
+          </IconButton>
+          <img
+            src={URL.createObjectURL(image)}
+            alt="retweet-image"
+            style={{ maxWidth: "100px", maxHeight: "100px" }}
+          />
+        </Box>
+
+              ))}
+            </Box>
+          }
           </Box>
           <Box>
             <Retweet tweet={parentTweet} />

@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.chats;
+package demo.project.twitter.garbage;
 
 
 import demo.project.twitter.model.chat.Chat;
@@ -12,8 +12,8 @@ import java.util.stream.StreamSupport;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class ServiceChat implements FunctionChat {
-    private final RepoChat repo;
+public class ServiceChat /*implements FunctionChat*/ {
+    /*private final RepoChat repo;
 
     @Override
     public Chat saveOne(Chat chat) {
@@ -52,5 +52,5 @@ public class ServiceChat implements FunctionChat {
     public List<Chat> getAllByUserId(Long userId) {
         return repo.getAllByUserId(userId);
     }
-
+}*/
 }

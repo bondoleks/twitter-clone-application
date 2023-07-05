@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.chats;
+package demo.project.twitter.garbage;
 
 
 import demo.project.twitter.model.chat.Chat;
@@ -15,8 +15,8 @@ import java.util.stream.StreamSupport;
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
 @Log4j2
-public class ServiceChatNew implements FunctionChat {
-    private final RepoChat repo;
+public class ServiceChatNew /*implements FunctionChat */{
+ /*   private final RepoChat repo;
 
     @Override
     public Chat saveOne(Chat chat) {
@@ -31,32 +31,15 @@ public class ServiceChatNew implements FunctionChat {
     @Override
     public boolean existsById(Long id) {
         return repo.existsById(id);
-    }
+    }*/
 
-    public List<Chat> getAll() {
+ /*   public List<Chat> getAll() {
         List<Chat> chats = new ArrayList<>();
         return StreamSupport.stream(repo.findAll().spliterator(), false)
                 .collect(Collectors.toList());
-    }
+    }*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void addUserToChat(Long chatId, Long userId) {
+  /*  public void addUserToChat(Long chatId, Long userId) {
         repo.addUserToChat(chatId, userId);
     }
 
@@ -91,5 +74,5 @@ public class ServiceChatNew implements FunctionChat {
 
     public List<ChatNew> getListChatByGeneralId(Long generalChatId) {
         return repo.getListChatByGeneralId(generalChatId);
-    }
+    }*/
 }

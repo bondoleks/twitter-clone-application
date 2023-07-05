@@ -79,6 +79,7 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
 
   const { firstName, head_imagerUrl, lastName, location, birthdate, av_imagerUrl, bio } = data;
 
+  
   const [fileAv, setFileAv] = useState(null);
   const [fileHead, setFileHead] = useState(null);
   const [bioText, setBioText] = useState(bio || "");
@@ -112,7 +113,7 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
   };
 
   const handleSave = () => {
-    console.log(initialBirthdate)
+
     const formData = new FormData();
     // formData.append("firstName", firstName);
     // formData.append("lastName", lastName);
@@ -133,8 +134,8 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
   console.log("bioText:", bioText);
   formData.append("bio", bioText);
 
-  console.log("user_id:", id);
-  formData.append("user_id", id);
+  // console.log("user_id:", id);
+  // formData.append("user_id", id);
 
   console.log("head_imagerUrl:", fileHead);
   formData.append("head_imagerUrl", fileHead);
@@ -145,10 +146,8 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
   console.log("locationText:", locationText);
   formData.append("location", locationText);
 
-  console.log("birthdate:", initialBirthdate);
-  formData.append("birthdate", initialBirthdate);
-
-    console.log(formData); // Вывод содержимого formData в консоль
+  // console.log("birthdate:", initialBirthdate);
+  formData.append("birthdate", '12.01.2013');
 
     api
       .post("user/update", formData)
