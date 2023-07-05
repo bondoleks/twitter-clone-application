@@ -8,7 +8,8 @@ import {
     Menu,
     MenuItem,
     Typography,
-    Grid
+    Grid,
+    Avatar
 } from '@mui/material';
 import { Stack } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -22,7 +23,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import PersonIcon from '@mui/icons-material/Person';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
@@ -34,18 +34,62 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ModalTheme from '../ModalTheme/ModalTheme';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useFetch } from "../../hooks/UseFetch";
+import { styled } from '@mui/material/styles';
 
 
-export const SidebarMedium = () => {
-    const isAutorizate= useSelector(state => state.user.authorized);
+export const SidebarMedium = ({ withId }) => {
+    const { id } = useParams()
+    const isAutorizate = useSelector(state => state.user.authorized);
     const [buttonColor, setButtonColor] = useState();
+    const navigate = useNavigate();
+
+    const StyledAvatar = styled(Avatar)(({ theme }) => ({
+        position: 'relative',
+        '&:before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            opacity: 0,
+            transition: 'opacity 0.3s ease',
+        },
+        '&:hover:before': {
+            opacity: 1,
+        },
+    }));
+
+    const [{ data, loading }, getData] = useFetch({
+        initData: {},
+        url: withId
+            ? `user/getuser/${id}`
+            : 'user/profile',
+        method: 'GET',
+        dataTransformer: (data) => {
+            console.log(data)
+            return data;
+        },
+    });
+
+    useEffect(() => {
+        getData()
+    }, [id])
+
+    if (!loading) <p>loading...</p>
+
+    const { av_imagerUrl } = data
 
     const theme = useTheme();
 
     const DropStyles = {
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.default
-      };
+    };
 
     useEffect(() => {
         const savedColor = localStorage.getItem('buttonColor');
@@ -144,106 +188,125 @@ export const SidebarMedium = () => {
                             </Tooltip>
                         </Link>
 
-                        <Hidden mdUp smDown>
+                        {isAutorizate && <>
+                            <Hidden mdUp smDown>
+                                <Link to={`/explore`}>
+                                    <Tooltip title="Explore">
+                                        <IconButton color='gray'>
+                                            {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                        </IconButton>
+                                    </Tooltip>
+                                </Link>
+                            </Hidden>
 
-                            <Link to={`/explore`}>
-                                <Tooltip title="Explore">
+                            <Hidden lgUp mdDown>
+
+                                <Link to={`/explore`}>
+                                    <Tooltip title="Explore">
+                                        <IconButton color='gray'>
+                                            {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />}
+                                        </IconButton>
+                                    </Tooltip>
+                                </Link>
+                            </Hidden>
+
+
+                            <Link to={`/notifications`}>
+                                <Tooltip title="Notifications">
                                     <IconButton color='gray'>
-                                        {clicked.explore ? <FindInPageIcon sx={{ margin: '16px' }} fontSize="medium" /> : <SearchIcon sx={{ margin: '16px' }} fontSize="medium"  />}
+                                        {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
                                     </IconButton>
                                 </Tooltip>
                             </Link>
-                        </Hidden>
 
-                        <Hidden lgUp mdDown>
 
-                            <Link to={`/explore`}>
-                                <Tooltip title="Explore">
+                            <Link to={`/messages`}>
+                                <Tooltip title="Messages">
                                     <IconButton color='gray'>
-                                        {clicked.explore ? <Grid4x4OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Grid3x3Icon sx={{ margin: '16px' }} fontSize="medium" />}
+                                        {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
                                     </IconButton>
                                 </Tooltip>
                             </Link>
-                        </Hidden>
+
+                            <Link to={`/bookmarks`}>
+                                <Tooltip title="Bookmarks">
+                                    <IconButton color='gray'>
+                                        {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                    </IconButton>
+                                </Tooltip>
+                            </Link>
+
+                            <Link to={`/profile`}>
+                                <Tooltip title="Profile">
+                                    <IconButton color='gray'>
+                                        {clicked.profile ? <PersonIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                                    </IconButton>
+                                </Tooltip>
+                            </Link>
 
 
-                        <Link to={`/notifications`}>
-                            <Tooltip title="Notifications">
-                                <IconButton color='gray'>
-                                    {clicked.notifications ? <NotificationsActiveIcon sx={{ margin: '16px' }} fontSize="medium" /> : <NotificationsNoneOutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
+                            <Grid item>
+                                <Tooltip title="More">
+                                    <IconButton color='gray' onClick={handleOpenMenu}>
+                                        <MoreHorizIcon sx={{ margin: '16px' }} fontSize="medium" />
+                                    </IconButton>
+                                </Tooltip>
+
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleCloseMenu}
+                                    sx={{
+                                        marginTop: '-50px',
+                                        marginLeft: '16px'
+                                    }}
+                                >
+                                    <MenuItem onClick={handleOpenModal} style={DropStyles}>
+                                        <Typography sx={{ marginInline: '8px' }} >
+                                            Display
+                                        </Typography>
+                                        <KeyboardArrowDownIcon />
+                                    </MenuItem>
+                                    <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
+                                      <Typography>
+                                          Change Password
+                                      </Typography>
+                                  </MenuItem>
+
+                                </Menu>
+                                <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
+                            </Grid>
+
+                            <Grid item>
+                                <IconButton edge='start' onClick={handleOpen}>
+                                    <AddCircleIcon fontSize='large' sx={{
+                                        margin: '20px',
+                                        color: buttonColor ? buttonColor : '#0080ff',
+                                    }} />
                                 </IconButton>
-                            </Tooltip>
-                        </Link>
+                                <TweetForm open={open} onClose={handleClose} />
+                            </Grid>
 
-
-                        <Link to={`/messages`}>
-                            <Tooltip title="Messages">
-                                <IconButton color='gray'>
-                                    {clicked.messages ? <MailIcon sx={{ margin: '16px' }} fontSize="medium" /> : <MailOutlineIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                                </IconButton>
-                            </Tooltip>
-                        </Link>
-
-                        <Link to={`/bookmarks`}>
-                            <Tooltip title="Bookmarks">
-                                <IconButton color='gray'>
-                                    {clicked.bookmarks ? <BookmarkIcon sx={{ margin: '16px' }} fontSize="medium" /> : <BookmarkBorderIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                                </IconButton>
-                            </Tooltip>
-                        </Link>
-
-                        <Link to={`/profile`}>
-                            <Tooltip title="Profile">
-                                <IconButton color='gray'>
-                                    {clicked.profile ? <PersonIcon sx={{ margin: '16px' }} fontSize="medium" /> : <Person2OutlinedIcon sx={{ margin: '16px' }} fontSize="medium" />}
-                                </IconButton>
-                            </Tooltip>
-                        </Link>
-
-
-                        <Grid item>
-                            <Tooltip title="More">
-                                <IconButton color='gray' onClick={handleOpenMenu}>
-                                    <MoreHorizIcon sx={{ margin: '16px' }} fontSize="medium" />
-                                </IconButton>
-                            </Tooltip>
-
-                            <Menu
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
-                                onClose={handleCloseMenu}
-                                sx={{
-                                    marginTop: '-50px',
-                                    marginLeft: '16px'
-                                }}
-                            >
-                                <MenuItem onClick={handleOpenModal} style={DropStyles}>
-                                    <Typography sx={{ marginInline: '8px' }} >
-                                        Settings
-                                    </Typography>
-                                    <KeyboardArrowDownIcon />
-                                </MenuItem>
-                            </Menu>
-                            <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
-                        </Grid>
-
-                        <Grid item>
-                            <IconButton edge='start' onClick={handleOpen}>
-                                <AddCircleIcon fontSize='large' sx={{
-                                    margin: '20px',
-                                    color: buttonColor
-                                }} />
-                            </IconButton>
-                            <TweetForm open={open} onClose={handleClose} />
-                        </Grid>
-
-                        <Grid item>
-                            <Tooltip title="User">
-                                <IconButton edge='start'>
-                                    <AccountCircleIcon sx={{ margin: '20px' }} fontSize="large" color="success" />
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
+                            <Link to={`/profile`} >
+                                <Grid item>
+                                    <Tooltip title="User">
+                                        <IconButton edge='start'>
+                                            <StyledAvatar
+                                                alt="User Avatar"
+                                                src={av_imagerUrl}
+                                                sx={{
+                                                    width: '36px',
+                                                    height: '36px',
+                                                    borderRadius: '50%',
+                                                    cursor: 'pointer',
+                                                    margin: '20px'
+                                                }}
+                                            />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid>
+                            </Link>
+                        </>}
                     </Stack>
                 </Box>
             </Grid>

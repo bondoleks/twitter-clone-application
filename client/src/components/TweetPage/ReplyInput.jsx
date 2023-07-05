@@ -1,11 +1,12 @@
 import { Grid, Typography,Box,TextareaAutosize,Button,IconButton,Avatar } from "@mui/material";
-import { ADD_TEXT_IN_REPLY,ADD_IMG_IN_REPLY } from "../../redux/actions";
+import { ADD_TEXT_IN_REPLY,ADD_IMG_IN_REPLY ,DELETE_IMG_IN_REPLY} from "../../redux/actions";
 import { useSelector,useDispatch } from "react-redux";
 import { textReplySelector,imageReplySelector } from "../../redux/selectors";
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import { useState,useEffect } from "react";
 import { postReplyThunk } from "../../redux/reply/postReplyThunk";
 import { getUser } from "../../redux/selectors";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 export function ReplyInput({userParentName,tweetId}){
@@ -32,6 +33,10 @@ export function ReplyInput({userParentName,tweetId}){
     const handleImageUpload = (e) => {
       dispatch({ type: ADD_IMG_IN_REPLY, payload: { img: e.target.files } });
     };
+
+    function handleRemoveImage(index){
+      dispatch({type:DELETE_IMG_IN_REPLY,payload:{index:index}})
+    }
 
     function postReply(id) {
         console.log(id);
@@ -67,7 +72,28 @@ export function ReplyInput({userParentName,tweetId}){
             {replyImages && replyImages.length > 0 &&
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {Array.from(replyImages).map((image, index) => (
-                  <img key={index} src={URL.createObjectURL(image)} alt="reply-image" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+            <Box key={index} sx={{ position: "relative" }}>
+            <IconButton
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                zIndex: 1,
+                background: "white",
+                borderRadius: "50%",
+                padding: "2px",
+              }}
+              onClick={() => handleRemoveImage(index)}
+            >
+              <CloseIcon />
+            </IconButton>
+            <img
+              src={URL.createObjectURL(image)}
+              alt="reply-image"
+              style={{ maxWidth: "100px", maxHeight: "100px" }}
+            />
+          </Box>
+
                 ))}
               </Box>
             }

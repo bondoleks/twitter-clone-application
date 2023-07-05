@@ -1,6 +1,5 @@
-package demo.project.twitter.facade.chats;
+package demo.project.twitter.dto;
 
-import demo.project.twitter.facade.messages.DtoMessage;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

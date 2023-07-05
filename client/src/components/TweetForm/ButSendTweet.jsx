@@ -21,17 +21,11 @@ export default function ButSendTweet({ tweetText, id, file, closeModal, setFile,
         formData.append('parentTweetId', 0);
         formData.append('user_id', id);
 
-        if (fileCount > 0) {
             const fileArray = Array.from(file);
             for (let i = 0; i < fileCount; i++) {
                 formData.append('file', fileArray[i]);
                 console.log("file", fileArray[i]);
             }
-        } else {
-            const emptyImage = new File([new Blob()], "empty.png", { type: "image/png" });
-            formData.append('file', emptyImage);
-            console.log("file", emptyImage);
-        }
 
         api.post("https://twitter-clone-application.herokuapp.com/api/v1/tweets/tweet/save", formData)
             .then(response => {
