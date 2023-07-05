@@ -18,7 +18,9 @@ public  class NotificationFacade {
         dto.setNotificationType(notification.getNotificationType());
         dto.setReciever(notification.getReciever().getUsername());
         dto.setInvitator(notification.getInvitator().getUsername());
-        dto.setTweet(notification.getTweet());
+        dto.setInvitatorId(notification.getInvitator().getId());
+        dto.setInvitatorAvImagerUrl(notification.getInvitator().getAv_imagerUrl());
+        dto.setTweetId(notification.getTweet().getId());
         return dto;
     }
 }

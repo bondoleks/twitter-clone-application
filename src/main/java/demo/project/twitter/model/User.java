@@ -102,6 +102,23 @@ public class User extends BaseEntity {
         this.bio = bio;
     }
 
+    public User(String firstName, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl) {
+        this.firstName = firstName;
+        this.location = location;
+        this.birthDate = birthDate;
+        this.bio = bio;
+        this.av_imagerUrl = String.valueOf(avUrl);
+        this.head_imagerUrl = String.valueOf(headUrl);
+    }
+
+    public User(String firstName, String location, Date birthDate, String bio, String avUrl, String headUrl) {
+        this.firstName = firstName;
+        this.location = location;
+        this.birthDate = birthDate;
+        this.bio = bio;
+        this.av_imagerUrl = avUrl;
+        this.head_imagerUrl = headUrl;
+    }
 
     public User(String username, String email) {
         this.username = username;

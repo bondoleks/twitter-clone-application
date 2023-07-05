@@ -15,6 +15,7 @@ import ModalEditBirthdate from "./ModalEditBirthdate";
 import { useTheme } from '@mui/material/styles';
 
 export default function ContainerBirthday({value, setValue}) {
+
   const theme = useTheme();
 
   const borderColor = theme.palette.text.primary; // Цвет бордера

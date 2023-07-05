@@ -17,5 +17,7 @@ public class NotificationDto {
     private ActionType notificationType;
     private String reciever;
     private String invitator;
-    private Tweet tweet;
+    private Long invitatorId;
+    private String invitatorAvImagerUrl;
+    private Long tweetId;
 }

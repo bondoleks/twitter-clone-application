@@ -81,12 +81,12 @@ public class UserFacade {
 
     }
 
-    public UserDto updateUser (String username, String firstName, String lastName, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
-        User usr = new User(username, firstName, lastName, location, birthDate, bio, avUrl, headUrl);
+    public UserDto updateUser (String firstName, String location, Date birthDate, String bio, Optional<String> avUrl, Optional<String> headUrl){
+        User usr = new User(firstName, location, birthDate, bio, avUrl.get(), headUrl.get());
         UserDto entity = makeDto(usr);
-        User entity2 = service.updateUser(usr, entity);
-        dto = makeDto(entity2);
-        return dto;
+//        User entity2 = service.updateUser(usr, entity);
+//        dto = makeDto(entity2);
+        return entity;
     }
 
 
