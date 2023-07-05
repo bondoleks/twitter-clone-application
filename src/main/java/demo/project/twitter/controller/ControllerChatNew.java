@@ -70,8 +70,8 @@ public class ControllerChatNew {
     public String saveMessage(@RequestBody DtoMessage dtoM, Principal principal) {
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         Message savedMessage = facade.saveMessage(profileId, dtoM);
-        User userReceiver = savedMessage.getChat().getUsers().get(0);
-        simpMessagingTemplate.convertAndSend("/chat/message", dtoM);
+        User userReceiver = savedMessage.getChat().getUsers().get(1);
+        simpMessagingTemplate.convertAndSendToUser(userReceiver.getUsername(), "/chat/message", dtoM);
         return "ok";
     }
 
