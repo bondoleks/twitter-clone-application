@@ -14,7 +14,7 @@ import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSha
 import ModalEditBirthdate from "./ModalEditBirthdate";
 import { useTheme } from '@mui/material/styles';
 
-export default function ContainerBirthday() {
+export default function ContainerBirthday(value) {
   const theme = useTheme();
 
   const borderColor = theme.palette.text.primary; // Цвет бордера

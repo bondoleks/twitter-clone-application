@@ -40,7 +40,6 @@ import { useFetch } from "../../hooks/UseFetch";
 import { styled } from '@mui/material/styles';
 
 
-
 export const SidebarMedium = ({ withId }) => {
     const { id } = useParams()
     const isAutorizate = useSelector(state => state.user.authorized);
@@ -84,7 +83,6 @@ export const SidebarMedium = ({ withId }) => {
     if (!loading) <p>loading...</p>
 
     const { av_imagerUrl } = data
-
 
     const theme = useTheme();
 
@@ -253,6 +251,7 @@ export const SidebarMedium = ({ withId }) => {
                                         <MoreHorizIcon sx={{ margin: '16px' }} fontSize="medium" />
                                     </IconButton>
                                 </Tooltip>
+
                                 <Menu
                                     anchorEl={anchorEl}
                                     open={Boolean(anchorEl)}
@@ -266,13 +265,14 @@ export const SidebarMedium = ({ withId }) => {
                                         <Typography sx={{ marginInline: '8px' }} >
                                             Display
                                         </Typography>
-                                      
+                                        <KeyboardArrowDownIcon />
                                     </MenuItem>
                                     <MenuItem onClick={()=>{navigate('/change_password')}} style={DropStyles}>
                                       <Typography>
                                           Change Password
                                       </Typography>
                                   </MenuItem>
+
                                 </Menu>
                                 <ModalTheme open={openModal} onClose={handleCloseModal} onColorChange={handleColorChange} />
                             </Grid>
