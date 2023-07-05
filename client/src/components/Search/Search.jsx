@@ -975,7 +975,6 @@ const Search = () => {
 
   const handleUserClick = (user) => {
     navigate(`/profile/${user.id}`);
-    console.log('Clicked user:', user);
     setUsers([]);
     setInputValue("");
   };

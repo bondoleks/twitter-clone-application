@@ -137,13 +137,20 @@ import ModalList from "./ModalList.jsx";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack.js";
 import {useDispatch, useSelector} from 'react-redux';
 import {
+  handleGetMessagesForChat,
   handleGetSearchUsers,
   handleGetUserChats,
-  handleOpenNewMessageModal
+  handleOpenNewMessageModal, handleSetActiveChat
 } from '../../../redux/Messages/Thunks/MessagesThunk.js';
-import {getActiveChat} from "../../../redux/selectors.jsx";
+import {
+  getActiveChat,
+  getAllMessagesForAllChats,
+  getAllMessagesLoading, getUser,
+  getUserChats
+} from '../../../redux/selectors.jsx';
 import { useNavigate } from 'react-router-dom';
 import {useTheme} from "@mui/material/styles";
+import MessagesLoader from './MessagesLoader.jsx';
 
 
 
@@ -152,8 +159,10 @@ const MessageMiddleColumn = ({mockedUsers}) => {
   const [clicked, setClicked] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
-
-
+  const user = useSelector(getUser);
+  const allMessagesLoading = useSelector(getAllMessagesLoading);
+  const allMessagesForAllChats = useSelector(getAllMessagesForAllChats);
+  const userChats = useSelector(getUserChats);
 
   const dispatch = useDispatch();
 
@@ -189,11 +198,37 @@ const MessageMiddleColumn = ({mockedUsers}) => {
 
 
   const handleMessageClick = (message) => {
-    const chatId = message.chatId;
-    console.log(chatId)
+    const chat = userChats.find(chat => chat.chatId === message.chat_id);
+    const chatId = message.chat_id;
+    dispatch(handleSetActiveChat(chat))
+    dispatch(handleGetMessagesForChat(chat.chatId, user.id));
     navigate(`/messages/${chatId}`);
-    console.log('Clicked message:', message);
+    setClicked(false);
+    setInputValue("");
   };
+
+  const renderMessagesOutput = () => {
+    if (allMessagesLoading) {
+      return <MessagesLoader />;
+    }
+
+    const filteredMessages = allMessagesForAllChats.filter((message) => {
+      return message.textMessage.toLowerCase().includes(inputValue.toLowerCase());
+    });
+    if (!filteredMessages.length) {
+      return <Typography>No messages found</Typography>;
+    }
+
+    return (
+      <List>
+        {filteredMessages.map((message) => (
+          <ListItem key={message.dateMessage} button onClick={() => handleMessageClick(message)}>
+            <ListItemText primary={message.textMessage} />
+          </ListItem>
+        ))}
+      </List>
+    )
+  }
 
 
   return (
@@ -203,7 +238,7 @@ const MessageMiddleColumn = ({mockedUsers}) => {
         borderRight: '1px solid rgba(128, 128, 128, 0.1)',
         borderLeft: '1px solid rgba(128, 128, 128, 0.1)',
         height: "100vh",
-        paddingTop: isMobile ? "50px" : "0",
+        paddingTop: isMobile ? "80px" : "0",
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary
       }}>
@@ -244,12 +279,16 @@ const MessageMiddleColumn = ({mockedUsers}) => {
                 <IconButton sx={{ mt: 2 }} onClick={handleArrowClick}>
                   <ArrowBackIcon />
                 </IconButton>
-                <MessagesSearch inputValue={inputValue} setInputValue={setInputValue} messages={messages} setMessages={setMessages}
+                <MessagesSearch
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  messages={messages}
+                  setMessages={setMessages}
+                  clicked={clicked}
                   handleMessageClick={handleMessageClick} />
               </Box>
               {!inputValue ? (
                 <>
-
                   <Box>
                     <Typography sx={{ display: "box", marginTop: "20px", padding: "0 10px" }}>
                       Try searching for people, groups, or messages
@@ -257,22 +296,12 @@ const MessageMiddleColumn = ({mockedUsers}) => {
                   </Box>
                 </>
               ) : (
-                // <ListItem key={messages} button>
-                //   <ListItemText primary={messages} />
-                // </ListItem>
-                <List>
-                  {messages.map((message) => (
-                    <ListItem key={message.chatId} button onClick={() => handleMessageClick(message)}>
-                      <ListItemText primary={message.lastMessage} />
-                    </ListItem>
-                  ))}
-                </List>
-
+                renderMessagesOutput()
               )}
             </>
           ) : (
             <Box>
-              <MessagesSearch handleInputClick={handleInputClick} />
+              <MessagesSearch handleInputClick={handleInputClick} clicked={clicked} />
               <ModalList sx={{
                 display: "flex",
                 flexDirection: "column",

@@ -55,7 +55,6 @@ export const handleGetUserChats = () => {
                     'Access-Control-Allow-Origin': 'http://localhost:5173',
                     'credentials': 'include',
                 }});
-            console.log(userChats)
             return dispatch({ type: GET_CHATS_SUCCESS, payload: userChats });
         } catch (error) {
             return dispatch({ type: GET_CHATS_ERROR, payload: error.message });
@@ -120,7 +119,7 @@ export const handleGetAllMessagesForAllChats = (chatsIds, userId) => {
             }
 
             // Think on what to do with this data;
-            return dispatch({ type: GET_ALL_MESSAGES_SUCCESS, payload: allChatsMessages });
+            return dispatch({ type: GET_ALL_MESSAGES_SUCCESS, payload: allChatsMessages.flat() });
         } catch (error) {
             return dispatch({ type: GET_ALL_MESSAGES_ERROR, payload: error.message });
         }
@@ -171,7 +170,7 @@ export const handleSendNewMessage = (chatId, message) => {
 
 export const handleSetChatOwners = (userId, chat) => {
     return async dispatch => {
-        if (!chat || !userId) {
+        if (!chat && !userId) {
             return null;
         }
         try {

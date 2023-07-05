@@ -102,17 +102,22 @@
 
 //V2
 
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from 'react';
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment, TextField, Box } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { styled } from "@mui/system";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import {handleGetUserChats} from "../../../redux/Messages/Thunks/MessagesThunk.js";
+import {handleGetAllMessagesForAllChats, handleGetUserChats} from '../../../redux/Messages/Thunks/MessagesThunk.js';
 import {api} from "../../../redux/service/api.jsx";
 import { useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {getUserChats} from "../../../redux/selectors.jsx";
+import {
+  getAllMessagesForAllChats,
+  getAllMessagesLoading,
+  getUser,
+  getUserChats
+} from '../../../redux/selectors.jsx';
 
 
 
@@ -143,16 +148,23 @@ const StyledArrowBackIcon = styled(ArrowBackOutlinedIcon)(({}) => ({
   },
 }));
 
-const MessagesSearch = ({handleMessageClick,handleInputClick, inputValue, setInputValue, setMessages, messages}) => {
+const MessagesSearch = ({
+                          handleMessageClick,
+                          handleInputClick,
+                          inputValue,
+                          setInputValue,
+                          setMessages,
+                          messages,
+                          clicked}) => {
+  const user = useSelector(getUser);
   const [inputClicked, setInputClicked] = useState(false);
   const userChats = useSelector(getUserChats);
-  const [allMessagesFetched, setAllMessagesFetched] = useState(false)
+  const [allMessagesFetched, setAllMessagesFetched] = useState(false);
+  const textFieldRef = useRef(null);
 
   const chatIds = userChats.map((chat) => {
     return chat.chatId
   })
-
-  console.log("35354646475758", chatIds)
 
   const dispatch = useDispatch();
 
@@ -160,7 +172,6 @@ const MessagesSearch = ({handleMessageClick,handleInputClick, inputValue, setInp
   const handleInputChange = () => {
     const value = event.target.value;
     setInputValue(value);
-    console.log(value);
 
     if (value.trim() === '') {
       setMessages([]);
@@ -180,6 +191,18 @@ const MessagesSearch = ({handleMessageClick,handleInputClick, inputValue, setInp
       return;
     }
 
+    if (!allMessagesFetched) {
+      await dispatch(handleGetAllMessagesForAllChats(chatIds, user.id))
+      setAllMessagesFetched(true)
+    }
+
+  }
+
+  useEffect(() => {
+    if (clicked && textFieldRef.current) {
+      textFieldRef.current.focus();
+    }
+  }, [clicked]);
 
     return (
       <>
@@ -193,8 +216,10 @@ const MessagesSearch = ({handleMessageClick,handleInputClick, inputValue, setInp
             variant="outlined"
             placeholder="Search Direct Messages"
             value={inputValue}
+            inputRef={textFieldRef}
             onChange={handleInputChange}
             onClick={handleInputClick}
+            // autoFocus
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -225,7 +250,6 @@ const MessagesSearch = ({handleMessageClick,handleInputClick, inputValue, setInp
         </Box>
       </>
     );
-  };
-}
+};
 
 export default MessagesSearch;
