@@ -14,7 +14,7 @@ import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSha
 import ModalEditBirthdate from "./ModalEditBirthdate";
 import { useTheme } from '@mui/material/styles';
 
-export default function ContainerBirthday(value) {
+export default function ContainerBirthday({value, setValue}) {
   const theme = useTheme();
 
   const borderColor = theme.palette.text.primary; // Цвет бордера
@@ -76,7 +76,7 @@ const handleMonthChange = (event) => {
   const updateBirthday = (day, monthIndex, year) => {
     const formattedMonth = monthIndex.toString().padStart(2, '0');
     const formattedDate = `${day}.${formattedMonth}.${year}`;
-    setBirthday(formattedDate);
+    setValue(formattedDate);
     console.log("birthdate:", formattedDate); // Вывод значения в консоль
   };
 

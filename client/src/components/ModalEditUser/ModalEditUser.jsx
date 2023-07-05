@@ -77,7 +77,7 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
 
   if (!loading) <p>loading...</p>;
 
-  const { firstName, head_imagerUrl, lastName, location, birthdate, av_imagerUrl, bio } = data;
+  const { firstName, head_imagerUrl, lastName, location, birthdate: bd, av_imagerUrl, bio } = data;
 
   
   const [fileAv, setFileAv] = useState(null);
@@ -88,6 +88,7 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
   const fileHeadRef = useRef(null);
   const [filePath, setFilePath] = useState(head_imagerUrl);
   const [filePathAv, setFilePathAv] = useState(av_imagerUrl);
+  const [birthdate, setBirthdate] = useState(bd);
   const [value, setValue] = useState(`${firstName || ""} ${lastName || ""}`);
 
   useEffect(() => {
@@ -147,7 +148,7 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
   formData.append("location", locationText);
 
   // console.log("birthdate:", initialBirthdate);
-  formData.append("birthdate", '12.01.2013');
+  formData.append("birthdate", birthdate);
 
     api
       .post("user/update", formData)
@@ -324,7 +325,7 @@ export default function ModalEditUser({ open, onClose, withId, initialBirthdate 
             },
           }}
         />
-        <ContainerBirthday value={birthdate} />
+        <ContainerBirthday value={birthdate} setValue={setBirthdate} />
       </DialogContent>
     </Dialog>
   );
