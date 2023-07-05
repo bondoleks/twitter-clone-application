@@ -9,6 +9,8 @@ import {
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getNotificationThunk } from '../../redux/notifications/getNotificationThunk';
+import { NotificationsList } from '../../components/Notification/NotificationList';
+
 
 
 
@@ -19,7 +21,6 @@ const Notifications = () => {
 
   useEffect(() => {
       dispatch(getNotificationThunk());
-
     },[]);
 
 
@@ -31,7 +32,7 @@ const Notifications = () => {
         Notifications
         </Typography>
         </Box>
-
+    <NotificationsList/>
         </Box>
   )
 }

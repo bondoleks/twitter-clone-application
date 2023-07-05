@@ -15,7 +15,7 @@ export function ReplyModal() {
   const parentTweet = useSelector(tweetInReplySelector);
   const visibleQuoteRetweetModal = useSelector(visibleReplyModalSelector)
   const { id, av_imagerUrl, username } = currentUser;
-  console.log(parentTweet);
+
 
   // Text
   const replyText = useSelector(textReplySelector);
