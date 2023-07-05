@@ -55,7 +55,7 @@ const routes = [
         errorElement: <div>Not found</div>
     },
     {
-        path: "/forgot_password/:key",
+        path: "/forgotPassword/activate/:key",
         element: <ForgotPage />,
         errorElement: <div>Not found</div>
     },
@@ -140,7 +140,7 @@ function App() {
     const isAuthenticated = useSelector(state => state.user.authorized);
     const isActiveMessage = useMatch("/messages/:id");
     const isActivateKey = useMatch("/activate/:key");
-    const isActivateForgotPassword = useMatch("/forgot_password/:key");
+    const isActivateForgotPassword = useMatch("forgotPassword/activate/:key");
 
     console.log(Boolean(isAuthenticated));
 

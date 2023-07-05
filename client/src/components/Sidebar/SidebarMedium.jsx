@@ -220,7 +220,7 @@ export const SidebarMedium = () => {
                             >
                                 <MenuItem onClick={handleOpenModal} style={DropStyles}>
                                     <Typography sx={{ marginInline: '8px' }} >
-                                        Dispplay
+                                        Display
                                     </Typography>
                                     <KeyboardArrowDownIcon />
                                 </MenuItem>
