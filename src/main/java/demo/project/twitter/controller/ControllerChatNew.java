@@ -13,6 +13,15 @@ import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.chat.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,8 +71,13 @@ public class ControllerChatNew {
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
         Message savedMessage = facade.saveMessage(profileId, dtoM);
         User userReceiver = savedMessage.getChat().getUsers().get(0);
-        simpMessagingTemplate.convertAndSendToUser(userReceiver.getEmail(), "/chat/message", dtoM);
+        simpMessagingTemplate.convertAndSend("/chat/message", dtoM);
         return "ok";
+    }
+
+    @SendTo("/chat/message")
+    public DtoMessage broadcastMessage(@Payload DtoMessage dtoMessage) {
+        return dtoMessage;
     }
 
     @GetMapping("chat/messages/{chatId}")

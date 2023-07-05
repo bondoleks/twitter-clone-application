@@ -10,6 +10,8 @@ export const dataModalMainPage = state => state.main.modalData;
 export const VisibleNoAutorizateModalSelector = state => state.main.VisibleNoAutorizateModal;
 export const filteredUsersSelector = state => state.chat.filteredUsers;
 export const getUserChats = state => state.chat.userChats;
+export const getAllMessagesLoading = state => state.chat.allMessagesLoading;
+export const getAllMessagesForAllChats = state => state.chat.allMessages;
 export const getActiveChat = state => state.chat.activeChat;
 export const getUser = state => state.user.user;
 export const getMessagesForChat = state => state.chat.chatMessages;

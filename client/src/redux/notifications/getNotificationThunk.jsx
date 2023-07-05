@@ -9,7 +9,6 @@ export const getNotificationThunk = () => {
       const state = getState();
       api.get(`notifications/read`)
         .then((data) => {
-            console.log(data);
           dispatch({type:GET_NOTIFICATIONS_SUCCSES,payload: { notifications:  data }});
 
         })

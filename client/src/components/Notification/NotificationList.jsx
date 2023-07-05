@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { notificationsDataSelector } from '../../redux/selectors';
 import { NotificationItem } from "./NotificationItem";
 
+
 export function NotificationsList(){
 const NotificationList =useSelector(notificationsDataSelector);
 
@@ -29,6 +30,7 @@ console.log(NotificationList);
           notification={notification} 
         />
       ))}
+
         </Box>
     )
 }
