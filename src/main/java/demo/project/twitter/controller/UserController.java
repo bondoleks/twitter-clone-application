@@ -49,19 +49,35 @@ public class UserController {
         return facade.getEntity(id);
     }
 
+//    @PostMapping("update")
+//    public ResponseEntity updateEntity(Principal principal, @RequestParam (value = "userName", required = false) String username,
+//                                @RequestParam (value = "firstName", required = false) String firstName,
+//                                @RequestParam (value = "lastName", required = false) String lastName,
+//                                @RequestParam (value = "location", required = false) String location,
+//                                @RequestParam (value = "birthDate", required = false) String bDate,
+//                                @RequestParam (value = "bio", required = false) String bio,
+//                                @RequestParam (value = "avatar", required = false) MultipartFile avFile,
+//                                @RequestParam (value = "headimg", required = false) MultipartFile headFile) throws Exception {
+//        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+//            Date birthDate = format.parse(bDate);
+//        User user = userService.findByUsername(principal.getName());
+//        UserDto entity = facade.updateUser(username, firstName, lastName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+//        User updateUser = userServiceUpdate.updateUser(user, entity);
+//        return ResponseEntity.ok("Update user successful " + updateUser.getUsername());
+//    }
+
     @PostMapping("update")
-    public ResponseEntity updateEntity(Principal principal, @RequestParam (value = "userName", required = false) String username,
-                                @RequestParam (value = "firstName", required = false) String firstName,
-                                @RequestParam (value = "lastName", required = false) String lastName,
-                                @RequestParam (value = "location", required = false) String location,
-                                @RequestParam (value = "birthDate", required = false) String bDate,
-                                @RequestParam (value = "bio", required = false) String bio,
-                                @RequestParam (value = "avatar", required = false) MultipartFile avFile,
-                                @RequestParam (value = "headimg", required = false) MultipartFile headFile) throws Exception {
+    public ResponseEntity updateEntity(Principal principal,
+                                       @RequestParam (value = "firstName", required = false) String firstName,
+                                       @RequestParam (value = "bio", required = false) String bio,
+                                       @RequestParam (value = "head_imagerUrl", required = false) MultipartFile headFile,
+                                       @RequestParam (value = "av_imagerUrl", required = false) MultipartFile avFile,
+                                       @RequestParam (value = "location", required = false) String location,
+                                       @RequestParam (value = "birthdate", required = false) String bDate) throws Exception {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-            Date birthDate = format.parse(bDate);
+        Date birthDate = format.parse(bDate);
         User user = userService.findByUsername(principal.getName());
-        UserDto entity = facade.updateUser(username, firstName, lastName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+        UserDto entity = facade.updateUser(firstName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
         User updateUser = userServiceUpdate.updateUser(user, entity);
         return ResponseEntity.ok("Update user successful " + updateUser.getUsername());
     }
