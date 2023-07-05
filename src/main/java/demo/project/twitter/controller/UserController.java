@@ -66,6 +66,7 @@ public class UserController {
 //        return ResponseEntity.ok("Update user successful " + updateUser.getUsername());
 //    }
 
+
    /* @PostMapping("update")
     public ResponseEntity updateEntity(Principal principal,
                                        @RequestParam (value = "firstName", required = false) String firstName,
