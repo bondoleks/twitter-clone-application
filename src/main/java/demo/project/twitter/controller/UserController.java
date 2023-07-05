@@ -5,6 +5,7 @@ import demo.project.twitter.dto.UserDto;
 import demo.project.twitter.facade.UserFacade;
 import demo.project.twitter.model.User;
 import demo.project.twitter.service.GeneralService;
+import demo.project.twitter.service.UserService;
 import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class UserController {
     private final UserFacade facade;
     private final GeneralService photo;
     private final UserServiceImpl userService;
+    private final UserService userServiceUpdate;
 
    @GetMapping("suggestions")
    public ResponseEntity<List<UserDto>> getSuggestions(Principal principal){
@@ -48,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping("update")
-    public UserDto updateEntity(@RequestParam (value = "userName", required = false) String username,
+    public ResponseEntity updateEntity(Principal principal, @RequestParam (value = "userName", required = false) String username,
                                 @RequestParam (value = "firstName", required = false) String firstName,
                                 @RequestParam (value = "lastName", required = false) String lastName,
                                 @RequestParam (value = "location", required = false) String location,
@@ -58,8 +60,10 @@ public class UserController {
                                 @RequestParam (value = "headimg", required = false) MultipartFile headFile) throws Exception {
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Date birthDate = format.parse(bDate);
-
-        return facade.updateUser(username, firstName, lastName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+        User user = userService.findByUsername(principal.getName());
+        UserDto entity = facade.updateUser(username, firstName, lastName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+        User updateUser = userServiceUpdate.updateUser(user, entity);
+        return ResponseEntity.ok("Update user successful " + updateUser.getUsername());
     }
 
     @PostMapping("update/password")

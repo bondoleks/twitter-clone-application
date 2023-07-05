@@ -86,7 +86,7 @@ public class UserFacade {
         UserDto entity = makeDto(usr);
         User entity2 = service.updateUser(usr, entity);
         dto = makeDto(entity2);
-        return dto;
+        return entity;
     }
 
 
