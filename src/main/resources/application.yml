@@ -1,11 +1,49 @@
+server:
+  port: 8080
+jwt:
+  token:
+    expired: 3600000
+    secret: jwtappdemo
 spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: ${{ secrets.DATASOURCE_PASSWORD }}
+    url: ${{ secrets.DATASOURCE_URL }}
+    username: ${{ secrets.DATASOURCE_USERNAME }}
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    password: ${{ secrets.MAIL_SENDER_PASSWORD }}
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: ${{ secrets.MAIL_SENDER_USERNAME }}
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
   security:
     oauth2:
       client:
         registration:
+#          accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+#          clientAuthenticationScheme: form
           google:
-            clientId: 43110405413-n05stkskoha4lm0eam1qt1hiqvv7uio2.apps.googleusercontent.com
-            clientSecret: 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
-            scope:
-              - email
-              - profile
+            client-id: ${{ secrets.GOOGLE_CLIENT_ID }}
+            client-secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+#          preferTokenInfo: true
+          scope:
+          - email
+          - profile
+#          userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+#          userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo

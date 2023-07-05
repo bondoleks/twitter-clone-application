@@ -2,7 +2,6 @@ package demo.project.twitter.service;
 
 
 import demo.project.twitter.dto.UserDto;
-import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.model.User;
 
 import demo.project.twitter.repository.UserRepository;
@@ -60,7 +59,7 @@ public class UserService implements FunctionUser {
             usr.setBio(Optional.ofNullable(data.getBio()).orElse(usr.getBio()));
             usr.setAv_imagerUrl(Optional.ofNullable(data.getAv_imagerUrl()).orElse(usr.getAv_imagerUrl()));
             usr.setHead_imagerUrl(Optional.ofNullable(data.getHead_imagerUrl()).orElse(usr.getHead_imagerUrl()));
-
+            repo.save(usr);
             return usr;
     }
 

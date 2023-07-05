@@ -12,14 +12,10 @@ export function watchUserTweetsThunk(){
                 arrTweetId: userVisibleTweets,
               };
             api.post('tweets/tweet/view',requestData)
-
-            .then(response => {
-                console.log(response);
-                alert("Success!");
+            .then(() => {
                 dispatch({type:DELETE_USER_VISIBLE_TWEETS})
             })
             .catch(error => {
-                console.error(error);
                 if (error.response) {
                     console.log("Server Response:", error.response.data);
                 }

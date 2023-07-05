@@ -1,7 +1,7 @@
 package demo.project.twitter.facade.tweets;
 
 import demo.project.twitter.config.Mapper;
-import demo.project.twitter.facade.images.ServicAttachmentImage;
+import demo.project.twitter.service.AttachmentImageService;
 import demo.project.twitter.model.Notification;
 import demo.project.twitter.model.TweetAction;
 import demo.project.twitter.model.User;
@@ -14,6 +14,7 @@ import demo.project.twitter.model.tweet.Tweet;
 
 import demo.project.twitter.model.tweet.TweetWord;
 
+import demo.project.twitter.model.tweet.ViewUserId;
 import demo.project.twitter.service.NotificationService;
 
 import demo.project.twitter.service.GeneralService;
@@ -38,13 +39,14 @@ public class FacadeTweet {
 
     private final ServiceTweet service;
     private final UserService serviceUser;
-    private final ServicAttachmentImage serviceImage;
+    private final AttachmentImageService serviceImage;
     private final ServiceTweetAction serviceAction;
     private final Mapper mapper;
     private final GeneralService photo;
     private final NotificationService notificationService;
 
     private final ServiceTweetWord serviceTweetWord;
+    private final ServiceViewUser serviceViewUser;
 
 
     public List<String> transListPhotoToListUrl(List<MultipartFile> listPhoto, Tweet tweet) {
@@ -146,6 +148,7 @@ public class FacadeTweet {
         dto.setCountBookmark(serviceAction.countAction(entity.getId(), "BOOKMARK"));
         dto.setCountRetweet(serviceAction.countAction(entity.getId(), "RETWEET"));
         dto.setCountQuote(service.countTweets(entity.getId(), "QUOTE_TWEET") - dto.getCountRetweet());
+        dto.setCountView(entity.getListViewUserId().size());
 
 
         dto.setTweet_imageUrl(getImageTweet(entity.getId()));
@@ -154,6 +157,9 @@ public class FacadeTweet {
         if ((entity.getTweetType() == TweetType.QUOTE_TWEET) &&
                 (entity.getTweetBody() != null) && (count == 0))
             dto.setParentDto(transEntityToDto(entity.getParentTweet(), profileId, count + 1));
+
+        if (dto.getBranch() == BranchType.BODYBRANCH)
+            dto.setParentBranchDto(transEntityToDto(entity.getParentTweet(), profileId, count +1));
 
 
 
@@ -456,19 +462,17 @@ public class FacadeTweet {
 
 
     public void saveViewTweet(Long profileId, Long[] arrTweetId) {
-log.info(":::::::::::: start1");
-        List<Tweet> listTweet = service.getListTweetByListTweetId(arrTweetId);
-        Tweet tweet1 = listTweet.get(0);
-        log.info(":::::::::::: start2");
-        User user = serviceUser.findById(profileId);
-        log.info(":::::::::::: start3");
-log.info(":::::::::: size = " + tweet1.getSetUser().size());
-        listTweet.forEach(t -> t.getSetUser().add(user));
-        log.info(":::::::::: size = " + tweet1.getSetUser().size());
-        log.info(":::::::::::: start4");
+        ViewUserId viewUserId;
+        if (serviceViewUser.existsByUserId(profileId)) {
+            viewUserId = serviceViewUser.getviewUserIdByUserId(profileId);
+        }
+        else {
+            viewUserId = new ViewUserId(profileId);
+        }
 
-        service.saveOne(tweet1);
-        log.info(":::::::::::: start5");
+        List<Tweet> listTweet = service.getListTweetByListTweetId(arrTweetId);
+        viewUserId.getListTweet1().addAll(listTweet);
+        serviceViewUser.saveOne(viewUserId);
 
     }
 }

@@ -3,7 +3,7 @@ export const GET_USER_REQUEST = 'user/get/request';
 export const GET_USER_SUCCSES = 'user/get/succses';
 export const GET_USER_ERROR = 'user/get/error';
 export const LOG_OUT_USER = 'user/log_out';
-
+//Modal
 export const  OPEN_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/open';
 export const  CLOSE_NOAUTORIZATE_MODAL = 'main/modal/nonAutorizate/close';
 
@@ -15,6 +15,9 @@ export const CLOSE_REGISTRATION_MODAL ='main/modal/registration/close';
 
 export const OPEN_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/open';
 export const CLOSE_NEXT_REGISTRATION_MODAL = 'main/modal/next_registration/close';
+
+export const OPEN_IMAGE_MODAL = 'main/modal/image/open';
+export const CLOSE_IMAGE_MODAL = 'main/modal/image/close';
 
 
 export const ADD_USER_VISIBLE_TWEETS ='user/visibleTweets/add';
@@ -68,6 +71,7 @@ export const  GET_TWEET_PAGE_ERROR = 'tweet/all/error';
 export const  START_SCROLL_COMMENTS = 'comments/scroll/start';
 export const  END_SCROLL_COMMENTS = 'comments/scroll/end';
 export const REMOVE_OLD_REPLY = 'tweet/comments/remove';
+export const REMOVE_PREVIOUS_TWEET = 'tweet/tweet/delete';
 
 // chats and messages
 
@@ -133,3 +137,7 @@ export const DELETE_IMG_IN_REPLY  = 'reply/data/img/delete';
 export const ADD_HASH_IN_REPLY = 'reply/data/hash/change';
 export const REPLY_SUCCSES = 'reply/post/succses';
 
+//Bookmark
+export const GET_BOOKMARK_REQUEST= 'bookmark/get/request';
+export const GET_BOOKMARK_SUCCESS= 'bookmark/get/success';
+export const GET_BOOKMARK_ERROR = 'bookmark/get/error';

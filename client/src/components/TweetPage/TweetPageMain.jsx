@@ -104,7 +104,8 @@ export function TweetPageMain({tweet}){
     return(
         <Box key={id} data-user-id={user_id} >
             <Box sx={{display:'flex', gap:'12px', }}>
-                <Avatar src={av_imagerUrl} alt={username} sx={{ m: '14px' , cursor:'pointer'}}
+                <Avatar src={av_imagerUrl} alt={username} sx={{ m: '8px' , cursor:'pointer'}}
+
                     onClick={(e)=>{
                       e.stopPropagation();
                       if(currentUserId === user_id ){
@@ -132,7 +133,7 @@ export function TweetPageMain({tweet}){
                 </Box>
             </Box>
             <Box sx={{ padding: '8px' }}>
-                {tweetBody && <Typography variant="body1" sx={{p:'14px 0'}}>{tweetBody}</Typography>}
+                {tweetBody && <Typography variant="body1" sx={{p:'14px 8px'}}>{tweetBody}</Typography>}
                 <Box sx={{borderRadius: '16px'}}>
                 {tweet_imageUrl && <ImageInTweetLayout images={tweet_imageUrl} size='320'/>}
                 </Box>

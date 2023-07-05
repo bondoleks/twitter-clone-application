@@ -34,5 +34,10 @@ export const tweetInReplySelector = state => state.reply.parentTweet;
 export const visibleReplyModalSelector = state => state.reply.visibleReplyModal;
 export const textReplySelector = state => state.reply.replyData.text;
 export const  imageReplySelector = state => state.reply.replyData.img;
-
 export const currentUserIdSelector = state => state.user.user.id;
+//Modal
+export const visibleImageModalSelector = state => state.main.visibleImageModal;
+//Bookmark
+export const bookmarkDataSelector = state => state.bookmark.bookmarks;
+
+

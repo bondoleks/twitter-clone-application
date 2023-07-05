@@ -1,18 +1,35 @@
 import { Box, Grid, CardMedia } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { OPEN_IMAGE_MODAL } from "../../redux/actions";
+
+
 
 export function ImageInTweetLayout({ images, size }) {
   const imageCount = images.length;
+  const dispatch = useDispatch();
+function openImageModal(images,index){
+  console.log(images,index);
+  dispatch({type:OPEN_IMAGE_MODAL,payload:{images:images,index:index}})
+}
+
 
   return (
     <Box>
       {imageCount < 2 ? (
-        <CardMedia component="img" src={images[0]} sx={{ borderRadius: '16px','&:hover': { filter: 'brightness(0.8)', }, }} />
+        <CardMedia 
+        onClick={(e)=>{
+          e.stopPropagation()
+          openImageModal(images,0)}}
+        component="img" src={images[0]} sx={{ borderRadius: '16px','&:hover': { filter: 'brightness(0.8)', }, }} />
       ) : (
         <Grid container spacing={0.5}>
           {imageCount === 2 && (
             <>
               <Grid item xs={6}>
                 <Box
+                  onClick={(e)=>{
+                    e.stopPropagation()
+                    openImageModal(images,0)}}
                   sx={{
                     backgroundImage: `url(${images[0]})`,
                     backgroundSize: 'cover',
@@ -30,6 +47,9 @@ export function ImageInTweetLayout({ images, size }) {
               </Grid>
               <Grid item xs={6}>
                 <Box
+                onClick={(e)=>{
+                  e.stopPropagation()
+                  openImageModal(images,1)}}
                   sx={{
                     backgroundImage: `url(${images[1]})`,
                     backgroundSize: 'cover',
@@ -52,6 +72,9 @@ export function ImageInTweetLayout({ images, size }) {
             <>
               <Grid item xs={6}>
                 <Box
+                  onClick={(e)=>{
+                    e.stopPropagation()
+                    openImageModal(images,0)}}
                   sx={{
                     backgroundImage: `url(${images[0]})`,
                     backgroundSize: 'cover',
@@ -71,6 +94,9 @@ export function ImageInTweetLayout({ images, size }) {
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                     <Box
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        openImageModal(images,1)}}
                       sx={{
                         backgroundImage: `url(${images[1]})`,
                         backgroundSize: 'cover',
@@ -87,6 +113,9 @@ export function ImageInTweetLayout({ images, size }) {
                   </Grid>
                   <Grid item xs={12}>
                     <Box
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        openImageModal(images,2)}}
                       sx={{
                         backgroundImage: `url(${images[2]})`,
                         backgroundSize: 'cover',
@@ -112,6 +141,9 @@ export function ImageInTweetLayout({ images, size }) {
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                     <Box
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        openImageModal(images,0)}}
                       sx={{
                         backgroundImage: `url(${images[0]})`,
                         backgroundSize: 'cover',
@@ -128,6 +160,9 @@ export function ImageInTweetLayout({ images, size }) {
                   </Grid>
                   <Grid item xs={12}>
                     <Box
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        openImageModal(images,1)}}
                       sx={{
                         backgroundImage: `url(${images[1]})`,
                         backgroundSize: 'cover',
@@ -148,6 +183,9 @@ export function ImageInTweetLayout({ images, size }) {
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                     <Box
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        openImageModal(images,2)}}
                       sx={{
                         backgroundImage: `url(${images[2]})`,
                         backgroundSize: 'cover',
@@ -164,6 +202,9 @@ export function ImageInTweetLayout({ images, size }) {
                   </Grid>
                   <Grid item xs={12}>
                     <Box
+                      onClick={(e)=>{
+                        e.stopPropagation()
+                        openImageModal(images,3)}}
                       sx={{
                         backgroundImage: `url(${images[3]})`,
                         backgroundSize: 'cover',
