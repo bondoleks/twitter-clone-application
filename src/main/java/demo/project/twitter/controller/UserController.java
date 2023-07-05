@@ -67,7 +67,8 @@ public class UserController {
 //    }
 
 
-   /* @PostMapping("update")
+    @PostMapping("update")
+
     public ResponseEntity updateEntity(Principal principal,
                                        @RequestParam (value = "firstName", required = false) String firstName,
                                        @RequestParam (value = "bio", required = false) String bio,
@@ -81,9 +82,9 @@ public class UserController {
         UserDto entity = facade.updateUser(firstName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
         User updateUser = userServiceUpdate.updateUser(user, entity);
         return ResponseEntity.ok("Update user successful " + updateUser.getUsername());
-    }*/
+    }
 
-      @PostMapping("update")
+  /*    @PostMapping("update")
     public String updateEntity(Principal principal,
                                        @RequestParam (value = "firstName", required = false) String firstName,
                                        @RequestParam (value = "bio", required = false) String bio,
@@ -96,11 +97,11 @@ public class UserController {
         User user = userService.findByUsername(principal.getName());
         String s1 = photo.getPhotoUrl(avFile).get();
         String s2 = photo.getPhotoUrl(headFile).get();
-        /*UserDto entity = facade.updateUser(firstName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
-        User updateUser = userServiceUpdate.updateUser(user, entity);*/
+        *//*UserDto entity = facade.updateUser(firstName, location, birthDate, bio, photo.getPhotoUrl(avFile), photo.getPhotoUrl(headFile));
+        User updateUser = userServiceUpdate.updateUser(user, entity);*//*
         return "url1 : " + s1 + "url2 : " + s2;
 
-    }
+    }*/
 
 
 
