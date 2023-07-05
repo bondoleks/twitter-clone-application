@@ -14,7 +14,7 @@ export function QuoteRetweetModal() {
   const parentTweet = useSelector(tweetInQuoteModalSelector);
   const visibleQuoteRetweetModal = useSelector(visibleQuoteModalSelector)
   const { id, av_imagerUrl, username } = currentUser;
-  console.log(parentTweet);
+
 
   // Text
   const retweetText = useSelector(textQuoteModalSelector);

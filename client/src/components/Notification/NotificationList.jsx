@@ -1,7 +1,7 @@
 import { Box,Typography,Avatar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { notificationsDataSelector } from '../../redux/selectors';
-
+import { NotificationItem } from "./NotificationItem";
 
 export function NotificationsList(){
 const NotificationList =useSelector(notificationsDataSelector);
@@ -23,7 +23,12 @@ console.log(NotificationList);
 
     return(
         <Box>
-
+            {NotificationList.map((notification) => (
+        <NotificationItem
+          key={notification.id}
+          notification={notification} 
+        />
+      ))}
         </Box>
     )
 }

@@ -9,8 +9,8 @@ export const getNotificationThunk = () => {
       const state = getState();
       api.get(`notifications/read`)
         .then((data) => {
-
-          dispatch({type:GET_NOTIFICATIONS_SUCCSES,payload: { notifications:  data.listDto }});
+            console.log(data);
+          dispatch({type:GET_NOTIFICATIONS_SUCCSES,payload: { notifications:  data }});
 
         })
         .catch((error) => {

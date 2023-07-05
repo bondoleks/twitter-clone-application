@@ -4,7 +4,7 @@ import Tweet from '../../components/Tweet/Tweet';
 export function Following(){
     return(
         <div>
-            Following
+            No tweets
         </div>
     )
 }
