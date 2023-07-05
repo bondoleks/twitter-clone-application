@@ -39,7 +39,10 @@ export const  imageReplySelector = state => state.reply.replyData.img;
 export const currentUserIdSelector = state => state.user.user.id;
 //Modal
 export const visibleImageModalSelector = state => state.main.visibleImageModal;
+export const visibleForgotModalSelector = state => state.main.visibleForgotModal;
 //Bookmark
 export const bookmarkDataSelector = state => state.bookmark.bookmarks;
+//
+export const notificationsDataSelector = state => state.notifications.notifications;
 
 
