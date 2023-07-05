@@ -23,11 +23,15 @@ public class GeneralService {
 
     public Optional<String> getPhotoUrl(MultipartFile file) throws IOException {
 
-        if (file.isEmpty()) return Optional.empty();
+        if (file.isEmpty()) {
+
+            return Optional.empty();
+        }
         else {
 
             Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = uploadResult.get("secure_url").toString();
+
             return Optional.of(imageUrl);
         }
     }
