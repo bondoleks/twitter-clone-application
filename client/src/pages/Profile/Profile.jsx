@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   IconButton,
@@ -57,10 +57,32 @@ export const Profile = ({ withId }) => {
     getData()
   }, [id])
 
-
   if (!loading) <p>loading...</p>
 
   const { username, firstName, head_imagerUrl, lastName, email, location, birthdate, av_imagerUrl, bio } = data
+
+  const [fileAv, setFileAv] = useState(null);
+  const [fileHead, setFileHead] = useState(null);
+  const [filePath, setFilePath] = useState(head_imagerUrl);
+  const [filePathAv, setFilePathAv] = useState(av_imagerUrl);
+
+  useEffect(() => {
+    if (fileAv) setFilePathAv(URL.createObjectURL(fileAv));
+  }, [fileAv]);
+
+  const handleFileAvChange = (e) => {
+    const fileAv = e.target.files[0];
+    setFileAv(fileAv);
+  };
+
+  useEffect(() => {
+    if (fileHead) setFilePath(URL.createObjectURL(fileHead));
+  }, [fileHead]);
+
+  const handleFileHeadChange = (e) => {
+    const fileHead = e.target.files[0];
+    setFileHead(fileHead);
+  };
 
 
   return (
@@ -75,24 +97,16 @@ export const Profile = ({ withId }) => {
         <ToolbarProfile />
 
         <Container sx={{ marginTop: '70px' }}>
-          {head_imagerUrl ? (
-            <Avatar
-              alt="Head Image"
-              src={head_imagerUrl}
-              // src='../../img/avatar.png'
-              sx={{
-                bgcolor: 'grey.300',
-                width: '110%',
-                marginLeft: '-5%',
-                height: '200px',
-              }} />) : (
-            <Box sx={{
-              bgcolor: 'grey.300',
-              width: '110%',
-              marginLeft: '-5%',
-              height: '200px',
-            }}></Box>
-          )}
+          <Box
+            sx={{
+              backgroundImage: filePath ? `url(${filePath})` : "none",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              width: "100%",
+              height: "200px",
+              bgcolor: !filePath && "grey.300",
+            }}
+          ></Box>
 
 
           <StyledAvatar
