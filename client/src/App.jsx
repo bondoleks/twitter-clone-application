@@ -35,6 +35,7 @@ import { ForgotPage } from './pages/ForgotPage/ForgotPage';
 import { ReplyModal } from './components/Tweet/ModalsTweetReaction/ReplyModal';
 import { ChangePasswordPage } from './pages/ChangePassword/ChangePasswordPage';
 import { ModalImageFullScreen } from './components/Tweet/ModalImageFullScreen';
+import { EmailModalForgotPassword } from './components/ModalOmMainPage/Login/EmailModalForgotPassword';
 
 
 const PrivateRoute = ({ element: Element, ...rest }) => {
@@ -143,8 +144,10 @@ function App() {
     const [themeMode, setThemeMode] = useState("light");
     const isAuthenticated = useSelector(state => state.user.authorized);
     const isActiveMessage = useMatch("/messages/:id");
-    const isActivateKey = useMatch("/activate/:key");
-    const isActivateForgotPassword = useMatch("forgotPassword/activate/:key");
+    const isActivatePageConfirm = useMatch("/activate/:key");
+    let isActivateForgotPassword = useMatch("forgotPassword/activate/:key");
+    let isActivateKey = isActivateForgotPassword || isActivatePageConfirm;
+    
 
 
     const modalOpen = useSelector(isModalOpened);
@@ -316,11 +319,12 @@ return () =>{
         let isActiveMessage = useMatch("/messages/:id")
         let rightColumn = null;
 
+
         if (path === '/messages') {
             rightColumn = <MessagesRightColumn />
         } else if (isActiveMessage) {
             rightColumn = <ActiveChat />
-        } else if(!isActivateKey || !isActivateForgotPassword){
+        } else if(!isActivateKey){
             rightColumn = <Search />
         }
 
@@ -336,7 +340,7 @@ return () =>{
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                     <Grid container spacing={2} sx={{ margin: "0 auto", maxWidth: "1082px", paddingBottom: !isAuthenticated ? "65px" : '32px', width: '100%!important' }}>
-                        {Boolean(!useMatch("/activate/:key")) &&
+                        {Boolean(!isActivateKey) &&
                         <Grid item md={3} sx={{paddingTop:'0!important',paddingLeft:'0!important'}}>
                             <Sidebar />
                         </Grid>
@@ -358,6 +362,7 @@ return () =>{
                     <QuoteRetweetModal/>
                     <ReplyModal/>
                     <ModalImageFullScreen/>
+                    <EmailModalForgotPassword/>
             </ThemeProvider>
         </CustomThemeContext.Provider>
 
