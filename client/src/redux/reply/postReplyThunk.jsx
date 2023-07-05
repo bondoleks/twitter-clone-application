@@ -25,11 +25,9 @@ export function postReplyThunk(parent_id){
 
           api.post("tweets/reply/save", formData)
           .then(response => {
-              console.log(response);
               dispatch({type:REPLY_SUCCSES})
           })
           .catch(error => {
-              console.error(error);
               alert("Error!: " + error.message);
               if (error.response) {
                   console.log("Server Response:", error.response.data);

@@ -16,7 +16,12 @@ import {
   SEND_NEW_MESSAGE_ERROR,
   SEND_NEW_MESSAGE_LOADING,
   ADD_NEW_CHAT_SUCCESS,
-  GET_CHAT_OWNERS, OPEN_NEW_MESSAGE_MODAL, CLOSE_NEW_MESSAGE_MODAL
+  GET_CHAT_OWNERS,
+  OPEN_NEW_MESSAGE_MODAL,
+  CLOSE_NEW_MESSAGE_MODAL,
+  GET_ALL_MESSAGES_ERROR,
+  GET_ALL_MESSAGES_SUCCESS,
+  GET_ALL_MESSAGES_LOADING
 
 } from '../../actions.jsx';
 
@@ -35,6 +40,10 @@ const initialState = {
   error: false,
   filters: {},
   newMessageModal: false,
+  allMessages: [],
+  allMessagesLoading: false,
+  allMessagesError: false,
+
 }
 
 
@@ -142,8 +151,31 @@ export const ChatReducer = (state = initialState, action) => {
         ...state,
         newMessageModal: false,
       };
+
+    case  GET_ALL_MESSAGES_SUCCESS :
+      return {
+        ...state,
+        allMessages: payload,
+        allMessagesLoading: false,
+        allMessagesError: false
+
+      }
+      case  GET_ALL_MESSAGES_LOADING :
+      return {
+        ...state,
+        allMessagesLoading: true,
+        allMessagesError: false
+      }
+
+    case  GET_ALL_MESSAGES_ERROR :
+      return {
+        ...state,
+        allMessagesLoading: false,
+        allMessagesError: true
+      }
     default:
       return state;
+
   }
 }
 

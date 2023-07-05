@@ -19,17 +19,12 @@ export function postQuoteRetweetThunk(parentid){
               }
 
           console.log("FormData content:");
-          for (const [key, value] of formData) {
-            console.log(key, value);
-          }
+
 
           api.post("tweets/quote/save", formData)
           .then(response => {
-              console.log(response);
-              alert("Success!");
           })
           .catch(error => {
-              console.error(error);
               // Actions on error
               alert("Error!: " + error.message);
               if (error.response) {
