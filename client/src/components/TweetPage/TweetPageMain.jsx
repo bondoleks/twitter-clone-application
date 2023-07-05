@@ -1,4 +1,4 @@
-import { Typography,Box,Avatar,CardMedia,IconButton} from "@mui/material";
+import { Typography,Box,Avatar,CardMedia,IconButton,CircularProgress} from "@mui/material";
 import { useSelector } from "react-redux";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RepeatIcon from '@mui/icons-material/Repeat';
@@ -18,6 +18,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { openQuoteRetweetModalThunk } from "../../redux/quoteRetweet/openQuoteRetweetModalThunk";
 import { openReplyModalThunk } from "../../redux/reply/openReplyModalThunk";
 import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -45,7 +46,15 @@ function formatDateTimeTweet(dateTimeString) {
 
 export function TweetPageMain({tweet}){
 
-    const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countRetweet, countLike, view = 154,markerLike,markerRetweet,markerBookmark, parentDto, countBookmark} = tweet;
+
+
+  if(!tweet){
+    return(
+<CircularProgress/>
+    )
+  }
+
+    const { id, createdDate,username, firstName, lastName, tweetBody, av_imagerUrl, tweet_imageUrl, user_id, countRetweet,countQuote, countLike, countView,markerLike,markerRetweet,markerBookmark, parentDto, countBookmark} = tweet;
     const fullName = `${firstName} ${lastName}`;
     const dispatch =useDispatch();
     const navigate =useNavigate();
@@ -55,7 +64,7 @@ export function TweetPageMain({tweet}){
     const [visibleRetweetModal,setVisibleRetweetModal] = useState(false);
     const [visibleShareModal,setVisibleShareModal] = useState(false);
     //Count
-    const [retweetRealyCount,setRetweetRealyCount] = useState(countRetweet);
+    const [retweetRealyCount,setRetweetRealyCount] = useState(countRetweet || 0);
     const [likeRealyCount,setLikeRealyCount] = useState(countLike);
     const [bookmarkRealyCount,setBoolmarkRealyCount] = useState(countBookmark);    
     //Marker
@@ -140,13 +149,13 @@ export function TweetPageMain({tweet}){
                 {parentDto && <Retweet key={parentDto.id} tweet={parentDto} />}
             </Box>
             <Box sx={{borderBottom: '1px rgb(239, 243, 244) solid', p:'8px 12px'}}>
-                <Typography>{formatDateTimeTweet(createdDate)}· {view} Views</Typography>
+                <Typography>{formatDateTimeTweet(createdDate)}· {countView} Views</Typography>
             </Box>
             <Box sx={{borderBottom: '1px rgb(239, 243, 244) solid', display:'flex', justifyContent:'space-around',p:'8px 0'}}>
                 <Typography>{retweetRealyCount}<span>  Retweets</span></Typography>                
 
                 
-                <Typography>12<span> Quotes</span></Typography>                
+                <Typography>{countQuote}<span> Quotes</span></Typography>                
 
                 
                 <Typography>{likeRealyCount} Likes</Typography>                

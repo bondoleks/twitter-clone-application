@@ -120,7 +120,7 @@ export function ChangePasswordPage () {
                 {messagePassword && <Typography>{messagePassword}</Typography>}
                 </Box>
                 <Box sx={{display:'flex',justifyContent:'right'}}>
-                <Button type="submit" variant="contained" sx={{borderRadius:'20px'}} disabled={1 === 0}>
+                <Button type="submit" variant="contained" sx={{borderRadius:'20px'}} >
                     Save
                     </Button>
                 </Box>

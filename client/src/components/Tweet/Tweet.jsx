@@ -14,7 +14,7 @@ import { MiniModal } from './MiniModal';
 import {api} from '../../redux/service/api';
 import { ImageInTweetLayout } from './ImageInTweetLayout';
 import { openQuoteRetweetModalThunk} from '../../redux/quoteRetweet/openQuoteRetweetModalThunk';
-import { ADD_USER_VISIBLE_TWEETS,REMOVE_PREVIOUS_TWEET } from '../../redux/actions';
+import { ADD_USER_VISIBLE_TWEETS,DELETE_BOOKMARK,REMOVE_PREVIOUS_TWEET } from '../../redux/actions';
 import VisibilitySensor from 'react-visibility-sensor';
 import { openReplyModalThunk } from '../../redux/reply/openReplyModalThunk';
 import { useTheme } from '@mui/material/styles';
@@ -105,6 +105,9 @@ function headlerBookmark(id){
   api.post(`/tweets/bookmark/${id}`)
   .then(() => {
     setActiveBookmark(!activeBookmark);
+    if(!activeBookmark){
+      dispatch({type:DELETE_BOOKMARK,payload:{bookmarkId:id}})
+    }
   });
   setVisibleShareModal(false);
 }

@@ -40,12 +40,15 @@ import ModalTheme from '../ModalTheme/ModalTheme';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useFetch } from "../../hooks/UseFetch";
+import { useMatch } from 'react-router-dom';
 
 
 const SidebarMobile = ({ withId }) => {
     const { id } = useParams();
     const isAutorizate = useSelector(state => state.user.authorized);
     const theme = useTheme();
+    const isActiveMessage = useMatch("/messages/:id");
+    const isMessagesPage = useMatch("/messages");
 
     const StyledAvatar = styled(Avatar)(({ theme }) => ({
         position: 'relative',
@@ -502,19 +505,24 @@ const SidebarMobile = ({ withId }) => {
                 </Container>
             </AppBar >
 
-            <IconButton onClick={handleOpen}>
-                <AddCircleIcon sx={{
-                    position: 'fixed',
-                    top: '500px',
-                    left: '70%',
-                    zIndex: '999',
-                    color: buttonColor ? buttonColor : '#0080ff',
-                    fontSize: '64px'
-                }} />
-            </IconButton>
-            <TweetFormMobile open={open} onClose={handleClose} />
-
             {isAutorizate && <>
+                {
+                  (!isActiveMessage && !isMessagesPage) &&  (
+                    <IconButton onClick={handleOpen}>
+                        <AddCircleIcon sx={{
+                            position: 'fixed',
+                            top: '500px',
+                            left: '70%',
+                            zIndex: '999',
+                            color: buttonColor ? buttonColor : '#0080ff',
+                            fontSize: '64px'
+                        }} />
+                    </IconButton>
+                  )
+                }
+                <TweetFormMobile open={open} onClose={handleClose} />
+
+
                 <Box edge="start">
                     <BottomNavigation style={bottomNavigationStyles} sx={{
                         position: 'fixed',

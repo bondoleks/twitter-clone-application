@@ -10,6 +10,8 @@ export const dataModalMainPage = state => state.main.modalData;
 export const VisibleNoAutorizateModalSelector = state => state.main.VisibleNoAutorizateModal;
 export const filteredUsersSelector = state => state.chat.filteredUsers;
 export const getUserChats = state => state.chat.userChats;
+export const getAllMessagesLoading = state => state.chat.allMessagesLoading;
+export const getAllMessagesForAllChats = state => state.chat.allMessages;
 export const getActiveChat = state => state.chat.activeChat;
 export const getUser = state => state.user.user;
 export const getMessagesForChat = state => state.chat.chatMessages;
@@ -37,7 +39,10 @@ export const  imageReplySelector = state => state.reply.replyData.img;
 export const currentUserIdSelector = state => state.user.user.id;
 //Modal
 export const visibleImageModalSelector = state => state.main.visibleImageModal;
+export const visibleForgotModalSelector = state => state.main.visibleForgotModal;
 //Bookmark
 export const bookmarkDataSelector = state => state.bookmark.bookmarks;
+//
+export const notificationsDataSelector = state => state.notifications.notifications;
 
 
