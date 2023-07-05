@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserServiceImplInterface {
             String message = String.format(
                     "Hello, %s! \n" +
                             "Welcome to Twitter. Please, visit next link: " +
-                            "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app/#/activate/%s",
+                            "https://twitter-clone-application.vercel.app/#/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserServiceImplInterface {
             String message = String.format(
                     "Hello, %s! \n" +
                             "Please, visit next link if you need to change password: " +
-                            "https://twitter-clone-application-e8cz8renm-bondoleks.vercel.app/#/forgotPassword/activate/%s",
+                            "https://twitter-clone-application.vercel.app/#/forgotPassword/activate/%s",
                     user.getUsername(),
                     user.getActivationCodeForgotPassword()
             );
