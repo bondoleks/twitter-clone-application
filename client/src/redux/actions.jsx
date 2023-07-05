@@ -137,3 +137,7 @@ export const DELETE_IMG_IN_REPLY  = 'reply/data/img/delete';
 export const ADD_HASH_IN_REPLY = 'reply/data/hash/change';
 export const REPLY_SUCCSES = 'reply/post/succses';
 
+//Bookmark
+export const GET_BOOKMARK_REQUEST= 'bookmark/get/request';
+export const GET_BOOKMARK_SUCCESS= 'bookmark/get/success';
+export const GET_BOOKMARK_ERROR = 'bookmark/get/error';

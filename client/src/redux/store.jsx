@@ -11,6 +11,7 @@ import { mainPageReducer } from './mainPage/mainPageReducer'
 import {ChatReducer} from './Messages/Reducers/ChatReducer.js';
 import { quoteRetweetReducer } from './quoteRetweet/quoteRetweetReducer'
 import { replyReducer } from './reply/replyReducer'
+import { bookmarkReducer } from './bookmark/bookmarkReducer'
 
 
 
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     tweet: tweetReducer,
     chat: ChatReducer,
     quoteRetweet: quoteRetweetReducer,
-    reply:replyReducer
+    reply:replyReducer,
+    bookmark:bookmarkReducer
 
 })
 
