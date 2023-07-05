@@ -1,19 +1,8 @@
-package demo.project.twitter.facade.chats;
+package demo.project.twitter.garbage;
 
-import demo.project.twitter.facade.messages.DtoMessage;
-import demo.project.twitter.facade.messages.FacadeMessage;
-import demo.project.twitter.facade.messages.ServiceMessage;
-import demo.project.twitter.model.chat.Chat;
-import demo.project.twitter.model.chat.Message;
-import demo.project.twitter.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.images;
+package demo.project.twitter.repository;
 
 import demo.project.twitter.model.tweet.AttachmentImage;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface RepoAttachmentImage extends CrudRepository<AttachmentImage, Long> {
+public interface AttachmentImageRepository extends CrudRepository<AttachmentImage, Long> {
 
     @Query(
             value = "select image_url from images  where tweet_id = ?",

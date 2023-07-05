@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.chats;
+package demo.project.twitter.garbage;
 
 
 import lombok.RequiredArgsConstructor;

@@ -36,13 +36,10 @@ public class Tweet extends BaseEntity {
     @ManyToMany(mappedBy = "listTweet")
     private List<TweetWord> listTweetWord;
 
-    @OneToMany
-    @JoinTable(
-            name = "viewtweet",
-            joinColumns = @JoinColumn(name = "tweet_id"),
-            inverseJoinColumns = @JoinColumn(name = "userr_id")
-    )
-    private Set<User> setUser = new HashSet<>();
+    @ManyToMany(mappedBy = "listTweet1")
+    private List<ViewUserId> listViewUserId = new ArrayList<>();
+
+
 
     public Tweet(TweetType tweetType, String tweetBody, User user) {
         this.tweetType = tweetType;

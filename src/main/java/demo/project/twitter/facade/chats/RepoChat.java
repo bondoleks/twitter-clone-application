@@ -23,7 +23,6 @@ import java.util.Optional;
 @Repository
 public interface RepoChat extends JpaRepository<Chat, Long> {
 
-
     @Transactional
     @Modifying
     @Query(
