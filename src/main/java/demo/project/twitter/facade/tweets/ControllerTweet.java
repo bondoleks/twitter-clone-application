@@ -43,7 +43,7 @@ public class ControllerTweet {
     }
 
     @PostMapping("tweet/view")
-    public String countViewTweet(@RequestBody DtoArrayTweet dto ,
+    public void countViewTweet(@RequestBody DtoArrayTweet dto ,
 //                               @RequestParam("profileId") Long userId,
                                  Principal principal) {
 
@@ -51,14 +51,7 @@ public class ControllerTweet {
 //        Long profileId = userId;
 
         Long profileId = facadeUser.getUserByName(principal.getName()).getId();
-//        facade.saveViewTweet(profileId, dto.getArrTweetId());
-
-
-String s = dto.getArrTweetId().length + " " + profileId;
-        return s;
-
-
-
+        facade.saveViewTweet(profileId, dto.getArrTweetId());
     }
 
 

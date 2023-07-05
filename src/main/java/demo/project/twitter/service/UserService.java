@@ -2,7 +2,6 @@ package demo.project.twitter.service;
 
 
 import demo.project.twitter.dto.UserDto;
-import demo.project.twitter.facade.images.ServicAttachmentImage;
 import demo.project.twitter.model.User;
 
 import demo.project.twitter.repository.UserRepository;
