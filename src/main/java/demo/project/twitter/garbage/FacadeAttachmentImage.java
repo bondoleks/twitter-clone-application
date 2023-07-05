@@ -1,5 +1,6 @@
-package demo.project.twitter.facade.images;
+package demo.project.twitter.garbage;
 
+import demo.project.twitter.garbage.DtoAttachmentImage;
 import demo.project.twitter.model.tweet.AttachmentImage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,13 +16,16 @@ import org.springframework.stereotype.Service;
 @Service
 @Log4j2
 public  class FacadeAttachmentImage {
+/*
 
     private final ServicAttachmentImage service;
     private AttachmentImage entity = new AttachmentImage();
     private DtoAttachmentImage dto = new DtoAttachmentImage();
 
+*/
 /*Маппер настроен минимально, только для выполнения основной функции - простого преобразования одного объекта
-* в другой - entity в dto и dto в entity. */
+* в другой - entity в dto и dto в entity. *//*
+
     private ModelMapper mapper() {
         ModelMapper mm = new ModelMapper();
         mm.getConfiguration()
@@ -32,10 +36,12 @@ public  class FacadeAttachmentImage {
         return mm;
     }
 
- /* Дальнейший код приведен для примера.
+ */
+/* Дальнейший код приведен для примера.
         В данном классе реализуются методы предназначенные для связи контроллера и сервиса, с подкючением ModelMapper
          для преобразования данных из БД в DTO и обратно
-  */
+  *//*
+
 
     // ************************************** EXAMPLE START **************************************
     public ResponseEntity<?> getEntity (Long id){
@@ -57,6 +63,8 @@ public  class FacadeAttachmentImage {
     }
 
 //    ************************************** EXAMPLE END **************************************
+*/
+
 }
 
 

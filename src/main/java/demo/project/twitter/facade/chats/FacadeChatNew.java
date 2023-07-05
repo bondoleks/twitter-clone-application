@@ -1,10 +1,11 @@
 package demo.project.twitter.facade.chats;
 
 import demo.project.twitter.config.Mapper;
-import demo.project.twitter.facade.messages.DtoMessage;
+import demo.project.twitter.dto.DtoChat;
+import demo.project.twitter.dto.DtoChatMessage;
+import demo.project.twitter.dto.DtoMessage;
 import demo.project.twitter.facade.messages.ServiceMessage;
 import demo.project.twitter.model.User;
-import demo.project.twitter.model.chat.Chat;
 import demo.project.twitter.model.chat.ChatNew;
 import demo.project.twitter.model.chat.GeneralChat;
 import demo.project.twitter.model.chat.Message;

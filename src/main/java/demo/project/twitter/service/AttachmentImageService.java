@@ -1,7 +1,8 @@
-package demo.project.twitter.facade.images;
+package demo.project.twitter.service;
 
 
 import demo.project.twitter.model.tweet.AttachmentImage;
+import demo.project.twitter.repository.AttachmentImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -11,8 +12,8 @@ import java.util.Optional;
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
 @Log4j2
-public class ServicAttachmentImage implements FunctionAttachmentImage {
-    private final RepoAttachmentImage repo;
+public class AttachmentImageService implements FunctionAttachmentImage {
+    private final AttachmentImageRepository repo;
 
 
 

@@ -1,4 +1,4 @@
-package demo.project.twitter.facade.roles;
+package demo.project.twitter.garbage;
 
 
 import lombok.RequiredArgsConstructor;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("roles")
 public class ControllerRole {
-    private final FacadeRole facade;
+    /*   private final FacadeRole facade;
 
 
-/* Дальнейший код приведен для примера.
+     *//* Дальнейший код приведен для примера.
         В данном классе создаются endpoint для обработки запросов фронта.
         Весь основной процесс обработки происходит в классе Facade
-        */
+        *//*
 
 // ************************************** EXAMPLE START **************************************
 
@@ -31,4 +31,6 @@ public class ControllerRole {
     }
 
     //    ************************************** EXAMPLE END **************************************
+}
+*/
 }
